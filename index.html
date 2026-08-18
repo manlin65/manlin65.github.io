@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M. Linner Softwareentwicklung & Dienstleistungen | Datenbanken · DMS</title>
+<meta name="description" content="Softwareentwicklung, Datenbanken, SQL Server, C#/.NET, Delphi, Reporting und DMS-Beratung.">
+<style>
+:root{--bg:#f6f8fb;--surface:#fff;--soft:#eef3f8;--text:#17202a;--muted:#64748b;--primary:#155e75;--dark:#0e4759;--border:#dce4ec;--shadow:0 12px 32px rgba(0,0,0,.07);--radius:18px;--max:1180px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}a{color:inherit}section{scroll-margin-top:90px}.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}.nav-container{width:min(var(--max),calc(100% - 40px));min-height:72px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{text-decoration:none;font-weight:800;font-size:1.2rem;white-space:nowrap}.brand span{color:var(--primary)}.main-nav{display:flex;gap:4px}.main-nav a{text-decoration:none;padding:9px 11px;border-radius:9px;font-size:.94rem;font-weight:600;color:#334155}.main-nav a:hover{background:var(--soft);color:var(--primary)}.menu-button{display:none;border:0;background:transparent;font-size:1.7rem;cursor:pointer}
+.hero{padding:105px 0 95px;background:radial-gradient(circle at top right,rgba(21,94,117,.15),transparent 34%),linear-gradient(180deg,#fff 0%,#f6f8fb 100%)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.55fr);gap:65px;align-items:center}.hero-kicker{margin:0 0 14px;color:var(--primary);font-size:.9rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:0 0 24px;font-size:clamp(3rem,7vw,5.6rem);line-height:.98;letter-spacing:-.06em}.hero h1 span{color:var(--primary)}.hero-text{max-width:760px;color:#475569;font-size:clamp(1.08rem,2vw,1.25rem);margin-bottom:28px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:10px;background:var(--primary);color:white;font-weight:700;text-decoration:none;transition:.2s}.button:hover{background:var(--dark);transform:translateY(-1px)}.button-secondary{background:white;color:var(--primary);border:1px solid var(--border)}.button-secondary:hover{background:var(--soft)}.hero-box,.card,.profile-box,.contact-box,.dms-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}.hero-box{padding:30px;box-shadow:var(--shadow)}.hero-box h3{margin-top:0}.hero-box ul{padding-left:20px;margin-bottom:0}
+.section{padding:88px 0}.section-soft{background:var(--soft)}.section-title{max-width:760px;margin-bottom:38px}.section-title small{display:block;color:var(--primary);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}.section-title h2{margin:0 0 12px;font-size:clamp(2rem,4vw,3rem);line-height:1.12;letter-spacing:-.04em}.section-title p{margin:0;color:var(--muted);font-size:1.06rem}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{padding:27px;box-shadow:0 8px 24px rgba(0,0,0,.035)}.card h3{margin-top:0;margin-bottom:9px}.card p{margin-bottom:0;color:var(--muted)}.dms-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}.dms-panel{padding:32px}.dms-panel.highlight{background:var(--primary);color:white;border-color:var(--primary)}.dms-panel.highlight p,.dms-panel.highlight li{color:rgba(255,255,255,.88)}.tag-list{display:flex;flex-wrap:wrap;gap:10px}.tag{padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:999px;font-size:.92rem;font-weight:650}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start}.profile-box,.contact-box{padding:28px}.profile-links{display:flex;gap:12px;flex-wrap:wrap}.contact-box{padding:34px;box-shadow:var(--shadow)}.contact-box p{color:var(--muted)}
+.legal{padding:70px 0;background:#fff}.legal h2{margin-top:0}.legal p{color:#475569}footer{padding:28px 0;background:#111827;color:#d1d5db}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.footer-links{display:flex;gap:18px}.footer-links a{text-decoration:none}.footer-links a:hover{color:#fff}
+@media(max-width:900px){.hero-grid,.dms-grid,.about-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.menu-button{display:block}.main-nav{display:none;position:absolute;top:72px;left:20px;right:20px;flex-direction:column;padding:14px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}.main-nav.open{display:flex}.main-nav a{padding:12px 14px}}@media(max-width:620px){.cards{grid-template-columns:1fr}.hero{padding-top:75px}.section{padding:70px 0}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-container">
+    <a class="brand" href="#top">M. Linner <span>Softwareentwicklung &amp; Dienstleistungen</span></a>
+    <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <a href="#dms-check">DMS-Check</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#technologien">Technologien</a>
+      <a href="#profile">Profile</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="hero-kicker">Dipl.-Informatiker · Software · Datenbanken · DMS</p>
+      <h1>Software, Daten und<br><span>klare Lösungen.</span></h1>
+      <p class="hero-text">Langjährige Erfahrung in Softwareentwicklung, Datenbankdesign, SQL Server, Reporting und technischen Fachanwendungen. Schwerpunkte sind C#/.NET, Delphi, Datenmigration, Datenbankadministration sowie pragmatische Lösungen für bestehende Systeme.</p>
+      <div class="hero-actions">
+        <a class="button" href="#kontakt">Kontakt</a>
+        <a class="button button-secondary" href="#leistungen">Leistungen</a>
+      </div>
+    </div>
+    <aside class="hero-box">
+      <h3>Schwerpunkte</h3>
+      <ul>
+        <li>C# / .NET / WPF</li><li>Microsoft SQL Server / T-SQL</li><li>Delphi / Pascal</li>
+        <li>Datenbankadministration & Migration</li><li>Reporting & Auswertungen</li>
+        <li>DMS-Analyse & Dokumentenprozesse</li><li>KI-gestützte Entwicklung & Recherche</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section id="dms-check" class="section">
+  <div class="container">
+    <div class="section-title"><small>DMS-Check</small><h2>Passt Ihr Dokumentenmanagement noch zu Ihren Abläufen?</h2><p>Ein DMS soll Arbeit vereinfachen. Wenn Ablage, Suche, Freigaben oder Zuständigkeiten unnötig kompliziert geworden sind, lohnt sich ein technischer und organisatorischer Blick von außen.</p></div>
+    <div class="dms-grid">
+      <div class="dms-panel"><h3>Typische Fragestellungen</h3><ul><li>Werden Dokumente schnell und zuverlässig gefunden?</li><li>Sind Ablagestrukturen und Metadaten noch sinnvoll?</li><li>Wo entstehen Medienbrüche und Doppelarbeit?</li><li>Sind Berechtigungen nachvollziehbar und wartbar?</li><li>Welche Abläufe lassen sich vereinfachen oder automatisieren?</li></ul></div>
+      <div class="dms-panel highlight"><h3>Pragmatischer DMS-Check</h3><p>Analyse der bestehenden Situation mit Fokus auf konkrete Schwachstellen, technische Abhängigkeiten und realistische Verbesserungen.</p><p>Kein theoretisches Großprojekt – sondern eine nachvollziehbare Bewertung mit priorisierten nächsten Schritten.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="leistungen" class="section section-soft">
+  <div class="container">
+    <div class="section-title"><small>Leistungen</small><h2>Entwicklung, Datenbanken und technische Analyse</h2><p>Unterstützung bei bestehenden Anwendungen ebenso wie bei Migrationen, Erweiterungen und technischen Problemstellungen.</p></div>
+    <div class="cards">
+      <article class="card"><h3>Softwareentwicklung</h3><p>Entwicklung und Pflege von Fachanwendungen mit C#/.NET, WPF, MVC, WCF, Webservices und Delphi.</p></article>
+      <article class="card"><h3>SQL Server & Datenbanken</h3><p>T-SQL, Datenmodellierung, Benutzer und Berechtigungen, Backup/Restore, Migrationen, Updates und Fehleranalyse.</p></article>
+      <article class="card"><h3>Reporting</h3><p>Datenbankgestützte Auswertungen und Berichte mit Crystal Reports, List & Label, DevExpress und individuellen Lösungen.</p></article>
+      <article class="card"><h3>Datenmigration</h3><p>Strukturierte Übernahme, Bereinigung und Transformation von Daten zwischen Alt- und Zielsystemen.</p></article>
+      <article class="card"><h3>DMS & Dokumentenprozesse</h3><p>Analyse von Ablage, Suche, Berechtigungen, Dokumentenflüssen und bestehenden technischen Schnittstellen.</p></article>
+      <article class="card"><h3>KI & Automatisierung</h3><p>Praktischer Einsatz generativer KI und Python-basierter Tools für Recherche, SQL-/Codeanalyse, Dokumentation und Automatisierung.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="technologien" class="section">
+  <div class="container">
+    <div class="section-title"><small>Technologien</small><h2>Langjährige Praxis statt Buzzword-Liste</h2></div>
+    <div class="tag-list">
+      <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">WPF</span><span class="tag">WCF</span><span class="tag">MVC</span><span class="tag">ASP.NET</span><span class="tag">Webservices</span><span class="tag">Delphi</span><span class="tag">Pascal</span><span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">MS Access</span><span class="tag">Oracle</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">Crystal Reports</span><span class="tag">List & Label</span><span class="tag">DevExpress</span><span class="tag">XML</span><span class="tag">Python</span><span class="tag">PHP</span><span class="tag">Visual Basic</span><span class="tag">VBA</span><span class="tag">Generative AI</span>
+    </div>
+  </div>
+</section>
+
+<section id="ueber-mich" class="section section-soft">
+  <div class="container about-grid">
+    <div>
+      <div class="section-title"><small>Über mich</small><h2>Dipl.-Informatiker mit breitem technischen Hintergrund</h2></div>
+      <p>Ich arbeite seit vielen Jahren in der Softwareentwicklung und Datenbanktechnik. Mein Schwerpunkt liegt auf gewachsenen Fachanwendungen, Datenbanken und Systemen, bei denen technische Erfahrung und pragmatische Lösungen wichtiger sind als kurzfristige Trends.</p>
+      <p>Neben der Entwicklung bin ich verstärkt im Bereich Datenbankadministration tätig – unter anderem bei Migrationen, Berechtigungen, Updates, Backup/Restore und Zugriffs- bzw. Fehleranalysen.</p>
+    </div>
+    <div class="profile-box" id="profile">
+      <h3>Profile</h3>
+      <p>Weitere berufliche Informationen und Stationen finden Sie auf meinen Profilen.</p>
+      <div class="profile-links">
+        <a class="button"
+           href="https://de.linkedin.com/in/manfred-linner-4a346727"
+           target="_blank" rel="noopener noreferrer">LinkedIn</a>
+
+        <a class="button button-secondary"
+           href="https://www.xing.com/profile/Manfred_Linner3/web_profiles?nwt_nav=profile_icon"
+           target="_blank" rel="noopener noreferrer">XING</a>
+
+        <a class="button button-secondary"
+           href="https://www.freelancermap.de/profil/software-developer-c-delphi-vb-vb-net-html-asp-net"
+           target="_blank" rel="noopener noreferrer">Freelancermap</a>
+
+        <a class="button button-secondary"
+           href="https://www.freelance.de/freelancer/144124-Senior-Software-Datenbankentwickler-C-Sharp-dotNET"
+           target="_blank" rel="noopener noreferrer">freelance.de</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="section">
+  <div class="container">
+    <div class="contact-box">
+      <div class="section-title"><small>Kontakt</small><h2>Projekt, Unterstützung oder technische Frage?</h2><p>Für Projektanfragen, Datenbankthemen, Softwareentwicklung oder einen DMS-Check können Sie mich gerne kontaktieren.</p></div>
+      <a class="button" href="mailto:mcllinner@hotmail.com">E-Mail senden</a>
+    </div>
+  </div>
+</section>
+
+<section id="datenschutz" class="legal">
+  <div class="container"><h2>Datenschutz</h2><p>Diese Website dient der Darstellung meiner beruflichen Leistungen. Personenbezogene Daten werden nur verarbeitet, soweit dies technisch erforderlich ist oder Sie selbst Kontakt mit mir aufnehmen.</p></div>
+</section>
+
+<section id="impressum" class="legal">
+  <div class="container"><h2>Impressum</h2><p><strong>M. Linner Softwareentwicklung &amp; Dienstleistungen</strong><br>Manfred Linner<br>Kienbühl 3<br>91126 Schwabach<br>Deutschland</p><p>E-Mail: <a href="mailto:mcllinner@hotmail.com">mcllinner@hotmail.com</a></p></div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© 2026 M. Linner Softwareentwicklung &amp; Dienstleistungen</div>
+    <div class="footer-links"><a href="#datenschutz">Datenschutz</a><a href="#impressum">Impressum</a></div>
+  </div>
+</footer>
+
+<script>
+const b=document.querySelector('.menu-button'),n=document.querySelector('.main-nav');
+b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')});
+n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{n.classList.remove('open');b.setAttribute('aria-expanded','false')}));
+</script>
+</body>
+</html>
