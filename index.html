@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M. Linner Softwareentwicklung & Dienstleistungen | Datenbanken · DMS</title>
-<meta name="description" content="Softwareentwicklung, Datenbanken, SQL Server, C#/.NET, Delphi, Reporting und DMS-Beratung.">
+<title>M. Linner IT & KI Dienstleistungen | KI · Prozesse · Daten · Automatisierung</title>
+<meta name="description" content="Externe Unterstützung für KI-gestützte Prozessanalyse, Automatisierung, SQL Server, Daten, Dokumentenmanagement, Reporting und Troubleshooting.">
 <style>
 :root{--bg:#f6f8fb;--surface:#fff;--soft:#eef3f8;--text:#17202a;--muted:#64748b;--primary:#155e75;--dark:#0e4759;--border:#dce4ec;--shadow:0 12px 32px rgba(0,0,0,.07);--radius:18px;--max:1180px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}a{color:inherit}section{scroll-margin-top:90px}.container{width:min(var(--max),calc(100% - 40px));margin:auto}
@@ -13,6 +13,29 @@
 .section{padding:88px 0}.section-soft{background:var(--soft)}.section-title{max-width:760px;margin-bottom:38px}.section-title small{display:block;color:var(--primary);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}.section-title h2{margin:0 0 12px;font-size:clamp(2rem,4vw,3rem);line-height:1.12;letter-spacing:-.04em}.section-title p{margin:0;color:var(--muted);font-size:1.06rem}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{padding:27px;box-shadow:0 8px 24px rgba(0,0,0,.035)}.card h3{margin-top:0;margin-bottom:9px}.card p{margin-bottom:0;color:var(--muted)}.dms-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}.dms-panel{padding:32px}.dms-panel.highlight{background:var(--primary);color:white;border-color:var(--primary)}.dms-panel.highlight p,.dms-panel.highlight li{color:rgba(255,255,255,.88)}.tag-list{display:flex;flex-wrap:wrap;gap:10px}.tag{padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:999px;font-size:.92rem;font-weight:650}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start}.profile-box,.contact-box{padding:28px}.profile-links{display:flex;gap:12px;flex-wrap:wrap}.contact-box{padding:34px;box-shadow:var(--shadow)}.contact-box p{color:var(--muted)}
 .legal{padding:70px 0;background:#fff}.legal h2{margin-top:0}.legal p{color:#475569}footer{padding:28px 0;background:#111827;color:#d1d5db}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.footer-links{display:flex;gap:18px}.footer-links a{text-decoration:none}.footer-links a:hover{color:#fff}
 @media(max-width:900px){.hero-grid,.dms-grid,.about-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.menu-button{display:block}.main-nav{display:none;position:absolute;top:72px;left:20px;right:20px;flex-direction:column;padding:14px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}.main-nav.open{display:flex}.main-nav a{padding:12px 14px}}@media(max-width:620px){.cards{grid-template-columns:1fr}.hero{padding-top:75px}.section{padding:70px 0}}
+
+.example-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.example-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.example-card img{width:100%;height:260px;object-fit:cover;display:block;background:#fff}
+.example-card .content{padding:26px}
+.example-card h3{margin:0 0 10px}
+.example-card p{color:var(--muted);margin:0 0 18px}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.72);z-index:2000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal.open{display:flex}
+.modal-dialog{width:min(1100px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.35);position:relative}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:2}
+.modal-head h3{margin:0}
+.modal-close{border:0;background:var(--soft);width:42px;height:42px;border-radius:999px;font-size:1.4rem;cursor:pointer}
+.modal-body{padding:24px}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gallery img{width:100%;height:300px;object-fit:cover;border-radius:14px;border:1px solid var(--border);background:#fff}
+.tech-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tech-gallery figure{margin:0}
+.tech-gallery img{width:100%;border-radius:14px;border:1px solid var(--border);background:#fff}
+.tech-gallery figcaption{font-size:.9rem;color:var(--muted);margin-top:7px}
+.mini-note{margin-top:18px;padding:16px 18px;background:var(--soft);border-radius:14px;color:#475569}
+@media(max-width:900px){.example-grid,.gallery,.tech-gallery{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -21,9 +44,12 @@
     <a class="brand" href="#top">M. Linner <span>Softwareentwicklung &amp; Dienstleistungen</span></a>
     <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false">☰</button>
     <nav class="main-nav" aria-label="Hauptnavigation">
+      <a href="#ki-praxis">KI in der Praxis</a>
+      <a href="#troubleshooting">Troubleshooting</a>
       <a href="#dms-check">DMS-Check</a>
       <a href="#ueber-mich">Über mich</a>
       <a href="#leistungen">Leistungen</a>
+      <a href="#software-web">Software &amp; Web</a>
       <a href="#technologien">Technologien</a>
       <a href="#profile">Profile</a>
       <a href="#kontakt">Kontakt</a>
@@ -35,54 +61,119 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
-      <p class="hero-kicker">Dipl.-Informatiker · Software · Datenbanken · DMS</p>
-      <h1>Software, Daten und<br><span>klare Lösungen.</span></h1>
-      <p class="hero-text">Langjährige Erfahrung in Softwareentwicklung, Datenbankdesign, SQL Server, Reporting und technischen Fachanwendungen. Schwerpunkte sind C#/.NET, Delphi, Datenmigration, Datenbankadministration sowie pragmatische Lösungen für bestehende Systeme.</p>
+      <p class="hero-kicker">Dipl.-Informatiker · KI · Daten · Prozesse · Software · Automatisierung</p>
+      <h1>Prozesse verstehen.<br><span>Daten nutzen. KI sinnvoll einsetzen.</span></h1>
+      <p class="hero-text">Ich unterstütze Unternehmen dabei, bestehende IT-, Daten- und Dokumentenprozesse zu analysieren, zu vereinfachen und zu automatisieren. Dabei kombiniere ich langjährige Erfahrung in Softwareentwicklung und Datenbanken mit modernen KI-Werkzeugen. Ich schreibe nicht unnötig viel Code, sondern nutze klassische Entwicklung, Automatisierung und KI jeweils dort, wo sie die beste Lösung liefern.</p>
       <div class="hero-actions">
         <a class="button" href="#kontakt">Kontakt</a>
         <a class="button button-secondary" href="#leistungen">Leistungen</a>
       </div>
     </div>
     <aside class="hero-box">
-      <h3>Schwerpunkte</h3>
+      <h3>Fünf Schwerpunkte</h3>
       <ul>
-        <li>C# / .NET / WPF</li><li>Microsoft SQL Server / T-SQL</li><li>Delphi / Pascal</li>
-        <li>Datenbankadministration & Migration</li><li>Reporting & Auswertungen</li>
-        <li>DMS-Analyse & Dokumentenprozesse</li><li>KI-gestützte Entwicklung & Recherche</li>
+        <li>KI &amp; Prozessautomatisierung</li>
+        <li>SQL Server &amp; Daten</li>
+        <li>Analyse &amp; Troubleshooting</li>
+        <li>Software- &amp; Webentwicklung</li>
+        <li>Dokumentenmanagement &amp; Reporting</li>
       </ul>
     </aside>
   </div>
 </section>
 
+
+<section id="troubleshooting" class="section section-soft">
+  <div class="container">
+    <div class="section-title"><small>Senior Troubleshooting</small><h2>Wenn bestehende Systeme Probleme machen</h2><p>Gewachsene Anwendungen, Datenbanken und Schnittstellen müssen nicht sofort ersetzt werden. Oft hilft zuerst eine strukturierte technische Analyse: Wo liegt die Ursache, was ist kritisch und welcher nächste Schritt ist wirtschaftlich sinnvoll?</p></div>
+    <div class="cards">
+      <article class="card"><h3>Fehleranalyse & Stabilisierung</h3><p>Analyse komplexer Fehlerbilder, Logs, Datenbankprobleme und Schnittstellen. Ziel ist eine nachvollziehbare Ursache und eine pragmatische Lösung.</p></article>
+      <article class="card"><h3>Legacy &amp; Softwareentwicklung</h3><p>Weiterentwicklung, Fehlerbehebung und Modernisierung bestehender C#/.NET-, ASP.NET-, Delphi-, Access/VBA- und datenbankgestützter Anwendungen – ohne unnötige Komplett-Neuentwicklung.</p></article>
+      <article class="card"><h3>Migration & Schnittstellen</h3><p>Datenübernahmen, Systemwechsel und technische Kopplung bestehender Fachanwendungen sowie strukturierte Übergänge zwischen Alt- und Zielsystemen.</p></article>
+    </div>
+  </div>
+</section>
+
 <section id="dms-check" class="section">
   <div class="container">
-    <div class="section-title"><small>DMS-Check</small><h2>Passt Ihr Dokumentenmanagement noch zu Ihren Abläufen?</h2><p>Ein DMS soll Arbeit vereinfachen. Wenn Ablage, Suche, Freigaben oder Zuständigkeiten unnötig kompliziert geworden sind, lohnt sich ein technischer und organisatorischer Blick von außen.</p></div>
+    <div class="section-title"><small>Dokumentenmanagement & DMS-Check</small><h2>Dokumentenprozesse analysieren, strukturieren und technisch verbessern</h2><p>Im Mittelpunkt steht nicht der Verkauf eines bestimmten DMS-Produkts, sondern die Frage, wie Dokumente heute abgelegt, gefunden, berechtigt, ausgetauscht und mit bestehenden Fachanwendungen verbunden werden. Daraus entstehen konkrete, realistische Verbesserungen.</p></div>
     <div class="dms-grid">
       <div class="dms-panel"><h3>Typische Fragestellungen</h3><ul><li>Werden Dokumente schnell und zuverlässig gefunden?</li><li>Sind Ablagestrukturen und Metadaten noch sinnvoll?</li><li>Wo entstehen Medienbrüche und Doppelarbeit?</li><li>Sind Berechtigungen nachvollziehbar und wartbar?</li><li>Welche Abläufe lassen sich vereinfachen oder automatisieren?</li></ul></div>
-      <div class="dms-panel highlight"><h3>Pragmatischer DMS-Check</h3><p>Analyse der bestehenden Situation mit Fokus auf konkrete Schwachstellen, technische Abhängigkeiten und realistische Verbesserungen.</p><p>Kein theoretisches Großprojekt – sondern eine nachvollziehbare Bewertung mit priorisierten nächsten Schritten.</p></div>
+      <div class="dms-panel highlight"><h3>Pragmatischer DMS-Check</h3><p>Analyse von Ablagen, Metadaten, Berechtigungen, Suchbarkeit, Medienbrüchen, bestehenden Schnittstellen und technischen Abhängigkeiten.</p><p>Ergebnis: eine nachvollziehbare Bewertung mit priorisierten nächsten Schritten – bei Bedarf inklusive technischer Umsetzung, Migration und Integration.</p></div>
     </div>
   </div>
 </section>
 
 <section id="leistungen" class="section section-soft">
   <div class="container">
-    <div class="section-title"><small>Leistungen</small><h2>Entwicklung, Datenbanken und technische Analyse</h2><p>Unterstützung bei bestehenden Anwendungen ebenso wie bei Migrationen, Erweiterungen und technischen Problemstellungen.</p></div>
+    <div class="section-title"><small>Leistungen</small><h2>Von der Analyse zur praktikablen Lösung</h2><p>Unterstützung dort, wo Prozesse, Daten und bestehende Systeme zusammenkommen – mit Erfahrung, Automatisierung und KI statt unnötiger Komplexität.</p></div>
     <div class="cards">
-      <article class="card"><h3>Softwareentwicklung</h3><p>Entwicklung und Pflege von Fachanwendungen mit C#/.NET, WPF, MVC, WCF, Webservices und Delphi.</p></article>
-      <article class="card"><h3>SQL Server & Datenbanken</h3><p>T-SQL, Datenmodellierung, Benutzer und Berechtigungen, Backup/Restore, Migrationen, Updates und Fehleranalyse.</p></article>
-      <article class="card"><h3>Reporting</h3><p>Datenbankgestützte Auswertungen und Berichte mit Crystal Reports, List & Label, DevExpress und individuellen Lösungen.</p></article>
-      <article class="card"><h3>Datenmigration</h3><p>Strukturierte Übernahme, Bereinigung und Transformation von Daten zwischen Alt- und Zielsystemen.</p></article>
-      <article class="card"><h3>DMS & Dokumentenprozesse</h3><p>Analyse von Ablage, Suche, Berechtigungen, Dokumentenflüssen und bestehenden technischen Schnittstellen.</p></article>
-      <article class="card"><h3>KI & Automatisierung</h3><p>Praktischer Einsatz generativer KI und Python-basierter Tools für Recherche, SQL-/Codeanalyse, Dokumentation und Automatisierung.</p></article>
+      <article class="card"><h3>KI &amp; Prozessautomatisierung</h3><p>Prozesse analysieren, Verbesserungspotenziale erkennen und mit generativer KI, Automatisierung und geeigneten Werkzeugen praktisch umsetzen.</p></article>
+      <article class="card"><h3>SQL Server &amp; Daten</h3><p>T-SQL, Datenmodelle, Benutzer/Rollen/Berechtigungen, Backup/Restore, Migrationen, Updates sowie Performance- und Fehleranalyse.</p></article>
+      <article class="card"><h3>Dokumentenmanagement</h3><p>DMS-Check, Ablagestrukturen, Metadaten, Berechtigungen, Suchbarkeit, Dokumentenflüsse, Migrationen und technische Integration.</p></article>
+      <article class="card"><h3>Reporting, Excel/VBA &amp; Automatisierung</h3><p>SQL-basierte Auswertungen, Reports, Excel/VBA-Lösungen, Datenimporte sowie Automatisierung wiederkehrender Arbeitsabläufe.</p></article>
+      <article class="card"><h3>Analyse &amp; Troubleshooting</h3><p>Bestehende Anwendungen, Datenbanken und Schnittstellen systematisch analysieren, Ursachen finden und pragmatische Lösungen entwickeln.</p></article>
+      <article class="card"><h3>Software- &amp; Webentwicklung</h3><p>C#/.NET, ASP.NET, WPF, Webanwendungen, Schnittstellen, Delphi und bestehende Fachanwendungen – für Integration, Erweiterung, Fehlerbehebung und Qualitätssicherung.</p></article>
+    </div>
+  </div>
+</section>
+
+
+<section id="software-web" class="section">
+  <div class="container">
+    <div class="section-title">
+      <small>Software &amp; Web</small>
+      <h2>Programmierung bleibt Teil des Werkzeugkastens</h2>
+      <p>Wenn eine Lösung klassische Entwicklung braucht, setze ich sie ein – gezielt und mit Blick auf Wartbarkeit, Integration und Nutzen. Besonders dort, wo bestehende Anwendungen weiterleben und mit Datenbanken, Webservices oder modernen KI-Werkzeugen zusammenspielen.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><h3>C# / .NET &amp; ASP.NET</h3><p>Weiterentwicklung bestehender Anwendungen, Webanwendungen, Fehlerbehebung, Schnittstellen und technische Modernisierung.</p></article>
+      <article class="card"><h3>Delphi &amp; Legacy</h3><p>Analyse und Pflege gewachsener Anwendungen, schrittweise Modernisierung sowie Anbindung an Datenbanken und Schnittstellen.</p></article>
+      <article class="card"><h3>Web &amp; Integration</h3><p>Webservices, Datenanbindung, kleinere Weblösungen und technische Integration bestehender Systeme – pragmatisch statt überdimensioniert.</p></article>
     </div>
   </div>
 </section>
 
 <section id="technologien" class="section">
   <div class="container">
-    <div class="section-title"><small>Technologien</small><h2>Langjährige Praxis statt Buzzword-Liste</h2></div>
+    <div class="section-title"><small>Werkzeuge &amp; Technologien</small><h2>KI, Daten und Software – sinnvoll kombiniert</h2><p>Moderne KI-Werkzeuge ergänzen meine langjährige Erfahrung in Softwareentwicklung, Datenbanken, Webanwendungen und Automatisierung.</p></div>
     <div class="tag-list">
-      <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">WPF</span><span class="tag">WCF</span><span class="tag">MVC</span><span class="tag">ASP.NET</span><span class="tag">Webservices</span><span class="tag">Delphi</span><span class="tag">Pascal</span><span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">MS Access</span><span class="tag">Oracle</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">Crystal Reports</span><span class="tag">List & Label</span><span class="tag">DevExpress</span><span class="tag">XML</span><span class="tag">Python</span><span class="tag">PHP</span><span class="tag">Visual Basic</span><span class="tag">VBA</span><span class="tag">Generative AI</span>
+      <span class="tag">ChatGPT / OpenAI</span><span class="tag">Prompt Engineering</span><span class="tag">Pollo AI</span><span class="tag">GitHub Copilot</span><span class="tag">Gemini Code Assist</span><span class="tag">Claude / Claude Code</span><span class="tag">Generative KI</span><span class="tag">Prozessanalyse</span><span class="tag">Automatisierung</span><span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">Reporting</span><span class="tag">Excel / VBA</span><span class="tag">Python</span><span class="tag">DMS</span><span class="tag">Datenmigration</span><span class="tag">Troubleshooting</span><span class="tag">C# / .NET</span><span class="tag">ASP.NET</span><span class="tag">WPF</span><span class="tag">Webentwicklung</span><span class="tag">Delphi</span><span class="tag">MS Access</span><span class="tag">Webservices</span><span class="tag">Legacy-Systeme</span>
+    </div>
+  </div>
+</section>
+
+
+<section id="ki-praxis" class="section section-soft">
+  <div class="container">
+    <div class="section-title" style="margin-left:auto;margin-right:auto;text-align:center">
+      <small>KI in der Praxis</small>
+      <h2>Kleine Auswahl konkreter Anwendungen</h2>
+      <p>Die Beispiele dienen als Einblick in meine praktische Arbeit mit KI – von betrieblicher Automatisierung bis zur generativen Bildgestaltung.</p>
+    </div>
+
+    <div class="example-grid" style="max-width:920px;margin:0 auto">
+      <article class="example-card">
+        <div class="content" style="text-align:center">
+          <h3>KI-gestützte Einsatz- und Maschinenplanung</h3>
+          <p>Automatisierte Wochenplanung mit Qualifikationen, Schichtmodellen, Personalbedarf, Abwesenheiten, Wartung und Stillständen.</p>
+          <button class="button" type="button" data-modal-open="modal-tech">Technisches Beispiel ansehen</button>
+        </div>
+      </article>
+
+      <article class="example-card">
+        <div class="content" style="text-align:center">
+          <h3>Generative Bildgestaltung</h3>
+          <p>Prompt Engineering, Stilsteuerung, Variantenbildung und visuelle Konzepte für unterschiedliche Motive und Einsatzbereiche.</p>
+          <button class="button" type="button" data-modal-open="modal-art">Bildbeispiele ansehen</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="cards" style="margin-top:28px">
+      <article class="card"><h3>ChatGPT / OpenAI</h3><p>Praktischer Einsatz für Analyse, Strukturierung, Recherche, Dokumentation und technische Aufgaben.</p></article>
+      <article class="card"><h3>Pollo AI</h3><p>Umfangreiche praktische Nutzung für generative Bildideen, Varianten und kreative Ausarbeitung.</p></article>
+      <article class="card"><h3>Weitere KI-Werkzeuge</h3><p>GitHub Copilot, Gemini Code Assist sowie Claude / Claude Code werden aktuell praktisch vertieft.</p></article>
     </div>
   </div>
 </section>
@@ -90,9 +181,9 @@
 <section id="ueber-mich" class="section section-soft">
   <div class="container about-grid">
     <div>
-      <div class="section-title"><small>Über mich</small><h2>Dipl.-Informatiker mit breitem technischen Hintergrund</h2></div>
-      <p>Ich arbeite seit vielen Jahren in der Softwareentwicklung und Datenbanktechnik. Mein Schwerpunkt liegt auf gewachsenen Fachanwendungen, Datenbanken und Systemen, bei denen technische Erfahrung und pragmatische Lösungen wichtiger sind als kurzfristige Trends.</p>
-      <p>Neben der Entwicklung bin ich verstärkt im Bereich Datenbankadministration tätig – unter anderem bei Migrationen, Berechtigungen, Updates, Backup/Restore und Zugriffs- bzw. Fehleranalysen.</p>
+      <div class="section-title"><small>Über mich</small><h2>Dipl.-Informatiker mit Erfahrung in IT, Daten und Prozessen</h2></div>
+      <p>Ich bringe langjährige Erfahrung aus Softwareentwicklung, Webanwendungen, Datenbanktechnik und gewachsenen Fachanwendungen mit. Heute verbinde ich dieses technische Fundament mit Analyse, Troubleshooting, Prozessverbesserung und KI-gestützter Automatisierung.</p>
+      <p>Meine Programmiererfahrung ist dabei ein wichtiger Vorteil: Sie hilft mir, technische Zusammenhänge schnell zu verstehen, KI-generierte Ergebnisse fachlich zu bewerten und Lösungen zuverlässig in bestehende Systeme zu integrieren. Programmierung bleibt Teil meines Angebots – sie ist jedoch kein Selbstzweck, sondern eines von mehreren Werkzeugen für eine praktikable Lösung.</p>
     </div>
     <div class="profile-box" id="profile">
       <h3>Profile</h3>
@@ -121,7 +212,7 @@
 <section id="kontakt" class="section">
   <div class="container">
     <div class="contact-box">
-      <div class="section-title"><small>Kontakt</small><h2>Projekt, Unterstützung oder technische Frage?</h2><p>Für Projektanfragen, Datenbankthemen, Softwareentwicklung oder einen DMS-Check können Sie mich gerne kontaktieren.</p></div>
+      <div class="section-title"><small>Kontakt</small><h2>Projekt, Unterstützung oder technische Frage?</h2><p>Für KI- und Automatisierungsideen, Prozessanalysen, SQL-Server-/Datenthemen, Software- und Webentwicklung, Troubleshooting bestehender Systeme oder einen DMS-Check können Sie mich gerne kontaktieren.</p></div>
       <a class="button" href="mailto:mcllinner@hotmail.com">E-Mail senden</a>
     </div>
   </div>
@@ -136,6 +227,45 @@
 </section>
 </main>
 
+<div class="modal" id="modal-tech" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-tech-title">
+    <div class="modal-head">
+      <h3 id="modal-tech-title">Technisches Praxisbeispiel: Einsatzplanung</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Aus Mitarbeiter-Stammdaten, Maschinenanforderungen, Wochenbedarf und Abwesenheiten wird automatisch ein konkreter Einsatzplan mit Statusprüfung erzeugt.</p>
+      <div class="tech-gallery">
+        <figure><img src="assets/einsatz_mitarbeiter.png" alt="Mitarbeiter-Stammdaten"><figcaption>Mitarbeiter: Qualifikationen, mögliche Maschinen, Schichten und Einschränkungen.</figcaption></figure>
+        <figure><img src="assets/einsatz_maschinen.png" alt="Maschinen und Personalbedarf"><figcaption>Maschinen: Standard-Personal, Priorität, Bereich und Bemerkungen.</figcaption></figure>
+        <figure><img src="assets/einsatz_wochenbedarf.png" alt="Wochenbedarf und Maschinen-Auslastung"><figcaption>Wochenbedarf: Betrieb, Stillstand, Sonderauftrag und benötigte Besetzung.</figcaption></figure>
+        <figure><img src="assets/einsatz_abwesenheiten.png" alt="Abwesenheiten und Einschränkungen"><figcaption>Abwesenheiten und schichtbezogene Einschränkungen.</figcaption></figure>
+        <figure style="grid-column:1/-1"><img src="assets/einsatz_ergebnis.png" alt="Automatisch erzeugter Wochen-Einsatzplan"><figcaption>Ergebnis: automatisch erzeugter Einsatzplan mit Mitarbeiterzuordnung und Status.</figcaption></figure>
+      </div>
+      <div class="mini-note"><strong>KI-Anteil:</strong> Unterstützung bei Anforderungsanalyse, Strukturierung der Regeln, Lösungsentwurf sowie Entwicklung und Optimierung der Excel-/Makro-Logik.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-art" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-art-title">
+    <div class="modal-head">
+      <h3 id="modal-art-title">Generative Bildgestaltung</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Beispiele aus praktischer Arbeit mit generativer Bild-KI: unterschiedliche Motive, Stilrichtungen und visuelle Konzepte.</p>
+      <div class="gallery">
+        <img src="assets/ki_abstrakt.png" alt="Abstrakte generative KI-Illustration in dunklen Grün- und Grautönen">
+        <img src="assets/ki_katze.png" alt="Generative Illustration einer Katze im Geschenkpaket">
+        <img src="assets/ki_weihnachten.png" alt="Generative Winter- und Weihnachtsillustration">
+      </div>
+      <div class="mini-note"><strong>Arbeitsweise:</strong> Ideenentwicklung, Prompt Engineering, Variantenbildung, Stilsteuerung und Auswahl geeigneter Ergebnisse.</div>
+    </div>
+  </div>
+</div>
+
+
 <footer>
   <div class="container footer-inner">
     <div>© 2026 M. Linner Softwareentwicklung &amp; Dienstleistungen</div>
@@ -147,6 +277,30 @@
 const b=document.querySelector('.menu-button'),n=document.querySelector('.main-nav');
 b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')});
 n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{n.classList.remove('open');b.setAttribute('aria-expanded','false')}));
+
+document.querySelectorAll('[data-modal-open]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const m=document.getElementById(btn.getAttribute('data-modal-open'));
+    if(m){m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  });
+});
+document.querySelectorAll('[data-modal-close]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const m=btn.closest('.modal'); if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  });
+});
+document.querySelectorAll('.modal').forEach(m=>{
+  m.addEventListener('click',e=>{
+    if(e.target===m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  });
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal.open').forEach(m=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');});
+    document.body.style.overflow='';
+  }
+});
+
 </script>
 </body>
 </html>
