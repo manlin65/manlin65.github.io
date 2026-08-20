@@ -1,0 +1,16 @@
+ArtikelID;Bezeichnung;Kategorie;Preis;MwStSatz;Lagerbestand;Lieferant;Aktiv
+A1001;Notebook Business 14;Hardware;1100;19;12;Alpha IT GmbH;Ja
+A1002;Dockingstation USB-C;Hardware;125;19;30;Alpha IT GmbH;Ja
+A1003;Einrichtung Arbeitsplatz;Dienstleistung;75;19;999;Beta Service GmbH;Ja
+A1004;Monitor 27 Zoll;hardware;249;19;18;Gamma Logistik;Ja
+A1005;Lizenz Standard;Software;29.90;19;250;Delta Handel;Ja
+A1006;Support Premium;Dienstleistung;-99;19;999;Beta Service GmbH;Ja
+A1007;Maus Wireless;Hardware;39.90;19;-5;Gamma Logistik;Ja
+A1008;Tastatur DE;Hardware;59.90;19;45;Gamma Logistik;JA
+A1009;Sonderartikel;;89;19;5;Omega GmbH;Ja
+A1010;Beratung Remote;Dienstleistung;achtzig;19;999;Roth Consulting;Ja
+A1011;Buch Fachliteratur;Sonstiges;45;7;8;Schmidt & Partner;Ja
+A1012;USB-C Kabel;Hardware;14.90;19;100;Alpha IT GmbH;Nein
+A1012;USB-C Kabel;Hardware;14.90;19;100;Alpha IT GmbH;Nein
+;Artikel ohne ID;Hardware;9.90;19;3;Alpha IT GmbH;Ja
+A1015;Falsche MwSt;Hardware;199;25;7;Alpha IT GmbH;Ja

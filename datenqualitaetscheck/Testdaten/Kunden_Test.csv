@@ -1,0 +1,16 @@
+KundenID;Firma;Ansprechpartner;PLZ;Ort;E-Mail;Umsatz;Aktiv;ErfasstAm
+K1001;Müller GmbH;Anna Müller;90402;Nürnberg;anna.mueller@mueller.de;12500;Ja;2026-01-15
+K1002;Test AG;Peter Test;;Schwabach;peter.test@test-ag.de;8200;Ja;2026-02-02
+K1003;Demo KG;Lena Demo;ABCDE;Nürnberg;lena.demo@demo.de;-500;Ja;2026-02-12
+K1004;Beispiel GmbH;Tom Beispiel;91126;schwabach;tom.beispiel@beispiel.de;15100;JA;2026-03-03
+K1005;Alpha IT GmbH;Mia Alpha;90403;Nürnberg;mia.alpha@;9900;Ja;2026-03-18
+K1006;Beta Service GmbH;Ben Beta;91052;Erlangen;ben.beta@beta.de;18200;Nein;2026-04-01
+K1001;Müller GmbH;Anna Müller;90402;Nürnberg;anna.mueller@mueller.de;12500;Ja;2026-01-15
+K1008;Gamma Logistik;Eva Gamma;90762;Fürth;eva.gamma@gamma.de;1250000;Ja;2026-05-04
+K1009;Delta Handel;Noah Delta;90402;Nürnberg;noah.delta@delta.de;7400;Ja;2027-01-01
+K1010;Omega GmbH;;90431;Nürnberg;office@omega.de;6400;Ja;2026-06-01
+;Ohne ID GmbH;Max Mustermann;90441;Nürnberg;max@ohneid.de;3500;Ja;2026-06-03
+K1012;Schmidt & Partner;Sara Schmidt;91207;Lauf;sara.schmidt@partner.de;12300;ja;2026-06-08
+K1013;Techno GmbH;Paul Techno;90408;Nürnberg;paul.techno@techno.de;zwölftausend;Ja;2026-06-09
+K1014;Franken Bau;Julia Franken;90411;Nürnberg;julia.franken@frankenbau.de;22000;Ja;2026-06-15
+K1015;Roth Consulting;Felix Roth;91154;Roth;felix.roth@consulting.de;17500;Nein;2026-07-02

@@ -316,6 +316,27 @@
 @media(max-width:900px){.invoice-facts{grid-template-columns:repeat(2,1fr)}.invoice-flow{grid-template-columns:repeat(2,1fr)}.invoice-gallery,.invoice-checks{grid-template-columns:1fr}.invoice-gallery figure.wide{grid-column:auto}}
 @media(max-width:620px){.invoice-facts,.invoice-flow{grid-template-columns:1fr}}
 
+
+
+/* KI-gestützter Datenqualitäts-Check */
+.quality-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:#e9f5f4;color:#176b67;font-size:.78rem;font-weight:800;letter-spacing:.02em}
+.quality-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 24px}
+.quality-fact{padding:13px 12px;border-radius:12px;background:var(--soft);text-align:center;color:#334155;font-size:.88rem;font-weight:750}
+.quality-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:22px 0 24px}
+.quality-step{padding:14px 12px;border:1px solid var(--border);border-radius:13px;background:#fff;color:#334155;font-size:.84rem;line-height:1.4;text-align:center}
+.quality-step b{display:grid;place-items:center;width:28px;height:28px;margin:0 auto 8px;border-radius:50%;background:#e9f5f4;color:#176b67}
+.quality-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.quality-gallery figure{margin:0;border:1px solid var(--border);border-radius:15px;overflow:hidden;background:#fff}
+.quality-gallery figure.wide{grid-column:1/-1}
+.quality-gallery img{display:block;width:100%;height:auto;background:#f8fafc}
+.quality-gallery figcaption{padding:12px 14px 14px;color:var(--muted);font-size:.86rem;line-height:1.45}
+.quality-gallery figcaption strong{display:block;color:#263445;margin-bottom:3px}
+.quality-checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.quality-check{padding:14px 15px;border-left:4px solid #176b67;border-radius:0 12px 12px 0;background:#edf7f6;color:#334155;font-size:.9rem}
+.quality-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:900px){.quality-facts{grid-template-columns:repeat(2,1fr)}.quality-flow{grid-template-columns:repeat(2,1fr)}.quality-gallery,.quality-checks{grid-template-columns:1fr}.quality-gallery figure.wide{grid-column:auto}}
+@media(max-width:620px){.quality-facts,.quality-flow{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -435,6 +456,18 @@
                 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
                   <button class="button" type="button" data-modal-open="modal-invoice-check">Ablauf ansehen</button>
                   <a class="button button-secondary" href="rechnungscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo</a>
+                </div>
+              </div>
+            </article>
+
+      <article class="example-card">
+              <div class="content" style="text-align:center">
+                <span class="quality-badge">Praxisprodukt · Datenqualität</span>
+                <h3>KI-gestützter Datenqualitäts-Check</h3>
+                <p>Excel-, CSV- und SQL-Daten automatisch auf Dubletten, fehlende Pflichtfelder, ungültige Formate, Ausreißer, Datentyp- und Summenfehler sowie inkonsistente Schreibweisen prüfen.</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                  <button class="button" type="button" data-modal-open="modal-data-quality">Ablauf ansehen</button>
+                  <a class="button button-secondary" href="datenqualitaetscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo</a>
                 </div>
               </div>
             </article>
@@ -564,6 +597,54 @@
 
       <div class="invoice-actions">
         <a class="button" href="rechnungscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo öffnen</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="modal-data-quality" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-data-quality-title">
+    <div class="modal-head">
+      <h3 id="modal-data-quality-title">KI-gestützter Datenqualitäts-Check</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Praxisdemonstration für die automatisierte Prüfung strukturierter Unternehmensdaten. Excel/XLSX oder CSV werden direkt analysiert; für SQL Server zeigt die Demo dieselbe Prüfidee mit vorbereiteten T-SQL-Testdaten und einer sicheren API-Architektur für den Produktivbetrieb.</p>
+
+      <div class="quality-facts">
+        <div class="quality-fact">Excel / XLSX</div>
+        <div class="quality-fact">CSV</div>
+        <div class="quality-fact">SQL Server</div>
+        <div class="quality-fact">Regel-Engine &amp; KI-Zusammenfassung</div>
+      </div>
+
+      <div class="quality-flow" aria-label="Ablauf des Datenqualitäts-Checks">
+        <div class="quality-step"><b>1</b>Datenquelle wählen</div>
+        <div class="quality-step"><b>2</b>Tabelle / Blatt laden</div>
+        <div class="quality-step"><b>3</b>Prüfregeln anwenden</div>
+        <div class="quality-step"><b>4</b>Auffälligkeiten priorisieren</div>
+        <div class="quality-step"><b>5</b>Bericht / bereinigte Daten exportieren</div>
+      </div>
+
+      <div class="quality-gallery">
+        <figure class="wide"><img src="assets/datenqualitaet_uebersicht.png" alt="Übersicht des KI-gestützten Datenqualitäts-Checks mit Datensätzen, Fehlern, Hinweisen und Qualitätswert"><figcaption><strong>Qualität auf einen Blick</strong>Datensätze, Fehler, Hinweise und Qualitätswert werden direkt zusammengefasst. Im Beispiel werden Auftragsdaten aus CSV geprüft.</figcaption></figure>
+        <figure><img src="assets/datenqualitaet_kundencheck.png" alt="Erkannte Auffälligkeiten in Kundendaten"><figcaption><strong>Kundendaten prüfen</strong>Dubletten, ungültige Postleitzahlen, negative Umsätze und weitere Qualitätsprobleme werden zeilenbezogen mit Vorschlag ausgegeben.</figcaption></figure>
+        <figure><img src="assets/datenqualitaet_artikelcheck.png" alt="Erkannte Auffälligkeiten in Artikeldaten"><figcaption><strong>Artikelstammdaten prüfen</strong>Negative Preise und Bestände, fehlende Kategorien, ungültige IDs, nicht standardisierte Werte und ungewöhnliche Steuersätze werden erkannt.</figcaption></figure>
+        <figure class="wide"><img src="assets/datenqualitaet_sql_architektur.png" alt="SQL-Server-Produktivarchitektur mit Browser, ASP.NET Core REST API und SQL Server"><figcaption><strong>SQL Server sicher anbinden</strong>Im Produktivbetrieb erfolgt die Datenbankanbindung nicht direkt aus dem Browser, sondern über eine kleine ASP.NET-Core-REST-API mit Qualitätsabfragen und kundenspezifischen Regeln.</figcaption></figure>
+      </div>
+
+      <div class="quality-checks">
+        <div class="quality-check"><strong>Vollständigkeit &amp; Eindeutigkeit:</strong> Pflichtfelder, fehlende IDs und Dubletten werden automatisch markiert.</div>
+        <div class="quality-check"><strong>Formate &amp; Datentypen:</strong> PLZ, E-Mail, Datum, Zahlenwerte und standardisierte Ja/Nein-Felder lassen sich prüfen.</div>
+        <div class="quality-check"><strong>Plausibilität:</strong> Negative Werte, Ausreißer, ungültige Fremdschlüssel und Summenfehler werden sichtbar gemacht.</div>
+        <div class="quality-check"><strong>Weiterverarbeitung:</strong> Prüfbericht und bereinigte Daten können exportiert und vor Import, Migration oder Reporting verwendet werden.</div>
+      </div>
+
+      <div class="mini-note"><strong>Demo-Testdaten:</strong> Mitgeliefert sind Excel-Blätter für Kunden, Artikel und Aufträge sowie SQL-Server-Testtabellen mit absichtlich eingebauten Fehlerfällen. Die aktuelle Demo formuliert ihre Zusammenfassung lokal aus den Prüfergebnissen; ein externer KI-Service kann im Produktivbetrieb zusätzliche semantische Bewertungen ergänzen.</div>
+
+      <div class="quality-actions">
+        <a class="button" href="datenqualitaetscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo öffnen</a>
       </div>
     </div>
   </div>
