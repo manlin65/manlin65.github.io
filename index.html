@@ -337,6 +337,26 @@
 @media(max-width:900px){.quality-facts{grid-template-columns:repeat(2,1fr)}.quality-flow{grid-template-columns:repeat(2,1fr)}.quality-gallery,.quality-checks{grid-template-columns:1fr}.quality-gallery figure.wide{grid-column:auto}}
 @media(max-width:620px){.quality-facts,.quality-flow{grid-template-columns:1fr}}
 
+
+
+/* KI-gestützter Logfile- & Fehleranalysator */
+.log-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:#edf4f7;color:var(--primary);font-size:.78rem;font-weight:800;letter-spacing:.02em}
+.log-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 24px}
+.log-fact{padding:13px 12px;border-radius:12px;background:var(--soft);text-align:center;color:#334155;font-size:.88rem;font-weight:750}
+.log-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:22px 0 24px}
+.log-step{padding:14px 12px;border:1px solid var(--border);border-radius:13px;background:#fff;color:#334155;font-size:.84rem;line-height:1.4;text-align:center}
+.log-step b{display:grid;place-items:center;width:28px;height:28px;margin:0 auto 8px;border-radius:50%;background:#e8f2f6;color:var(--primary)}
+.log-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.log-gallery figure{margin:0;border:1px solid var(--border);border-radius:15px;overflow:hidden;background:#fff}
+.log-gallery figure.wide{grid-column:1/-1}
+.log-gallery img{display:block;width:100%;height:auto;background:#f8fafc}
+.log-gallery figcaption{padding:12px 14px 14px;color:var(--muted);font-size:.86rem;line-height:1.45}
+.log-gallery figcaption strong{display:block;color:#263445;margin-bottom:3px}
+.log-checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.log-check{padding:14px 15px;border-left:4px solid var(--primary);border-radius:0 12px 12px 0;background:#edf5f8;color:#334155;font-size:.9rem}
+.log-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:900px){.log-facts{grid-template-columns:repeat(2,1fr)}.log-flow{grid-template-columns:repeat(2,1fr)}.log-gallery,.log-checks{grid-template-columns:1fr}.log-gallery figure.wide{grid-column:auto}}
+@media(max-width:620px){.log-facts,.log-flow{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -468,6 +488,18 @@
                 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
                   <button class="button" type="button" data-modal-open="modal-data-quality">Ablauf ansehen</button>
                   <a class="button button-secondary" href="datenqualitaetscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo</a>
+                </div>
+              </div>
+            </article>
+
+      <article class="example-card">
+              <div class="content" style="text-align:center">
+                <span class="log-badge">Praxisprodukt · Senior Troubleshooting</span>
+                <h3>KI-gestützter Logfile- &amp; Fehleranalysator</h3>
+                <p>Logdateien aus Anwendungen, Web/APIs und SQL Server automatisch strukturieren, Fehlermuster gruppieren, zeitliche Zusammenhänge erkennen und priorisierte Handlungsempfehlungen ableiten.</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                  <button class="button" type="button" data-modal-open="modal-log-analyzer">Ablauf ansehen</button>
+                  <a class="button button-secondary" href="loganalyzer/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo</a>
                 </div>
               </div>
             </article>
@@ -645,6 +677,53 @@
 
       <div class="quality-actions">
         <a class="button" href="datenqualitaetscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo öffnen</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="modal-log-analyzer" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-log-analyzer-title">
+    <div class="modal-head">
+      <h3 id="modal-log-analyzer-title">KI-gestützter Logfile- &amp; Fehleranalysator</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Praxisdemonstration für Senior Troubleshooting: Logdateien werden eingelesen, typische technische Muster automatisch erkannt, zu Fehlerclustern zusammengefasst und mit konkreten Empfehlungen priorisiert. Die Vollversion kann Analysen über ASP.NET Core in SQL Server speichern.</p>
+
+      <div class="log-facts">
+        <div class="log-fact">App- &amp; Windows-Logs</div>
+        <div class="log-fact">SQL Server</div>
+        <div class="log-fact">Fehlercluster &amp; Ketten</div>
+        <div class="log-fact">ASP.NET Core · CSV · SQL</div>
+      </div>
+
+      <div class="log-flow" aria-label="Ablauf der Logfile-Analyse">
+        <div class="log-step"><b>1</b>Logdatei wählen</div>
+        <div class="log-step"><b>2</b>Muster erkennen</div>
+        <div class="log-step"><b>3</b>Fehler korrelieren</div>
+        <div class="log-step"><b>4</b>Priorisieren</div>
+        <div class="log-step"><b>5</b>Bericht / SQL</div>
+      </div>
+
+      <div class="log-gallery">
+        <figure class="wide"><img src="assets/loganalyzer_start.png" alt="Startansicht des Logfile- und Fehleranalysators"><figcaption><strong>Logdatei oder vorbereitete Demo analysieren</strong>Die Web-Anwendung verarbeitet .log-, .txt- und .csv-Dateien und enthält vorbereitete Szenarien für SQL/Connection-Pool, Deadlocks und gemischte Fehlerbilder.</figcaption></figure>
+        <figure><img src="assets/loganalyzer_analyse.png" alt="Analyse mit Kennzahlen, KI-Zusammenfassung und Fehlerclustern"><figcaption><strong>Fehlerbild verdichten</strong>Kennzahlen, Zusammenfassung und Fehlercluster reduzieren viele einzelne Logzeilen auf die technisch relevanten Schwerpunkte.</figcaption></figure>
+        <figure><img src="assets/loganalyzer_befunde.png" alt="Priorisierte Auffälligkeiten und Logereignisse"><figcaption><strong>Priorisierte Befunde</strong>Zu jedem Muster werden Kategorie, Priorität, Anzahl und eine konkrete Empfehlung ausgegeben. Die Originalereignisse bleiben für die Nachvollziehbarkeit sichtbar.</figcaption></figure>
+      </div>
+
+      <div class="log-checks">
+        <div class="log-check"><strong>Typische Muster:</strong> SQL Timeout, Deadlock, Connection Pool, Login-Fehler, HTTP 5xx, Netzwerk, fehlende Dateien und NullReference.</div>
+        <div class="log-check"><strong>Fehlerketten:</strong> zeitlich zusammenhängende Ereignisse wie Slow Query → Timeout → Connection Pool → HTTP 500 werden gemeinsam betrachtet.</div>
+        <div class="log-check"><strong>Pragmatische Diagnose:</strong> aus jedem Befund entsteht eine nachvollziehbare nächste Prüf- oder Handlungsmaßnahme.</div>
+        <div class="log-check"><strong>Integration:</strong> zentrale Connection-String-Konfiguration, ASP.NET-Core-Backend und optionale SQL-Server-Speicherung für produktive Umgebungen.</div>
+      </div>
+
+      <div class="mini-note"><strong>Demo:</strong> Die veröffentlichte Web-Demo analysiert vollständig im Browser. Die Projektversion enthält zusätzlich das ASP.NET-Core-Backend und SQL-Server-Skripte; produktive Datenbankzugriffe bleiben damit außerhalb des Browsers.</div>
+
+      <div class="log-actions">
+        <a class="button" href="loganalyzer/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo öffnen</a>
       </div>
     </div>
   </div>
