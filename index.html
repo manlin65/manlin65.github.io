@@ -295,6 +295,27 @@
 .excel-gallery figcaption strong{display:block;color:#263445;margin-bottom:4px}
 @media(max-width:800px){.integration-map{grid-template-columns:1fr}.integration-arrow{transform:rotate(90deg)}.variant-grid,.excel-gallery{grid-template-columns:1fr}.excel-gallery figure:first-child{grid-column:auto}}
 
+
+
+/* KI-gestützter Angebots- und Rechnungscheck */
+.invoice-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:#e8f2f6;color:var(--primary);font-size:.78rem;font-weight:800;letter-spacing:.02em}
+.invoice-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 24px}
+.invoice-fact{padding:13px 12px;border-radius:12px;background:var(--soft);text-align:center;color:#334155;font-size:.88rem;font-weight:750}
+.invoice-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:22px 0 24px}
+.invoice-step{padding:14px 12px;border:1px solid var(--border);border-radius:13px;background:#fff;color:#334155;font-size:.84rem;line-height:1.4;text-align:center}
+.invoice-step b{display:grid;place-items:center;width:28px;height:28px;margin:0 auto 8px;border-radius:50%;background:#e8f2f6;color:var(--primary)}
+.invoice-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.invoice-gallery figure{margin:0;border:1px solid var(--border);border-radius:15px;overflow:hidden;background:#fff}
+.invoice-gallery figure.wide{grid-column:1/-1}
+.invoice-gallery img{display:block;width:100%;height:auto;background:#f8fafc}
+.invoice-gallery figcaption{padding:12px 14px 14px;color:var(--muted);font-size:.86rem;line-height:1.45}
+.invoice-gallery figcaption strong{display:block;color:#263445;margin-bottom:3px}
+.invoice-checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.invoice-check{padding:14px 15px;border-left:4px solid var(--primary);border-radius:0 12px 12px 0;background:#edf5f8;color:#334155;font-size:.9rem}
+.invoice-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:900px){.invoice-facts{grid-template-columns:repeat(2,1fr)}.invoice-flow{grid-template-columns:repeat(2,1fr)}.invoice-gallery,.invoice-checks{grid-template-columns:1fr}.invoice-gallery figure.wide{grid-column:auto}}
+@media(max-width:620px){.invoice-facts,.invoice-flow{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -408,6 +429,18 @@
 
       <article class="example-card">
               <div class="content" style="text-align:center">
+                <span class="invoice-badge">Praxisprodukt · Rechnungsprüfung</span>
+                <h3>KI-gestützter Angebots- und Rechnungscheck</h3>
+                <p>PDF-Rechnungen und Angebote erfassen, Positionen prüfen, Auffälligkeiten erkennen und strukturierte Ergebnisse an Excel, CSV oder SQL Server weitergeben.</p>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                  <button class="button" type="button" data-modal-open="modal-invoice-check">Ablauf ansehen</button>
+                  <a class="button button-secondary" href="rechnungscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo</a>
+                </div>
+              </div>
+            </article>
+
+      <article class="example-card">
+              <div class="content" style="text-align:center">
                 <h3>KI-gestützte Einsatz- und Maschinenplanung</h3>
                 <p>Automatisierte Wochenplanung mit Qualifikationen, Schichtmodellen, Personalbedarf, Abwesenheiten, Wartung und Stillständen.</p>
                 <button class="button" type="button" data-modal-open="modal-tech">Technisches Beispiel ansehen</button>
@@ -487,6 +520,54 @@
   <div class="container"><h2>Impressum</h2><p><strong>M. Linner Softwareentwicklung &amp; Dienstleistungen</strong><br>Manfred Linner<br>Kienbühl 3<br>91126 Schwabach<br>Deutschland</p><p>E-Mail: <a href="mailto:mcllinner@hotmail.com">mcllinner@hotmail.com</a></p></div>
 </section>
 </main>
+
+
+<div class="modal" id="modal-invoice-check" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-invoice-check-title">
+    <div class="modal-head">
+      <h3 id="modal-invoice-check-title">KI-gestützter Angebots- und Rechnungscheck</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Praxisdemonstration für eine automatisierte Dokumentenprüfung: PDF hochladen, Rechnungsdaten und Positionen erfassen, rechnerische und formale Auffälligkeiten erkennen und das Ergebnis strukturiert weitergeben.</p>
+
+      <div class="invoice-facts">
+        <div class="invoice-fact">PDF-Upload</div>
+        <div class="invoice-fact">Daten &amp; Positionen</div>
+        <div class="invoice-fact">Prüfregeln &amp; Dubletten</div>
+        <div class="invoice-fact">Excel · CSV · SQL Server</div>
+      </div>
+
+      <div class="invoice-flow" aria-label="Ablauf des Rechnungschecks">
+        <div class="invoice-step"><b>1</b>PDF hochladen</div>
+        <div class="invoice-step"><b>2</b>Daten erkennen</div>
+        <div class="invoice-step"><b>3</b>Positionen prüfen</div>
+        <div class="invoice-step"><b>4</b>Auffälligkeiten bewerten</div>
+        <div class="invoice-step"><b>5</b>Ergebnis exportieren</div>
+      </div>
+
+      <div class="invoice-gallery">
+        <figure class="wide"><img src="assets/rechnungscheck_analyse.jpg" alt="Analyse einer fiktiven Rechnung mit PDF-Vorschau und erkannten Daten"><figcaption><strong>Automatische Analyse</strong>PDF-Vorschau und erkannte Rechnungsdaten stehen direkt nebeneinander und können kontrolliert bzw. korrigiert werden.</figcaption></figure>
+        <figure><img src="assets/rechnungscheck_positionen.jpg" alt="Erkannte Rechnungspositionen"><figcaption><strong>Positionsprüfung</strong>Artikel, Beschreibung, Menge, Einheit, Einzelpreis und Positionssumme werden strukturiert dargestellt.</figcaption></figure>
+        <figure><img src="assets/rechnungscheck_ergebnis.jpg" alt="Prüfergebnis mit erkannter Betragsabweichung"><figcaption><strong>Konkretes Prüfergebnis</strong>Im Testfall wird eine Abweichung beim Gesamtbetrag erkannt und nachvollziehbar ausgewiesen.</figcaption></figure>
+        <figure class="wide"><img src="assets/rechnungscheck_uebersicht.jpg" alt="Dokumentübersicht mit Status und Exportmöglichkeiten"><figcaption><strong>Übersicht &amp; Weitergabe</strong>Dokumente werden nach Status zusammengefasst. Ergebnisse lassen sich für Excel/CSV oder SQL Server bereitstellen.</figcaption></figure>
+      </div>
+
+      <div class="invoice-checks">
+        <div class="invoice-check"><strong>Plausibilität:</strong> Positionssumme, MwSt.-Berechnung und Gesamtbetrag werden gegeneinander geprüft.</div>
+        <div class="invoice-check"><strong>Pflichtangaben:</strong> Rechnungsnummer, Datum, Zahlungsziel und weitere Felder können auf Vollständigkeit geprüft werden.</div>
+        <div class="invoice-check"><strong>Fristen &amp; Dubletten:</strong> Fälligkeiten sowie doppelte Rechnungsnummern lassen sich automatisch kennzeichnen.</div>
+        <div class="invoice-check"><strong>Integration:</strong> Die Demo zeigt Excel/CSV- und SQL-Server-Weitergabe; weitere REST-/ERP-/DMS-Schnittstellen sind erweiterbar.</div>
+      </div>
+
+      <div class="mini-note"><strong>Demo:</strong> Enthalten sind fiktive Testrechnungen mit korrekten und absichtlich fehlerhaften Fällen. Dadurch lässt sich die Prüflogik ohne echte Kunden- oder Rechnungsdaten demonstrieren.</div>
+
+      <div class="invoice-actions">
+        <a class="button" href="rechnungscheck/index.html" target="_blank" rel="noopener noreferrer">Interaktive Demo öffnen</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="modal-tech" aria-hidden="true">
   <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-tech-title">
