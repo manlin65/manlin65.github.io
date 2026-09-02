@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.mlinner-software.de/sitemap.xml
