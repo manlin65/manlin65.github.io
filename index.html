@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Softwareentwickler Nürnberg | C# .NET & SQL Server | Manfred Linner</title>
-<meta name="description" content="Senior Softwareentwickler und Dipl.-Informatiker aus Schwabach bei Nürnberg. C#/.NET, WPF, SQL Server, Datenmigration, Legacy-Modernisierung, Datenbanken, Automatisierung und KI-Integration.">
+<meta name="description" content="Senior Softwareentwickler und Dipl.-Informatiker aus Schwabach bei Nürnberg. C#/.NET, WPF, SQL Server, Datenmigration, Legacy-Modernisierung, Datenbanken, Automatisierung, Datenschutz- und Dateiprüfung sowie KI-Integration.">
 <style>
 :root{--bg:#f6f8fb;--surface:#fff;--soft:#eef3f8;--text:#17202a;--muted:#64748b;--primary:#155e75;--dark:#0e4759;--border:#dce4ec;--shadow:0 12px 32px rgba(0,0,0,.07);--radius:18px;--max:1180px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}a{color:inherit}section{scroll-margin-top:90px}.container{width:min(var(--max),calc(100% - 40px));margin:auto}
@@ -59,7 +59,7 @@
     "url":"https://www.mlinner-software.de/",
     "areaServed":["Schwabach","Nürnberg","Fürth","Erlangen","Metropolregion Nürnberg","Deutschland"],
     "founder":{"@type":"Person","name":"Manfred Linner","jobTitle":"Dipl.-Informatiker (FH), Senior Softwareentwickler"},
-    "knowsAbout":["C#",".NET","WPF","Microsoft SQL Server","T-SQL","Datenmigration","Legacy-Modernisierung","Automatisierung","KI-Integration"]
+    "knowsAbout":["C#",".NET","WPF","Microsoft SQL Server","T-SQL","Datenmigration","Legacy-Modernisierung","Automatisierung","Datenschutz- und Dateiprüfung","KI-Integration"]
   }
   </script>
 
@@ -202,6 +202,14 @@
 
 
       <article class="example-card"><div class="content" style="text-align:center">
+        <h3>Datenschutz- &amp; Dateiprüfung</h3>
+        <p>Sensible und personenbezogene Informationen in Dokumenten und Dateien automatisiert erkennen, bewerten und übersichtlich darstellen.</p>
+        <div class="project-tech"><span>Datenschutz</span><span>Dokumente</span><span>Datenanalyse</span><span>Automatisierung</span></div>
+        <button class="button" type="button" data-modal-open="modal-privacycheck">Mehr erfahren</button>
+      </div></article>
+
+
+      <article class="example-card"><div class="content" style="text-align:center">
         <h3>Intelligente Einsatz- und Ressourcenplanung</h3>
         <p>Personal, Maschinen, Schichten und Verfügbarkeiten aus vorhandenen Daten zusammenführen – für einen nachvollziehbaren Wochenplan und früh sichtbare Engpässe.</p>
         <div class="project-tech"><span>Unternehmensdaten</span><span>Regelwerk</span><span>Planung</span><span>Automatisierung</span></div>
@@ -340,6 +348,24 @@
     <div class="modal-body">
       <p>Strukturierte Unternehmensdaten werden vor Import, Migration oder Reporting automatisch auf typische Qualitätsprobleme geprüft und priorisiert.</p>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>Direkte Verarbeitung von Excel/XLSX und CSV im Demo-Betrieb</li><li>Regel-Engine für Dubletten, Pflichtfelder, Datentypen, Formate, Ausreißer und Summenfehler</li><li>ASP.NET-Core-REST-API als sichere Schicht zwischen Browser und SQL Server</li><li>T-SQL-Prüfungen und kundenspezifische Qualitätsregeln</li><li>Lokale Zusammenfassung; externer KI-Service optional für semantische Bewertungen</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-privacycheck" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-privacycheck-title">
+    <div class="modal-head"><h3 id="modal-privacycheck-title">Datenschutz- &amp; Dateiprüfung</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
+    <div class="modal-body">
+      <p>In Unternehmen liegen personenbezogene und sensible Informationen häufig verteilt in Dokumenten, Tabellen, PDFs und anderen Dateien. Eine automatisierte Prüfung hilft dabei, mögliche Fundstellen schneller zu erkennen und gezielt zu bearbeiten.</p>
+      <div class="tech-block"><h4>So funktioniert die Prüfung</h4><ul>
+        <li><strong>Dateien auswählen:</strong> Ordner und Dokumentbestände für die Prüfung festlegen.</li>
+        <li><strong>Inhalte analysieren:</strong> Dokumente und Dateien automatisiert auf mögliche personenbezogene und sensible Informationen untersuchen.</li>
+        <li><strong>Risiken bewerten:</strong> Gefundene Inhalte nach Art und möglichem Risiko einordnen.</li>
+        <li><strong>Fundstellen anzeigen:</strong> Auffälligkeiten übersichtlich mit Datei, Fundstelle und Bewertung darstellen.</li>
+        <li><strong>Ergebnisse dokumentieren:</strong> Ergebnisse zusammenfassen und als nachvollziehbare Grundlage für die weitere Prüfung bereitstellen.</li>
+      </ul></div>
+      <div class="tech-block"><h4>Typische Einsatzbereiche</h4><ul><li>Prüfung bestehender Dateiablagen</li><li>Vorbereitung von Datenbereinigungen</li><li>Auffinden sensibler Informationen</li><li>Unterstützung bei Datenschutzprüfungen</li></ul></div>
+      <div class="mini-note"><strong>Ziel:</strong> Große Datei- und Dokumentbestände schneller überblicken und mögliche Datenschutzrisiken gezielt sichtbar machen.</div>
     </div>
   </div>
 </div>
