@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DMOX Kundenbereich</title>
+<style>
+:root{--b:#0B5ED7;--bd:#0A3D91;--g:#0FAE73;--ink:#102A43;--muted:#64748B;--line:#DCE6EE}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f8fbff,#eef9f4);color:var(--ink);min-height:100vh}
+.center{min-height:100vh;display:grid;place-items:center;padding:20px}.box{width:min(92vw,480px);background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 20px 60px rgba(21,58,92,.10)}
+.brand{font-weight:850;font-size:28px}.accent{height:5px;border-radius:5px;background:linear-gradient(90deg,var(--b),var(--g));margin:14px 0 26px}
+h1{font-size:28px;margin:0 0 8px}.sub{color:var(--muted);line-height:1.5;margin-bottom:24px}
+.langs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.langs button{font-size:12px;font-weight:800;color:var(--bd);border:1px solid var(--line);padding:7px 9px;border-radius:10px;background:#fff;cursor:pointer}.langs button.on{background:#eaf3ff}
+label{font-weight:700;font-size:14px;display:block;margin:14px 0 7px}input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px}
+.loginbtn{margin-top:20px;width:100%;border:0;border-radius:12px;padding:14px;background:linear-gradient(135deg,var(--b),var(--g));color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+.err{display:none;background:#fff0f0;color:#9b1c1c;border:1px solid #ffd0d0;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+#content{display:none}.w{max-width:1120px;margin:auto;padding:36px 22px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:24px}
+.badge{display:inline-block;background:#E6F7EF;color:#0B8A5B;padding:6px 10px;border-radius:10px;font-size:12px;font-weight:800}
+a.btn{display:inline-block;margin-top:18px;background:linear-gradient(135deg,var(--b),var(--g));color:white;text-decoration:none;font-weight:750;padding:12px 16px;border-radius:12px}
+.future{opacity:.62}.logout{border:1px solid var(--line);padding:8px 12px;border-radius:10px;background:white;color:var(--bd);font-weight:700;cursor:pointer}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.top{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<div id="login" class="center">
+<div class="box">
+<div class="brand">DMOX</div><div class="accent"></div>
+<div class="langs">
+<button onclick="setLang('de')" id="l-de" class="on">DE</button>
+<button onclick="setLang('en')" id="l-en">EN</button>
+<button onclick="setLang('es')" id="l-es">ES</button>
+<button onclick="setLang('fr')" id="l-fr">FR</button>
+<button onclick="setLang('it')" id="l-it">IT</button>
+</div>
+<h1 id="title">DMOX Kundenbereich</h1>
+<div class="sub" id="sub">Geschützter Zugang zu Produktdemos und Informationen</div>
+<div id="err" class="err">Zugangsdaten sind nicht korrekt.</div>
+<label id="lu">Benutzername</label><input id="user" autocomplete="username">
+<label id="lp">Passwort</label><input id="pass" type="password" autocomplete="current-password">
+<button class="loginbtn" id="lb" onclick="login()">Anmelden</button>
+</div>
+</div>
+
+<div id="content">
+<div class="w">
+<div class="top"><strong>DMOX</strong><button class="logout" onclick="logout()">Logout</button></div>
+<h1 id="pt">DMOX Produkte</h1>
+<div class="sub" id="ps">Digitale Werkzeuge für Prozesse, Daten und Automatisierung.</div>
+<div class="grid">
+<div class="card">
+<span class="badge">VERFÜGBAR</span>
+<h2>InvoiceCheck Professional</h2>
+<p id="pic">Rechnungen und E-Rechnungen lokal vorprüfen.</p>
+<a class="btn" id="popen" href="produkte/invoicecheck/index.html">Produkt ansehen</a>
+</div>
+<div class="card future"><span class="badge">BALD</span><h2>DMOX</h2><p id="future1">Weitere Produkte folgen.</p></div>
+<div class="card future"><span class="badge">BALD</span><h2>DMOX</h2><p id="future2">Weitere Produkte folgen.</p></div>
+</div>
+</div>
+</div>
+
+<script>
+const T={
+de:{title:'DMOX Kundenbereich',sub:'Geschützter Zugang zu Produktdemos und Informationen',u:'Benutzername',p:'Passwort',login:'Anmelden',bad:'Zugangsdaten sind nicht korrekt.',pt:'DMOX Produkte',ps:'Digitale Werkzeuge für Prozesse, Daten und Automatisierung.',pic:'Rechnungen und E-Rechnungen lokal vorprüfen.',open:'Produkt ansehen',f:'Weitere Produkte folgen.'},
+en:{title:'DMOX Customer Area',sub:'Protected access to product demos and information',u:'Username',p:'Password',login:'Sign in',bad:'The login details are incorrect.',pt:'DMOX Products',ps:'Digital tools for processes, data and automation.',pic:'Pre-check invoices and e-invoices locally.',open:'View product',f:'More products coming soon.'},
+es:{title:'Área de clientes DMOX',sub:'Acceso protegido a demos e información de productos',u:'Usuario',p:'Contraseña',login:'Acceder',bad:'Los datos de acceso no son correctos.',pt:'Productos DMOX',ps:'Herramientas digitales para procesos, datos y automatización.',pic:'Comprobación local de facturas y facturas electrónicas.',open:'Ver producto',f:'Próximamente más productos.'},
+fr:{title:'Espace client DMOX',sub:'Accès protégé aux démos et informations produits',u:"Nom d’utilisateur",p:'Mot de passe',login:'Connexion',bad:'Les identifiants sont incorrects.',pt:'Produits DMOX',ps:'Outils numériques pour processus, données et automatisation.',pic:'Précontrôle local des factures et factures électroniques.',open:'Voir le produit',f:'D’autres produits arrivent bientôt.'},
+it:{title:'Area clienti DMOX',sub:'Accesso protetto a demo e informazioni sui prodotti',u:'Nome utente',p:'Password',login:'Accedi',bad:'I dati di accesso non sono corretti.',pt:'Prodotti DMOX',ps:'Strumenti digitali per processi, dati e automazione.',pic:'Controllo preliminare locale di fatture e fatture elettroniche.',open:'Vedi prodotto',f:'Altri prodotti in arrivo.'}
+};
+let lang='de';
+function setLang(l){
+ lang=l;
+ sessionStorage.setItem('dmoxLang',l);
+ document.documentElement.lang=l;
+ document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('on'));
+ document.getElementById('l-'+l).classList.add('on');
+ const t=T[l];
+ title.textContent=t.title;sub.textContent=t.sub;lu.textContent=t.u;lp.textContent=t.p;lb.textContent=t.login;err.textContent=t.bad;
+ pt.textContent=t.pt;ps.textContent=t.ps;pic.textContent=t.pic;popen.textContent=t.open;future1.textContent=t.f;future2.textContent=t.f;
+ popen.href='produkte/invoicecheck/index.html?lang='+encodeURIComponent(l);
+}
+function login(){if(user.value==='demo' && pass.value==='dmox7'){document.getElementById('login').style.display='none';document.getElementById('content').style.display='block';sessionStorage.setItem('dmox','1')}else{err.style.display='block'}}
+function logout(){sessionStorage.removeItem('dmox');location.reload()}
+const savedLang=sessionStorage.getItem('dmoxLang');if(savedLang&&T[savedLang])setLang(savedLang);
+if(sessionStorage.getItem('dmox')==='1'){document.getElementById('login').style.display='none';document.getElementById('content').style.display='block'}
+</script>
+</body></html>

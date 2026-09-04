@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InvoiceCheck Professional | DMOX</title>
+<style>
+:root{--blue:#0B5ED7;--blue2:#0A3D91;--green:#0FAE73;--ink:#102A43;--muted:#64748B;--bg:#F5F9FC;--line:#DCE6EE}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1180px;margin:auto;padding:28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:22px}.topright{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.langs{display:flex;gap:6px}.langs button{font-size:12px;font-weight:800;color:var(--blue2);border:1px solid var(--line);padding:7px 9px;border-radius:10px;background:#fff;cursor:pointer}
+.langs button.on{background:#EAF3FF}.back{color:var(--blue2);text-decoration:none;font-weight:700}
+.hero{background:white;border:1px solid var(--line);border-radius:24px;padding:40px;margin-top:20px}
+h1{font-size:44px;margin:0}.pro{display:inline-block;background:#E4F7EE;color:#0B8A5B;padding:7px 11px;border-radius:12px;font-size:13px;margin-left:10px;vertical-align:top}
+.lead{font-size:19px;color:var(--muted);max-width:820px;line-height:1.6}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 8px}.btn{display:inline-block;padding:13px 17px;border-radius:12px;text-decoration:none;font-weight:750;border:1px solid var(--line);background:white;color:var(--ink)}
+.primary{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;border:none}.green{background:var(--green);color:white;border:none}
+.slider{position:relative;margin-top:28px;background:#eef5fb;border-radius:20px;padding:18px;border:1px solid var(--line)}
+.slider img{width:100%;border-radius:14px;display:none}.slider img.active{display:block}
+.nav{display:flex;justify-content:center;gap:8px;margin-top:12px}.dot{width:10px;height:10px;border-radius:50%;background:#c7d7e4;cursor:pointer}.dot.active{background:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:22px}.card h3{margin-top:0}
+.video{margin-top:24px;background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.video video{width:100%;border-radius:14px}
+.note{margin-top:22px;background:#eaf8f1;border:1px solid #ccebdd;border-radius:16px;padding:18px}
+footer{color:#7b8fa1;font-size:13px;padding:26px 0}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.wrap{padding:16px}h1{font-size:34px}.hero{padding:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <div class="brand">DMOX · InvoiceCheck</div>
+  <div class="topright">
+    <div class="langs">
+      <button id="l-de" class="on" onclick="setLang('de')">DE</button>
+      <button id="l-en" onclick="setLang('en')">EN</button>
+      <button id="l-es" onclick="setLang('es')">ES</button>
+      <button id="l-fr" onclick="setLang('fr')">FR</button>
+      <button id="l-it" onclick="setLang('it')">IT</button>
+    </div>
+    <a class="back" id="back" href="../../index.html">← Produktübersicht</a>
+  </div>
+</div>
+
+<section class="hero">
+<h1>InvoiceCheck <span class="pro">PRO</span></h1>
+<p class="lead" id="lead">Rechnungen und E-Rechnungen automatisch vorprüfen – lokal auf Ihrem Windows-PC. Klare Statusanzeige, OCR, strukturierte E-Rechnungen und PDF-Prüfberichte.</p>
+
+<div class="actions">
+<a class="btn primary" id="demoBtn" href="demo/index.html" target="_blank">Demo starten</a>
+<a class="btn green" id="videoBtn" href="#video">Video ansehen</a>
+<a class="btn" id="pdfDe" href="flyer/InvoiceCheck_Broschuere_DE.pdf" target="_blank">Broschüre DE</a>
+<a class="btn" id="pdfEn" href="flyer/InvoiceCheck_Brochure_EN.pdf" target="_blank">Brochure EN</a>
+<a class="btn" id="pdfEs" href="flyer/InvoiceCheck_Folleto_ES.pdf" target="_blank">Folleto ES</a>
+<a class="btn" id="askBtn" href="mailto:info@mlinner-software.de?subject=InvoiceCheck%20Professional">Anfragen</a>
+</div>
+
+<div class="slider">
+<img class="slide active" src="screens/screen-01-start.png" alt="InvoiceCheck Startansicht">
+<img class="slide" src="screens/screen-02-result.png" alt="InvoiceCheck Prüfergebnis">
+<div class="nav"><span class="dot active"></span><span class="dot"></span></div>
+</div>
+</section>
+
+<section class="grid">
+<div class="card"><h3 id="c1h">Lokal & privat</h3><p id="c1p">Keine Cloud erforderlich. Verarbeitung und OCR laufen lokal.</p></div>
+<div class="card"><h3 id="c2h">Viele Formate</h3><p id="c2p">PDF, XML/XRechnung/UBL, DOCX, TXT, Bilder und E-Mail (.eml).</p></div>
+<div class="card"><h3 id="c3h">Klare Ergebnisse</h3><p id="c3p">OK, Hinweis oder Fehler – inklusive erkannter Rechnungsdaten und Details.</p></div>
+</section>
+
+<section class="video" id="video">
+<h2 id="videoTitle">InvoiceCheck in ca. 40 Sekunden</h2>
+<video id="productVideo" controls preload="metadata" poster="screens/screen-01-start.png">
+<source id="productVideoSource" src="video/invoicecheck-de.mp4" type="video/mp4">
+</video>
+</section>
+
+<div class="note" id="note">Die Web-Demo verwendet vorbereitete Beispieldaten. Die echte Rechnungsprüfung erfolgt in der Windows-Anwendung lokal.</div>
+<footer>M. Linner Softwareentwicklung & Dienstleistungen · mlinner-software.de</footer>
+</div>
+
+<script>
+const T={
+de:{back:'← Produktübersicht',lead:'Rechnungen und E-Rechnungen automatisch vorprüfen – lokal auf Ihrem Windows-PC. Klare Statusanzeige, OCR, strukturierte E-Rechnungen und PDF-Prüfberichte.',demo:'Demo starten',video:'Video ansehen',ask:'Anfragen',c1h:'Lokal & privat',c1p:'Keine Cloud erforderlich. Verarbeitung und OCR laufen lokal.',c2h:'Viele Formate',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, Bilder und E-Mail (.eml).',c3h:'Klare Ergebnisse',c3p:'OK, Hinweis oder Fehler – inklusive erkannter Rechnungsdaten und Details.',vt:'InvoiceCheck in ca. 40 Sekunden',note:'Die Web-Demo verwendet vorbereitete Beispieldaten. Die echte Rechnungsprüfung erfolgt in der Windows-Anwendung lokal.'},
+en:{back:'← Product overview',lead:'Automatically pre-check invoices and e-invoices locally on your Windows PC. Clear status display, OCR, structured e-invoices and PDF reports.',demo:'Start demo',video:'Watch video',ask:'Contact',c1h:'Local & private',c1p:'No cloud required. Processing and OCR run locally.',c2h:'Many formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images and e-mail (.eml).',c3h:'Clear results',c3p:'OK, warning or error – including recognised invoice data and details.',vt:'InvoiceCheck in about 40 seconds',note:'The web demo uses prepared sample data. Real invoice processing takes place locally in the Windows application.'},
+es:{back:'← Resumen de productos',lead:'Comprueba automáticamente facturas y facturas electrónicas de forma local en tu PC con Windows. Estado claro, OCR, facturas electrónicas estructuradas e informes PDF.',demo:'Iniciar demo',video:'Ver vídeo',ask:'Contactar',c1h:'Local y privado',c1p:'No se necesita nube. El procesamiento y OCR se realizan localmente.',c2h:'Muchos formatos',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, imágenes y e-mail (.eml).',c3h:'Resultados claros',c3p:'OK, aviso o error, incluidos datos reconocidos y detalles.',vt:'InvoiceCheck en unos 40 segundos',note:'La demo web utiliza datos de ejemplo preparados. La comprobación real se realiza localmente en la aplicación de Windows.'},
+fr:{back:'← Vue des produits',lead:'Précontrôlez automatiquement factures et factures électroniques localement sur votre PC Windows. Statut clair, OCR, e-factures structurées et rapports PDF.',demo:'Lancer la démo',video:'Voir la vidéo',ask:'Contact',c1h:'Local & privé',c1p:'Aucun cloud requis. Le traitement et l’OCR restent locaux.',c2h:'De nombreux formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images et e-mail (.eml).',c3h:'Résultats clairs',c3p:'OK, remarque ou erreur, avec données reconnues et détails.',vt:'InvoiceCheck en environ 40 secondes',note:'La démo web utilise des exemples préparés. Le contrôle réel s’effectue localement dans l’application Windows.'},
+it:{back:'← Panoramica prodotti',lead:'Controlla automaticamente fatture e fatture elettroniche in locale sul tuo PC Windows. Stato chiaro, OCR, e-fatture strutturate e report PDF.',demo:'Avvia demo',video:'Guarda video',ask:'Contatti',c1h:'Locale e privato',c1p:'Nessun cloud necessario. Elaborazione e OCR avvengono in locale.',c2h:'Molti formati',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, immagini ed e-mail (.eml).',c3h:'Risultati chiari',c3p:'OK, avviso o errore, inclusi dati riconosciuti e dettagli.',vt:'InvoiceCheck in circa 40 secondi',note:'La demo web usa dati di esempio preparati. Il controllo reale avviene localmente nell’applicazione Windows.'}
+};
+function setLang(l){sessionStorage.setItem('dmoxLang',l);document.documentElement.lang=l;
+  document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('on'));document.getElementById('l-'+l).classList.add('on');
+  const t=T[l];back.textContent=t.back;lead.textContent=t.lead;demoBtn.textContent=t.demo;videoBtn.textContent=t.video;askBtn.textContent=t.ask;
+  c1h.textContent=t.c1h;c1p.textContent=t.c1p;c2h.textContent=t.c2h;c2p.textContent=t.c2p;c3h.textContent=t.c3h;c3p.textContent=t.c3p;videoTitle.textContent=t.vt;note.textContent=t.note;demoBtn.href='demo/index.html?lang='+l;const map={de:'de',en:'en',es:'es',fr:'de',it:'de'};productVideoSource.src='video/invoicecheck-'+map[l]+'.mp4';productVideo.load();
+}
+const qlang=new URLSearchParams(location.search).get('lang');const savedLang=sessionStorage.getItem('dmoxLang');const initLang=['de','en','es','fr','it'].includes(qlang)?qlang:(['de','en','es','fr','it'].includes(savedLang)?savedLang:'de');setLang(initLang);
+const slides=[...document.querySelectorAll('.slide')],dots=[...document.querySelectorAll('.dot')];let i=0;
+function show(n){slides.forEach((s,k)=>s.classList.toggle('active',k===n));dots.forEach((d,k)=>d.classList.toggle('active',k===n));i=n}
+dots.forEach((d,k)=>d.onclick=()=>show(k));setInterval(()=>show((i+1)%slides.length),5000);
+</script>
+</body></html>

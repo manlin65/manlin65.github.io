@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InvoiceCheck Professional – Web Demo</title>
+<style>
+:root{
+  --ink:#102A43;
+  --muted:#64748B;
+  --blue:#0B5ED7;
+  --blue-dark:#0A3D91;
+  --green:#0FAE73;
+  --green-dark:#0B8A5B;
+  --line:#D8E3EC;
+  --bg:#F3F7FA;
+  --card:#fff;
+  --soft-blue:#E2EFFF;
+  --soft-green:#E3F8EF;
+  --yellow:#E7A912;
+  --red:#DF4141;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:linear-gradient(180deg,#f7fafd 0%,var(--bg) 100%);
+  color:var(--ink);
+}
+.shell{max-width:1500px;margin:0 auto;padding:28px}
+.header{
+  display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px
+}
+.brandline{display:flex;align-items:flex-start;gap:12px}
+h1{font-size:38px;line-height:1;margin:0;font-weight:800;letter-spacing:-.6px}
+.subtitle{color:var(--muted);font-size:15px;margin-top:8px}
+.pro{
+  background:#D0F0E2;color:var(--green-dark);font-size:11px;font-weight:800;
+  padding:7px 11px;border-radius:10px;margin-top:2px
+}
+.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+select,button{
+  height:42px;border-radius:12px;border:1px solid #cfdbe6;background:#fff;color:var(--ink);
+  font-weight:700;padding:0 14px;font-size:14px
+}
+button{cursor:pointer}
+.primary{background:linear-gradient(135deg,var(--blue),var(--green));color:white;border-color:var(--blue-dark)}
+.green{background:var(--green);border-color:var(--green-dark);color:#fff}
+.ghost{background:#fff}
+.info{background:#f7fafc}
+.drop{
+  min-height:154px;border:2px solid #93B9EC;border-radius:20px;
+  background:linear-gradient(135deg,var(--soft-blue),var(--soft-green));
+  display:grid;grid-template-columns:150px 1fr 260px;align-items:center;padding:18px 22px;margin-bottom:20px;
+  box-shadow:0 8px 30px rgba(15,58,105,.05)
+}
+.iconwrap{display:flex;justify-content:center}
+.docicon{
+  width:76px;height:76px;border-radius:50%;background:#fff;display:grid;place-items:center;
+  box-shadow:0 8px 24px rgba(10,61,145,.10)
+}
+.paper{
+  width:39px;height:48px;border:2px solid #5D8FE6;border-radius:6px;background:#D9E8FF;
+  display:grid;place-items:center;color:var(--green);font-size:27px;font-weight:900
+}
+.drop h2{margin:0;font-size:22px}
+.drop p{margin:7px 0 0;color:#587287;font-size:13px}
+.local{
+  justify-self:end;background:#fff;border:1px solid #d7e5ed;border-radius:13px;
+  padding:15px 18px;min-width:215px
+}
+.local strong{font-size:11px;color:var(--green-dark)}
+.local span{display:block;margin-top:5px;color:#587287;font-size:12px}
+.main{display:grid;grid-template-columns:1.12fr .88fr;gap:20px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;
+  box-shadow:0 8px 24px rgba(31,56,76,.035)
+}
+.cardhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.cardhead h3{margin:0;font-size:20px}
+.pill{font-size:11px;background:#e7f0f7;color:#546f83;padding:6px 10px;border-radius:10px;font-weight:700}
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden}
+.table th{
+  background:#f5f8fa;color:#49657a;text-align:left;padding:13px 12px;font-size:12px;border-bottom:1px solid #e4ecf2
+}
+.table td{padding:12px;border-bottom:1px solid #edf2f6;font-size:13px;vertical-align:middle}
+.table tr.demo-row{cursor:pointer}
+.table tr.demo-row:hover{background:#f6faff}
+.table tr.active{background:#e9f3ff}
+.badge{
+  width:118px;height:34px;border-radius:12px;border:1px solid;display:inline-flex;align-items:center;
+  justify-content:center;gap:8px;font-size:11.5px;font-weight:800
+}
+.badge .dot{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900}
+.ok{background:#E9F8F2;border-color:#BFEBDD;color:#087457}.ok .dot{background:var(--green)}
+.warn{background:#FFF7DF;border-color:#F6DEA0;color:#8B6200}.warn .dot{background:var(--yellow)}
+.bad{background:#FDECEC;border-color:#F3C6C6;color:#A82222}.bad .dot{background:var(--red)}
+.details-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.details-top h3{margin:0;font-size:22px}.smallmuted{color:var(--muted);font-size:12px;margin-top:5px}
+.detailbadge{min-width:138px;height:40px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px;margin:26px 0}
+.label{font-size:10.5px;color:#6b7f90;font-weight:800;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+.value{font-size:14px}.total{font-size:18px;color:var(--blue-dark);font-weight:800}
+.findings-title{font-size:14px;font-weight:800;margin:5px 0 10px}
+.findings{border:1px solid #e3ebf1;background:#fafcfd;border-radius:12px;padding:8px;min-height:240px}
+.finding{background:#fff;border-radius:9px;padding:10px 11px;margin-bottom:7px;color:#314b5e;font-size:12.5px}
+.demo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.demo-btn{
+  height:38px;border-radius:11px;background:#fff;border:1px solid #ccdce8;color:#23425a;font-size:12.5px
+}
+.footer{display:flex;justify-content:space-between;color:#7f95a6;font-size:11.5px;margin-top:15px;padding:0 3px}
+.notice{
+  margin:18px 0 0;background:#fff7df;border:1px solid #f1d897;color:#775900;border-radius:12px;padding:11px 13px;font-size:12px
+}
+.cta{
+  margin-top:20px;background:#fff;border:1px solid #d8e3ec;border-radius:18px;padding:20px;
+  box-shadow:0 8px 24px rgba(31,56,76,.035);display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap
+}
+.cta h3{margin:0 0 6px 0;font-size:22px}
+.cta p{margin:0;color:#5d7487;font-size:13px;max-width:760px}
+.cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+.cta-actions a{
+  text-decoration:none;height:44px;padding:0 16px;border-radius:12px;display:inline-flex;align-items:center;
+  font-weight:800;border:1px solid #cfdbe6
+}
+.cta-primary{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;border-color:var(--blue-dark)!important}
+.cta-secondary{background:#fff;color:var(--ink)}
+.privacy-note{margin-top:10px;color:#6f8698;font-size:12px}
+
+@media(max-width:980px){
+ .header{align-items:flex-start;flex-direction:column}.actions{width:100%}
+ .drop{grid-template-columns:100px 1fr}.local{display:none}
+ .main{grid-template-columns:1fr}.shell{padding:18px}
+}
+@media(max-width:640px){
+ h1{font-size:30px}.drop{grid-template-columns:1fr;text-align:center}.iconwrap{margin-bottom:10px}
+ .fields{grid-template-columns:1fr}.table th:nth-child(2),.table td:nth-child(2){display:none}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="header">
+    <div>
+      <div class="brandline">
+        <h1>InvoiceCheck</h1><span class="pro">PRO</span>
+      </div>
+      <div class="subtitle" id="subtitle">InvoiceCheck Professional</div>
+    </div>
+    <div class="actions">
+      <select id="lang" aria-label="Sprache">
+        <option value="de">🇩🇪 DE</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="es">🇪🇸 ES</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="it">🇮🇹 IT</option>
+      </select>
+      <button class="primary" id="addBtn">…</button>
+      <button class="green" id="reportBtn">…</button>
+      <button class="ghost" id="clearBtn">…</button>
+      <button class="info" id="infoBtn">INFO</button>
+    </div>
+  </header>
+
+  <section class="drop" id="dropZone">
+    <div class="iconwrap"><div class="docicon"><div class="paper">✓</div></div></div>
+    <div>
+      <h2 id="dropTitle">InvoiceCheck</h2>
+      <p id="dropSub">PDF · XML · DOCX · TXT · OCR · E-Mail</p>
+      <p id="dropLocal">…</p>
+      <div class="demo-actions">
+        <button class="demo-btn" data-demo="0" id="demo1">…</button>
+        <button class="demo-btn" data-demo="1" id="demo2">…</button>
+        <button class="demo-btn" data-demo="2" id="demo3">…</button>
+      </div>
+    </div>
+    <div class="local">
+      <strong id="localTitle">LOCAL</strong>
+      <span id="localSub">…</span>
+    </div>
+  </section>
+
+  <main class="main">
+    <section class="card">
+      <div class="cardhead">
+        <h3 id="listTitle">InvoiceCheck</h3>
+        <span class="pill" id="listPill">DEMO</span>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th id="thFile">Datei</th>
+            <th id="thFormat">Format</th>
+            <th id="thStatus">Status</th>
+            <th id="thResult">Ergebnis</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="notice" id="notice">…</div>
+    </section>
+
+    <section class="card">
+      <div class="details-top">
+        <div>
+          <h3 id="detailsTitle">InvoiceCheck</h3>
+          <div class="smallmuted" id="detailsSub">…</div>
+        </div>
+        <div id="detailBadge"></div>
+      </div>
+
+      <div class="fields">
+        <div><div class="label" id="labNo">—</div><div class="value" id="vNo"></div></div>
+        <div><div class="label" id="labDate">—</div><div class="value" id="vDate"></div></div>
+        <div><div class="label" id="labSeller">—</div><div class="value" id="vSeller"></div></div>
+        <div><div class="label" id="labBuyer">—</div><div class="value" id="vBuyer"></div></div>
+        <div><div class="label" id="labTotal">—</div><div class="value total" id="vTotal"></div></div>
+      </div>
+
+      <div class="findings-title" id="findTitle">—</div>
+      <div class="findings" id="findings"></div>
+    </section>
+  </main>
+
+
+  <section class="cta">
+    <div>
+      <h3 id="ctaTitle">InvoiceCheck Professional</h3>
+      <p id="ctaText">…</p>
+      <div class="privacy-note" id="ctaPrivacy">…</div>
+    </div>
+    <div class="cta-actions">
+      <a class="cta-primary" id="ctaPrimary" href="mailto:info@mlinner-software.de?subject=Anfrage%20InvoiceCheck%20Professional">…</a>
+      <a class="cta-secondary" id="ctaSecondary" href="#">…</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span id="statusFoot">DMOX · InvoiceCheck</span>
+    <span>M. Linner Softwareentwicklung & Dienstleistungen · mlinner-software.de</span>
+  </footer>
+</div>
+
+<script>
+const DEMOS={
+de:[
+ {file:"2026-0918_Musterbau_GmbH.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"RE-2026-0918",date:"18.09.2026",seller:"Musterbau GmbH",buyer:"Beispiel Handel GmbH",total:"1.428,00 €",findings:["fOk1","fOk2","fOk3","fOk4"]},
+ {file:"2026-0921_Software_Service.pdf",format:"PDF",state:"warn",summaryKey:"sumWarn",no:"INV-2026-0921",date:"21.09.2026",seller:"Software Service S.r.l.",buyer:"Beispiel Technik GmbH",total:"952,00 €",findings:["fWarn1","fWarn2","fWarn3"]},
+ {file:"2026-0924_Fehlerhafte_Rechnung.pdf",format:"PDF",state:"bad",summaryKey:"sumBad",no:"—",date:"24.09.2026",seller:"Beispiel Lieferant GmbH",buyer:"Beispiel Kunde GmbH",total:"1.261,00 €",findings:["fBad1","fBad2","fBad3"]}
+],
+en:[
+ {file:"2026-0918_Sample_Construction_Ltd.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"INV-2026-0918",date:"18/09/2026",seller:"Sample Construction Ltd.",buyer:"Example Trading Ltd.",total:"€1,428.00",findings:["fOk1","fOk2","fOk3","fOk4"]},
+ {file:"2026-0921_Software_Service.pdf",format:"PDF",state:"warn",summaryKey:"sumWarn",no:"INV-2026-0921",date:"21/09/2026",seller:"Software Service Ltd.",buyer:"Example Technology Ltd.",total:"€952.00",findings:["fWarn1","fWarn2","fWarn3"]},
+ {file:"2026-0924_Invalid_Invoice.pdf",format:"PDF",state:"bad",summaryKey:"sumBad",no:"—",date:"24/09/2026",seller:"Example Supplier Ltd.",buyer:"Example Customer Ltd.",total:"€1,261.00",findings:["fBad1","fBad2","fBad3"]}
+],
+es:[
+ {file:"2026-0918_Construcciones_Ejemplo.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"FAC-2026-0918",date:"18/09/2026",seller:"Construcciones Ejemplo S.L.",buyer:"Comercio Ejemplo S.L.",total:"1.428,00 €",findings:["fOk1","fOk2","fOk3","fOk4"]},
+ {file:"2026-0921_Servicios_Software.pdf",format:"PDF",state:"warn",summaryKey:"sumWarn",no:"FAC-2026-0921",date:"21/09/2026",seller:"Servicios Software S.L.",buyer:"Tecnología Ejemplo S.L.",total:"952,00 €",findings:["fWarn1","fWarn2","fWarn3"]},
+ {file:"2026-0924_Factura_Incorrecta.pdf",format:"PDF",state:"bad",summaryKey:"sumBad",no:"—",date:"24/09/2026",seller:"Proveedor Ejemplo S.L.",buyer:"Cliente Ejemplo S.L.",total:"1.261,00 €",findings:["fBad1","fBad2","fBad3"]}
+],
+fr:[
+ {file:"2026-0918_Construction_Exemple.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"FAC-2026-0918",date:"18/09/2026",seller:"Construction Exemple SARL",buyer:"Commerce Exemple SARL",total:"1 428,00 €",findings:["fOk1","fOk2","fOk3","fOk4"]},
+ {file:"2026-0921_Service_Logiciel.pdf",format:"PDF",state:"warn",summaryKey:"sumWarn",no:"FAC-2026-0921",date:"21/09/2026",seller:"Service Logiciel SARL",buyer:"Technologie Exemple SARL",total:"952,00 €",findings:["fWarn1","fWarn2","fWarn3"]},
+ {file:"2026-0924_Facture_Incorrecte.pdf",format:"PDF",state:"bad",summaryKey:"sumBad",no:"—",date:"24/09/2026",seller:"Fournisseur Exemple SARL",buyer:"Client Exemple SARL",total:"1 261,00 €",findings:["fBad1","fBad2","fBad3"]}
+],
+it:[
+ {file:"2026-0918_Costruzioni_Esempio.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"FAT-2026-0918",date:"18/09/2026",seller:"Costruzioni Esempio S.r.l.",buyer:"Commercio Esempio S.r.l.",total:"1.428,00 €",findings:["fOk1","fOk2","fOk3","fOk4"]},
+ {file:"2026-0921_Servizi_Software.pdf",format:"PDF",state:"warn",summaryKey:"sumWarn",no:"FAT-2026-0921",date:"21/09/2026",seller:"Servizi Software S.r.l.",buyer:"Tecnologia Esempio S.r.l.",total:"952,00 €",findings:["fWarn1","fWarn2","fWarn3"]},
+ {file:"2026-0924_Fattura_Errata.pdf",format:"PDF",state:"bad",summaryKey:"sumBad",no:"—",date:"24/09/2026",seller:"Fornitore Esempio S.r.l.",buyer:"Cliente Esempio S.r.l.",total:"1.261,00 €",findings:["fBad1","fBad2","fBad3"]}
+]
+};
+function demosForLang(){return DEMOS[lang]||DEMOS.en;}
+
+const T={
+de:{
+ subtitle:"Rechnungen und E-Rechnungen automatisch prüfen",add:"Hinzufügen ▼",report:"PDF-Prüfbericht",clear:"Liste leeren",
+ dropTitle:"Rechnungen hier hineinziehen",dropSub:"XML, PDF, Word, TXT, Bilder und E-Mail (.eml)",
+ dropLocal:"Diese Web-Demo verarbeitet keine echten Dokumente.",localTitle:"LOKAL & PRIVAT",localSub:"Desktop-Version ohne Cloud-Zwang",
+ demo:["Beispiel: korrekt","Beispiel: Hinweis","Beispiel: Fehler"],listTitle:"Rechnungen",listPill:"Demo-Prüfliste",
+ th:["Datei","Format","Status","Ergebnis"],notice:"Demo-Modus: Es werden ausschließlich vorbereitete Beispieldaten angezeigt. Ihre eigenen Dokumente werden hier nicht hochgeladen oder geprüft.",
+ detailsTitle:"Prüfdetails",detailsSub:"Erkannte Rechnungsdaten und Prüfergebnis",
+ labs:["Rechnungsnummer","Rechnungsdatum","Lieferant","Empfänger","Gesamtbetrag"],findTitle:"Prüfergebnis",
+ status:{ok:"OK",warn:"Hinweis",bad:"Fehler"},sumOk:"Keine Auffälligkeiten",sumWarn:"2 Hinweise",sumBad:"2 Fehler",
+ fOk1:"✓ Rechnungsnummer erkannt.",fOk2:"✓ Rechnungsdatum erkannt.",fOk3:"✓ Netto + Steuer = Gesamtbetrag.",fOk4:"✓ Steuersatz ist plausibel.",
+ fWarn1:"! Empfängerangaben konnten nur teilweise zugeordnet werden.",fWarn2:"! Zahlungsziel sollte manuell geprüft werden.",fWarn3:"✓ Gesamtsumme ist rechnerisch plausibel.",
+ fBad1:"× Rechnungsnummer fehlt.",fBad2:"× Netto + Steuer stimmt nicht mit dem Gesamtbetrag überein.",fBad3:"! Steuerangaben sollten geprüft werden.",
+ info:"InvoiceCheck Professional ist eine Windows-Anwendung. Diese Web-Demo zeigt nur vorbereitete Beispiele.",reportMsg:"Demo-Bericht geöffnet.",cleared:"Demo-Liste wurde ausgeblendet.",foot:"Web-Demo · Beispieldaten",
+ ctaTitle:"InvoiceCheck für Windows anfragen",ctaText:"Sie möchten die Desktop-Version live sehen oder in Ihrem Unternehmen testen? Fordern Sie eine kurze Demo oder eine persönliche Vorstellung an.",
+ ctaPrivacy:"Hinweis: Die Web-Demo zeigt nur Beispieldaten. Die eigentliche Rechnungsprüfung läuft in der Windows-Version lokal.",
+ ctaPrimary:"Demo anfragen",ctaSecondary:"Zur Produktseite",reportTitle:"Demo-Prüfbericht",reportInvoice:"Rechnung",reportStatus:"Status",reportFooter:"Demo-Prüfbericht · Beispieldaten",reportClose:"Fenster schließen"
+},
+en:{
+ subtitle:"Automatically check invoices and e-invoices",add:"Add ▼",report:"PDF report",clear:"Clear list",
+ dropTitle:"Drop invoices here",dropSub:"XML, PDF, Word, TXT, images and e-mail (.eml)",dropLocal:"This web demo does not process real documents.",
+ localTitle:"LOCAL & PRIVATE",localSub:"Desktop version with no cloud requirement",demo:["Example: correct","Example: warning","Example: error"],
+ listTitle:"Invoices",listPill:"Demo checklist",th:["File","Format","Status","Result"],
+ notice:"Demo mode: Only prepared sample data is shown. Your own documents are not uploaded or checked here.",
+ detailsTitle:"Check details",detailsSub:"Detected invoice data and check result",labs:["Invoice number","Invoice date","Seller","Buyer","Total amount"],findTitle:"Check result",
+ status:{ok:"OK",warn:"Warning",bad:"Error"},sumOk:"No issues",sumWarn:"2 warnings",sumBad:"2 errors",
+ fOk1:"✓ Invoice number detected.",fOk2:"✓ Invoice date detected.",fOk3:"✓ Net + tax equals total.",fOk4:"✓ Tax rate is plausible.",
+ fWarn1:"! Buyer data could only be matched partially.",fWarn2:"! Payment terms should be checked manually.",fWarn3:"✓ Total amount is arithmetically plausible.",
+ fBad1:"× Invoice number is missing.",fBad2:"× Net + tax does not match the total amount.",fBad3:"! Tax information should be checked.",
+ info:"InvoiceCheck Professional is a Windows application. This web demo shows prepared examples only.",reportMsg:"Demo report opened.",cleared:"Demo list hidden.",foot:"Web demo · sample data",
+ ctaTitle:"Request InvoiceCheck for Windows",ctaText:"Would you like to see the desktop version live or test it in your company? Request a short demo or a personal presentation.",
+ ctaPrivacy:"Note: The web demo only shows sample data. The actual invoice validation runs locally in the Windows version.",
+ ctaPrimary:"Request demo",ctaSecondary:"Back to product",reportTitle:"Demo check report",reportInvoice:"Invoice",reportStatus:"Status",reportFooter:"Demo check report · sample data",reportClose:"Close window"
+},
+es:{
+ subtitle:"Comprueba automáticamente facturas y facturas electrónicas",add:"Añadir ▼",report:"Informe PDF",clear:"Vaciar lista",
+ dropTitle:"Arrastra aquí las facturas",dropSub:"XML, PDF, Word, TXT, imágenes y correo (.eml)",dropLocal:"Esta demo web no procesa documentos reales.",
+ localTitle:"LOCAL Y PRIVADO",localSub:"Versión de escritorio sin necesidad de nube",demo:["Ejemplo: correcto","Ejemplo: aviso","Ejemplo: error"],
+ listTitle:"Facturas",listPill:"Lista de demo",th:["Archivo","Formato","Estado","Resultado"],
+ notice:"Modo demo: solo se muestran datos de ejemplo preparados. Sus propios documentos no se cargan ni se comprueban aquí.",
+ detailsTitle:"Detalles de la comprobación",detailsSub:"Datos detectados y resultado",labs:["Número de factura","Fecha","Proveedor","Cliente","Importe total"],findTitle:"Resultado",
+ status:{ok:"OK",warn:"Aviso",bad:"Error"},sumOk:"Sin incidencias",sumWarn:"2 avisos",sumBad:"2 errores",
+ fOk1:"✓ Número de factura detectado.",fOk2:"✓ Fecha de factura detectada.",fOk3:"✓ Neto + impuesto = total.",fOk4:"✓ El tipo impositivo es plausible.",
+ fWarn1:"! Los datos del cliente solo se pudieron asignar parcialmente.",fWarn2:"! Conviene revisar manualmente el plazo de pago.",fWarn3:"✓ El total es aritméticamente plausible.",
+ fBad1:"× Falta el número de factura.",fBad2:"× Neto + impuesto no coincide con el total.",fBad3:"! Conviene revisar los datos fiscales.",
+ info:"InvoiceCheck Professional es una aplicación para Windows. Esta demo web solo muestra ejemplos preparados.",reportMsg:"Informe demo abierto.",cleared:"Lista demo oculta.",foot:"Demo web · datos de ejemplo",
+ ctaTitle:"Solicitar InvoiceCheck para Windows",ctaText:"¿Desea ver la versión de escritorio en directo o probarla en su empresa? Solicite una breve demo o una presentación personal.",
+ ctaPrivacy:"Nota: La demo web solo muestra datos de ejemplo. La validación real se ejecuta localmente en la versión para Windows.",
+ ctaPrimary:"Solicitar demo",ctaSecondary:"Volver al producto",reportTitle:"Informe de comprobación demo",reportInvoice:"Factura",reportStatus:"Estado",reportFooter:"Informe demo · datos de ejemplo",reportClose:"Cerrar ventana"
+},
+fr:{
+ subtitle:"Contrôlez automatiquement les factures et factures électroniques",add:"Ajouter ▼",report:"Rapport PDF",clear:"Vider la liste",
+ dropTitle:"Déposez les factures ici",dropSub:"XML, PDF, Word, TXT, images et e-mail (.eml)",dropLocal:"Cette démo web ne traite aucun document réel.",
+ localTitle:"LOCAL & PRIVÉ",localSub:"Version bureau sans cloud requis",demo:["Exemple : correct","Exemple : avertissement","Exemple : erreur"],
+ listTitle:"Factures",listPill:"Liste de démo",th:["Fichier","Format","Statut","Résultat"],
+ notice:"Mode démo : seules des données d'exemple préparées sont affichées. Vos propres documents ne sont ni téléchargés ni contrôlés ici.",
+ detailsTitle:"Détails du contrôle",detailsSub:"Données détectées et résultat",labs:["Numéro de facture","Date","Fournisseur","Client","Montant total"],findTitle:"Résultat du contrôle",
+ status:{ok:"OK",warn:"Avertissement",bad:"Erreur"},sumOk:"Aucune anomalie",sumWarn:"2 avertissements",sumBad:"2 erreurs",
+ fOk1:"✓ Numéro de facture détecté.",fOk2:"✓ Date de facture détectée.",fOk3:"✓ Net + taxe = total.",fOk4:"✓ Le taux de taxe est plausible.",
+ fWarn1:"! Les données client n'ont été reconnues que partiellement.",fWarn2:"! Le délai de paiement doit être vérifié manuellement.",fWarn3:"✓ Le total est arithmétiquement plausible.",
+ fBad1:"× Le numéro de facture est manquant.",fBad2:"× Net + taxe ne correspond pas au total.",fBad3:"! Les informations fiscales doivent être vérifiées.",
+ info:"InvoiceCheck Professional est une application Windows. Cette démo web affiche uniquement des exemples préparés.",reportMsg:"Rapport de démo ouvert.",cleared:"Liste de démo masquée.",foot:"Démo web · données d'exemple",
+ ctaTitle:"Demander InvoiceCheck pour Windows",ctaText:"Vous souhaitez voir la version bureau en direct ou la tester dans votre entreprise ? Demandez une courte démo ou une présentation personnelle.",
+ ctaPrivacy:"Remarque : la démo web n'affiche que des données d'exemple. Le contrôle réel des factures s'exécute localement dans la version Windows.",
+ ctaPrimary:"Demander une démo",ctaSecondary:"Retour au produit",reportTitle:"Rapport de contrôle démo",reportInvoice:"Facture",reportStatus:"Statut",reportFooter:"Rapport démo · données d’exemple",reportClose:"Fermer la fenêtre"
+},
+it:{
+ subtitle:"Controlla automaticamente fatture e fatture elettroniche",add:"Aggiungi ▼",report:"Report PDF",clear:"Svuota elenco",
+ dropTitle:"Trascina qui le fatture",dropSub:"XML, PDF, Word, TXT, immagini ed e-mail (.eml)",dropLocal:"Questa demo web non elabora documenti reali.",
+ localTitle:"LOCALE & PRIVATO",localSub:"Versione desktop senza obbligo di cloud",demo:["Esempio: corretto","Esempio: avviso","Esempio: errore"],
+ listTitle:"Fatture",listPill:"Elenco demo",th:["File","Formato","Stato","Risultato"],
+ notice:"Modalità demo: vengono mostrati esclusivamente dati di esempio preparati. I tuoi documenti non vengono caricati né controllati qui.",
+ detailsTitle:"Dettagli del controllo",detailsSub:"Dati fattura rilevati e risultato",labs:["Numero fattura","Data fattura","Fornitore","Cliente","Importo totale"],findTitle:"Risultato del controllo",
+ status:{ok:"OK",warn:"Avviso",bad:"Errore"},sumOk:"Nessuna anomalia",sumWarn:"2 avvisi",sumBad:"2 errori",
+ fOk1:"✓ Numero fattura rilevato.",fOk2:"✓ Data fattura rilevata.",fOk3:"✓ Netto + imposta = totale.",fOk4:"✓ L'aliquota fiscale è plausibile.",
+ fWarn1:"! I dati del cliente sono stati riconosciuti solo parzialmente.",fWarn2:"! Il termine di pagamento dovrebbe essere verificato manualmente.",fWarn3:"✓ Il totale è aritmeticamente plausibile.",
+ fBad1:"× Numero fattura mancante.",fBad2:"× Netto + imposta non corrisponde al totale.",fBad3:"! Le informazioni fiscali dovrebbero essere verificate.",
+ info:"InvoiceCheck Professional è un'applicazione Windows. Questa demo web mostra solo esempi preparati.",reportMsg:"Report demo aperto.",cleared:"Elenco demo nascosto.",foot:"Demo web · dati di esempio",
+ ctaTitle:"Richiedi InvoiceCheck per Windows",ctaText:"Vuoi vedere la versione desktop dal vivo o provarla nella tua azienda? Richiedi una breve demo o una presentazione personale.",
+ ctaPrivacy:"Nota: la demo web mostra solo dati di esempio. La verifica reale delle fatture viene eseguita localmente nella versione Windows.",
+ ctaPrimary:"Richiedi demo",ctaSecondary:"Torna al prodotto",reportTitle:"Report di controllo demo",reportInvoice:"Fattura",reportStatus:"Stato",reportFooter:"Report demo · dati di esempio",reportClose:"Chiudi finestra"
+}
+};
+
+let lang=new URLSearchParams(location.search).get("lang")||sessionStorage.getItem("dmoxLang")||"de"; if(!["de","en","es","fr","it"].includes(lang)) lang="de"; sessionStorage.setItem("dmoxLang",lang); active=0; hidden=false;
+
+function badge(state,detail=false){
+ const t=T[lang], label=t.status[state], symbol=state==="ok"?"✓":state==="warn"?"!":"×";
+ return `<span class="badge ${state} ${detail?'detailbadge':''}"><span class="dot">${symbol}</span>${label}</span>`;
+}
+function renderRows(){
+ const tbody=document.getElementById("rows");
+ tbody.innerHTML= hidden ? "" : demosForLang().map((d,i)=>`
+ <tr class="demo-row ${i===active?'active':''}" data-row="${i}">
+   <td>${d.file}</td><td>${d.format}</td><td>${badge(d.state)}</td><td>${T[lang][d.summaryKey]}</td>
+ </tr>`).join("");
+ document.querySelectorAll("[data-row]").forEach(r=>r.onclick=()=>{active=+r.dataset.row;renderRows();renderDetails()});
+}
+function renderDetails(){
+ const d=demosForLang()[active],t=T[lang];
+ document.getElementById("detailBadge").innerHTML=badge(d.state,true);
+ vNo.textContent=d.no;vDate.textContent=d.date;vSeller.textContent=d.seller;vBuyer.textContent=d.buyer;vTotal.textContent=d.total;
+ findings.innerHTML=d.findings.map(k=>`<div class="finding">${t[k]}</div>`).join("");
+}
+function applyLang(){
+ const t=T[lang];
+ document.documentElement.lang=lang;
+ subtitle.textContent=t.subtitle;addBtn.textContent=t.add;reportBtn.textContent=t.report;clearBtn.textContent=t.clear;
+ dropTitle.textContent=t.dropTitle;dropSub.textContent=t.dropSub;dropLocal.textContent=t.dropLocal;
+ localTitle.textContent=t.localTitle;localSub.textContent=t.localSub;
+ demo1.textContent=t.demo[0];demo2.textContent=t.demo[1];demo3.textContent=t.demo[2];
+ listTitle.textContent=t.listTitle;listPill.textContent=t.listPill;
+ [thFile,thFormat,thStatus,thResult].forEach((el,i)=>el.textContent=t.th[i]);
+ notice.textContent=t.notice;detailsTitle.textContent=t.detailsTitle;detailsSub.textContent=t.detailsSub;
+ [labNo,labDate,labSeller,labBuyer,labTotal].forEach((el,i)=>el.textContent=t.labs[i]);
+ findTitle.textContent=t.findTitle;statusFoot.textContent=t.foot;
+ ctaTitle.textContent=t.ctaTitle;ctaText.textContent=t.ctaText;ctaPrivacy.textContent=t.ctaPrivacy;
+ ctaPrimary.textContent=t.ctaPrimary;ctaSecondary.textContent=t.ctaSecondary;
+ renderRows();renderDetails();
+}
+function updateProductLink(){const targetLang=encodeURIComponent(lang);ctaSecondary.href=`../index.html?lang=${targetLang}`;}
+document.getElementById("lang").value=lang;
+document.getElementById("lang").onchange=e=>{lang=e.target.value;sessionStorage.setItem("dmoxLang",lang);applyLang();updateProductLink()};
+document.querySelectorAll("[data-demo]").forEach(b=>b.onclick=()=>{active=+b.dataset.demo;hidden=false;renderRows();renderDetails()});
+clearBtn.onclick=()=>{hidden=true;renderRows();alert(T[lang].cleared)};
+addBtn.onclick=()=>alert(T[lang].info);
+infoBtn.onclick=()=>alert(T[lang].info);
+dropZone.ondragover=e=>{e.preventDefault();dropZone.style.transform="scale(1.003)"};
+dropZone.ondragleave=()=>dropZone.style.transform="";
+dropZone.ondrop=e=>{e.preventDefault();dropZone.style.transform="";alert(T[lang].info)};
+reportBtn.onclick=()=>{
+ const d=demosForLang()[active],t=T[lang];
+ const w=window.open("","_blank");
+ const findingHtml=d.findings.map(k=>"<p>"+t[k]+"</p>").join("");
+ const reportHtml=`<!doctype html>
+<html lang="${lang}">
+<head>
+<meta charset="utf-8">
+<title>${t.reportTitle}</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;padding:40px;color:#102A43;background:#f6f9fc}
+.wrap{max-width:820px;margin:auto;background:#fff;border:1px solid #d8e3ec;border-radius:18px;padding:30px}
+h1{color:#0B5ED7;margin-top:0}.box{border:1px solid #d8e3ec;border-radius:12px;padding:18px;margin:18px 0}
+.ok{color:#0B8A5B}.warn{color:#8B6200}.bad{color:#A82222}
+.meta{line-height:1.8}.foot{color:#789;margin-top:26px;font-size:13px}
+button{border:0;border-radius:10px;background:#0B5ED7;color:#fff;padding:10px 14px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body><div class="wrap">
+<h1>InvoiceCheck Professional</h1>
+<h2>${t.reportTitle}</h2>
+<p>${t.reportMsg}</p>
+<div class="box">
+<b>${t.reportInvoice}: ${d.file}</b>
+<p class="meta">
+${t.labs[0]}: ${d.no}<br>
+${t.labs[1]}: ${d.date}<br>
+${t.labs[2]}: ${d.seller}<br>
+${t.labs[3]}: ${d.buyer}<br>
+${t.labs[4]}: ${d.total}
+</p>
+<h3 class="${d.state}">${t.reportStatus}: ${t.status[d.state]}</h3>
+${findingHtml}
+</div>
+<button onclick="window.close()">${t.reportClose}</button>
+<div class="foot">${t.reportFooter}<br>M. Linner Softwareentwicklung & Dienstleistungen · mlinner-software.de</div>
+</div></body></html>`;
+ w.document.open();
+ w.document.write(reportHtml);
+ w.document.close();
+};
+applyLang();updateProductLink();
+</script>
+</body>
+</html>
