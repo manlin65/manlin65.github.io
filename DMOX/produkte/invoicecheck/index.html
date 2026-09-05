@@ -47,17 +47,14 @@ footer{color:#7b8fa1;font-size:13px;padding:26px 0}
 <p class="lead" id="lead">Rechnungen und E-Rechnungen automatisch vorprüfen – lokal auf Ihrem Windows-PC. Klare Statusanzeige, OCR, strukturierte E-Rechnungen und PDF-Prüfberichte.</p>
 
 <div class="actions">
-<a class="btn primary" id="demoBtn" href="demo/index.html" target="_blank">Demo starten</a>
 <a class="btn green" id="videoBtn" href="#video">Video ansehen</a>
-<a class="btn" id="pdfDe" href="flyer/InvoiceCheck_Broschuere_DE.pdf" target="_blank">Broschüre DE</a>
-<a class="btn" id="pdfEn" href="flyer/InvoiceCheck_Brochure_EN.pdf" target="_blank">Brochure EN</a>
-<a class="btn" id="pdfEs" href="flyer/InvoiceCheck_Folleto_ES.pdf" target="_blank">Folleto ES</a>
+<a class="btn" id="pdfBtn" href="flyer/InvoiceCheck_Broschuere_DE.pdf" target="_blank">Broschüre PDF</a>
 <a class="btn" id="askBtn" href="mailto:info@mlinner-software.de?subject=InvoiceCheck%20Professional">Anfragen</a>
 </div>
 
 <div class="slider">
-<img class="slide active" src="screens/screen-01-start.png" alt="InvoiceCheck Startansicht">
-<img class="slide" src="screens/screen-02-result.png" alt="InvoiceCheck Prüfergebnis">
+<img id="screenStart" class="slide active" src="screens/de-start.png" alt="InvoiceCheck">
+<img id="screenResult" class="slide" src="screens/de-result.png" alt="InvoiceCheck">
 <div class="nav"><span class="dot active"></span><span class="dot"></span></div>
 </div>
 </section>
@@ -70,27 +67,34 @@ footer{color:#7b8fa1;font-size:13px;padding:26px 0}
 
 <section class="video" id="video">
 <h2 id="videoTitle">InvoiceCheck in ca. 40 Sekunden</h2>
-<video id="productVideo" controls preload="metadata" poster="screens/screen-01-start.png">
+<video id="productVideo" controls preload="metadata" poster="screens/de-start.png">
 <source id="productVideoSource" src="video/invoicecheck-de.mp4" type="video/mp4">
 </video>
 </section>
 
-<div class="note" id="note">Die Web-Demo verwendet vorbereitete Beispieldaten. Die echte Rechnungsprüfung erfolgt in der Windows-Anwendung lokal.</div>
 <footer>M. Linner Softwareentwicklung & Dienstleistungen · mlinner-software.de</footer>
 </div>
 
 <script>
+if(sessionStorage.getItem('dmox')!=='1'){location.replace('../../index.html');}
 const T={
-de:{back:'← Produktübersicht',lead:'Rechnungen und E-Rechnungen automatisch vorprüfen – lokal auf Ihrem Windows-PC. Klare Statusanzeige, OCR, strukturierte E-Rechnungen und PDF-Prüfberichte.',demo:'Demo starten',video:'Video ansehen',ask:'Anfragen',c1h:'Lokal & privat',c1p:'Keine Cloud erforderlich. Verarbeitung und OCR laufen lokal.',c2h:'Viele Formate',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, Bilder und E-Mail (.eml).',c3h:'Klare Ergebnisse',c3p:'OK, Hinweis oder Fehler – inklusive erkannter Rechnungsdaten und Details.',vt:'InvoiceCheck in ca. 40 Sekunden',note:'Die Web-Demo verwendet vorbereitete Beispieldaten. Die echte Rechnungsprüfung erfolgt in der Windows-Anwendung lokal.'},
-en:{back:'← Product overview',lead:'Automatically pre-check invoices and e-invoices locally on your Windows PC. Clear status display, OCR, structured e-invoices and PDF reports.',demo:'Start demo',video:'Watch video',ask:'Contact',c1h:'Local & private',c1p:'No cloud required. Processing and OCR run locally.',c2h:'Many formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images and e-mail (.eml).',c3h:'Clear results',c3p:'OK, warning or error – including recognised invoice data and details.',vt:'InvoiceCheck in about 40 seconds',note:'The web demo uses prepared sample data. Real invoice processing takes place locally in the Windows application.'},
-es:{back:'← Resumen de productos',lead:'Comprueba automáticamente facturas y facturas electrónicas de forma local en tu PC con Windows. Estado claro, OCR, facturas electrónicas estructuradas e informes PDF.',demo:'Iniciar demo',video:'Ver vídeo',ask:'Contactar',c1h:'Local y privado',c1p:'No se necesita nube. El procesamiento y OCR se realizan localmente.',c2h:'Muchos formatos',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, imágenes y e-mail (.eml).',c3h:'Resultados claros',c3p:'OK, aviso o error, incluidos datos reconocidos y detalles.',vt:'InvoiceCheck en unos 40 segundos',note:'La demo web utiliza datos de ejemplo preparados. La comprobación real se realiza localmente en la aplicación de Windows.'},
-fr:{back:'← Vue des produits',lead:'Précontrôlez automatiquement factures et factures électroniques localement sur votre PC Windows. Statut clair, OCR, e-factures structurées et rapports PDF.',demo:'Lancer la démo',video:'Voir la vidéo',ask:'Contact',c1h:'Local & privé',c1p:'Aucun cloud requis. Le traitement et l’OCR restent locaux.',c2h:'De nombreux formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images et e-mail (.eml).',c3h:'Résultats clairs',c3p:'OK, remarque ou erreur, avec données reconnues et détails.',vt:'InvoiceCheck en environ 40 secondes',note:'La démo web utilise des exemples préparés. Le contrôle réel s’effectue localement dans l’application Windows.'},
-it:{back:'← Panoramica prodotti',lead:'Controlla automaticamente fatture e fatture elettroniche in locale sul tuo PC Windows. Stato chiaro, OCR, e-fatture strutturate e report PDF.',demo:'Avvia demo',video:'Guarda video',ask:'Contatti',c1h:'Locale e privato',c1p:'Nessun cloud necessario. Elaborazione e OCR avvengono in locale.',c2h:'Molti formati',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, immagini ed e-mail (.eml).',c3h:'Risultati chiari',c3p:'OK, avviso o errore, inclusi dati riconosciuti e dettagli.',vt:'InvoiceCheck in circa 40 secondi',note:'La demo web usa dati di esempio preparati. Il controllo reale avviene localmente nell’applicazione Windows.'}
+de:{back:'← Produktübersicht',lead:'Rechnungen und E-Rechnungen automatisch vorprüfen – lokal auf Ihrem Windows-PC. Klare Statusanzeige, OCR, strukturierte E-Rechnungen und PDF-Prüfberichte.',demo:'Demo starten',video:'Video ansehen',ask:'Anfragen',c1h:'Lokal & privat',c1p:'Keine Cloud erforderlich. Verarbeitung und OCR laufen lokal.',c2h:'Viele Formate',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, Bilder und E-Mail (.eml).',c3h:'Klare Ergebnisse',c3p:'OK, Hinweis oder Fehler – inklusive erkannter Rechnungsdaten und Details.',vt:'InvoiceCheck in 30 Sekunden',pdf:'Broschüre PDF',note:'Die Web-Demo verwendet vorbereitete Beispieldaten. Die echte Rechnungsprüfung erfolgt in der Windows-Anwendung lokal.'},
+en:{back:'← Product overview',lead:'Automatically pre-check invoices and e-invoices locally on your Windows PC. Clear status display, OCR, structured e-invoices and PDF reports.',demo:'Start demo',video:'Watch video',ask:'Contact',c1h:'Local & private',c1p:'No cloud required. Processing and OCR run locally.',c2h:'Many formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images and e-mail (.eml).',c3h:'Clear results',c3p:'OK, warning or error – including recognised invoice data and details.',vt:'InvoiceCheck in 30 seconds',pdf:'PDF brochure',note:'The web demo uses prepared sample data. Real invoice processing takes place locally in the Windows application.'},
+es:{back:'← Resumen de productos',lead:'Comprueba automáticamente facturas y facturas electrónicas de forma local en tu PC con Windows. Estado claro, OCR, facturas electrónicas estructuradas e informes PDF.',demo:'Iniciar demo',video:'Ver vídeo',ask:'Contactar',c1h:'Local y privado',c1p:'No se necesita nube. El procesamiento y OCR se realizan localmente.',c2h:'Muchos formatos',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, imágenes y e-mail (.eml).',c3h:'Resultados claros',c3p:'OK, aviso o error, incluidos datos reconocidos y detalles.',vt:'InvoiceCheck en 30 segundos',pdf:'Folleto PDF',note:'La demo web utiliza datos de ejemplo preparados. La comprobación real se realiza localmente en la aplicación de Windows.'},
+fr:{back:'← Vue des produits',lead:'Précontrôlez automatiquement factures et factures électroniques localement sur votre PC Windows. Statut clair, OCR, e-factures structurées et rapports PDF.',demo:'Lancer la démo',video:'Voir la vidéo',ask:'Contact',c1h:'Local & privé',c1p:'Aucun cloud requis. Le traitement et l’OCR restent locaux.',c2h:'De nombreux formats',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, images et e-mail (.eml).',c3h:'Résultats clairs',c3p:'OK, remarque ou erreur, avec données reconnues et détails.',vt:'InvoiceCheck en 30 secondes (EN)',pdf:'Brochure PDF (EN)',note:'La démo web utilise des exemples préparés. Le contrôle réel s’effectue localement dans l’application Windows.'},
+it:{back:'← Panoramica prodotti',lead:'Controlla automaticamente fatture e fatture elettroniche in locale sul tuo PC Windows. Stato chiaro, OCR, e-fatture strutturate e report PDF.',demo:'Avvia demo',video:'Guarda video',ask:'Contatti',c1h:'Locale e privato',c1p:'Nessun cloud necessario. Elaborazione e OCR avvengono in locale.',c2h:'Molti formati',c2p:'PDF, XML/XRechnung/UBL, DOCX, TXT, immagini ed e-mail (.eml).',c3h:'Risultati chiari',c3p:'OK, avviso o errore, inclusi dati riconosciuti e dettagli.',vt:'InvoiceCheck in 30 secondi (EN)',pdf:'Brochure PDF (EN)',note:'La demo web usa dati di esempio preparati. Il controllo reale avviene localmente nell’applicazione Windows.'}
 };
 function setLang(l){sessionStorage.setItem('dmoxLang',l);document.documentElement.lang=l;
   document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('on'));document.getElementById('l-'+l).classList.add('on');
-  const t=T[l];back.textContent=t.back;lead.textContent=t.lead;demoBtn.textContent=t.demo;videoBtn.textContent=t.video;askBtn.textContent=t.ask;
-  c1h.textContent=t.c1h;c1p.textContent=t.c1p;c2h.textContent=t.c2h;c2p.textContent=t.c2p;c3h.textContent=t.c3h;c3p.textContent=t.c3p;videoTitle.textContent=t.vt;note.textContent=t.note;demoBtn.href='demo/index.html?lang='+l;const map={de:'de',en:'en',es:'es',fr:'de',it:'de'};productVideoSource.src='video/invoicecheck-'+map[l]+'.mp4';productVideo.load();
+  const t=T[l];back.textContent=t.back;lead.textContent=t.lead;videoBtn.textContent=t.video;askBtn.textContent=t.ask;
+  c1h.textContent=t.c1h;c1p.textContent=t.c1p;c2h.textContent=t.c2h;c2p.textContent=t.c2p;c3h.textContent=t.c3h;c3p.textContent=t.c3p;videoTitle.textContent=t.vt;pdfBtn.textContent=t.pdf;
+  const assetLang={de:'de',en:'en',es:'es',fr:'en',it:'en'}[l];
+  const pdfMap={de:'InvoiceCheck_Broschuere_DE.pdf',en:'InvoiceCheck_Brochure_EN.pdf',es:'InvoiceCheck_Folleto_ES.pdf'};
+  pdfBtn.href='flyer/'+pdfMap[assetLang];
+  productVideoSource.src='video/invoicecheck-'+assetLang+'.mp4';
+  productVideo.poster='screens/'+assetLang+'-start.png';
+  screenStart.src='screens/'+assetLang+'-start.png'; screenResult.src='screens/'+assetLang+'-result.png';
+  productVideo.load();
 }
 const qlang=new URLSearchParams(location.search).get('lang');const savedLang=sessionStorage.getItem('dmoxLang');const initLang=['de','en','es','fr','it'].includes(qlang)?qlang:(['de','en','es','fr','it'].includes(savedLang)?savedLang:'de');setLang(initLang);
 const slides=[...document.querySelectorAll('.slide')],dots=[...document.querySelectorAll('.dot')];let i=0;

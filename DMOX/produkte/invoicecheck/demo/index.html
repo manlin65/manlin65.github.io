@@ -242,6 +242,8 @@ button{cursor:pointer}
 </div>
 
 <script>
+if(sessionStorage.getItem('dmox')!=='1'){location.replace('../../../index.html');}
+
 const DEMOS={
 de:[
  {file:"2026-0918_Musterbau_GmbH.pdf",format:"PDF",state:"ok",summaryKey:"sumOk",no:"RE-2026-0918",date:"18.09.2026",seller:"Musterbau GmbH",buyer:"Beispiel Handel GmbH",total:"1.428,00 €",findings:["fOk1","fOk2","fOk3","fOk4"]},

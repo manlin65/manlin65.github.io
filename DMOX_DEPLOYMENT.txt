@@ -1,0 +1,4 @@
+DMOX is included in /DMOX/.
+GitHub Pages static version.
+Language assets: DE/EN/ES. FR and IT use English PDF/video/screens as fallback.
+The root homepage index.html was not modified.
