@@ -1,14 +1,29 @@
-RAUS! v1.0 – Unterordner für www.mlinner-software.de
+MISSION RAUS! v2.1 – PRIVATE WEB-DEMO
 
-Dieser komplette Ordner muss als /raus/ in das Root-Verzeichnis der Website.
-Danach ist die App erreichbar unter:
-https://www.mlinner-software.de/raus/
+Ziel: verkaufsreife Vorführversion im Browser, noch keine App/PWA.
 
-Dateien:
-- index.html
-- manifest.webmanifest
-- sw.js
-- icons/icon-192.png
-- icons/icon-512.png
+Empfohlener geheimer Unterordner:
+  /mission-raus-preview-7q4m9x/
 
-Hinweis: Bei GitHub Pages werden Änderungen am Service Worker manchmal erst nach einem Neuladen bzw. Schließen/Öffnen des Tabs sichtbar.
+Upload:
+1. Den kompletten Ordnerinhalt in einen gleichnamigen Unterordner auf dem Webspace kopieren.
+2. Startdatei ist index.html.
+3. Der Link ist anschließend sinngemäß:
+   https://<deine-domain>/mission-raus-preview-7q4m9x/
+
+Privatsphäre / Auffindbarkeit:
+- index.html enthält noindex, nofollow, noarchive und nosnippet.
+- Die Seite wird nicht von der Hauptnavigation verlinkt.
+- Wichtig: Ein geheimer URL-Pfad ist KEIN echter Passwortschutz. Jeder, der den Link kennt, kann ihn öffnen.
+- Für echten Zugriffsschutz wäre serverseitiger Passwortschutz nötig.
+
+Version 2.1:
+- private, nicht öffentlich gelistete Produktdemo
+- Verkaufs-/Vorführstartseite
+- Kontakt-CTA
+- Demo-Daten lokal im Browser
+- kompletter bisheriger Funktionsumfang
+- Sterne statt XP
+- Kinderprofile: anlegen, wechseln, bearbeiten, löschen
+- Demo zurücksetzen unter Mehr
+- keine PWA-/Service-Worker-Dateien, um Cache-Probleme in der Vorschau zu vermeiden
