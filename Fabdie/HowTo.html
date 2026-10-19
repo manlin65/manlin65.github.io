@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How-to: STL-Negativform entwickeln</title>
+<style>
+:root{--navy:#14334b;--teal:#168b88;--ink:#203344;--muted:#667988;--line:#dbe5e9;--paper:#f2f6f7;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Segoe UI",Arial,sans-serif}.wrap{max-width:920px;margin:auto;padding:28px 18px 56px}.hero{padding:30px 34px;background:linear-gradient(120deg,var(--navy),var(--teal));color:white;border-radius:20px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.78rem;font-weight:700;opacity:.84}.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:.35em 0}.hero p{color:#e4f3f1;max-width:700px}.card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:18px;box-shadow:0 6px 20px #14334b0a}h2{color:var(--navy);font-size:1.3rem;margin:0 0 12px}h3{font-size:1.02rem;margin:0 0 5px;color:var(--navy)}p{margin:8px 0}.steps{display:grid;gap:12px}.step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}.num{display:grid;place-items:center;background:#e5f5ef;color:#176d67;font-weight:800;border-radius:50%;width:34px;height:34px}.quote{border-left:4px solid var(--teal);padding:9px 14px;background:#f2f8f7;border-radius:0 8px 8px 0;margin:9px 0}.note{padding:15px 17px;border-radius:12px;background:#fff7e3;border:1px solid #efdfa4}.small{color:var(--muted);font-size:.92rem}ul,ol{padding-left:23px}li{margin:5px 0}footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:22px}
+@media(max-width:600px){.wrap{padding:12px}.hero{padding:23px}.card{padding:18px}.step{grid-template-columns:32px 1fr;gap:9px}.num{width:30px;height:30px}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="hero"><div class="eyebrow">How-to · Modell-Chat</div><h1>Vom ersten STL-Begriff zur eigenen 3D-Seite</h1><p>So haben wir die Idee Schritt für Schritt geklärt und daraus eine Browser-Anwendung für eine STL-Negativform gemacht.</p></header>
+<section class="card"><h2>Der Startpunkt</h2><p>Los ging es mit der Frage <strong>„STL – was ist das?“</strong> Daraus wurde eine konkrete Aufgabe: Eine STL-Datei soll eingelesen und daraus eine Negativform erzeugt werden.</p><div class="quote">„STL einlesen ⇒ Ausgabe ⇒ Negativ davon“</div><p>Gemeint war eine Gegenform: Das geladene 3D-Modell wird als Hohlraum aus einem Block herausgerechnet.</p></section>
+<section class="card"><h2>So sind wir im Modell-Chat vorgegangen</h2><div class="steps">
+<div class="step"><span class="num">1</span><div><h3>Begriff und Ziel klären</h3><p>Erst wurde geklärt, was eine STL-Datei enthält. Dann wurde das Ziel festgelegt: STL laden und eine Negativform als neue STL-Datei ausgeben.</p></div></div>
+<div class="step"><span class="num">2</span><div><h3>Die passende Umsetzung wählen</h3><p>Auf die Frage, ob das ohne Python geht, fiel die Wahl auf eine HTML-Seite mit JavaScript. Die Berechnung soll lokal im Browser laufen; eine Installation ist nicht nötig.</p></div></div>
+<div class="step"><span class="num">3</span><div><h3>Die Ansicht konkretisieren</h3><p>Die geladene STL sollte sichtbar sein. Danach wurde ergänzt: nicht nur eine 2D-Ansicht, sondern das Eingabemodell und das berechnete Ergebnis jeweils in 3D. Farben machen die Höhen- beziehungsweise Rasterebenen erkennbar.</p></div></div>
+<div class="step"><span class="num">4</span><div><h3>Beispiele und Bedienung ergänzen</h3><p>Zum Ausprobieren kamen drei Modelle hinzu: Kugel, Pyramide und Stufenblock. Eine 2D-Querschnittsansicht blieb als zusätzliche Kontrolle erhalten.</p></div></div>
+<div class="step"><span class="num">5</span><div><h3>Als eigene Unterseite ablegen</h3><p>Die Anwendung liegt getrennt von der Startseite im Ordner <strong>Fabdie</strong>. Es gibt absichtlich keinen Link von der Homepage dorthin.</p></div></div>
+</div></section>
+<section class="card"><h2>Was die Seite kann</h2><ol><li>Eine eigene ASCII- oder Binär-STL-Datei laden oder eines der drei Beispiele wählen.</li><li>Rasterabstand, Blockrand und Modellüberstand einstellen.</li><li>Eingabe und erzeugte Negativform nebeneinander in 3D ansehen, drehen und zoomen.</li><li>Das Ergebnis als STL herunterladen; der Querschnitt durch die Mitte hilft bei der Sichtkontrolle.</li></ol></section>
+<section class="card"><h2>Technik und Grenzen</h2><p>Die Seite besteht aus HTML und JavaScript. Sie benötigt kein Python und lädt die ausgewählte Datei nicht auf einen Server hoch. Die Höhenfarben visualisieren die Rasterebenen.</p><div class="note"><strong>Wichtig:</strong> Die Negativform wird in dieser Demo als Voxel- beziehungsweise Raster-Näherung erzeugt. Dadurch können sichtbare Stufen entstehen; es ist keine exakte CAD-Boolesche Operation. Vor einem 3D-Druck die ausgegebene STL im Slicer prüfen. Geschlossene, fehlerfreie Modelle liefern die besten Ergebnisse.</div></section>
+<section class="card"><h2>Die Idee dahinter</h2><p>Die Anwendung entstand nicht aus einem fertigen Pflichtenheft. Wir haben erst die Aufgabe beschrieben und anschließend anhand der Vorschauen entschieden, was noch fehlt: sichtbares 3D-Modell, 3D-Ergebnis, Ebenenfarben, drei Testmodelle und eine eigene Unterseite. So wurde aus einer kurzen Frage ein kleines, direkt ausprobierbares Projekt.</p></section>
+<footer>Fabdie · How-to zum Entstehungsweg der STL-Negativform-Demo</footer>
+</main></body></html>
