@@ -11,7 +11,7 @@ function normalize(elements,point) {
     if(!Number.isFinite(latitude) || !Number.isFinite(longitude) || Math.abs(latitude)>90 || Math.abs(longitude)>180) continue;
     const km=distance(point,{latitude,longitude});if(km>100) continue;
     const tags=element.tags || {},name=String(tags.name || 'Weihnachtsmarkt');
-    if(tags['xmas:feature']!=='market' && !/weihnachtsm[aä]rkt|christkind(?:les|l|el)?markt|adventsm[aä]rkt|christmas market|march[eé] de no[eë]l|mercat.{0,5} natale|mercado navide[nñ]o/i.test(name)) continue;
+    if(tags['xmas:feature']!=='market' && tags.event!=='christmas_market' && !/weihnachtsm[aä]rkt|christkind(?:les|l|el)?markt|adventsm[aä]rkt|christmas market|march[eé] de no[eë]l|mercat.{0,5} natale|mercado navide[nñ]o/i.test(name)) continue;
     const key=name.normalize('NFKC').toLocaleLowerCase('de-DE')+'|'+latitude.toFixed(3)+'|'+longitude.toFixed(3);
     if(matches.has(key)) continue;
     matches.set(key,{id:`${element.type}/${element.id}`,name:name.slice(0,300),latitude,longitude,distanceKm:Math.round(km*10)/10,description:String(tags['description:de'] || tags.description || '').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,650) || null,city:String(tags['addr:city'] || '').slice(0,150),address:[tags['addr:street'],tags['addr:housenumber']].filter(Boolean).join(' ').slice(0,250),openingHours:String(tags.opening_hours || '').slice(0,300) || null,website:safeLink(tags.website || tags['contact:website']),mapUrl:`https://www.openstreetmap.org/${element.type}/${element.id}`});
@@ -37,7 +37,7 @@ async function search(point) {
     const around=`around:100000,${point.latitude},${point.longitude}`;
     const query=`[out:json][timeout:6];(nwr(${around})["xmas:feature"="market"];nwr(${around})["event"="christmas_market"];nwr(${around})["amenity"="marketplace"]["name"~"Weihnachtsmarkt|Weihnachtsmärkte|Christkindlesmarkt|Christkindlmarkt|Christkindelmarkt|Adventsmarkt|Adventsmärkte|Christmas Market|Marché de Noël|Mercato di Natale|Mercado Navideño",i];);out tags center;`;
     let raw;const sourceErrors=[];
-    for(const endpoint of ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']) {
+    for(const endpoint of ['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter']) {
       try {raw=await queryServer(endpoint,query);break;}
       catch(error) {sourceErrors.push({source:new URL(endpoint).hostname,code:error.name==='TimeoutError'?'timeout':error.sourceCode || 'network_error'});}
     }

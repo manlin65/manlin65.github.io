@@ -22,7 +22,7 @@ test('market locations are filtered to 100 km, sorted, deduplicated and safely l
 });
 test('real Overpass request has a fixed radius, no date restriction, no weather; results cache',async()=>{
  let calls=0;global.fetch=async(url,options)=>{
-  calls++;assert.equal(url,'https://overpass-api.de/api/interpreter');assert.equal(options.method,'POST');const query=options.body.get('data');assert.match(query,/around:100000,49.45,11.08/);assert.ok(!query.includes('date:'));
+  calls++;assert.equal(url,'https://overpass.private.coffee/api/interpreter');assert.equal(options.method,'POST');const query=options.body.get('data');assert.match(query,/around:100000,49.45,11.08/);assert.ok(!query.includes('date:'));
   return new Response(JSON.stringify({elements:[{type:'node',id:9,lat:49.45,lon:11.08,tags:{name:'Weihnachtsmarkt'}}]}));
  };
  const first=await handler(request());assert.equal(first.statusCode,200);const body=JSON.parse(first.body);assert.equal(body.radiusKm,100);assert.equal(body.markets.length,1);assert.match(body.notice,/keine Bestätigung/);
@@ -34,6 +34,6 @@ test('partial or unavailable OSM data is an explicit error rather than an empty 
 });
 
 test('a failing primary Overpass server falls back to another public OSM server',async()=>{
- const calls=[];global.fetch=async url=>{calls.push(url);return url.includes('overpass-api.de')?new Response('Busy',{status:503}):new Response(JSON.stringify({elements:[{type:'node',id:8,lat:52.52,lon:13.4,tags:{name:'Weihnachtsmarkt'}}]}));};
- const result=await handler(request({latitude:'52.52',longitude:'13.4'}));assert.equal(result.statusCode,200);assert.equal(JSON.parse(result.body).markets.length,1);assert.deepEqual(calls,['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']);
+ const calls=[];global.fetch=async url=>{calls.push(url);return url.includes('private.coffee')?new Response('Busy',{status:503}):new Response(JSON.stringify({elements:[{type:'node',id:8,lat:52.52,lon:13.4,tags:{name:'Weihnachtsmarkt'}}]}));};
+ const result=await handler(request({latitude:'52.52',longitude:'13.4'}));assert.equal(result.statusCode,200);assert.equal(JSON.parse(result.body).markets.length,1);assert.deepEqual(calls,['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter']);
 });
