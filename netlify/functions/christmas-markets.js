@@ -18,8 +18,8 @@ function normalize(elements,point) {
   }
   return [...matches.values()].sort((a,b)=>a.distanceKm-b.distanceKm);
 }
-async function queryServer(endpoint,query) {
-  const upstream=await fetch(endpoint,{method:'POST',body:new URLSearchParams({data:query}),headers:{Accept:'application/json','User-Agent':'Rauszeit/1.0 (Christmas market locations)'},signal:AbortSignal.timeout(8500)});
+async function queryServer(endpoint,query,signal) {
+  const upstream=await fetch(endpoint,{method:'POST',body:new URLSearchParams({data:query}),headers:{Accept:'application/json','User-Agent':'Rauszeit/1.0 (Christmas market locations)'},signal:AbortSignal.any([AbortSignal.timeout(28000),signal])});
   if(!upstream.ok) {const error=new Error('OSM_HTTP');error.sourceCode='http_'+upstream.status;throw error;}
   const reader=upstream.body?.getReader();if(!reader) throw new Error('OSM_EMPTY');
   const chunks=[];let size=0;
@@ -35,13 +35,17 @@ async function search(point) {
   if(pending.has(key)) return pending.get(key);
   const work=(async()=>{
     const around=`around:100000,${point.latitude},${point.longitude}`;
-    const query=`[out:json][timeout:6];(nwr(${around})["xmas:feature"="market"];nwr(${around})["event"="christmas_market"];nwr(${around})["amenity"="marketplace"]["name"~"Weihnachtsmarkt|Weihnachtsmärkte|Christkindlesmarkt|Christkindlmarkt|Christkindelmarkt|Adventsmarkt|Adventsmärkte|Christmas Market|Marché de Noël|Mercato di Natale|Mercado Navideño",i];);out tags center;`;
-    let raw;const sourceErrors=[];
-    for(const endpoint of ['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter']) {
-      try {raw=await queryServer(endpoint,query);break;}
-      catch(error) {sourceErrors.push({source:new URL(endpoint).hostname,code:error.name==='TimeoutError'?'timeout':error.sourceCode || 'network_error'});}
-    }
-    if(!raw) {const error=new Error('OSM_UNAVAILABLE');error.sourceErrors=sourceErrors;throw error;}
+    const query=`[out:json][timeout:20];(nwr(${around})["xmas:feature"="market"];nwr(${around})["event"="christmas_market"];nwr(${around})["amenity"="marketplace"]["name"~"Weihnachtsmarkt|Weihnachtsmärkte|Christkindlesmarkt|Christkindlmarkt|Christkindelmarkt|Adventsmarkt|Adventsmärkte|Christmas Market|Marché de Noël|Mercato di Natale|Mercado Navideño",i];);out tags center;`;
+    const stop=new AbortController(),sourceErrors=[];
+    const endpoints=['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter'];
+    let raw;
+    try {
+      raw=await Promise.any(endpoints.map(async endpoint=>{
+        try {return await queryServer(endpoint,query,stop.signal);}
+        catch(error) {sourceErrors.push({source:new URL(endpoint).hostname,code:error.name==='TimeoutError'?'timeout':error.sourceCode || 'network_error'});throw error;}
+      }));
+    } catch {const error=new Error('OSM_UNAVAILABLE');error.sourceErrors=sourceErrors;throw error;}
+    finally {stop.abort();}
     const markets=normalize(raw.elements,point);
     const data={markets:markets.slice(0,100),radiusKm:100,total:markets.length,truncated:markets.length>100,source:'OpenStreetMap',sourceUrl:'https://www.openstreetmap.org/copyright',checkedAt:new Date().toISOString(),notice:'Verzeichnete Marktstandorte, keine Bestätigung für die aktuelle Saison oder heutige Öffnung. Saisontermine bitte beim Veranstalter prüfen.'};
     if(cache.size>=60) cache.delete(cache.keys().next().value);cache.set(key,{expires:Date.now()+900000,data});return data;

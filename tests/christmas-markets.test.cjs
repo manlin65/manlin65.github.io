@@ -22,11 +22,11 @@ test('market locations are filtered to 100 km, sorted, deduplicated and safely l
 });
 test('real Overpass request has a fixed radius, no date restriction, no weather; results cache',async()=>{
  let calls=0;global.fetch=async(url,options)=>{
-  calls++;assert.equal(url,'https://overpass.private.coffee/api/interpreter');assert.equal(options.method,'POST');const query=options.body.get('data');assert.match(query,/around:100000,49.45,11.08/);assert.ok(!query.includes('date:'));
+  calls++;assert.ok(['https://overpass.private.coffee/api/interpreter','https://overpass-api.de/api/interpreter'].includes(url));assert.equal(options.method,'POST');const query=options.body.get('data');assert.match(query,/around:100000,49.45,11.08/);assert.ok(!query.includes('date:'));
   return new Response(JSON.stringify({elements:[{type:'node',id:9,lat:49.45,lon:11.08,tags:{name:'Weihnachtsmarkt'}}]}));
  };
  const first=await handler(request());assert.equal(first.statusCode,200);const body=JSON.parse(first.body);assert.equal(body.radiusKm,100);assert.equal(body.markets.length,1);assert.match(body.notice,/keine Bestätigung/);
- await handler(request());assert.equal(calls,1);
+ await handler(request());assert.equal(calls,2);
 });
 test('partial or unavailable OSM data is an explicit error rather than an empty market list',async()=>{
  global.fetch=async()=>new Response(JSON.stringify({remark:'runtime error: timeout',elements:[]}));
