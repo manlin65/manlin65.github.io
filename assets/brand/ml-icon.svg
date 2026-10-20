@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="670" viewBox="70 77 740 335" role="img" aria-labelledby="title desc">
+<title id="title">ML-Monogramm · Farbe hell</title><desc id="desc">Eigenständiges ML-Monogramm mit stärkerem KI-Netzwerk sowie integrierten C#- und Python-Codezeilen. Kein weiterer Text.</desc>
+<defs><linearGradient id="m-grad" x1="95" y1="105" x2="560" y2="390" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#12294C" /><stop offset=".34" stop-color="#14577A" /><stop offset=".68" stop-color="#1CB3A1" /><stop offset="1" stop-color="#79DE75" /></linearGradient>
+<linearGradient id="l-grad" x1="0" y1="100" x2="0" y2="390" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#163459" /><stop offset=".42" stop-color="#157D83" /><stop offset=".74" stop-color="#35C89C" /><stop offset="1" stop-color="#83E572" /></linearGradient>
+<linearGradient id="side-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C1D38" /><stop offset=".55" stop-color="#10596C" /><stop offset="1" stop-color="#176C61" /></linearGradient>
+<linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".43" /><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".06" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0" /></linearGradient><filter id="shadow" x="-20%" y="-25%" width="150%" height="165%"><feDropShadow dx="3" dy="9" stdDeviation="9" flood-color="#07172B" flood-opacity=".28" /></filter><clipPath id="clip-m"><path d="M 90 390 L 162 111 Q 166 97 181 97 H 232 L 330 263 L 424 97 H 476 Q 490 97 494 112 L 560 390 H 475 L 436 220 L 330 370 L 222 220 L 180 390 Z" /></clipPath><clipPath id="clip-l"><path d="M 584 97 H 652 V 321 H 790 L 770 390 H 584 Z" /></clipPath></defs>
+
+<g fill="#07172B" opacity=".16" filter="url(#shadow)" transform="translate(3 5)"><path d="M 90 390 L 162 111 Q 166 97 181 97 H 232 L 330 263 L 424 97 H 476 Q 490 97 494 112 L 560 390 H 475 L 436 220 L 330 370 L 222 220 L 180 390 Z" /><path d="M 584 97 H 652 V 321 H 790 L 770 390 H 584 Z" /></g>
+<g fill="none" stroke="url(#side-grad)" stroke-width="1" transform="translate(10 10)"><path d="M 90 390 L 162 111 Q 166 97 181 97 H 232 L 330 263 L 424 97 H 476 Q 490 97 494 112 L 560 390 H 475 L 436 220 L 330 370 L 222 220 L 180 390 Z" /><path d="M 584 97 H 652 V 321 H 790 L 770 390 H 584 Z" /></g>
+<g fill="url(#side-grad)" transform="translate(10 10)"><path d="M 90 390 L 162 111 Q 166 97 181 97 H 232 L 330 263 L 424 97 H 476 Q 490 97 494 112 L 560 390 H 475 L 436 220 L 330 370 L 222 220 L 180 390 Z" /><path d="M 584 97 H 652 V 321 H 790 L 770 390 H 584 Z" /></g>
+
+<path d="M 90 390 L 162 111 Q 166 97 181 97 H 232 L 330 263 L 424 97 H 476 Q 490 97 494 112 L 560 390 H 475 L 436 220 L 330 370 L 222 220 L 180 390 Z" fill="url(#m-grad)" stroke="#E5FFF8" stroke-opacity=".42" stroke-width="2" stroke-linejoin="round" />
+<path d="M 584 97 H 652 V 321 H 790 L 770 390 H 584 Z" fill="url(#l-grad)" stroke="#E5FFF8" stroke-opacity=".42" stroke-width="2" stroke-linejoin="round" />
+
+<g clip-path="url(#clip-m)"><path d="M 127 106 H 238 L 329 254 L 298 267 Z" fill="url(#shine)" opacity=".62" /></g>
+<g clip-path="url(#clip-l)"><path d="M 587 99 H 650 V 321 H 690 L 690 337 H 600 Z" fill="url(#shine)" opacity=".38" /></g>
+
+</svg>
