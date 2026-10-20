@@ -51,7 +51,7 @@
     if(!force && lastPoint===select.value && markets.length) return;
     const run=++generation;controller?.abort();controller=new AbortController();lastPoint=select.value;markets=[];visible=12;
     clear('Suche Weihnachtsmarkt-Standorte im Umkreis von 100 km …');
-    const timeout=setTimeout(()=>controller.abort(),30000);
+    const activeController=controller;const timeout=setTimeout(()=>activeController.abort(),42000);
     try {
       url.search=new URLSearchParams({latitude:String(point.latitude),longitude:String(point.longitude)});
       const response=await fetch(url,{signal:controller.signal});const data=await response.json();

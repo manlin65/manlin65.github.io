@@ -32,3 +32,8 @@ test('partial or unavailable OSM data is an explicit error rather than an empty 
  global.fetch=async()=>new Response(JSON.stringify({remark:'runtime error: timeout',elements:[]}));
  const result=await handler(request({latitude:'48.85',longitude:'2.35'}));assert.equal(result.statusCode,503);assert.match(result.body,/nicht erreichbar/);
 });
+
+test('a failing primary Overpass server falls back to another public OSM server',async()=>{
+ const calls=[];global.fetch=async url=>{calls.push(url);return url.includes('overpass-api.de')?new Response('Busy',{status:503}):new Response(JSON.stringify({elements:[{type:'node',id:8,lat:52.52,lon:13.4,tags:{name:'Weihnachtsmarkt'}}]}));};
+ const result=await handler(request({latitude:'52.52',longitude:'13.4'}));assert.equal(result.statusCode,200);assert.equal(JSON.parse(result.body).markets.length,1);assert.deepEqual(calls,['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']);
+});

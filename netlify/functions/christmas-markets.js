@@ -18,20 +18,30 @@ function normalize(elements,point) {
   }
   return [...matches.values()].sort((a,b)=>a.distanceKm-b.distanceKm);
 }
+async function queryServer(endpoint,query) {
+  const upstream=await fetch(endpoint,{method:'POST',body:new URLSearchParams({data:query}),headers:{Accept:'application/json','User-Agent':'Rauszeit/1.0 (Christmas market locations)'},signal:AbortSignal.timeout(18000)});
+  if(!upstream.ok) {const error=new Error('OSM_HTTP');error.sourceCode='http_'+upstream.status;throw error;}
+  const reader=upstream.body?.getReader();if(!reader) throw new Error('OSM_EMPTY');
+  const chunks=[];let size=0;
+  try {for(;;) {const {value,done}=await reader.read();if(done) break;size+=value.byteLength;if(size>3*1024*1024){await reader.cancel();throw new Error('OSM_TOO_LARGE');}chunks.push(Buffer.from(value));}} finally {reader.releaseLock();}
+  let data;
+  try {data=JSON.parse(Buffer.concat(chunks).toString('utf8'));} catch {const error=new Error('OSM_FORMAT');error.sourceCode='invalid_response';throw error;}
+  if(data.remark || !Array.isArray(data.elements)) {const error=new Error('OSM_INCOMPLETE');error.sourceCode=String(data.remark || '').includes('timed out')?'query_timeout':'incomplete_response';throw error;}
+  return data;
+}
 async function search(point) {
   const key=[point.latitude.toFixed(6),point.longitude.toFixed(6)].join(',');
   const saved=cache.get(key);if(saved && saved.expires>Date.now()) return saved.data;
   if(pending.has(key)) return pending.get(key);
   const work=(async()=>{
     const around=`around:100000,${point.latitude},${point.longitude}`;
-    const query=`[out:json][timeout:20];(nwr(${around})["xmas:feature"="market"];nwr(${around})["name"~"Weihnachtsmarkt|Weihnachtsmärkte|Christkindlesmarkt|Christkindlmarkt|Christkindelmarkt|Adventsmarkt|Adventsmärkte|Christmas Market|Marché de Noël|Mercato di Natale|Mercado Navideño",i];);out center tags;`;
-    const upstream=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:new URLSearchParams({data:query}),headers:{Accept:'application/json','User-Agent':'Rauszeit/1.0 (Christmas market locations)'},signal:AbortSignal.timeout(25000)});
-    if(!upstream.ok) throw new Error('OSM_UNAVAILABLE');
-    const reader=upstream.body?.getReader();if(!reader) throw new Error('OSM_EMPTY');
-    const chunks=[];let size=0;
-    try {for(;;) {const {value,done}=await reader.read();if(done) break;size+=value.byteLength;if(size>3*1024*1024){await reader.cancel();throw new Error('OSM_TOO_LARGE');}chunks.push(Buffer.from(value));}} finally {reader.releaseLock();}
-    const raw=JSON.parse(Buffer.concat(chunks).toString('utf8'));
-    if(raw.remark || !Array.isArray(raw.elements)) throw new Error('OSM_INCOMPLETE');
+    const query=`[out:json][timeout:14];(nwr(${around})["xmas:feature"="market"];nwr(${around})["name"~"Weihnachtsmarkt|Weihnachtsmärkte|Christkindlesmarkt|Christkindlmarkt|Christkindelmarkt|Adventsmarkt|Adventsmärkte|Christmas Market|Marché de Noël|Mercato di Natale|Mercado Navideño",i];);out tags center;`;
+    let raw;const sourceErrors=[];
+    for(const endpoint of ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']) {
+      try {raw=await queryServer(endpoint,query);break;}
+      catch(error) {sourceErrors.push({source:new URL(endpoint).hostname,code:error.name==='TimeoutError'?'timeout':error.sourceCode || 'network_error'});}
+    }
+    if(!raw) {const error=new Error('OSM_UNAVAILABLE');error.sourceErrors=sourceErrors;throw error;}
     const markets=normalize(raw.elements,point);
     const data={markets:markets.slice(0,100),radiusKm:100,total:markets.length,truncated:markets.length>100,source:'OpenStreetMap',sourceUrl:'https://www.openstreetmap.org/copyright',checkedAt:new Date().toISOString(),notice:'Verzeichnete Marktstandorte, keine Bestätigung für die aktuelle Saison oder heutige Öffnung. Saisontermine bitte beim Veranstalter prüfen.'};
     if(cache.size>=60) cache.delete(cache.keys().next().value);cache.set(key,{expires:Date.now()+900000,data});return data;
@@ -47,7 +57,7 @@ async function handler(event) {
   if(event.httpMethod!=='GET') {const result=response(405,{error:'Nur GET-Anfragen sind erlaubt.'},origin);result.headers.Allow='GET, OPTIONS';return result;}
   const p=event.queryStringParameters || {},point={latitude:Number(p.latitude),longitude:Number(p.longitude)};
   if(!p.latitude?.trim() || !p.longitude?.trim() || !Number.isFinite(point.latitude) || Math.abs(point.latitude)>90 || !Number.isFinite(point.longitude) || Math.abs(point.longitude)>180) return response(400,{error:'Bitte einen gültigen Ausgangspunkt wählen.'},origin);
-  try {return response(200,await search(point),origin);} catch {return response(503,{error:'Die Weihnachtsmarkt-Karte ist gerade nicht erreichbar. Bitte später erneut versuchen.'},origin);}
+  try {return response(200,await search(point),origin);} catch(error) {return response(503,{error:'Die Weihnachtsmarkt-Karte ist gerade nicht erreichbar. Bitte später erneut versuchen.',sourceErrors:error.sourceErrors || []},origin);}
 }
 exports.handler=handler;
 exports.normalize=normalize;
