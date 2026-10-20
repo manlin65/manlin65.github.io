@@ -64,3 +64,14 @@ Die mitgelieferte `.env.example` enthält keinen echten Schlüssel. Eine echte `
 ## Noch erforderlich
 
 Der Netlify-Account und ein echter Ticketmaster-Schlüssel sind in dieser Cloud-Sitzung nicht verbunden. Das Quellpaket ist vorbereitet und lokal geprüft; eine Veröffentlichung in deinem Netlify-Konto und der Ticketmaster-Live-Test erfolgen nach den obigen Einrichtungsschritten.
+
+## Zusätzliche Kalender, Tanzpartys und Ü-Veranstaltungen
+
+Rauszeit unterstützt jetzt mehrere Quellen. Der bestehende Ticketmaster-Schlüssel
+bleibt unverändert. Für einen öffentlichen ICS-Kalender wird kein weiterer
+API-Schlüssel benötigt. Weitere Portale sind erst nach Prüfung eines verfügbaren
+Datenzugangs tatsächlich angeschlossen; sie werden nicht pauschal durchsucht.
+
+Konfiguration und ehrlicher aktueller Anschlussstand:
+[wochenende/VERANSTALTUNGSQUELLEN.md](wochenende/VERANSTALTUNGSQUELLEN.md).
+Netlify installiert nun `node-ical` über `package.json` und `package-lock.json`.

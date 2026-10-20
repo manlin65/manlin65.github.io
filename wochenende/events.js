@@ -7,7 +7,10 @@
   const defaults=['Bamberg','Nürnberg','Schwabach'];
   const categories=window.RauszeitInterests.options;
   const interestStorage='rauszeit.interests.v1';
-  let interests=[];
+  let interests=[],audience='all';
+  try {const saved=localStorage.getItem('rauszeit.audience.v1');if(['30','40','50','60'].includes(saved)) audience=saved;} catch {}
+  $('#eventAudience').value=audience;
+  $('#eventAudience').addEventListener('change',()=>{audience=$('#eventAudience').value;saveInterests();renderSearches();});
   try {const stored=JSON.parse(localStorage.getItem(interestStorage));if(Array.isArray(stored)) interests=[...new Set(stored.filter(id=>Object.hasOwn(categories,id)))];} catch {}
   for(const [id,option] of Object.entries(categories)) {
     const label=document.createElement('label');label.className='interest-chip';
@@ -15,8 +18,8 @@
     label.append(input,document.createTextNode(option.label));$('#interestOptions').append(label);
     input.addEventListener('change',()=>{interests=[...document.querySelectorAll('[data-interest]:checked')].map(item=>item.value);saveInterests();renderSearches();});
   }
-  function saveInterests() {try {localStorage.setItem(interestStorage,JSON.stringify(interests));} catch {}}
-  $('#clearInterests').addEventListener('click',()=>{interests=[];document.querySelectorAll('[data-interest]').forEach(input=>input.checked=false);saveInterests();renderSearches();});
+  function saveInterests() {try {localStorage.setItem(interestStorage,JSON.stringify(interests));localStorage.setItem('rauszeit.audience.v1',audience);} catch {}}
+  $('#clearInterests').addEventListener('click',()=>{interests=[];audience='all';$('#eventAudience').value='all';document.querySelectorAll('[data-interest]').forEach(input=>input.checked=false);saveInterests();renderSearches();});
   const official={bamberg:'bamberg.info',nuernberg:'nuernberg.de',schwabach:'schwabach.de',fuerth:'fuerth.de',erlangen:'erlangen.de'};
   const normalized=value=>value.normalize('NFKC').trim().toLocaleLowerCase('de-DE').replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/\s+/g,' ');
   const clean=value=>value.normalize('NFKC').replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e]/g,'').trim().replace(/\s+/g,' ');
@@ -205,6 +208,7 @@
     renderTopResults(dates);
     const selected=interests.map(id=>categories[id]);
     const category={label:selected.map(item=>item.label).join(', ') || 'Alle Veranstaltungen',terms:selected.length?'('+selected.map(item=>'('+item.terms.split(' ').join(' OR ')+')').join(' OR ')+')':'Veranstaltungen'};
+    if(audience!=='all') {category.label+=' · Ü'+audience;category.terms+=' Ü'+audience;}
     $('#interestStatus').textContent=interests.length?'Deine Interessen werden in diesem Browser gespeichert. Passend ist ein Termin, der mindestens eines davon erfüllt.':'Alle Interessen – wähle deine Favoriten für persönlichere Ergebnisse.';
     $('#eventWeekendLabel').textContent='Dein Zeitraum: '+label;
     const dateQuery=dates.length>1 ? '('+dates.map(date=>'"'+formatDate(date,{year:'numeric'})+'"').join(' OR ')+')' : '"'+(dates[0]?formatDate(dates[0],{year:'numeric'}):'')+'"';
@@ -228,7 +232,7 @@
       card.append(weatherButton);
       $('#eventSearchCards').append(card);
     }
-    document.dispatchEvent(new CustomEvent('rauszeit:selection',{detail:{dates,category:'all',interests:[...interests],cities:cities.map(city=>({name:city,place:selectedPlace(city) || null}))}}));
+    document.dispatchEvent(new CustomEvent('rauszeit:selection',{detail:{dates,category:'all',interests:[...interests],audience,cities:cities.map(city=>({name:city,place:selectedPlace(city) || null}))}}));
     if(!cities.length) {
       const empty=document.createElement('p');empty.className='events-empty';empty.textContent='Füge oben deinen ersten Ort hinzu. Du kannst bis zu fünf Orte gleichzeitig vergleichen.';$('#eventSearchCards').append(empty);
     }
@@ -344,7 +348,7 @@
     if(!finite(temperature) || !finite(rain)) return null;
     return `${weather(daily.weather_code?.[index])[0]} ${Math.round(temperature)}° Tagesmaximum · Regenrisiko ${Math.round(rain)}% am Zielort`;
   };
-  window.RauszeitSelection=()=>({dates:selectedDates(),cities:cities.map(city=>({name:city,place:selectedPlace(city) || null})),category:'all',interests:[...interests]});
+  window.RauszeitSelection=()=>({dates:selectedDates(),cities:cities.map(city=>({name:city,place:selectedPlace(city) || null})),category:'all',interests:[...interests],audience});
   message(`${cities.length} von 5 Orten ausgewählt. Die Liste bleibt in diesem Browser gespeichert.`);
   renderCities();
 })();

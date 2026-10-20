@@ -13,8 +13,8 @@
   $('#ticketEndpoint').value=backend;
   const status=message=>{$('#ticketStatus').textContent=message;};
   const safeURL=value=>{try {const url=new URL(value);return url.protocol==='https:'?url.href:null;}catch{return null;}};
-  function renderCards(items,dates,interests,container) {
-    const events=window.RauszeitInterests.top(items,dates,interests);
+  function renderCards(items,dates,interests,container,audience) {
+    const events=window.RauszeitInterests.top(items,dates,interests,audience);
     for(const event of events) {
       const card=document.createElement('article');card.className='ticket-card';
       const city=document.createElement('p');city.className='ticket-city';city.textContent=event.city || event.searchCity;
@@ -28,17 +28,32 @@
       if(event.status && !['onsale','unknown'].includes(event.status)) {const note=document.createElement('p');note.className='ticket-status-note';note.textContent=({offsale:'Derzeit nicht im Verkauf',postponed:'Verschoben – Termin beim Veranstalter prüfen',rescheduled:'Neuer Termin – Angaben beim Veranstalter prüfen'})[event.status] || 'Ticketstatus beim Anbieter prüfen';card.append(note);}
       if(event.timeNote) {const note=document.createElement('p');note.textContent=event.timeNote;card.append(note);}
       const href=safeURL(event.url);
-      if(href) {const link=document.createElement('a');link.href=href;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Details & Tickets →';card.append(link);}
-      const source=document.createElement('small');source.textContent='Quelle: Ticketmaster · Ortszeit am Veranstaltungsort';card.append(source);
+      if(href) {const link=document.createElement('a');link.href=href;link.target='_blank';link.rel='noopener noreferrer';link.textContent=event.sourceId && event.sourceId!=='ticketmaster'?'Veranstaltung öffnen →':'Details & Tickets →';card.append(link);}
+      const source=document.createElement('small');source.textContent='Quelle: '+(Array.isArray(event.sources)?event.sources.join(' · '):event.source || 'Ticketmaster')+' · Ortszeit am Veranstaltungsort';card.append(source);
+      if(event.sourceNote) {const note=document.createElement('small');note.className='event-source-note';note.textContent=event.sourceNote;card.append(note);}
       container.append(card);
     }
     return events.length;
+  }
+  function renderSources(results) {
+    const statuses=new Map();
+    for(const {data} of results) for(const source of data.sources || [{id:'ticketmaster',name:'Ticketmaster',status:'ok'}]) {
+      const key=source.id+'|'+source.status;
+      if(!statuses.has(key)) statuses.set(key,source);
+    }
+    const labels={ok:'automatisch abgefragt',manual:'manuell gepflegt',error:'derzeit nicht erreichbar',not_configured:'nicht angeschlossen'};
+    $('#eventSourceList').replaceChildren();
+    for(const source of statuses.values()) {
+      const item=document.createElement('li');item.textContent=source.name+' · '+(labels[source.status] || 'Status unbekannt')+(source.notice?' – '+source.notice:'');$('#eventSourceList').append(item);
+    }
+    $('#eventSourceSummary').textContent='Veranstaltungsquellen · '+[...statuses.values()].filter(source=>source.status==='ok').length+' automatisch · '+[...statuses.values()].filter(source=>source.status==='manual').length+' manuell';
   }
   async function refresh(force=false) {
     const current=window.RauszeitSelection?.();if(!current) return;
     const myGeneration=++generation;controller?.abort();controller=new AbortController();
     const signal=controller.signal;
     $('#ticketResults').replaceChildren();
+    $('#eventSourceSummary').textContent='Veranstaltungsquellen';$('#eventSourceList').replaceChildren();
     if(!current.dates.length || !current.cities.length) {status('Wähle mindestens einen Ort und einen gültigen Tag.');return;}
     if(!backend) {status('Echte Veranstaltungstermine sind noch nicht verbunden. Wetter und Ausflugstipps werden bereits angezeigt. Über „Veranstaltungssuche verbinden“ kannst du das eingerichtete Backend anschließen.');return;}
     const resolved=current.cities.filter(city=>city.place);
@@ -68,22 +83,23 @@
         const title=document.createElement('h4');title.className='ticket-group-title';title.textContent='Top-Ereignisse für '+(city.place.name || city.name)+' & Umgebung';
         const grid=document.createElement('div');grid.className='ticket-grid';group.append(title,grid);
         const events=(data?.events || []).map(event=>({...event,searchCity:city.name,forecast:window.RauszeitCityWeather?.(city.name,event.date)}));
-        const shown=renderCards(events,current.dates,current.interests || [],grid);count+=shown;
-        if(!shown) {const empty=document.createElement('p');empty.className='source-note';empty.textContent=error || 'Keine passenden Ticketmaster-Termine für deine Interessen an den gewählten Tagen gefunden.';group.append(empty);}
+        const shown=renderCards(events,current.dates,current.interests || [],grid,current.audience || 'all');count+=shown;
+        if(!shown) {const empty=document.createElement('p');empty.className='source-note';empty.textContent=error || 'Keine passenden Termine aus den verbundenen Quellen für deine Interessen an den gewählten Tagen gefunden.';group.append(empty);}
         const local=(current.interests || []).filter(id=>window.RauszeitInterests.options[id]?.local);
         for(const id of local) {
           const option=window.RauszeitInterests.options[id];
           const link=document.createElement('a');link.className='local-interest-link';link.target='_blank';link.rel='noopener noreferrer';
           const dates=current.dates.map(day=>'"'+formatDate(day,{year:'numeric'})+'"').join(' OR ');
-          link.href='https://www.google.com/search?q='+encodeURIComponent('('+option.terms.split(' ').join(' OR ')+') '+(city.place.name || city.name)+' ('+dates+')');
+          link.href='https://www.google.com/search?q='+encodeURIComponent('('+option.terms.split(' ').join(' OR ')+') '+(city.place.name || city.name)+(current.audience && current.audience!=='all'?' Ü'+current.audience:'')+' ('+dates+')');
           link.textContent=option.label+': lokale Termine suchen →';group.append(link);
         }
-        if(local.length) {const note=document.createElement('p');note.className='source-note';note.textContent='Externe Suche, keine bestätigten Termine. Kirmes und lokale Feste sind bei Ticketmaster oft nicht erfasst.';group.append(note);}
+        if(local.length) {const note=document.createElement('p');note.className='source-note';note.textContent='Externe Suche, keine bestätigten Termine. Kirmes, Weihnachtsmärkte und lokale Feste sind bei Ticketmaster oft nicht erfasst.';group.append(note);}
         $('#ticketResults').append(group);
       }
+      renderSources(successes);
       const notices=[...new Set(successes.map(result=>result.data.notice).filter(Boolean))];
       const unresolved=current.cities.length-resolved.length;
-      status(`${count?`${count} passende Veranstaltung${count===1?'':'en'} angezeigt – höchstens drei pro Ort.`:'Keine passenden Ticketmaster-Termine für diese Auswahl gefunden.'}${failures.length?' '+failures.map(result=>result.city.name+': '+result.error).join(' '):''}${unresolved?' Für '+unresolved+' Ort(e) fehlen noch Koordinaten.':''}${notices.length?' '+notices.join(' '):''} Angaben und Verfügbarkeit bitte beim Veranstalter prüfen.`);
+      status(`${count?`${count} passende Veranstaltung${count===1?'':'en'} angezeigt – höchstens drei pro Ort.`:'Keine passenden Termine aus den verbundenen Quellen für diese Auswahl gefunden.'}${failures.length?' '+failures.map(result=>result.city.name+': '+result.error).join(' '):''}${unresolved?' Für '+unresolved+' Ort(e) fehlen noch Koordinaten.':''}${notices.length?' '+notices.join(' '):''} Angaben und Verfügbarkeit bitte beim Veranstalter prüfen.`);
     } catch(error) {if(myGeneration===generation) status(error.name==='AbortError'?'Die Veranstaltungssuche dauert zu lange. Bitte erneut versuchen.':'Veranstaltungssuche nicht erreichbar. Wetter und Kalenderlinks bleiben verfügbar.');}
     finally {clearTimeout(timeout);}
   }

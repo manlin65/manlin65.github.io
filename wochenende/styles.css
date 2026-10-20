@@ -25,3 +25,7 @@
 .ticket-city-group{min-width:0;border-top:1px solid #dce2d7;padding-top:20px}
 .ticket-group-title{font-size:1.4rem;margin:0 0 16px}
 .local-interest-link{display:block;margin:16px 0 8px}
+
+.audience-filter{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:20px 0 12px}.audience-filter select{max-width:100%}.event-source-status{margin:0 0 24px;padding:16px;background:#f0f3e9;border-radius:12px}.event-source-status summary{cursor:pointer;font-weight:700}.event-source-status li{margin:10px 0}.event-source-note{display:block;margin-top:10px}
+
+.christmas-section{border-top:1px solid #dce2d7;padding:48px 0;margin-top:32px}.christmas-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:24px 0}.christmas-controls label{display:grid;gap:8px;min-width:0;max-width:100%}.christmas-controls select{max-width:100%;min-width:220px}.christmas-market-card a{display:block;margin:12px 0}.christmas-market-card h3{font-size:1.5rem;overflow-wrap:anywhere}.christmas-section #christmasMore{margin:20px 0}@media(max-width:600px){.christmas-controls{align-items:stretch}.christmas-controls label,.christmas-controls button{width:100%}.christmas-controls select{width:100%;min-width:0}}

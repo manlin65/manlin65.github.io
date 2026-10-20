@@ -27,6 +27,7 @@ with sync_playwright() as p:
  page.route('https://geocoding-api.open-meteo.com/**',geo)
  page.route('https://api.open-meteo.com/**',forecast)
  page.route('https://test.netlify.app/.netlify/functions/events?**',tickets)
+ page.route('**/.netlify/functions/christmas-markets?**',lambda route:route.fulfill(json={'markets':[]}))
  page.goto(os.environ.get('RAUSZEIT_BASE_URL','http://127.0.0.1:8000/wochenende/'))
  page.wait_for_function("document.querySelectorAll('.city-weather-day').length===9")
  page.locator('.ticket-setup').click();page.locator('#ticketEndpoint').fill('https://test.netlify.app');page.locator('#ticketEndpointForm button').click()

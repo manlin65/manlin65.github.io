@@ -1,0 +1,12 @@
+[
+  {
+    "id": "tanzlokal-beispiel",
+    "name": "Name des Tanzlokals",
+    "url": "https://kalender.example.invalid/veranstaltungen.ics",
+    "homepage": "https://kalender.example.invalid/",
+    "city": "Fürth",
+    "latitude": 49.477,
+    "longitude": 10.989,
+    "timezone": "Europe/Berlin"
+  }
+]

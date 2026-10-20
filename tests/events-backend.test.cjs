@@ -1,6 +1,6 @@
 const {test,after}=require('node:test');
 const assert=require('node:assert/strict');
-const {handler}=require('../netlify/functions/events.js');
+const {handler}=require('../netlify/lib/ticketmaster.js');
 const originalFetch=global.fetch;
 const originalKey=process.env.TICKETMASTER_API_KEY;
 const originalOrigins=process.env.RAUSZEIT_ALLOWED_ORIGINS;

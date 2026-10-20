@@ -17,6 +17,7 @@ with sync_playwright() as p:
   route.fulfill(json={'timezone':'Europe/Berlin','daily':{'time':dates,'weather_code':[0 if rain==5 else 61]*len(dates),'temperature_2m_max':[20]*len(dates),'temperature_2m_min':[8]*len(dates),'precipitation_probability_max':[rain]*len(dates),'wind_speed_10m_max':[10]*len(dates),'precipitation_sum':[0]*len(dates)}})
  page.route('https://geocoding-api.open-meteo.com/**',geo);page.route('https://api.open-meteo.com/**',weather)
  page.route('**/config.js',lambda route:route.fulfill(body='window.RAUSZEIT_CONFIG = {};',content_type='application/javascript'))
+ page.route('**/.netlify/functions/christmas-markets?**',lambda route:route.fulfill(json={'markets':[]}))
  page.goto(os.environ.get('RAUSZEIT_BASE_URL','http://127.0.0.1:8000/wochenende/'))
  page.wait_for_function("document.querySelectorAll('.city-weather-day').length===9")
  assert page.locator('.top-result-card').count()==3

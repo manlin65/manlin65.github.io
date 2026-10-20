@@ -1,0 +1,11 @@
+{
+  "name": "rauszeit-webapp",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build-netlify.mjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "dependencies": { "node-ical": "0.27.3" }
+}

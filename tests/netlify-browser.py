@@ -5,7 +5,7 @@ from urllib.parse import parse_qs,urlparse
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
  browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or None,args=['--no-sandbox'])
- page=browser.new_page(viewport={'width':1280,'height':900});errors=[];calls=[];configured=False
+ page=browser.new_page(viewport={'width':1280,'height':900});errors=[];calls=[];configured=False;multi=False
  page.on('pageerror',lambda e:errors.append(str(e)))
  days=[str(date.today()+timedelta(days=i)) for i in range(-7,35)]
  def geo(route):
@@ -16,11 +16,15 @@ with sync_playwright() as p:
  def tickets(route):
   q=parse_qs(urlparse(route.request.url).query);calls.append(route.request.url)
   if not configured:route.fulfill(status=503,json={'error':'TICKETMASTER_API_KEY beim Hosting-Anbieter hinterlegen.'});return
+  if multi:
+   events=[{'id':q['latitude'][0]+'-60','name':'Ü60 Oldies Disco','category':'Party','classifications':['Tanzen','Oldies'],'date':q['start'][0],'time':'20:00','city':'Teststadt','venue':'Tanzsaal','url':'https://calendar.example.org/party','sourceId':'calendar','source':'Tanzkalender','sources':['Tanzkalender','Ticketmaster'],'sourceNote':'Automatisch aus öffentlichem Kalender.'}, {'id':q['latitude'][0]+'-30','name':'Ü30 Oldies Party','category':'Party','date':q['start'][0],'time':'21:00','city':'Teststadt','venue':'Club'}]
+   route.fulfill(json={'events':events,'sources':[{'id':'calendar','name':'Tanzkalender','status':'ok'},{'id':'local','name':'Einzeltermine','status':'manual'},{'id':'unavailable','name':'Anderer Kalender','status':'error','notice':'Quelle derzeit nicht erreichbar.'},{'id':'unconnected','name':'Weitere Portale','status':'not_configured'}]});return
   route.fulfill(json={'events':[{'id':q['latitude'][0],'name':'Netlify-Testkonzert','category':'Music','date':q['start'][0],'time':'19:00','city':'Teststadt','venue':'Testbühne','status':'onsale','url':'https://www.ticketmaster.de/event/test'}]})
  page.route('https://geocoding-api.open-meteo.com/**',geo);page.route('https://api.open-meteo.com/**',weather)
  base=os.environ.get('RAUSZEIT_NETLIFY_URL','http://127.0.0.1:8892/')
  origin=urlparse(base).scheme+'://'+urlparse(base).netloc
  page.route(origin+'/.netlify/functions/events?**',tickets)
+ page.route('**/.netlify/functions/christmas-markets?**',lambda route:route.fulfill(json={'markets':[]}))
  page.goto(base)
  page.wait_for_function("document.querySelectorAll('.city-weather-day').length===9")
  page.wait_for_function("document.querySelector('#ticketStatus').textContent.includes('TICKETMASTER_API_KEY')")
@@ -68,4 +72,23 @@ with sync_playwright() as p:
  assert not errors,errors
  print('PASS automatic destination addition/removal and preserved interests on mobile')
  print('PASS interest union, no unrelated results, per-city groups, persisted choices and local fair searches')
+ multi=True
+ page.locator('#clearInterests').click()
+ page.locator('[data-interest="oldies"]').check()
+ page.locator('#eventAudience').select_option('60')
+ page.locator('#reloadTickets').click()
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===3 && [...document.querySelectorAll('.ticket-card h4')].every(item=>item.textContent.includes('Ü60'))")
+ assert all('Tanzkalender · Ticketmaster' in text for text in page.locator('.ticket-card small').all_text_contents() if text.startswith('Quelle:'))
+ assert 'manuell' in page.locator('#eventSourceSummary').inner_text()
+ page.locator('#eventSourceSummary').click()
+ assert 'nicht angeschlossen' in page.locator('#eventSourceList').inner_text()
+ assert 'derzeit nicht erreichbar' in page.locator('#eventSourceList').inner_text()
+ page.reload()
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===3")
+ assert page.locator('#eventAudience').input_value()=='60'
+ assert page.locator('[data-interest="oldies"]').is_checked()
+ assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+ page.screenshot(path='/tmp/rauszeit-multiple-sources-mobile.png',full_page=True)
+ assert not errors,errors
+ print('PASS merged source attribution, honest source status, strict Ü60 matching, persistence and mobile layout')
  browser.close()

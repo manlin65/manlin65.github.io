@@ -21,3 +21,9 @@ test('top results exclude duplicates, unselected dates and cancelled events',()=
  const item=event('1','Party');
  assert.equal(top([item,item,{...item,id:'2',date:'2026-11-01'},{...item,id:'3',status:'cancelled'}],dates,['party']).length,1);
 });
+
+test('Christmas market interest matches local names and excludes unrelated markets',()=>{
+ for(const name of ['Nürnberger Christkindlesmarkt','Bamberger Weihnachtsmarkt','Adventsmärkte in Wien']) assert.equal(score(event(name,name,'Market'),['christmas']),1);
+ assert.equal(score(event('other','Flohmarkt','Market'),['christmas']),0);
+ assert.equal(score(event('song','Christmas Concert','Music'),['christmas']),0);
+});

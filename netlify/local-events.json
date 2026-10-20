@@ -1,0 +1,24 @@
+[
+  {
+    "id": "babylon-einfach-disco-2026-11-14",
+    "name": "Einfach Disco auf Vinyl im Babylon Fürth",
+    "date": "2026-11-14",
+    "time": "20:00",
+    "endDate": "2026-11-15",
+    "endTime": "02:00",
+    "timezone": "Europe/Berlin",
+    "venue": "Babylon Kino Fürth",
+    "city": "Fürth",
+    "country": "Deutschland",
+    "latitude": 49.477,
+    "longitude": 10.989,
+    "locationApproximate": true,
+    "status": "unknown",
+    "category": "Party",
+    "classifications": ["Tanzen", "Disco", "Oldies", "70er", "80er", "Dance Classics"],
+    "url": "https://www.facebook.com/events/1352914835817097/1557914711983774/",
+    "source": "Facebook-Veranstaltung · manuell erfasst",
+    "sourceNote": "Aus dem bereitgestellten Screenshot vom 20.10.2026 übernommen. Nicht automatisch mit Facebook abgeglichen; Termin bitte beim Veranstalter prüfen.",
+    "recordedAt": "2026-10-20"
+  }
+]
