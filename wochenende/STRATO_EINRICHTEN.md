@@ -32,7 +32,7 @@ Aus `rauszeit.env.example` eine echte Datei **rauszeit.env** erstellen. In diese
 
 ```dotenv
 TICKETMASTER_API_KEY=dein_echter_schluessel
-RAUSZEIT_ALLOWED_ORIGINS=https://www.mlinner-software.de,https://manlin65.github.io
+RAUSZEIT_ALLOWED_ORIGINS=https://www.mlinner-software.de,https://mlinner-software.de,https://manlin65.github.io
 ```
 
 Die Datei wie im Beispiel außerhalb des öffentlichen Webordners ablegen. Wenn du eine andere Website-Adresse verwendest, diese bei `RAUSZEIT_ALLOWED_ORIGINS` ergänzen. Es sind die Ursprungsadressen ohne Unterpfad gemeint.

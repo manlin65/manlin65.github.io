@@ -1,7 +1,9 @@
 'use strict';
-// Intentionally no event API or invented event listings: these links open external searches.
+// Live geocoding and weather; ticket queries use the shared selection events.
 (() => {
   const key='rauszeit.eventCities.v1';
+  const placeStorage='rauszeit.eventPlaces.v1';
+  const selectedPlaces=new Map();
   const defaults=['Bamberg','Nürnberg','Schwabach'];
   const categories={
     all:{label:'Veranstaltungen',terms:'Veranstaltungen'},
@@ -47,9 +49,38 @@
       }).slice(0,5);
     }
   } catch { /* Keep the defaults if storage is unavailable or malformed. */ }
+  try {
+    const saved=JSON.parse(localStorage.getItem(placeStorage) || '{}');
+    if(saved && typeof saved==='object' && !Array.isArray(saved)) {
+      for(const city of cities) {const place=saved[normalized(city)];if(validPlace(place)) selectedPlaces.set(normalized(city),place);}
+    }
+  } catch {}
+  function selectedPlace(city) {return selectedPlaces.get(normalized(city)) || weatherCache.get(normalized(city))?.place;}
+  function displayCity(city) {const place=selectedPlace(city);return place && !city.includes(' · ')?place.name:city;}
+  function countryFlag(place) {
+    const badge=document.createElement('span');badge.className='country-flag';
+    const code=typeof place?.country_code==='string'?place.country_code.toLowerCase():'';
+    if(!/^[a-z]{2}$/.test(code)) {badge.classList.add('flag-unknown');badge.setAttribute('aria-hidden','true');return badge;}
+    badge.setAttribute('role','img');badge.setAttribute('aria-label',place.country || code.toUpperCase());badge.title=place.country || code.toUpperCase();
+    const image=document.createElement('img');image.src=`assets/flags/${code}.svg`;image.alt='';image.width=24;image.height=18;
+    image.addEventListener('error',()=>{image.remove();badge.classList.add('flag-unknown');});badge.append(image);return badge;
+  }
+  function removeCity(city) {
+    const label=displayCity(city);cities=cities.filter(value=>value!==city);selectedPlaces.delete(normalized(city));
+    message(`${label} entfernt. ${cities.length} von 5 Orten ausgewählt.`);save();renderCities();
+  }
+  function renderCityChips() {
+    $('#eventCities').replaceChildren();
+    for(const city of cities) {
+      const chip=document.createElement('span');chip.className='event-city-chip';
+      const label=document.createElement('span');label.textContent=displayCity(city);
+      const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label',`${displayCity(city)} aus Veranstaltungsorten entfernen`);
+      remove.addEventListener('click',()=>removeCity(city));chip.append(countryFlag(selectedPlace(city)),label,remove);$('#eventCities').append(chip);
+    }
+  }
   function message(text) {$('#eventCityStatus').textContent=text;}
   function save() {
-    try {localStorage.setItem(key,JSON.stringify(cities));return true;}
+    try {localStorage.setItem(key,JSON.stringify(cities));localStorage.setItem(placeStorage,JSON.stringify(Object.fromEntries(cities.filter(city=>selectedPlaces.has(normalized(city))).map(city=>[normalized(city),selectedPlaces.get(normalized(city))]))));return true;}
     catch {message('Die Ortsliste gilt für diese Sitzung. Dein Browser erlaubt das dauerhafte Speichern gerade nicht.');return false;}
   }
   function searchLink(label,query) {
@@ -102,7 +133,7 @@
     $('#cityWeatherStatus').textContent='Wetter für deine Orte wird geladen …';renderSearches();
     const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
     try {
-      let place=chosenPlace || existing?.place;
+      let place=chosenPlace || existing?.place || selectedPlaces.get(id);
       if(!place) {
         const geo=new URL('https://geocoding-api.open-meteo.com/v1/search');geo.search=new URLSearchParams({name:city,count:'6',language:'de',format:'json'});
         const result=await requestJSON(geo,controller.signal);
@@ -113,7 +144,7 @@
         const candidates=exact.length?exact:matches;
         place=(official[id]?candidates.find(candidate=>candidate.country_code==='DE'):null) || candidates[0];
       }
-      entry.place=place;renderSearches();
+      entry.place=place;selectedPlaces.set(id,place);save();renderCityChips();renderSearches();
       const url=new URL('https://api.open-meteo.com/v1/forecast');url.search=new URLSearchParams({latitude:String(place.latitude),longitude:String(place.longitude),daily:'weather_code,temperature_2m_max,precipitation_probability_max,wind_speed_10m_max',timezone:'auto',past_days:'1',forecast_days:'16'});
       const data=await requestJSON(url,controller.signal);
       if(!Array.isArray(data.daily?.time)) throw new Error('Keine nutzbaren Wetterdaten erhalten.');
@@ -154,7 +185,7 @@
     results.slice(0,3).forEach((result,index)=>{
       const tip=recommendation(result.day),card=document.createElement('article');card.className='top-result-card';
       const badge=document.createElement('span');badge.className='top-rank';badge.textContent=`${index+1}. ${index===0?'Beste Wetteroption':'Weitere Wetteroption'}`;
-      const title=document.createElement('h4');title.textContent=result.place.name;
+      const title=document.createElement('h4');title.append(countryFlag(result.place),document.createTextNode(result.place.name));
       const date=document.createElement('p');date.className='top-date';date.textContent=formatDate(result.date,{weekday:'long',year:'numeric'});
       const facts=document.createElement('p');facts.className='top-weather';facts.textContent=`${weather(result.day.code)[0]} ${Math.round(result.day.temp)}° · Regen ${Math.round(result.day.rain)}% · Wind ${Math.round(result.day.wind)} km/h`;
       const activity=document.createElement('h5');activity.textContent=tip.icon+' '+tip.title;
@@ -174,9 +205,11 @@
     $('#eventSearchCards').replaceChildren();
     for(const city of cities) {
       const card=document.createElement('article');card.className='event-search-card';
-      const title=document.createElement('h3');title.textContent=city;
+      const title=document.createElement('h3');title.append(countryFlag(selectedPlace(city)),document.createTextNode(displayCity(city)));
+      const header=document.createElement('div');header.className='city-card-heading';
+      const remove=document.createElement('button');remove.type='button';remove.className='city-card-remove';remove.textContent='×';remove.setAttribute('aria-label',`${displayCity(city)} aus Liste entfernen`);remove.title='Ort entfernen';remove.addEventListener('click',()=>removeCity(city));header.append(title,remove);
       const date=document.createElement('p');date.textContent=label+' · '+category.label;
-      card.append(title,date,cityWeather(city,dates));
+      card.append(header,date,cityWeather(city,dates));
       const links=document.createElement('details');links.className='event-external-links';
       const summary=document.createElement('summary');summary.textContent='Veranstaltungen & Kalender öffnen';links.append(summary);
       links.append(searchLink('Passende Veranstaltungen suchen',`${category.terms} ${city} ${dateQuery}`),searchLink('Veranstaltungskalender finden',`Veranstaltungskalender ${city}`));
@@ -195,29 +228,93 @@
     }
   }
   function renderCities() {
-    $('#eventCities').replaceChildren();
-    for(const city of cities) {
-      const chip=document.createElement('span');chip.className='event-city-chip';
-      const label=document.createElement('span');label.textContent=city;
-      const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label',`${city} aus Veranstaltungsorten entfernen`);
-      remove.addEventListener('click',()=>{cities=cities.filter(value=>value!==city);message(`${city} entfernt. ${cities.length} von 5 Orten ausgewählt.`);save();renderCities();});
-      chip.append(label,remove);$('#eventCities').append(chip);
-    }
+    renderCityChips();
+    if(cities.length>=5) closeCitySuggestions();
     $('#addEventCity').disabled=cities.length>=5;
     $('#eventCity').disabled=cities.length>=5;
     $('#eventCity').placeholder=cities.length>=5?'Fünf Orte ausgewählt – zuerst einen entfernen':'Zum Beispiel Fürth, Wien oder Paris';
     renderSearches();
     if(weatherEnabled) cities.forEach(city=>loadCityWeather(city));
   }
-  $('#eventCityForm').addEventListener('submit',event=>{
-    event.preventDefault();
-    const city=clean($('#eventCity').value);
-    if(cities.length>=5) {message('Du kannst maximal fünf Orte eingeben. Entferne zuerst einen Ort.');return;}
-    if(city.length<2 || city.length>80) {message('Bitte gib einen Ortsnamen mit 2 bis 80 Zeichen ein.');return;}
-    if(cities.some(value=>normalized(value)===normalized(city))) {message(`${city} ist bereits ausgewählt.`);return;}
-    cities.push(city);$('#eventCity').value='';
+  let cityTimer=null,cityController=null,cityMatches=[],activeMatch=-1,citySequence=0;
+  const citySearchCache=new Map();
+  function closeCitySuggestions() {
+    clearTimeout(cityTimer);citySequence++;cityController?.abort();cityMatches=[];activeMatch=-1;
+    $('#eventCityOptions').replaceChildren();$('#eventCityOptions').hidden=true;
+    $('#eventCity').setAttribute('aria-expanded','false');$('#eventCity').removeAttribute('aria-activedescendant');
+  }
+  function highlightCity(index) {
+    if(!cityMatches.length) return;
+    activeMatch=(index+cityMatches.length)%cityMatches.length;
+    const options=[...$('#eventCityOptions').children];
+    options.forEach((option,i)=>option.setAttribute('aria-selected',String(i===activeMatch)));
+    $('#eventCity').setAttribute('aria-activedescendant',options[activeMatch].id);
+    options[activeMatch].scrollIntoView({block:'nearest'});
+  }
+  function chooseCity(place) {
+    if(cities.length>=5) {message('Du kannst maximal fünf Orte auswählen. Entferne zuerst einen Ort.');closeCitySuggestions();return;}
+    const duplicate=cities.find(city=>{
+      const selected=selectedPlaces.get(normalized(city)) || weatherCache.get(normalized(city))?.place;
+      return selected?placeKey(selected)===placeKey(place):normalized(city)===normalized(place.name);
+    });
+    if(duplicate) {message(`${place.name} ist bereits ausgewählt.`);closeCitySuggestions();return;}
+    let city=clean(place.name).slice(0,80);
+    if(cities.some(value=>normalized(value)===normalized(city))) city=clean([place.name,place.admin1,place.country].filter(Boolean).join(' · ')).slice(0,80);
+    if(cities.some(value=>normalized(value)===normalized(city))) {message('Dieser gleichnamige Ort ist bereits ausgewählt.');closeCitySuggestions();return;}
+    selectedPlaces.set(normalized(city),place);cities.push(city);
+    closeCitySuggestions();$('#eventCity').value='';
+    $('#eventCityHint').textContent='Ort ausgewählt. Wetter und die angeschlossene Veranstaltungssuche werden automatisch aktualisiert.';
     message(`${city} hinzugefügt. ${cities.length} von 5 Orten ausgewählt.`);save();renderCities();
+    if(cities.length<5) $('#eventCity').focus();
+  }
+  function showCitySuggestions(places) {
+    cityMatches=places;activeMatch=-1;$('#eventCityOptions').replaceChildren();
+    places.forEach((place,index)=>{
+      const option=document.createElement('button');option.type='button';option.className='city-option';option.id=`event-city-option-${index}`;
+      option.setAttribute('role','option');option.setAttribute('aria-selected','false');option.tabIndex=-1;
+      const name=document.createElement('strong');name.textContent=place.name;
+      const region=document.createElement('small');region.textContent=[place.admin1,place.country].filter(Boolean).join(', ');
+      const text=document.createElement('span');text.append(name,region);option.append(countryFlag(place),text);option.addEventListener('mousedown',event=>event.preventDefault());option.addEventListener('click',()=>chooseCity(place));
+      $('#eventCityOptions').append(option);
+    });
+    $('#eventCityOptions').hidden=!places.length;$('#eventCity').setAttribute('aria-expanded',String(places.length>0));
+    $('#eventCityHint').textContent=places.length?`${places.length} passende Orte. Klicke auf einen Treffer oder wähle mit den Pfeiltasten und Enter.`:'Keine Orte gefunden. Versuche einen anderen Namen oder einen größeren Ort in der Nähe.';
+  }
+  async function lookupCity() {
+    const query=clean($('#eventCity').value);closeCitySuggestions();
+    if(query.length<2 || cities.length>=5) {$('#eventCityHint').textContent='Bitte mindestens zwei Buchstaben eingeben.';return;}
+    const sequence=citySequence,controller=new AbortController();cityController=controller;
+    $('#eventCityHint').textContent=`Suche passende Orte zu „${query}“ …`;
+    const timeout=setTimeout(()=>controller.abort('timeout'),12000);
+    try {
+      let matches=citySearchCache.get(normalized(query));
+      if(!matches) {
+        const url=new URL('https://geocoding-api.open-meteo.com/v1/search');url.search=new URLSearchParams({name:query,count:'8',language:'de',format:'json'});
+        const data=await requestJSON(url,controller.signal);matches=(Array.isArray(data.results)?data.results:[]).filter(validPlace);
+        if(citySearchCache.size>=40)citySearchCache.delete(citySearchCache.keys().next().value);
+        citySearchCache.set(normalized(query),matches);
+      }
+      if(sequence!==citySequence || clean($('#eventCity').value)!==query) return;
+      showCitySuggestions(matches);
+    } catch(error) {
+      if(sequence!==citySequence) return;
+      $('#eventCityHint').textContent=controller.signal.reason==='timeout'?'Die Ortssuche dauert zu lange. Bitte erneut versuchen.':error.name==='AbortError'?'':error instanceof TypeError?'Ortssuche nicht erreichbar. Bitte Internetverbindung prüfen und erneut versuchen.':error.message;
+    } finally {clearTimeout(timeout);}
+  }
+  $('#eventCity').addEventListener('input',()=>{
+    closeCitySuggestions();
+    if(clean($('#eventCity').value).length<2) {$('#eventCityHint').textContent='Ab zwei Buchstaben erscheinen passende Ortsvorschläge.';return;}
+    $('#eventCityHint').textContent='Ortsvorschläge werden aktualisiert …';cityTimer=setTimeout(lookupCity,280);
   });
+  $('#eventCity').addEventListener('keydown',event=>{
+    if(event.key==='Escape') {event.preventDefault();closeCitySuggestions();return;}
+    if((event.key==='ArrowDown' || event.key==='ArrowUp') && cityMatches.length) {event.preventDefault();highlightCity(activeMatch<0?(event.key==='ArrowDown'?0:cityMatches.length-1):activeMatch+(event.key==='ArrowDown'?1:-1));}
+    if(event.key==='Enter' && activeMatch>=0 && cityMatches[activeMatch]) {event.preventDefault();chooseCity(cityMatches[activeMatch]);}
+  });
+  $('#eventCity').addEventListener('focus',()=>{if(clean($('#eventCity').value).length>=2 && !cityMatches.length) cityTimer=setTimeout(lookupCity,100);});
+  $('#eventCityForm').addEventListener('submit',event=>{event.preventDefault();if(activeMatch>=0 && cityMatches[activeMatch]) chooseCity(cityMatches[activeMatch]);else lookupCity();});
+  document.addEventListener('click',event=>{if(!$('#eventCityForm').contains(event.target)) closeCitySuggestions();});
+  $('#eventCityForm').addEventListener('focusout',event=>{if(!$('#eventCityForm').contains(event.relatedTarget)) closeCitySuggestions();});
   $('#loadCityWeather').addEventListener('click',()=>{weatherEnabled=true;cities.forEach(city=>loadCityWeather(city,true));if(!cities.length) $('#cityWeatherStatus').textContent='Füge zuerst einen Ort hinzu.';});
   $('#weekend').addEventListener('change',()=>{useWeekendRange();renderSearches();});
   $('#selectWeekendDays').addEventListener('click',()=>{useWeekendRange();renderSearches();});

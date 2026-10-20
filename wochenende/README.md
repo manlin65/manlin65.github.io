@@ -4,7 +4,8 @@ Webanwendung für bis zu fünf Ausflugsorte mit Wetter, Kalenderauswahl und Vera
 
 ## Was ohne Anmeldung funktioniert
 
-- Weltweite Ortssuche mit Auswahl gleichnamiger Orte und Länder.
+- Weltweite Live-Ortssuche ab zwei Buchstaben, mit Region, Land und lokal gespeicherten Länderflaggen. Auswahl per Klick oder Pfeiltasten/Enter; gewählte Koordinaten bleiben nach dem Neuladen erhalten.
+- Korrekte Ortsnamen aus den API-Daten (z. B. Prag statt prag) und direkte Löschknöpfe an jeder Ortskarte. Wetter und angeschlossene Veranstaltungsdaten werden nach der Auswahl automatisch aktualisiert.
 - Automatischer Wettervergleich für bis zu fünf Orte mit Temperatur, Regenrisiko, Wetterlage und Wind.
 - Wetterbasierte Top-Ausflugsziele mit allgemeinen Aktivitätsideen, klar getrennt von Veranstaltungsterminen.
 - Kalender: eigene Von-/Bis-Daten, einzelne Wochentage und Schnellwahl WE (Fr–So), Fr, Sa, So, Mo–Do, ganze Woche oder nächste sieben Tage.
@@ -40,6 +41,8 @@ php tests/events-php.test.php
 ```
 
 Der Backend-Test prüft fehlende/ungültige Schlüssel, Koordinaten und Daten, CORS, Abfragelimits, Normalisierung, abgesagte Termine, URLs und Cache-Verhalten. Er benötigt keinen echten Schlüssel.
+
+`tests/rauszeit-autocomplete.py` prüft Live-Vorschläge, Eingabewechsel, Tastaturbedienung, Flags, gespeicherte Koordinaten, Namenskorrektur und direktes Löschen. Die Flaggen stammen aus flag-icons 7.6.0 (MIT); Lizenz und Herkunft stehen unter `assets/flags/`.
 
 `tests/rauszeit-browser.py` prüft die Oberfläche mit kontrollierten API-Antworten. Dafür die statische Website wie oben starten, Python Playwright und Chromium bereitstellen, dann `python3 tests/rauszeit-browser.py` ausführen. Optional sind `RAUSZEIT_BASE_URL` und `CHROMIUM_PATH` konfigurierbar. Die Testdaten sind ausdrücklich keine echten Veranstaltungstermine.
 

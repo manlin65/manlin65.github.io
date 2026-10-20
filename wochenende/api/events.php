@@ -59,7 +59,7 @@ function rauszeit_reply(int $status,array $data,?string $origin): void {
 }
 function rauszeit_handle(?callable $transport=null,?array $settings=null): void {
     $env=$settings ?? rauszeit_env();$origin=$_SERVER['HTTP_ORIGIN'] ?? '';
-    $allowed=array_filter(array_map('trim',explode(',',$env['RAUSZEIT_ALLOWED_ORIGINS'] ?? 'https://www.mlinner-software.de,https://manlin65.github.io')));
+    $allowed=array_filter(array_map('trim',explode(',',$env['RAUSZEIT_ALLOWED_ORIGINS'] ?? 'https://www.mlinner-software.de,https://mlinner-software.de,https://manlin65.github.io')));
     $host=$_SERVER['HTTP_HOST'] ?? '';$scheme=(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off')?'https':'http';
     if ($host!=='' && $origin===$scheme.'://'.$host) $allowed[]=$origin;
     if ($origin!=='' && !in_array($origin,$allowed,true)) {rauszeit_reply(403,['error'=>'Diese Website ist für die Veranstaltungssuche nicht freigegeben.'],null);return;}

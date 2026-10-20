@@ -14,7 +14,7 @@ Registriere dich unter https://developer.ticketmaster.com/ und erstelle einen Sc
 2. Ein neues Projekt aus dem vorhandenen GitHub-Repository `manlin65/manlin65.github.io` importieren, Branch `main`.
 3. Die Datei `netlify.toml` übernimmt die Einstellungen: Publish directory `wochenende`, Functions directory `netlify/functions`, kein Build-Befehl erforderlich. Das Base directory bleibt leer.
 4. In den Netlify-Projekteinstellungen unter Environment variables die Variable `TICKETMASTER_API_KEY` anlegen und dort den echten Schlüssel sicher eintragen. Die Variable muss für Functions verfügbar sein.
-5. Optional `RAUSZEIT_ALLOWED_ORIGINS` ergänzen. Vorgabe: `https://www.mlinner-software.de,https://manlin65.github.io`. Weitere Website-Adressen mit Komma trennen. Für einen lokalen Test zusätzlich `http://localhost:8888` eintragen.
+5. Optional `RAUSZEIT_ALLOWED_ORIGINS` ergänzen. Vorgabe: `https://www.mlinner-software.de,https://mlinner-software.de,https://manlin65.github.io`. Weitere Website-Adressen mit Komma trennen. Für einen lokalen Test zusätzlich `http://localhost:8888` eintragen.
 6. Anschließend neu deployen und warten, bis die Bereitstellung abgeschlossen ist.
 
 Die Netlify-Adresse sieht beispielsweise so aus: `https://dein-projekt.netlify.app`. Diese Adresse ist öffentlich und enthält kein Geheimnis.

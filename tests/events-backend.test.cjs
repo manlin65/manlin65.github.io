@@ -20,6 +20,12 @@ test('CORS restricts origins and supports preflight',async()=>{
  const options=await handler({...request(),httpMethod:'OPTIONS'});assert.equal(options.statusCode,204);assert.equal(options.headers['Access-Control-Allow-Origin'],'https://www.mlinner-software.de');
  assert.equal((await handler({...request(),httpMethod:'POST'})).statusCode,405);
 });
+test('default origins support the website with and without www',async()=>{
+ const saved=process.env.RAUSZEIT_ALLOWED_ORIGINS;delete process.env.RAUSZEIT_ALLOWED_ORIGINS;
+ const savedKey=process.env.TICKETMASTER_API_KEY;delete process.env.TICKETMASTER_API_KEY;
+ try {for(const origin of ['https://www.mlinner-software.de','https://mlinner-software.de']) {const result=await handler({...request(),headers:{origin}});assert.equal(result.statusCode,503);assert.equal(result.headers['Access-Control-Allow-Origin'],origin);}}
+ finally {if(saved===undefined)delete process.env.RAUSZEIT_ALLOWED_ORIGINS;else process.env.RAUSZEIT_ALLOWED_ORIGINS=saved;if(savedKey===undefined)delete process.env.TICKETMASTER_API_KEY;else process.env.TICKETMASTER_API_KEY=savedKey;}
+});
 test('normalizes real API schema, filters cancelled/out-of-range events, guards URLs and caches',async()=>{
  process.env.TICKETMASTER_API_KEY='test-fixture-not-a-real-key';let calls=0;
  global.fetch=async(url)=>{

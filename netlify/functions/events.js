@@ -22,7 +22,7 @@ function response(statusCode,data,origin,extra={}) {
 }
 async function handler(event) {
   const origin=event.headers?.origin || event.headers?.Origin || '';
-  const allowed=(process.env.RAUSZEIT_ALLOWED_ORIGINS || 'https://www.mlinner-software.de,https://manlin65.github.io').split(',').map(v=>v.trim()).filter(Boolean);
+  const allowed=(process.env.RAUSZEIT_ALLOWED_ORIGINS || 'https://www.mlinner-software.de,https://mlinner-software.de,https://manlin65.github.io').split(',').map(v=>v.trim()).filter(Boolean);
   const netlifyURL=process.env.URL;
   if(netlifyURL) {try {allowed.push(new URL(netlifyURL).origin);} catch {}}
   if(origin && !allowed.includes(origin)) return response(403,{error:'Diese Website ist für die Veranstaltungssuche nicht freigegeben.'},null);
