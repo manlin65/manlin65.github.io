@@ -14,6 +14,10 @@ Webanwendung für bis zu fünf Ausflugsorte mit Wetter, Kalenderauswahl und Vera
 - Externe Veranstaltungssuchen und lokale Kalenderlinks nach Ort, Zeitraum und Kategorie.
 - Gekennzeichnete Wetterdemo, Ladezustände und Fehlerbehandlung.
 
+## Netlify-Bereitstellung
+
+Für Netlify ist ein eigener Build eingerichtet: `node scripts/build-netlify.mjs`. Er erzeugt die öffentlichen Dateien in `netlify-public` und verbindet das Frontend automatisch mit derselben Netlify-Website. Die vollständige Anleitung steht im Repository unter `NETLIFY_START.md`. Die bestehende GitHub-Pages-Seite bleibt unabhängig davon nutzbar.
+
 ## Echte Veranstaltungen direkt auf der Seite
 
 Die Ticketmaster Discovery API wird über das mitgelieferte PHP-Backend auf STRATO oder alternativ über eine Netlify Function angesprochen. Der Schlüssel `TICKETMASTER_API_KEY` bleibt beim Hosting-Anbieter. Das Frontend bekommt ausschließlich Veranstaltungsdaten, niemals den Schlüssel. Der Wetterteil benötigt keinen Schlüssel.

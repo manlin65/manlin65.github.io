@@ -1,6 +1,7 @@
 // Public backend address only. Never put an API key here.
+// Netlify generates a same-origin address automatically during its build.
+// For GitHub Pages, enter the deployed Netlify function URL below.
 window.RAUSZEIT_CONFIG = Object.freeze({
-  // STRATO example: 'https://deine-domain.de/wochenende/api/events.php'
-  // Netlify example: 'https://dein-projekt.netlify.app/.netlify/functions/events'
+  // Example: 'https://dein-projekt.netlify.app/.netlify/functions/events'
   eventApiUrl: ''
 });

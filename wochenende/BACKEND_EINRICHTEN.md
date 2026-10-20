@@ -12,7 +12,7 @@ Registriere dich unter https://developer.ticketmaster.com/ und erstelle einen Sc
 
 1. Bei https://app.netlify.com/ anmelden.
 2. Ein neues Projekt aus dem vorhandenen GitHub-Repository `manlin65/manlin65.github.io` importieren, Branch `main`.
-3. Die Datei `netlify.toml` übernimmt die Einstellungen: Publish directory `wochenende`, Functions directory `netlify/functions`, kein Build-Befehl erforderlich. Das Base directory bleibt leer.
+3. Die Datei `netlify.toml` übernimmt die Einstellungen: Build command `node scripts/build-netlify.mjs`, Publish directory `netlify-public`, Functions directory `netlify/functions`. Das Base directory bleibt leer.
 4. In den Netlify-Projekteinstellungen unter Environment variables die Variable `TICKETMASTER_API_KEY` anlegen und dort den echten Schlüssel sicher eintragen. Die Variable muss für Functions verfügbar sein.
 5. Optional `RAUSZEIT_ALLOWED_ORIGINS` ergänzen. Vorgabe: `https://www.mlinner-software.de,https://mlinner-software.de,https://manlin65.github.io`. Weitere Website-Adressen mit Komma trennen. Für einen lokalen Test zusätzlich `http://localhost:8888` eintragen.
 6. Anschließend neu deployen und warten, bis die Bereitstellung abgeschlossen ist.
@@ -21,7 +21,7 @@ Die Netlify-Adresse sieht beispielsweise so aus: `https://dein-projekt.netlify.a
 
 ## 3. Anwendung öffnen oder GitHub Pages verbinden
 
-- **Direkt auf Netlify:** Die Anwendung auf `https://dein-projekt.netlify.app/` öffnen. Bei einer Netlify-Standardadresse erkennt sie ihr Backend automatisch.
+- **Direkt auf Netlify:** Die Anwendung auf `https://dein-projekt.netlify.app/` öffnen. Der Netlify-Build verbindet die Anwendung automatisch mit dem Backend auf derselben Website, auch bei einer eigenen Domain.
 - **Bestehende GitHub-Pages-Website:** Unter „Veranstaltungssuche verbinden“ die Netlify-Adresse eintragen. Das aktiviert die Anbindung für diesen Browser.
 - **Für alle Besucher deiner GitHub-Pages-Website:** In `wochenende/config.js` den öffentlichen Wert `eventApiUrl` auf deine Netlify-Adresse setzen und die Datei nach `main` übernehmen. Dort niemals den Ticketmaster-Schlüssel eintragen.
 
@@ -54,7 +54,7 @@ cp .env.example .env
 npx netlify-cli dev
 ```
 
-Den vom CLI gemeldeten lokalen Port verwenden (üblicherweise 8888). Die .env-Datei wird durch .gitignore vom Commit ausgeschlossen. Keine echte .env hochladen oder per ZIP weitergeben. Der Publish-Ordner ist ausschließlich `wochenende`, nicht der Repository-Stamm.
+Den vom CLI gemeldeten lokalen Port verwenden (üblicherweise 8888). Die .env-Datei wird durch .gitignore vom Commit ausgeschlossen. Keine echte .env hochladen oder per ZIP weitergeben. Der Netlify-Publish-Ordner ist ausschließlich der erzeugte Ordner `netlify-public`, nicht der Repository-Stamm.
 
 ## Bereits geprüft / noch erforderlich
 

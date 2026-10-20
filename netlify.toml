@@ -1,12 +1,32 @@
 [build]
-  publish = "wochenende"
+  command = "node scripts/build-netlify.mjs"
+  publish = "netlify-public"
   functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [functions]
   node_bundler = "esbuild"
 
-# Netlify publishes the app itself at /. GitHub Pages keeps /wochenende/.
+# Old /wochenende/ links also work on the Netlify site.
+[[redirects]]
+  from = "/wochenende"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/wochenende/*"
+  to = "/:splat"
+  status = 301
+
 [[headers]]
-  for = "/.netlify/functions/*"
+  for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/config.js"
+  [headers.values]
+    Cache-Control = "no-store"
