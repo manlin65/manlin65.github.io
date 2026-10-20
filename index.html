@@ -1,336 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Softwareentwickler Nürnberg | C# .NET & SQL Server | Manfred Linner</title>
-<meta name="description" content="Senior Softwareentwickler und Dipl.-Informatiker aus Schwabach bei Nürnberg. C#/.NET, WPF, SQL Server, Datenmigration, Legacy-Modernisierung, Datenbanken, Automatisierung, Datenschutz- und Dateiprüfung sowie KI-Integration.">
-<style>
-:root{--bg:#f6f8fb;--surface:#fff;--soft:#eef3f8;--text:#17202a;--muted:#64748b;--primary:#155e75;--dark:#0e4759;--border:#dce4ec;--shadow:0 12px 32px rgba(0,0,0,.07);--radius:18px;--max:1180px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}a{color:inherit}section{scroll-margin-top:90px}.container{width:min(var(--max),calc(100% - 40px));margin:auto}
-.site-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}.nav-container{width:min(var(--max),calc(100% - 40px));min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{text-decoration:none;font-weight:800;font-size:1.08rem;line-height:1.2;max-width:420px}.brand span{color:var(--primary)}.main-nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.main-nav a{text-decoration:none;padding:10px 14px;border-radius:999px;font-size:.94rem;font-weight:700;color:#334155;border:1px solid transparent}.main-nav a:hover{background:var(--soft);color:var(--primary);border-color:var(--border)}.menu-button{display:none;border:0;background:transparent;font-size:1.7rem;cursor:pointer}
-.hero{padding:105px 0 95px;background:radial-gradient(circle at top right,rgba(21,94,117,.15),transparent 34%),linear-gradient(180deg,#fff 0%,#f6f8fb 100%)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.55fr);gap:65px;align-items:center}.hero-kicker{margin:0 0 14px;color:var(--primary);font-size:.9rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:0 0 24px;font-size:clamp(3rem,7vw,5.6rem);line-height:.98;letter-spacing:-.06em}.hero h1 span{color:var(--primary)}.hero-text{max-width:760px;color:#475569;font-size:clamp(1.08rem,2vw,1.25rem);margin-bottom:28px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:10px;background:var(--primary);color:white;font-weight:700;text-decoration:none;transition:.2s}.button:hover{background:var(--dark);transform:translateY(-1px)}.button-secondary{background:white;color:var(--primary);border:1px solid var(--border)}.button-secondary:hover{background:var(--soft)}.hero-box,.card,.profile-box,.contact-box,.dms-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}.hero-box{padding:30px;box-shadow:var(--shadow)}.hero-box h3{margin-top:0}.hero-box ul{padding-left:20px;margin-bottom:0}
-.section{padding:88px 0}.section-soft{background:var(--soft)}.section-title{max-width:760px;margin-bottom:38px}.section-title small{display:block;color:var(--primary);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}.section-title h2{margin:0 0 12px;font-size:clamp(2rem,4vw,3rem);line-height:1.12;letter-spacing:-.04em}.section-title p{margin:0;color:var(--muted);font-size:1.06rem}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{padding:27px;box-shadow:0 8px 24px rgba(0,0,0,.035)}.card h3{margin-top:0;margin-bottom:9px}.card p{margin-bottom:0;color:var(--muted)}.dms-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}.dms-panel{padding:32px}.dms-panel.highlight{background:var(--primary);color:white;border-color:var(--primary)}.dms-panel.highlight p,.dms-panel.highlight li{color:rgba(255,255,255,.88)}.tag-list{display:flex;flex-wrap:wrap;gap:10px}.tag{padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:999px;font-size:.92rem;font-weight:650}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start}.profile-box,.contact-box{padding:28px}.profile-links{display:flex;gap:12px;flex-wrap:wrap}.contact-box{padding:34px;box-shadow:var(--shadow)}.contact-box p{color:var(--muted)}
-.legal{padding:70px 0;background:#fff}.legal h2{margin-top:0}.legal p{color:#475569}footer{padding:28px 0;background:#111827;color:#d1d5db}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.footer-links{display:flex;gap:18px}.footer-links a{text-decoration:none}.footer-links a:hover{color:#fff}
-@media(max-width:980px){.hero-grid,.dms-grid,.about-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.menu-button{display:block}.main-nav{display:none;position:absolute;top:76px;left:20px;right:20px;flex-direction:column;align-items:stretch;padding:14px;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}.main-nav.open{display:flex}.main-nav a{padding:12px 14px;border-radius:12px}}@media(max-width:620px){.cards{grid-template-columns:1fr}.hero{padding-top:75px}.section{padding:70px 0}}
-
-.example-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.example-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.04)}
-.example-card img{width:100%;height:260px;object-fit:cover;display:block;background:#fff}
-.example-card .content{padding:26px}
-.example-card h3{margin:0 0 10px}
-.example-card p{color:var(--muted);margin:0 0 18px}
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.72);z-index:2000;display:none;align-items:center;justify-content:center;padding:24px}
-.modal.open{display:flex}
-.modal-dialog{width:min(1100px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.35);position:relative}
-.modal-head{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:2}
-.modal-head h3{margin:0}
-.modal-close{border:0;background:var(--soft);width:42px;height:42px;border-radius:999px;font-size:1.4rem;cursor:pointer}
-.modal-body{padding:24px}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.gallery img{width:100%;height:300px;object-fit:cover;border-radius:14px;border:1px solid var(--border);background:#fff}
-.tech-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.tech-gallery figure{margin:0}
-.tech-gallery img{width:100%;border-radius:14px;border:1px solid var(--border);background:#fff}
-.tech-gallery figcaption{font-size:.9rem;color:var(--muted);margin-top:7px}
-.mini-note{margin-top:18px;padding:16px 18px;background:var(--soft);border-radius:14px;color:#475569}
-.project-tech{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:16px 0 20px}.project-tech span{font-size:.78rem;font-weight:700;padding:6px 9px;border-radius:999px;background:var(--soft);color:#334155;border:1px solid var(--border)}
-.tech-block{margin-top:22px;padding:20px;border:1px solid var(--border);border-radius:14px;background:#f8fafc}.tech-block h4{margin:0 0 10px}.tech-block ul{margin:0;padding-left:20px}.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.card-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}.upcoming-wrap{max-width:1000px;margin:48px auto 0}.upcoming-head{text-align:center;margin-bottom:24px}.upcoming-head h3{font-size:1.7rem;margin:0 0 8px}.upcoming-head p{margin:0 auto;max-width:760px;color:var(--muted)}.upcoming-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.upcoming-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px}.upcoming-card h4{margin:0 0 8px;font-size:1.1rem}.upcoming-card p{margin:0;color:var(--muted)}.status-chip{display:inline-block;margin-bottom:10px;padding:5px 9px;border-radius:999px;background:var(--soft);border:1px solid var(--border);font-size:.76rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.04em}.knowhow-note{margin-top:20px;padding:16px 18px;background:#fff;border:1px solid var(--border);border-radius:14px;color:#475569;text-align:center}
-@media(max-width:900px){.example-grid,.gallery,.tech-gallery,.upcoming-grid{grid-template-columns:1fr}}
-
-
-.planning-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.planning-step{position:relative;padding:18px 14px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#fff,#f8fafc);text-align:center}.planning-step .num{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:var(--primary);color:#fff;font-weight:800;margin-bottom:10px}.planning-step strong{display:block;margin-bottom:5px}.planning-step span{display:block;color:var(--muted);font-size:.9rem;line-height:1.4}.planning-result{margin:26px 0 4px;padding:22px;border:1px solid var(--border);border-radius:18px;background:#f8fafc}.planning-result h4{margin:0 0 14px}.planning-board{display:grid;grid-template-columns:1.1fr .9fr .9fr .9fr;gap:8px}.planning-cell{padding:12px;border-radius:10px;background:#fff;border:1px solid var(--border);font-size:.9rem}.planning-cell.head{font-weight:800;background:var(--dark);color:#fff;border-color:var(--dark)}.planning-cell.ok{font-weight:800;color:#166534;background:#f0fdf4}.planning-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.planning-benefit{padding:16px;border:1px solid var(--border);border-radius:14px;background:#fff}.planning-benefit strong{display:block;margin-bottom:5px}.planning-benefit span{color:var(--muted);font-size:.9rem}.button-link{background:transparent;color:var(--primary);border:1px solid var(--border)}.button-link:hover{background:var(--soft);color:var(--dark)}@media(max-width:760px){.planning-flow,.planning-benefits{grid-template-columns:1fr 1fr}.planning-board{grid-template-columns:1fr 1fr}}@media(max-width:480px){.planning-flow,.planning-benefits,.planning-board{grid-template-columns:1fr}}
-</style>
-
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="Manfred Linner">
-  <link rel="canonical" href="https://www.mlinner-software.de/">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="Softwareentwickler Nürnberg | C# .NET & SQL Server | Manfred Linner">
-  <meta property="og:description" content="Softwareentwicklung, SQL Server, Datenmigration, Legacy-Modernisierung, Automatisierung und KI-Integration in der Metropolregion Nürnberg.">
-  <meta property="og:url" content="https://www.mlinner-software.de/">
-  <meta name="twitter:card" content="summary">
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"ProfessionalService",
-    "name":"M. Linner Softwareentwicklung & Dienstleistungen",
-    "url":"https://www.mlinner-software.de/",
-    "areaServed":["Schwabach","Nürnberg","Fürth","Erlangen","Metropolregion Nürnberg","Deutschland"],
-    "founder":{"@type":"Person","name":"Manfred Linner","jobTitle":"Dipl.-Informatiker (FH), Senior Softwareentwickler"},
-    "knowsAbout":["C#",".NET","WPF","Microsoft SQL Server","T-SQL","Datenmigration","Legacy-Modernisierung","Automatisierung","Datenschutz- und Dateiprüfung","KI-Integration"]
-  }
-  </script>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12294C">
+<title>Manfred Linner | KI, Datenbanken & Softwareentwicklung</title>
+<meta name="description" content="KI sinnvoll einsetzen, Daten nutzbar machen, Lösungen entwickeln. Manfred Linner: Senior Softwareentwickler aus Schwabach. KI-Integration, Dokumentenverarbeitung, Datenqualität, C#/.NET, SQL Server und Datenmigration.">
+<meta name="author" content="Manfred Linner">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.mlinner-software.de/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Manfred Linner · KI. Datenbanken. Programmierung.">
+<meta property="og:description" content="Technische Erfahrung. Praktischer KI-Nutzen. Softwareentwicklung, Datenbanken und Automatisierung aus einer Hand.">
+<meta property="og:url" content="https://www.mlinner-software.de/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="assets/brand/favicon.png">
+<link rel="preload" href="assets/fonts/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="assets/fonts/source-sans-3-variable.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"M. Linner Softwareentwicklung & Dienstleistungen","url":"https://www.mlinner-software.de/","email":"info@mlinner-software.de","telephone":"+491607838773","address":{"@type":"PostalAddress","streetAddress":"Kienbühl 3","postalCode":"91126","addressLocality":"Schwabach","addressCountry":"DE"},"areaServed":["Deutschland","DACH-Raum","international","Schwabach","Nürnberg","Fürth","Erlangen","Metropolregion Nürnberg"],"founder":{"@type":"Person","name":"Manfred Linner","jobTitle":"Dipl.-Informatiker (FH), Senior Softwareentwickler"},"knowsAbout":["KI-Integration","C#",".NET","SQL Server","WPF","Datenmigration","Legacy-Modernisierung","Automatisierung"]}</script>
 </head>
 <body>
-<header class="site-header">
-  <div class="nav-container">
-    <a class="brand" href="#top">M. Linner <span>Softwareentwicklung &amp; Dienstleistungen</span></a>
-    <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false">☰</button>
-    <nav class="main-nav" aria-label="Hauptnavigation">
-      <a href="#ki-praxis">Praxisprojekte</a>
-      <a href="#leistungen">Leistungen</a>
-      <a href="#technologien">Technologien</a>
-      <a href="#ueber-mich">Über mich</a>
-      <a href="#kontakt">Kontakt</a>
-    </nav>
-  </div>
-</header>
-
-<main id="top">
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="hero-kicker">Dipl.-Informatiker · Senior Softwareentwicklung · Daten · Modernisierung</p>
-      <h1>Software modernisieren.<br><span>Daten beherrschen. KI sinnvoll integrieren.</span></h1>
-      <p class="hero-text">Senior Softwareentwicklung für bestehende Unternehmenssysteme – C#/.NET, WPF, SQL Server, Datenmigration und Legacy-Modernisierung. Ergänzend integriere ich Automatisierung und KI dort, wo sie einen konkreten Nutzen bringen.</p>
-      <div class="hero-actions">
-        <a class="button" href="#kontakt">Kontakt</a>
-        <a class="button button-secondary" href="#leistungen">Leistungen</a>
-      </div>
-    </div>
-    <aside class="hero-box">
-      <h3>Fünf Schwerpunkte</h3>
-      <ul>
-        <li>C#/.NET &amp; Windows-Desktop</li>
-        <li>SQL Server &amp; Daten</li>
-        <li>Datenmigration &amp; Schnittstellen</li>
-        <li>Legacy-Modernisierung &amp; Troubleshooting</li>
-        <li>KI-Integration &amp; Automatisierung</li>
-      </ul>
-    </aside>
-  </div>
+<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="./" aria-label="Manfred Linner – Startseite"><img src="assets/brand/ml-icon.svg" alt="" width="64" height="34"><span>Manfred Linner<small>KI. Datenbanken. Programmierung.</small></span></a>
+<button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Menü öffnen"><span></span><span></span></button>
+<nav id="main-nav" class="main-nav" aria-label="Hauptnavigation"><a href="#leistungen">Leistungen</a><a href="#ki-praxis">Praxisprojekte</a><a href="#ueber-mich">Über mich</a><a class="nav-contact" href="#kontakt">Projekt besprechen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></nav>
+</div></header><main id="inhalt">
+<section class="hero" id="top"><div class="container hero-grid">
+<div class="hero-copy"><div class="availability"><span class="status-dot"></span> FREELANCER · REMOTE · DEUTSCHLAND & INTERNATIONAL</div>
+<h1>KI sinnvoll einsetzen.<br><span>Daten nutzbar machen.</span><br>Lösungen entwickeln.</h1>
+<p class="hero-description">Ich verbinde KI mit Unternehmensdaten und bestehender Software – für praktische Anwendungen in Dokumentenverarbeitung, Datenqualität und Prozessautomatisierung.</p>
+<div class="hero-actions"><a class="button button-primary" href="#kontakt">Über Ihr Projekt sprechen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a class="button button-quiet" href="#ki-praxis">Praxisprojekte entdecken <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+<div class="hero-qualification"><span class="qualification-mark"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span><p><strong>Manfred Linner</strong><br>Dipl.-Informatiker (FH) · KI-Integration & Automatisierung</p></div>
+</div>
+<div class="hero-visual" aria-label="ML: die Verbindung von künstlicher Intelligenz, Daten und Softwareentwicklung">
+<div class="visual-grid"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+<div class="visual-heading"><span class="status-dot"></span> ERFAHRUNG VERBINDET.</div>
+<picture class="hero-logo"><source media="(max-width: 1099px)" srcset="assets/brand/ml-compact.svg"><img src="assets/brand/ml-detail.svg" width="420" height="190" alt="Neues ML-Monogramm mit Netzwerk-, KI-, Code- und Datenbankmotiven"></picture>
+<span class="visual-label label-ai"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h3m6 0h3a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-3M9 3v18m6-18v18M6 10h12M6 14h12"/></svg> Künstliche Intelligenz</span><span class="visual-label label-data"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg> Nutzbare Daten</span><span class="visual-label label-code"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7-5 5 5 5m10-10 5 5-5 5m-4-14-2 18"/></svg> Gute Software</span>
+<div class="visual-bottom"><span>ANALYSIEREN.</span><span>VERBINDEN.</span><span>UMSETZEN.</span></div>
+</div></div>
+<div class="container hero-foundation"><span>Neue Möglichkeiten.<br><strong>Ein solides Fundament.</strong></span><div>C# / .NET</div><div>SQL Server</div><div>Python</div><div>KI & Automatisierung</div><a href="#technologien" aria-label="Alle Technologien ansehen"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
 </section>
+<section class="section services" id="leistungen"><div class="container">
+<div class="section-heading"><div><p class="eyebrow"><span class="short-line"></span> MEINE LEISTUNGEN</p><h2>Technik ist das Werkzeug.<br>Ihr Nutzen das Ziel.</h2></div><p>Ob neuer Ansatz oder gewachsenes System: Ich unterstütze Sie von der ersten Analyse bis zur technischen Umsetzung.</p></div>
+<div class="service-grid">
+<article class="service"><div class="service-top"><span>01 / KI & AUTOMATISIERUNG</span><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h3m6 0h3a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-3M9 3v18m6-18v18M6 10h12M6 14h12"/></svg></div><h3>Weniger Routine.<br>Mehr Möglichkeiten.</h3><p>Dokumente verarbeiten, Informationen erschließen und wiederkehrende Aufgaben vereinfachen. Mit KI dort, wo sie konkret weiterhilft.</p><ul class="check-list"><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Dokumentenanalyse & OCR</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> KI in bestehende Abläufe integrieren</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Prozesse gezielt automatisieren</li></ul><button class="service-action" data-modal-open="modal-doc">Mehr zu KI & Automatisierung</button></article>
+<article class="service"><div class="service-top"><span>02 / DATEN & DATENBANKEN</span><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><h3>Aus Daten wird<br>eine sichere Grundlage.</h3><p>Datenqualität verbessern, Bestände sicher migrieren und Datenbanken zuverlässig betreiben. Damit Ihre Informationen nutzbar werden.</p><ul class="check-list"><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> SQL Server, T-SQL & Performance</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Datenmigration & Schnittstellen</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Reporting, Backup & Berechtigungen</li></ul><button class="service-action" data-modal-open="modal-trouble-migration">Mehr zu Daten & Datenbanken</button></article>
+<article class="service"><div class="service-top"><span>03 / SOFTWARE & MODERNISIERUNG</span><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7-5 5 5 5m10-10 5 5-5 5m-4-14-2 18"/></svg></div><h3>Bewährtes erhalten.<br>Gezielt weiterentwickeln.</h3><p>Bestehende Anwendungen verstehen, stabilisieren und Schritt für Schritt modernisieren. Neue Lösungen passend zu Ihrer Systemlandschaft entwickeln.</p><ul class="check-list"><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> C#/.NET, WPF & Webanwendungen</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Legacy-Modernisierung & Integration</li><li><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Fehleranalyse & Troubleshooting</li></ul><button class="service-action" data-modal-open="modal-trouble-legacy">Mehr zu Software & Modernisierung</button></article>
+</div>
 
-
-<section id="troubleshooting" class="section section-soft">
-  <div class="container">
-    <div class="section-title"><small>Senior Troubleshooting</small><h2>Wenn bestehende Systeme Probleme machen</h2><p>Gewachsene Anwendungen, Datenbanken und Schnittstellen müssen nicht sofort ersetzt werden. Oft hilft zuerst eine strukturierte technische Analyse: Wo liegt die Ursache, was ist kritisch und welcher nächste Schritt ist wirtschaftlich sinnvoll?</p></div>
-    <div class="cards">
-      <article class="card"><h3>Fehleranalyse & Stabilisierung</h3><p>Analyse komplexer Fehlerbilder, Logs, Datenbankprobleme und Schnittstellen. Ziel ist eine nachvollziehbare Ursache und eine pragmatische Lösung.</p></article>
-      <article class="card"><h3>Legacy &amp; Softwareentwicklung</h3><p>Weiterentwicklung, Fehlerbehebung und Modernisierung bestehender C#/.NET-, ASP.NET-, Delphi-, Access/VBA- und datenbankgestützter Anwendungen – ohne unnötige Komplett-Neuentwicklung.</p></article>
-      <article class="card"><h3>Migration &amp; Schnittstellen</h3><p>Datenübernahmen, Systemwechsel und technische Kopplung bestehender Fachanwendungen sowie strukturierte Übergänge zwischen Alt- und Zielsystemen.</p></article>
-    </div>
-  </div>
-</section>
-
-<section id="dms-check" class="section">
-  <div class="container">
-    <div class="section-title"><small>Dokumentenmanagement & DMS-Check</small><h2>Dokumentenprozesse analysieren, strukturieren und technisch verbessern</h2><p>Im Mittelpunkt steht nicht der Verkauf eines bestimmten DMS-Produkts, sondern die Frage, wie Dokumente heute abgelegt, gefunden, berechtigt, ausgetauscht und mit bestehenden Fachanwendungen verbunden werden. Daraus entstehen konkrete, realistische Verbesserungen.</p></div>
-    <div class="dms-grid">
-      <div class="dms-panel"><h3>Typische Fragestellungen</h3><ul><li>Werden Dokumente schnell und zuverlässig gefunden?</li><li>Sind Ablagestrukturen und Metadaten noch sinnvoll?</li><li>Wo entstehen Medienbrüche und Doppelarbeit?</li><li>Sind Berechtigungen nachvollziehbar und wartbar?</li><li>Welche Abläufe lassen sich vereinfachen oder automatisieren?</li></ul></div>
-      <div class="dms-panel highlight"><h3>Pragmatischer DMS-Check</h3><p>Analyse von Ablagen, Metadaten, Berechtigungen, Suchbarkeit, Medienbrüchen, bestehenden Schnittstellen und technischen Abhängigkeiten.</p><p>Ergebnis: eine nachvollziehbare Bewertung mit priorisierten nächsten Schritten – bei Bedarf inklusive technischer Umsetzung, Migration und Integration.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="leistungen" class="section section-soft">
-  <div class="container">
-    <div class="section-title"><small>Leistungen</small><h2>Bestehende Systeme weiterbringen</h2><p>Unterstützung bei Software, Daten und technischen Übergängen – von der Weiterentwicklung gewachsener Anwendungen bis zur gezielten Integration moderner KI.</p></div>
-    <div class="cards">
-      <article class="card"><h3>Software &amp; Legacy</h3><p>C#/.NET, WPF, ASP.NET und gewachsene Fachanwendungen: Weiterentwicklung, Fehlerbehebung, Refactoring und schrittweise Modernisierung.</p></article>
-      <article class="card"><h3>SQL Server &amp; Daten</h3><p>T-SQL, Datenmodelle, Benutzer/Rollen/Berechtigungen, Backup/Restore, Updates sowie Performance- und Fehleranalyse.</p></article>
-      <article class="card"><h3>Datenmigration &amp; Schnittstellen</h3><p>Datenübernahmen, ETL, Import/Export, Systemwechsel und technische Kopplung zwischen bestehenden und neuen Anwendungen.</p></article>
-      <article class="card"><h3>Analyse &amp; Troubleshooting</h3><p>Bestehende Anwendungen, Datenbanken und Schnittstellen systematisch analysieren, Ursachen finden und Systeme stabilisieren.</p></article>
-      <article class="card"><h3>Reporting &amp; Automatisierung</h3><p>SQL-basierte Auswertungen, Reports, Excel/VBA-Lösungen, Datenimporte sowie Automatisierung wiederkehrender Arbeitsabläufe.</p></article>
-      <article class="card"><h3>KI &amp; Prozessautomatisierung</h3><p>KI dort integrieren, wo sie bestehende Anwendungen und Prozesse sinnvoll ergänzt – etwa bei Analyse, Dokumentenverarbeitung und Automatisierung.</p></article>
-    </div>
-  </div>
-</section>
-
-
-<section id="software-web" class="section">
-  <div class="container">
-    <div class="section-title">
-      <small>Software &amp; Web</small>
-      <h2>Programmierung bleibt Teil des Werkzeugkastens</h2>
-      <p>Wenn eine Lösung klassische Entwicklung braucht, setze ich sie ein – gezielt und mit Blick auf Wartbarkeit, Integration und Nutzen. Besonders dort, wo bestehende Anwendungen weiterleben und mit Datenbanken, Webservices oder modernen KI-Werkzeugen zusammenspielen.</p>
-    </div>
-    <div class="cards">
-      <article class="card"><h3>C# / .NET &amp; ASP.NET</h3><p>Weiterentwicklung bestehender Anwendungen, Webanwendungen, Fehlerbehebung, Schnittstellen und technische Modernisierung.</p></article>
-      <article class="card"><h3>Delphi &amp; Legacy</h3><p>Analyse und Pflege gewachsener Anwendungen, schrittweise Modernisierung sowie Anbindung an Datenbanken und Schnittstellen.</p></article>
-      <article class="card"><h3>Web &amp; Integration</h3><p>Webservices, Datenanbindung, kleinere Weblösungen und technische Integration bestehender Systeme – pragmatisch statt überdimensioniert.</p></article>
-    </div>
-  </div>
-</section>
-
-<section id="technologien" class="section">
-  <div class="container">
-    <div class="section-title"><small>Werkzeuge &amp; Technologien</small><h2>Software, Daten und KI – sinnvoll kombiniert</h2><p>C#/.NET, SQL Server und gewachsene Unternehmenssysteme bilden das technische Fundament. Moderne KI-Werkzeuge ergänzen dieses dort, wo sie praktisch weiterhelfen.</p></div>
-    <div class="tag-list">
-      <span class="tag">ChatGPT / OpenAI</span><span class="tag">Prompt Engineering</span><span class="tag">Pollo AI</span><span class="tag">GitHub Copilot</span><span class="tag">Gemini Code Assist</span><span class="tag">Claude / Claude Code</span><span class="tag">Generative KI</span><span class="tag">Prozessanalyse</span><span class="tag">Automatisierung</span><span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">Reporting</span><span class="tag">Excel / VBA</span><span class="tag">Python</span><span class="tag">DMS</span><span class="tag">Datenmigration</span><span class="tag">Troubleshooting</span><span class="tag">C# / .NET</span><span class="tag">ASP.NET</span><span class="tag">WPF</span><span class="tag">Webentwicklung</span><span class="tag">Delphi</span><span class="tag">MS Access</span><span class="tag">Webservices</span><span class="tag">Legacy-Systeme</span>
-    </div>
-  </div>
-</section>
-
-
-<section id="ki-praxis" class="section section-soft">
-  <div class="container">
-    <div class="section-title" style="margin-left:auto;margin-right:auto;text-align:center">
-      <small>KI in der Praxis</small>
-      <h2>Konkrete Anwendungen statt Schlagworte</h2>
-      <p>Ausgewählte Praxisprojekte zeigen, wie ich Daten, Automatisierung, klassische Softwareentwicklung und KI zu nutzbaren Lösungen verbinde. Ergänzend finden Sie weitere Lösungsansätze und Anwendungsfelder.</p>
-    </div>
-
-    <div class="example-grid" style="max-width:1000px;margin:0 auto">
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>KI-Dokumentenassistent</h3>
-        <p>PDF-Dokumente auslesen, relevante Geschäftsdaten erkennen und strukturiert an Excel, SQL Server oder weitere Systeme übergeben.</p>
-        <div class="project-tech"><span>Python</span><span>FastAPI</span><span>OCR</span><span>Ollama</span><span>SQL Server</span></div>
-        <button class="button" type="button" data-modal-open="modal-doc">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>KI-gestützter Angebots- und Rechnungscheck</h3>
-        <p>PDF-Rechnungen und Angebote erfassen, Positionen prüfen, Auffälligkeiten erkennen und Ergebnisse strukturiert weitergeben.</p>
-        <div class="project-tech"><span>PDF</span><span>Regel-Engine</span><span>Excel/CSV</span><span>SQL Server</span></div>
-        <button class="button" type="button" data-modal-open="modal-invoice">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>KI-gestützter Datenqualitäts-Check</h3>
-        <p>Excel-, CSV- und SQL-Daten auf Dubletten, Pflichtfelder, Formate, Ausreißer, Datentypen und Summenfehler prüfen.</p>
-        <div class="project-tech"><span>XLSX</span><span>CSV</span><span>ASP.NET Core</span><span>SQL Server</span></div>
-        <button class="button" type="button" data-modal-open="modal-quality">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>Datenschutz- &amp; Dateiprüfung</h3>
-        <p>Sensible und personenbezogene Informationen in Dokumenten und Dateien automatisiert erkennen, bewerten und übersichtlich darstellen.</p>
-        <div class="project-tech"><span>Datenschutz</span><span>Dokumente</span><span>Datenanalyse</span><span>Automatisierung</span></div>
-        <button class="button" type="button" data-modal-open="modal-privacycheck">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>Intelligente Einsatz- und Ressourcenplanung</h3>
-        <p>Personal, Maschinen, Schichten und Verfügbarkeiten aus vorhandenen Daten zusammenführen – für einen nachvollziehbaren Wochenplan und früh sichtbare Engpässe.</p>
-        <div class="project-tech"><span>Unternehmensdaten</span><span>Regelwerk</span><span>Planung</span><span>Automatisierung</span></div>
-        <button class="button" type="button" data-modal-open="modal-tech">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>KI-gestützter Logfile- &amp; Fehleranalysator</h3>
-        <p>Logdateien strukturieren, Fehlermuster gruppieren, Fehlerketten erkennen und priorisierte Handlungsempfehlungen ableiten.</p>
-        <div class="project-tech"><span>JavaScript</span><span>ASP.NET Core</span><span>SQL Server</span><span>CSV</span></div>
-        <button class="button" type="button" data-modal-open="modal-log">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>Rauszeit – Wohin am Wochenende?</h3>
-        <p>Ausflugsziele suchen, das Wochenendwetter entdecken und passende Aktivitäten planen. Mit echten Wetterdaten und persönlichen Lieblingsorten.</p>
-        <div class="project-tech"><span>JavaScript</span><span>REST API</span><span>Open-Meteo</span><span>Responsive</span></div>
-        <a class="button" href="wochenende/">Ausflug planen ↗</a>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>Mehrsprachige Web-App: Flaggen-Quiz</h3>
-        <p>Responsive Quiz-Webanwendung mit animierten Flaggen, Punkte- und Fortschrittslogik und vier vollständigen Sprachversionen.</p>
-        <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>i18n</span></div>
-        <button class="button" type="button" data-modal-open="modal-flags">Mehr erfahren</button>
-      </div></article>
-
-
-      <article class="example-card"><div class="content" style="text-align:center">
-        <h3>Generative Bildgestaltung</h3>
-        <p>Prompt Engineering, Stilsteuerung, Variantenbildung und visuelle Konzepte für unterschiedliche Motive und Einsatzbereiche.</p>
-        <div class="project-tech"><span>Generative KI</span><span>Prompt Engineering</span><span>Pollo AI</span><span>Bildkonzepte</span></div>
-        <button class="button" type="button" data-modal-open="modal-art">Mehr erfahren</button>
-      </div></article>
-    </div>
-  </div>
-</section>
-
-<section id="ueber-mich" class="section section-soft">
-  <div class="container about-grid">
-    <div>
-      <div class="section-title"><small>Über mich</small><h2>Dipl.-Informatiker mit Erfahrung in IT, Daten und Prozessen</h2></div>
-      <p>Ich bringe langjährige Erfahrung aus Softwareentwicklung, Webanwendungen, Datenbanktechnik und gewachsenen Fachanwendungen mit. Heute verbinde ich dieses technische Fundament mit Analyse, Troubleshooting, Prozessverbesserung und KI-gestützter Automatisierung.</p>
-      <p>Meine Programmiererfahrung ist dabei ein wichtiger Vorteil: Sie hilft mir, technische Zusammenhänge schnell zu verstehen, KI-generierte Ergebnisse fachlich zu bewerten und Lösungen zuverlässig in bestehende Systeme zu integrieren. Programmierung bleibt Teil meines Angebots – sie ist jedoch kein Selbstzweck, sondern eines von mehreren Werkzeugen für eine praktikable Lösung.</p>
-    </div>
-    <div class="profile-box" id="profile">
-      <h3>Profile</h3>
-      <p>Weitere berufliche Informationen und Stationen finden Sie auf meinen Profilen.</p>
-      <div class="profile-links">
-        <a class="button"
-           href="https://de.linkedin.com/in/manfred-linner-4a346727"
-           target="_blank" rel="noopener noreferrer">LinkedIn</a>
-
-        <a class="button button-secondary"
-           href="https://www.xing.com/profile/Manfred_Linner3/web_profiles?nwt_nav=profile_icon"
-           target="_blank" rel="noopener noreferrer">XING</a>
-
-        <a class="button button-secondary"
-           href="https://www.freelancermap.de/profil/software-developer-c-delphi-vb-vb-net-html-asp-net"
-           target="_blank" rel="noopener noreferrer">Freelancermap</a>
-
-        <a class="button button-secondary"
-           href="https://www.freelance.de/freelancer/144124-Senior-Software-Datenbankentwickler-C-Sharp-dotNET"
-           target="_blank" rel="noopener noreferrer">freelance.de</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="freelance" class="section section-soft">
-  <div class="container">
-    <div class="section-title"><small>Freelance &amp; Projektunterstützung</small><h2>Senior-Unterstützung für Software-, Daten- und Modernisierungsprojekte</h2><p>Ich unterstütze Unternehmen insbesondere bei C#/.NET, WPF, SQL Server, Datenmigration, Legacy-Systemen und technischen Modernisierungsaufgaben – Remote, hybrid oder im Raum Nürnberg. Umfang und Einsatzmodell nach Vereinbarung.</p></div>
-    <div class="hero-actions"><a class="button" href="#kontakt">Projekt anfragen</a></div>
-  </div>
-</section>
-
-
-<section class="section" id="softwareentwickler-nuernberg">
-  <div class="container">
-    <div class="section-head">
-      <p class="eyebrow">Softwareentwicklung in der Metropolregion Nürnberg</p>
-      <h2>C#/.NET- und SQL-Server-Entwicklung aus Schwabach</h2>
-      <p>Ich unterstütze Unternehmen in Nürnberg, Schwabach, Fürth, Erlangen und remote bei der Weiterentwicklung und Modernisierung bestehender Software- und Datenbanklösungen. Schwerpunkte sind C#/.NET, WPF, Microsoft SQL Server und T-SQL, Datenmigration, Schnittstellen, Reporting, Fehleranalyse sowie die Integration von Automatisierung und KI in bestehende Prozesse.</p>
-    </div>
-  </div>
-</section>
-
-<section id="kontakt" class="section">
-  <div class="container">
-    <div class="contact-box">
-      <div class="section-title"><small>Kontakt</small><h2>Projekt, Unterstützung oder technische Frage?</h2><p>Für C#/.NET- und SQL-Server-Projekte, Datenmigration, Legacy-Modernisierung, Troubleshooting sowie passende KI- und Automatisierungslösungen können Sie mich gerne kontaktieren.</p></div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:flex-start;">
-        <a class="button" href="tel:+491607838773">Anrufen: +49 160 7838773</a>
-        <a class="button button-secondary" href="mailto:info@mlinner-software.de">E-Mail senden</a>
-      </div>
-      <p style="margin-top:14px;"><strong>Manfred Linner</strong> · Dipl.-Informatiker (FH)<br>IT · Daten · KI · Automatisierung<br>Kienbühl 3 · 91126 Schwabach</p>
-    </div>
-  </div>
-</section>
-
-<section id="datenschutz" class="legal">
-  <div class="container">
-    <h2>Datenschutz</h2>
-    <p><strong>Verantwortlicher</strong><br>Manfred Linner<br>M. Linner Softwareentwicklung &amp; Dienstleistungen<br>Kienbühl 3<br>91126 Schwabach<br>Deutschland<br>Telefon: <a href="tel:+491607838773">+49 160 7838773</a><br>E-Mail: <a href="mailto:info@mlinner-software.de">info@mlinner-software.de</a></p>
-    <p>Diese Website dient der Darstellung meiner beruflichen Leistungen. Beim Aufruf der Website werden durch den Hosting-Anbieter technisch erforderliche Verbindungs- und Server-Logdaten verarbeitet, insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite bzw. Datei, übertragene Datenmenge, Referrer-Informationen sowie Angaben zu Browser und Betriebssystem. Die Verarbeitung erfolgt zur sicheren und störungsfreien Bereitstellung der Website auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.</p>
-    <p>Auf dieser Website werden derzeit keine Analyse- oder Trackingdienste eingesetzt und keine nicht technisch notwendigen Cookies gesetzt. Externe Profile werden erst aufgerufen, wenn Sie einen entsprechenden Link aktiv anklicken.</p>
-    <p>Wenn Sie per E-Mail Kontakt aufnehmen, werden die von Ihnen übermittelten Angaben zur Bearbeitung Ihrer Anfrage und für mögliche Anschlussfragen verarbeitet. Rechtsgrundlage ist je nach Inhalt der Anfrage Art. 6 Abs. 1 lit. b DSGVO oder Art. 6 Abs. 1 lit. f DSGVO.</p>
-    <p>Personenbezogene Daten werden nur so lange gespeichert, wie dies für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen. Sie haben im Rahmen der gesetzlichen Voraussetzungen insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Zudem besteht ein Beschwerderecht bei einer zuständigen Datenschutz-Aufsichtsbehörde.</p>
-  </div>
-</section>
-
-<section id="impressum" class="legal">
-  <div class="container"><h2>Impressum</h2><p><strong>M. Linner Softwareentwicklung &amp; Dienstleistungen</strong><br>Manfred Linner<br>Kienbühl 3<br>91126 Schwabach<br>Deutschland</p><p>Telefon: <a href="tel:+491607838773">+49 160 7838773</a><br>E-Mail: <a href="mailto:info@mlinner-software.de">info@mlinner-software.de</a></p></div>
-</section>
-</main>
-
-<div class="modal" id="modal-doc" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-doc-title">
+</div></section>
+<section class="section projects" id="ki-praxis"><div class="container">
+<div class="section-heading"><div><p class="eyebrow"><span class="short-line"></span> PRAXISBEISPIELE & ANWENDUNGSFELDER</p><h2>Konkrete Anwendungen<br>statt Schlagworte.</h2></div><p>Am PDF-Beispiel sehen Sie den Weg vom Dokument zum strukturierten Datensatz. Weitere Ansätze betreffen Datenqualität, Loganalyse und Dokumentenprozesse.</p></div>
+<div class="project-grid project-grid-text" aria-label="Praxisbeispiele und Anwendungsfelder">
+<article class="project-card"><div class="project-content"><p class="eyebrow">01 / DOKUMENTVERARBEITUNG</p><h3>Vom PDF zum prüfbaren Datensatz</h3><div class="example-copy"><p><strong>Aufgabe:</strong> Rechnungs- und Geschäftsdaten liegen in PDF-Dokumenten.</p><p><strong>Ansatz:</strong> PDF-Text direkt auslesen, bei Scans OCR ergänzen und die erkannten Angaben strukturiert darstellen. KI kann die Erkennung unterstützen.</p><p><strong>Ergebnis im Beispiel:</strong> Ein strukturierter Datensatz, der nachvollziehbar geprüft und anschließend an Excel oder SQL Server übergeben werden kann.</p></div><button class="service-action example-action" type="button" data-modal-open="modal-invoice">Rechnungscheck ansehen</button></div></article>
+<article class="project-card"><div class="project-content"><p class="eyebrow">02 / DATENQUALITÄT</p><h3>Fehler vor dem Import sichtbar machen</h3><div class="example-copy"><p><strong>Aufgabe:</strong> Dubletten, fehlende Angaben und unplausible Werte erschweren Migration und Reporting.</p><p><strong>Ansatz:</strong> Excel-, CSV- und SQL-Daten mit transparenten Regeln prüfen; KI kann bei Bedarf unstrukturierte Hinweise bewerten.</p><p><strong>Möglicher Nutzen:</strong> Auffälligkeiten früher erkennen und gezielter klären.</p></div><button class="service-action example-action" type="button" data-modal-open="modal-quality">Datenqualitäts-Check ansehen</button></div></article>
+<article class="project-card"><div class="project-content"><p class="eyebrow">03 / ANALYSE & TROUBLESHOOTING</p><h3>Fehlermuster in Logdateien erkennen</h3><div class="example-copy"><p><strong>Aufgabe:</strong> Einzelne Logmeldungen zeigen oft nicht, wie ein Fehler entstanden ist.</p><p><strong>Ansatz:</strong> Wiederkehrende Muster und zeitliche Zusammenhänge automatisch strukturieren.</p><p><strong>Möglicher Nutzen:</strong> Technische Ursachen schneller eingrenzen und nächste Schritte nachvollziehbar priorisieren.</p></div></div></article>
+<article class="project-card"><div class="project-content"><p class="eyebrow">04 / DOKUMENTENMANAGEMENT</p><h3>Dokumentenprozesse pragmatisch prüfen</h3><div class="example-copy"><p><strong>Aufgabe:</strong> Dokumente sind schwer zu finden, Ablagen gewachsen oder Berechtigungen unübersichtlich.</p><p><strong>Ansatz:</strong> Ablage, Metadaten, Suchbarkeit, Berechtigungen, Medienbrüche und Schnittstellen bewerten.</p><p><strong>Möglicher Nutzen:</strong> Priorisierte Schritte für besser auffindbare Dokumente und wartbare Abläufe.</p></div></div></article>
+</div>
+<p class="demo-note">Die ersten drei Beispiele stammen aus eigenen Entwicklungen. Der DMS-Check ist ein Analyse- und Beratungsangebot. Welche Lösung passt, hängt von den konkreten Daten, Abläufen und Systemen ab.</p>
+</div></section>
+<section class="section approach"><div class="container approach-grid"><div><p class="eyebrow"><span class="short-line"></span> UNSERE ZUSAMMENARBEIT</p><h2>Erst verstehen.<br>Dann sinnvoll lösen.</h2><p>Sie bringen die Aufgabe und das Wissen über Ihren Alltag mit. Ich bringe den technischen Blick, Erfahrung und die passende Umsetzung ein.</p><a class="button button-primary approach-cta" href="#kontakt">Lernen wir uns kennen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div><ol class="steps"><li><span>01</span><div><h3>Verstehen, was gebraucht wird.</h3><p>Prozesse, Systeme und Ziele gemeinsam betrachten. Ursachen klären und den tatsächlichen Bedarf herausarbeiten.</p></div></li><li><span>02</span><div><h3>Den passenden Weg finden.</h3><p>Machbarkeit und Nutzen abwägen. Einen überschaubaren Ansatz mit klaren nächsten Schritten entwickeln.</p></div></li><li><span>03</span><div><h3>Umsetzen und weiterdenken.</h3><p>Die Lösung entwickeln, prüfen und in Ihre Umgebung integrieren. Nachvollziehbar dokumentiert und wartbar.</p></div></li></ol></div></section>
+<section class="section about" id="ueber-mich"><div class="container about-grid"><div class="about-identity"><div class="identity-top"><span>TECHNISCHE ERFAHRUNG.<br>PRAKTISCHER KI-NUTZEN.</span><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></div><img src="assets/brand/ml-compact.svg" alt="ML – Manfred Linner" width="300" height="136" loading="lazy"><h3>Manfred Linner</h3><p>Dipl.-Informatiker (FH)<br>KI-Integration & Automatisierung</p><div class="identity-location"><svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg> Schwabach · Remote deutschlandweit und international</div><a class="linkedin-button" href="https://www.linkedin.com/in/manfred-linner-4a346727" target="_blank" rel="noopener noreferrer">Auf LinkedIn vernetzen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><div class="profile-links"><a class="profile-button" href="https://www.xing.com/profile/Manfred_Linner3" target="_blank" rel="noopener noreferrer">XING <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a class="profile-button" href="https://www.freelancermap.de/profil/software-developer-c-delphi-vb-vb-net-html-asp-net" target="_blank" rel="noopener noreferrer">Freelancermap <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a class="profile-button" href="https://www.freelance.de/freelancer/144124-Senior-Software-Datenbankentwickler-C-Sharp-dotNET" target="_blank" rel="noopener noreferrer">freelance.de <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div><div class="about-copy"><p class="eyebrow"><span class="short-line"></span> ÜBER MICH</p><h2>Neue Technologien.<br>Gewachsene Erfahrung.</h2><p class="lead">Ich bin Softwareentwickler, Datenbankpraktiker und technischer Problemlöser. Mich interessiert, wie aus einer komplexen Aufgabe eine Lösung wird, die im Alltag funktioniert.</p><p>Seit 2001 entwickle und integriere ich Software für unterschiedliche Unternehmensumgebungen – unter anderem in industriellen Track-&-Trace-Systemen und im Pharmaumfeld. Seit 2018 unterstütze ich Unternehmen selbstständig.</p><p>Dieses Fundament verbinde ich heute mit KI-Integration und Automatisierung. Dabei zählen für mich nachvollziehbare Ergebnisse, eine saubere Anbindung und der Nutzen für die Menschen, die damit arbeiten.</p><div class="experience"><div><strong>Software & Industrie</strong><span>C#/.NET, WPF, Systemintegration und technische Prozesse</span></div><div><strong>Daten & Verantwortung</strong><span>SQL Server, Migrationen, Administration und Berechtigungskonzepte</span></div><div><strong>KI & Weiterentwicklung</strong><span>Dokumentenanalyse, strukturierte Daten und praktische Automatisierung</span></div></div></div></div></section>
+<section class="technology-section" id="technologien"><div class="container technology-grid"><div><p class="eyebrow">PASSEND ZUR AUFGABE</p><h2>Ein breiter Werkzeugkasten.<br>Ein klarer Blick auf das Ziel.</h2></div><div class="technology-groups">
+<div class="technology-group"><h3>KI & Werkzeuge</h3><ul class="technology-list"><li>ChatGPT / OpenAI</li><li>Prompt Engineering</li><li>Pollo AI</li><li>GitHub Copilot</li><li>Gemini Code Assist</li><li>Claude / Claude Code</li><li>Generative KI</li></ul></div>
+<div class="technology-group"><h3>Daten & Prozesse</h3><ul class="technology-list"><li>Prozessanalyse</li><li>Automatisierung</li><li>SQL Server</li><li>T-SQL</li><li>Reporting</li><li>Excel / VBA</li><li>Python</li><li>DMS</li><li>Datenmigration</li><li>Troubleshooting</li></ul></div>
+<div class="technology-group"><h3>Software & Integration</h3><ul class="technology-list"><li>C# / .NET</li><li>ASP.NET</li><li>WPF</li><li>Webentwicklung</li><li>Delphi</li><li>MS Access</li><li>Webservices</li><li>Legacy-Systeme</li></ul></div>
+</div></div></section>
+<section class="section contact-section" id="kontakt"><div class="container"><div class="contact-panel"><div class="contact-copy"><p class="eyebrow"><span class="status-dot"></span> LASSEN SIE UNS SPRECHEN</p><h2>Was möchten Sie<br>weiterbringen?</h2><p>Eine neue Idee, ein gewachsenes System oder Daten, die mehr können sollen? Erzählen Sie mir von Ihrer Aufgabe. Gemeinsam finden wir einen sinnvollen nächsten Schritt.</p><div class="contact-actions"><a class="button button-light" href="mailto:info@mlinner-software.de">Projekt per E-Mail besprechen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a class="contact-phone" href="tel:+491607838773">+49 160 7838773</a></div></div><div class="contact-details"><img class="contact-monogram" src="assets/brand/ml-icon-white.svg" alt="" width="90" height="41" loading="lazy"><strong>Manfred Linner</strong><span>Softwareentwicklung & Dienstleistungen</span><a href="mailto:info@mlinner-software.de">info@mlinner-software.de <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><p>Schwabach bei Nürnberg<br>Remote deutschlandweit und international · hybrid oder vor Ort nach Vereinbarung</p></div></div></div></section>
+</main><footer class="site-footer"><div class="container footer-main"><a class="brand" href="#top"><img src="assets/brand/ml-icon.svg" alt="" width="58" height="30"><span>Manfred Linner<small>KI. Datenbanken. Programmierung.</small></span></a><p>KI sinnvoll einsetzen. Daten nutzbar machen. Lösungen entwickeln.</p><a class="back-top" href="#top">Nach oben <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div><div class="container footer-bottom"><span>© <span data-year>2026</span> M. Linner Softwareentwicklung & Dienstleistungen</span><div><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></div></div></footer><dialog class="modal" id="modal-doc" aria-labelledby="modal-doc-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-doc-title">KI-Dokumentenassistent</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Ein technischer Service für die automatisierte Erfassung von Geschäftsdokumenten. PDF-Text wird direkt gelesen, bei Bedarf per OCR ergänzt und anschließend strukturiert an das gewünschte Zielsystem übergeben.</p>
@@ -338,30 +81,30 @@
       <div class="mini-note"><strong>Prinzip:</strong> Die Dokumentenerkennung bleibt gleich; nur der Connector zum Zielsystem wird ausgetauscht. Dadurch lassen sich bestehende Systeme weiterverwenden.</div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-invoice" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-invoice-title">
+<dialog class="modal" id="modal-invoice" aria-labelledby="modal-invoice-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-invoice-title">KI-gestützter Angebots- und Rechnungscheck</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>PDF-Dokumente werden erfasst, Rechnungsdaten und Positionen strukturiert dargestellt und anschließend rechnerisch sowie formal geprüft.</p>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>PDF-Verarbeitung und strukturierte Dokumentdaten</li><li>Lokale Regel-Engine für Positionssumme, Mehrwertsteuer, Gesamtbetrag und Pflichtangaben</li><li>Prüfung von Fristen und doppelten Rechnungsnummern</li><li>Export nach Excel/CSV sowie SQL-Server-Skript</li><li>Produktiv erweiterbar um OCR/KI-Service per REST API</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-quality" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-quality-title">
+<dialog class="modal" id="modal-quality" aria-labelledby="modal-quality-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-quality-title">KI-gestützter Datenqualitäts-Check</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Strukturierte Unternehmensdaten werden vor Import, Migration oder Reporting automatisch auf typische Qualitätsprobleme geprüft und priorisiert.</p>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>Direkte Verarbeitung von Excel/XLSX und CSV im Demo-Betrieb</li><li>Regel-Engine für Dubletten, Pflichtfelder, Datentypen, Formate, Ausreißer und Summenfehler</li><li>ASP.NET-Core-REST-API als sichere Schicht zwischen Browser und SQL Server</li><li>T-SQL-Prüfungen und kundenspezifische Qualitätsregeln</li><li>Lokale Zusammenfassung; externer KI-Service optional für semantische Bewertungen</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-privacycheck" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-privacycheck-title">
+<dialog class="modal" id="modal-privacycheck" aria-labelledby="modal-privacycheck-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-privacycheck-title">Datenschutz- &amp; Dateiprüfung</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>In Unternehmen liegen personenbezogene und sensible Informationen häufig verteilt in Dokumenten, Tabellen, PDFs und anderen Dateien. Eine automatisierte Prüfung hilft dabei, mögliche Fundstellen schneller zu erkennen und gezielt zu bearbeiten.</p>
@@ -376,20 +119,20 @@
       <div class="mini-note"><strong>Ziel:</strong> Große Datei- und Dokumentbestände schneller überblicken und mögliche Datenschutzrisiken gezielt sichtbar machen.</div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-log" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-log-title">
+<dialog class="modal" id="modal-log" aria-labelledby="modal-log-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-log-title">KI-gestützter Logfile- &amp; Fehleranalysator</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Viele einzelne Logzeilen werden zu technisch verwertbaren Fehlerbildern verdichtet. Muster, zeitliche Zusammenhänge und Prioritäten bleiben nachvollziehbar.</p>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>Browserbasierte Analyse von .log-, .txt- und .csv-Dateien</li><li>Erkennung typischer Muster wie SQL Timeout, Deadlock, Connection Pool, HTTP 5xx und Netzwerkfehler</li><li>Korrelation zeitlich zusammenhängender Fehlerketten</li><li>ASP.NET-Core-Backend für produktive Integration</li><li>Optionale SQL-Server-Speicherung und CSV-Berichte</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-flags" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-flags-title">
+<dialog class="modal" id="modal-flags" aria-labelledby="modal-flags-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-flags-title">Mehrsprachige Web-App: Flaggen-Quiz</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Responsive Webanwendung zur Erkennung von Länderflaggen mit zufälligen Fragen, vier Antwortmöglichkeiten, direkter Rückmeldung, Punktestand und Fortschritt.</p>
@@ -397,10 +140,10 @@
       <div class="mini-note"><strong>Umsetzung:</strong> 20 Fragen pro Runde, zufällige Auswahl, Punkte-/Fortschrittsanzeige und unmittelbare Richtig-/Falsch-Rückmeldung.</div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-tech" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-tech-title">
+<dialog class="modal" id="modal-tech" aria-labelledby="modal-tech-title">
+  <div class="modal-dialog">
     <div class="modal-head">
       <h3 id="modal-tech-title">Intelligente Einsatz- und Ressourcenplanung</h3>
       <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
@@ -432,10 +175,10 @@
       <div class="mini-note"><strong>Ziel:</strong> keine starre Standardsoftware, sondern ein an vorhandene Daten und betriebliche Regeln anpassbarer Planungsbaustein.</div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-art" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-art-title">
+<dialog class="modal" id="modal-art" aria-labelledby="modal-art-title">
+  <div class="modal-dialog">
     <div class="modal-head">
       <h3 id="modal-art-title">Generative Bildgestaltung</h3>
       <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
@@ -443,49 +186,49 @@
     <div class="modal-body">
       <p>Beispiele aus praktischer Arbeit mit generativer Bild-KI: unterschiedliche Motive, Stilrichtungen und visuelle Konzepte.</p>
       <div class="gallery">
-        <img src="assets/ki_abstrakt.png" alt="Abstrakte generative KI-Illustration in dunklen Grün- und Grautönen">
-        <img src="assets/ki_katze.png" alt="Generative Illustration einer Katze im Geschenkpaket">
-        <img src="assets/ki_weihnachten.png" alt="Generative Winter- und Weihnachtsillustration">
+        <img loading="lazy" decoding="async" src="assets/ki_abstrakt.png" alt="Abstrakte generative KI-Illustration in dunklen Grün- und Grautönen">
+        <img loading="lazy" decoding="async" src="assets/ki_katze.png" alt="Generative Illustration einer Katze im Geschenkpaket">
+        <img loading="lazy" decoding="async" src="assets/ki_weihnachten.png" alt="Generative Winter- und Weihnachtsillustration">
       </div>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>Generative Bild-KI und Pollo AI</li><li>Prompt Engineering und iterative Prompt-Verfeinerung</li><li>Stilsteuerung, Variantenbildung und Motivkomposition</li><li>Auswahl, Bewertung und Weiterbearbeitung geeigneter Ergebnisse</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
 
 
-<div class="modal" id="modal-trouble-errors" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-trouble-errors-title">
+<dialog class="modal" id="modal-trouble-errors" aria-labelledby="modal-trouble-errors-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-trouble-errors-title">Fehleranalyse &amp; Stabilisierung</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Wenn Anwendungen instabil laufen, Fehler nicht reproduzierbar sind oder Schnittstellen nur sporadisch versagen, gehe ich systematisch vor: Symptome eingrenzen, Ursache isolieren, Risiken bewerten und einen umsetzbaren Korrekturpfad definieren.</p>
       <div class="tech-block"><h4>Typische Themen</h4><ul><li>Analyse von Logdateien, SQL-Fehlern, Deadlocks, Timeouts und Berechtigungsproblemen</li><li>Prüfung von Datenflüssen, Jobs, Diensten und Schnittstellen</li><li>Nachvollziehbare Ursachenanalyse statt Trial-and-Error</li><li>Priorisierte Empfehlungen zur Stabilisierung und Fehlervermeidung</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-trouble-legacy" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-trouble-legacy-title">
+<dialog class="modal" id="modal-trouble-legacy" aria-labelledby="modal-trouble-legacy-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-trouble-legacy-title">Legacy &amp; Softwareentwicklung</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Gewachsene Fachanwendungen müssen häufig nicht ersetzt, sondern technisch verstanden, stabilisiert und gezielt erweitert werden. Genau darin liegt ein Schwerpunkt meiner Arbeit.</p>
       <div class="tech-block"><h4>Verwendete Technik</h4><ul><li>C# / .NET, ASP.NET, Delphi/Pascal, Access/VBA und datenbankgestützte Anwendungen</li><li>Fehlerbehebung, Refactoring und gezielte Funktions-Erweiterung</li><li>Schrittweise Modernisierung statt riskanter Komplett-Neuentwicklung</li><li>Anbindung an SQL Server, Schnittstellen und neue Web-Komponenten</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-trouble-migration" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-trouble-migration-title">
+<dialog class="modal" id="modal-trouble-migration" aria-labelledby="modal-trouble-migration-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-trouble-migration-title">Migration &amp; Schnittstellen</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Bei Datenübernahmen und Systemwechseln ist nicht nur die reine Technik entscheidend, sondern auch der sichere Übergang im laufenden Betrieb.</p>
       <div class="tech-block"><h4>Typische Leistungen</h4><ul><li>Datenübernahmen zwischen Alt- und Zielsystemen</li><li>SQL-Server-Migrationen, Benutzer-/Rechtekonzepte und technische Prüfungen</li><li>Schnittstellen-Design für Import, Export und Datensynchronisation</li><li>Schrittweise Übergänge mit Test, Validierung und Rückfalloptionen</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-dms" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-dms-title">
+<dialog class="modal" id="modal-dms" aria-labelledby="modal-dms-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-dms-title">Pragmatischer DMS-Check</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Der DMS-Check bewertet nicht nur Ablagen, sondern den gesamten Dokumentenprozess: Finden Anwender die richtigen Dokumente? Sind Berechtigungen nachvollziehbar? Wo entstehen Medienbrüche?</p>
@@ -493,72 +236,37 @@
       <div class="mini-note"><strong>Ergebnis:</strong> Eine priorisierte Bewertung mit konkreten nächsten Schritten – auf Wunsch inklusive technischer Umsetzung.</div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-sw-dotnet" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-sw-dotnet-title">
+<dialog class="modal" id="modal-sw-dotnet" aria-labelledby="modal-sw-dotnet-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-sw-dotnet-title">C# / .NET &amp; ASP.NET</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Ich entwickle und erweitere Lösungen dort, wo klassische Programmierung die sinnvollste Ergänzung zu Analyse, Daten und KI ist.</p>
       <div class="tech-block"><h4>Schwerpunkte</h4><ul><li>C#/.NET-Anwendungen und ASP.NET-Weblösungen</li><li>Schnittstellen, Datenanbindung und technische Integrationen</li><li>Fehlerbehebung, Erweiterung und Strukturverbesserung bestehender Systeme</li><li>Saubere Anbindung an SQL Server, REST und produktive Umgebungen</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-sw-delphi" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-sw-delphi-title">
+<dialog class="modal" id="modal-sw-delphi" aria-labelledby="modal-sw-delphi-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-sw-delphi-title">Delphi &amp; Legacy</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Viele Unternehmen arbeiten weiterhin mit stabilen, aber gewachsenen Delphi- oder Access-basierten Lösungen. Diese Anwendungen wirtschaftlich weiterzuentwickeln ist oft sinnvoller als eine komplette Neuentwicklung.</p>
       <div class="tech-block"><h4>Leistungsbild</h4><ul><li>Analyse, Pflege und Erweiterung bestehender Legacy-Anwendungen</li><li>Schrittweise Modernisierung und technische Entlastung</li><li>Datenbankanbindung, Reports und Integration neuer Funktionen</li><li>Übersetzung fachlicher Anforderungen in nachvollziehbare Lösungen</li></ul></div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="modal" id="modal-sw-web" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-sw-web-title">
+<dialog class="modal" id="modal-sw-web" aria-labelledby="modal-sw-web-title">
+  <div class="modal-dialog">
     <div class="modal-head"><h3 id="modal-sw-web-title">Web &amp; Integration</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Kleinere Weblösungen, Produktseiten, Tools oder technische Frontends lassen sich oft schnell und pragmatisch umsetzen – insbesondere wenn sie vorhandene Prozesse oder Datenquellen anbinden sollen.</p>
       <div class="tech-block"><h4>Typische Bausteine</h4><ul><li>HTML, CSS, JavaScript und ASP.NET-basierte Webanwendungen</li><li>REST-APIs, Datenimporte, Exporte und Formularprozesse</li><li>Produktseiten, interne Tools und technische Demonstratoren</li><li>Integration mit Datenbanken, Dokumenten und vorhandenen Systemen</li></ul></div>
     </div>
   </div>
-</div>
-<footer>
-  <div class="container footer-inner">
-    <div>© 2026 M. Linner Softwareentwicklung &amp; Dienstleistungen</div>
-    <div class="footer-links"><a href="#datenschutz">Datenschutz</a><a href="#impressum">Impressum</a></div>
-  </div>
-</footer>
+</dialog>
 
-<script>
-const b=document.querySelector('.menu-button'),n=document.querySelector('.main-nav');
-b.addEventListener('click',()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')});
-n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{n.classList.remove('open');b.setAttribute('aria-expanded','false')}));
-
-document.querySelectorAll('[data-modal-open]').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const m=document.getElementById(btn.getAttribute('data-modal-open'));
-    if(m){m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
-  });
-});
-document.querySelectorAll('[data-modal-close]').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const m=btn.closest('.modal'); if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-  });
-});
-document.querySelectorAll('.modal').forEach(m=>{
-  m.addEventListener('click',e=>{
-    if(e.target===m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-  });
-});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    document.querySelectorAll('.modal.open').forEach(m=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');});
-    document.body.style.overflow='';
-  }
-});
-
-</script>
 </body>
 </html>
