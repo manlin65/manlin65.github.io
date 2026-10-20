@@ -87,7 +87,7 @@ eine datums- und ortsbezogene externe Suche; es werden keine Saisontermine gerat
 Unten auf der Seite gibt es eine eigene Ortseingabe sowie optional die Freigabe
 des aktuellen Gerätestandorts. Dieser Bereich benötigt weder die Datumsauswahl
 oben noch Wetterdaten. Die Ortsauflösung verwendet Open-Meteo, die Marktstandorte
-stammen aus der öffentlichen OpenStreetMap-Overpass-API (`overpass-api.de`).
+stammen aus der öffentlichen OpenStreetMap-Overpass-API (öffentliche Overpass-Server `overpass.private.coffee` und `overpass-api.de`).
 Es ist kein zusätzlicher API-Schlüssel nötig. Der Suchradius beträgt fest 100 km
 Luftlinie; Ergebnisse werden nach Entfernung sortiert. Abfragen werden 15 Minuten
 zwischengespeichert. Angezeigte Kurzbeschreibungen stammen aus den Kartendaten;
@@ -98,3 +98,7 @@ kein Datum für die Saison. OpenStreetMap-Abdeckung kann unvollständig sein.
 Die Standorte sind eine eigenständige Datenquelle und werden nicht als bestätigte
 Veranstaltungstermine in den Top-Ereignissen ausgegeben. Der Markt-Bereich ist
 von den noch nicht angeschlossenen zusätzlichen Veranstaltungsfeeds unabhängig.
+
+Bei Zeitüberschreitungen der öffentlichen Kartendienste wird ein Fehler angezeigt,
+keine irreführende leere Trefferliste. Die schnellere von zwei parallelen
+Kartenabfragen wird verwendet, die andere abgebrochen.
