@@ -106,15 +106,16 @@ function recommendation(day) {
 }
 function renderForecast() {
   if(!state.data) return;
-  const dates=weekends[Number($('#weekend').value)];
+  const dates=window.RauszeitSelection?window.RauszeitSelection().dates:weekends[Number($('#weekend').value)];
+  if(!dates.length) {$('#forecast').hidden=true;return;}
   const daily=state.data.daily;
   const number=(value,suffix='',digits=0)=>finite(value) ? value.toLocaleString('de-DE',{maximumFractionDigits:digits})+suffix : 'k. A.';
   const cards=dates.map((date,index)=>{
     const i=daily.time.indexOf(date);
-    if(i<0) return `<article class="day-card"><div class="day-top"><strong>${index?'Sonntag':'Samstag'}</strong>${formatDate(date)}</div><p>Für diesen Tag liegen noch keine Wetterdaten vor.</p></article>`;
+    if(i<0) return `<article class="day-card"><div class="day-top"><strong>${formatDate(date,{weekday:'long'}).split(',')[0]}</strong>${formatDate(date)}</div><p>Für diesen Tag liegen noch keine Wetterdaten vor.</p></article>`;
     const day={code:daily.weather_code?.[i],temp:daily.temperature_2m_max?.[i],rain:daily.precipitation_probability_max?.[i],wind:daily.wind_speed_10m_max?.[i]};
     const [symbol,label]=weather(day.code); const tip=recommendation(day);
-    return `<article class="day-card"><div class="day-top"><strong>${index?'Sonntag':'Samstag'}</strong><span>${formatDate(date,{year:'numeric'})}</span></div><div class="weather-main"><span class="weather-symbol" aria-hidden="true">${symbol}</span><div><div class="temperature">${number(day.temp,'°')}</div><div class="weather-label">${label} · Tiefstwert ${number(daily.temperature_2m_min?.[i],'°')}</div></div></div><div class="weather-stats"><span>☂ Regenrisiko ${number(day.rain,'%')}</span><span>≋ Wind ${number(day.wind,' km/h')}</span><span>Regen ${number(daily.precipitation_sum?.[i],' mm',1)}</span></div><div class="activity"><span class="activity-icon" aria-hidden="true">${tip.icon}</span><div><span class="activity-tag">${tip.tag}</span><h4>${tip.title}</h4><p>${tip.text}</p></div></div><p class="extras">Weitere Ideen: ${tip.extra}</p>${tip.warning?`<p class="warning">${tip.warning}</p>`:''}</article>`;
+    return `<article class="day-card"><div class="day-top"><strong>${formatDate(date,{weekday:'long'}).split(',')[0]}</strong><span>${formatDate(date,{year:'numeric'})}</span></div><div class="weather-main"><span class="weather-symbol" aria-hidden="true">${symbol}</span><div><div class="temperature">${number(day.temp,'°')}</div><div class="weather-label">${label} · Tiefstwert ${number(daily.temperature_2m_min?.[i],'°')}</div></div></div><div class="weather-stats"><span>☂ Regenrisiko ${number(day.rain,'%')}</span><span>≋ Wind ${number(day.wind,' km/h')}</span><span>Regen ${number(daily.precipitation_sum?.[i],' mm',1)}</span></div><div class="activity"><span class="activity-icon" aria-hidden="true">${tip.icon}</span><div><span class="activity-tag">${tip.tag}</span><h4>${tip.title}</h4><p>${tip.text}</p></div></div><p class="extras">Weitere Ideen: ${tip.extra}</p>${tip.warning?`<p class="warning">${tip.warning}</p>`:''}</article>`;
   }).join('');
   const saved=state.favorites.some(p=>placeKey(p)===placeKey(state.place));
   $('#forecast').innerHTML=`<div class="forecast-heading"><div>${state.demo?'<span class="demo-badge">DEMO · BEISPIELDATEN</span>':''}<h3>${escapeHTML(state.place.name)}</h3><p>${escapeHTML(locationDetail(state.place))}</p></div><button type="button" class="save-button" id="savePlace" ${saved?'disabled':''}>${saved?'✓ Ort gemerkt':'♡ Ort merken'}</button></div><div class="days-grid">${cards}</div><p class="source-note">${state.demo?'Fiktive Wetterdaten zum Ausprobieren, keine aktuelle Vorhersage.':'Quelle: Open-Meteo · Zeitzone am Ziel: '+escapeHTML(state.data.timezone || 'Ortszeit')+' · Vorhersagen können sich ändern; weiter entfernte Termine sind unsicherer.'}</p>`;
@@ -158,3 +159,5 @@ document.querySelectorAll('[data-city]').forEach(button=>button.addEventListener
 $('#weekend').addEventListener('change',renderForecast);
 $('#demoButton').addEventListener('click',showDemo);
 renderFavorites();
+
+document.addEventListener('rauszeit:selection',()=>{if(state.data) renderForecast();});

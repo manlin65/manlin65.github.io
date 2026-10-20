@@ -1,0 +1,12 @@
+[build]
+  publish = "wochenende"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Netlify publishes the app itself at /. GitHub Pages keeps /wochenende/.
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"

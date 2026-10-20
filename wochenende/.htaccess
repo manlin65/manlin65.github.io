@@ -1,0 +1,4 @@
+# Defense in depth. The real secret file belongs OUTSIDE the public web directory.
+<FilesMatch "(?i)^(\.env(\..*)?|rauszeit\.env(\..*)?)$">
+    Require all denied
+</FilesMatch>
