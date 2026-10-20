@@ -8,7 +8,7 @@ const output=path.join(root,'netlify-public');
 // This directory contains generated files only. Never publish the repository root.
 await rm(output,{recursive:true,force:true});
 await mkdir(path.join(output,'assets','flags'),{recursive:true});
-for(const name of ['index.html','app.js','events.js','tickets.js','styles.css']) {
+for(const name of ['index.html','app.js','events.js','interests.js','tickets.js','styles.css']) {
   await cp(path.join(source,name),path.join(output,name));
 }
 for(const item of await readdir(path.join(source,'assets','flags'),{withFileTypes:true})) {

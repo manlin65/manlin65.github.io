@@ -5,14 +5,18 @@
   const placeStorage='rauszeit.eventPlaces.v1';
   const selectedPlaces=new Map();
   const defaults=['Bamberg','Nürnberg','Schwabach'];
-  const categories={
-    all:{label:'Veranstaltungen',terms:'Veranstaltungen'},
-    music:{label:'Konzerte & Musik',terms:'Konzerte Live-Musik'},
-    culture:{label:'Kultur & Bühne',terms:'Kultur Theater Ausstellung'},
-    markets:{label:'Märkte & Feste',terms:'Markt Flohmarkt Stadtfest'},
-    family:{label:'Mit Kindern',terms:'Veranstaltungen Kinder Familie'},
-    outdoor:{label:'Draußen & Sport',terms:'Outdoor Sport Wanderung Veranstaltung'}
-  };
+  const categories=window.RauszeitInterests.options;
+  const interestStorage='rauszeit.interests.v1';
+  let interests=[];
+  try {const stored=JSON.parse(localStorage.getItem(interestStorage));if(Array.isArray(stored)) interests=[...new Set(stored.filter(id=>Object.hasOwn(categories,id)))];} catch {}
+  for(const [id,option] of Object.entries(categories)) {
+    const label=document.createElement('label');label.className='interest-chip';
+    const input=document.createElement('input');input.type='checkbox';input.value=id;input.checked=interests.includes(id);input.dataset.interest=id;
+    label.append(input,document.createTextNode(option.label));$('#interestOptions').append(label);
+    input.addEventListener('change',()=>{interests=[...document.querySelectorAll('[data-interest]:checked')].map(item=>item.value);saveInterests();renderSearches();});
+  }
+  function saveInterests() {try {localStorage.setItem(interestStorage,JSON.stringify(interests));} catch {}}
+  $('#clearInterests').addEventListener('click',()=>{interests=[];document.querySelectorAll('[data-interest]').forEach(input=>input.checked=false);saveInterests();renderSearches();});
   const official={bamberg:'bamberg.info',nuernberg:'nuernberg.de',schwabach:'schwabach.de',fuerth:'fuerth.de',erlangen:'erlangen.de'};
   const normalized=value=>value.normalize('NFKC').trim().toLocaleLowerCase('de-DE').replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/\s+/g,' ');
   const clean=value=>value.normalize('NFKC').replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e]/g,'').trim().replace(/\s+/g,' ');
@@ -199,7 +203,9 @@
     const dates=selectedDates();
     const label=dates.length?[dates[0],...(dates.length>1?[dates.at(-1)]:[])].map(date=>formatDate(date,{year:'numeric'})).join(' – '):'Keine Tage ausgewählt';
     renderTopResults(dates);
-    const category=categories[$('#eventCategory').value] || categories.all;
+    const selected=interests.map(id=>categories[id]);
+    const category={label:selected.map(item=>item.label).join(', ') || 'Alle Veranstaltungen',terms:selected.length?'('+selected.map(item=>'('+item.terms.split(' ').join(' OR ')+')').join(' OR ')+')':'Veranstaltungen'};
+    $('#interestStatus').textContent=interests.length?'Deine Interessen werden in diesem Browser gespeichert. Passend ist ein Termin, der mindestens eines davon erfüllt.':'Alle Interessen – wähle deine Favoriten für persönlichere Ergebnisse.';
     $('#eventWeekendLabel').textContent='Dein Zeitraum: '+label;
     const dateQuery=dates.length>1 ? '('+dates.map(date=>'"'+formatDate(date,{year:'numeric'})+'"').join(' OR ')+')' : '"'+(dates[0]?formatDate(dates[0],{year:'numeric'}):'')+'"';
     $('#eventSearchCards').replaceChildren();
@@ -222,7 +228,7 @@
       card.append(weatherButton);
       $('#eventSearchCards').append(card);
     }
-    document.dispatchEvent(new CustomEvent('rauszeit:selection',{detail:{dates,category:$('#eventCategory').value,cities:cities.map(city=>({name:city,place:weatherCache.get(normalized(city))?.place || null}))}}));
+    document.dispatchEvent(new CustomEvent('rauszeit:selection',{detail:{dates,category:'all',interests:[...interests],cities:cities.map(city=>({name:city,place:selectedPlace(city) || null}))}}));
     if(!cities.length) {
       const empty=document.createElement('p');empty.className='events-empty';empty.textContent='Füge oben deinen ersten Ort hinzu. Du kannst bis zu fünf Orte gleichzeitig vergleichen.';$('#eventSearchCards').append(empty);
     }
@@ -331,7 +337,6 @@
   $('#selectNextDays').addEventListener('click',()=>{const now=new Date();const start=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()));$('#eventStart').value=start.toISOString().slice(0,10);start.setUTCDate(start.getUTCDate()+6);$('#eventEnd').value=start.toISOString().slice(0,10);document.querySelectorAll('[data-event-weekday]').forEach(input=>input.checked=true);renderSearches();});
   ['#eventStart','#eventEnd'].forEach(selector=>$(selector).addEventListener('change',renderSearches));
   document.querySelectorAll('[data-event-weekday]').forEach(input=>input.addEventListener('change',renderSearches));
-  $('#eventCategory').addEventListener('change',renderSearches);
   window.RauszeitCityWeather=(city,date)=>{
     const entry=weatherCache.get(normalized(city));if(!entry?.data || entry.pending || entry.error) return null;
     const daily=entry.data.daily,index=daily.time.indexOf(date);if(index<0) return null;
@@ -339,7 +344,7 @@
     if(!finite(temperature) || !finite(rain)) return null;
     return `${weather(daily.weather_code?.[index])[0]} ${Math.round(temperature)}° Tagesmaximum · Regenrisiko ${Math.round(rain)}% am Zielort`;
   };
-  window.RauszeitSelection=()=>({dates:selectedDates(),cities:cities.map(city=>({name:city,place:weatherCache.get(normalized(city))?.place || null})),category:$('#eventCategory').value});
+  window.RauszeitSelection=()=>({dates:selectedDates(),cities:cities.map(city=>({name:city,place:selectedPlace(city) || null})),category:'all',interests:[...interests]});
   message(`${cities.length} von 5 Orten ausgewählt. Die Liste bleibt in diesem Browser gespeichert.`);
   renderCities();
 })();

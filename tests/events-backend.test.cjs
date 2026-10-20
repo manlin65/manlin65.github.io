@@ -30,10 +30,10 @@ test('normalizes real API schema, filters cancelled/out-of-range events, guards 
  process.env.TICKETMASTER_API_KEY='test-fixture-not-a-real-key';let calls=0;
  global.fetch=async(url)=>{
   calls++;assert.equal(url.hostname,'app.ticketmaster.com');assert.equal(url.searchParams.get('apikey'),'test-fixture-not-a-real-key');assert.equal(url.searchParams.get('radius'),'20');assert.equal(url.searchParams.get('geoPoint').length,8);
-  const event=(id,date,status='onsale',url='https://www.ticketmaster.de/event/123')=>({id,name:'Concert <script>',url,dates:{start:{localDate:date,localTime:'19:30:00'},status:{code:status}},_embedded:{venues:[{name:'Arena',city:{name:'Bamberg'},country:{name:'Deutschland'}}]}});
+  const event=(id,date,status='onsale',url='https://www.ticketmaster.de/event/123')=>({id,name:'Concert <script>',classifications:[{segment:{name:'Music'},genre:{name:'Dance/Electronic'},subGenre:{name:'House'}}],url,dates:{start:{localDate:date,localTime:'19:30:00'},status:{code:status}},_embedded:{venues:[{name:'Arena',city:{name:'Bamberg'},country:{name:'Deutschland'}}]}});
   return {ok:true,json:async()=>({_embedded:{events:[event('ok','2026-10-24'),event('cancelled','2026-10-24','cancelled'),event('outside','2026-10-26'),event('unsafe','2026-10-25','onsale','https://ticketmaster.evil.example/'),{...event('tba','2026-10-25'),dates:{start:{localDate:'2026-10-25',timeTBA:true},status:{code:'onsale'}}}]},page:{totalPages:2}})};
  };
- const result=await handler(request()),body=JSON.parse(result.body);assert.equal(result.statusCode,200);assert.equal(body.events.length,3);assert.equal(body.truncated,true);assert.equal(body.events[0].time,'19:30');assert.equal(body.events[1].url,null);assert.equal(body.events[2].time,null);assert.ok(!result.body.includes(process.env.TICKETMASTER_API_KEY));
+ const result=await handler(request()),body=JSON.parse(result.body);assert.equal(result.statusCode,200);assert.equal(body.events.length,3);assert.equal(body.truncated,true);assert.equal(body.events[0].time,'19:30');assert.deepEqual(body.events[0].classifications,['Music','Dance/Electronic','House']);assert.equal(body.events[1].url,null);assert.equal(body.events[2].time,null);assert.ok(!result.body.includes(process.env.TICKETMASTER_API_KEY));
  await handler(request());assert.equal(calls,1);
 });
 test('upstream credential and quota errors do not expose credentials',async()=>{

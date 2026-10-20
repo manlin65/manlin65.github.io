@@ -16,7 +16,7 @@ with sync_playwright() as p:
  def tickets(route):
   q=parse_qs(urlparse(route.request.url).query);calls.append(route.request.url)
   if not configured:route.fulfill(status=503,json={'error':'TICKETMASTER_API_KEY beim Hosting-Anbieter hinterlegen.'});return
-  route.fulfill(json={'events':[{'id':q['latitude'][0],'name':'Netlify-Testkonzert','date':q['start'][0],'time':'19:00','city':'Teststadt','venue':'Testbühne','status':'onsale','url':'https://www.ticketmaster.de/event/test'}]})
+  route.fulfill(json={'events':[{'id':q['latitude'][0],'name':'Netlify-Testkonzert','category':'Music','date':q['start'][0],'time':'19:00','city':'Teststadt','venue':'Testbühne','status':'onsale','url':'https://www.ticketmaster.de/event/test'}]})
  page.route('https://geocoding-api.open-meteo.com/**',geo);page.route('https://api.open-meteo.com/**',weather)
  base=os.environ.get('RAUSZEIT_NETLIFY_URL','http://127.0.0.1:8892/')
  origin=urlparse(base).scheme+'://'+urlparse(base).netloc
@@ -37,4 +37,35 @@ with sync_playwright() as p:
  page.wait_for_function("[...document.querySelectorAll('.country-flag img')].every(image=>image.complete && image.naturalWidth>0)")
  assert not errors,errors
  print('PASS event results, matching weather, day changes and local flags without manual connection setup')
+ page.locator('[data-interest="party"]').check()
+ page.wait_for_function("document.querySelector('#ticketStatus').textContent.startsWith('Keine passenden')")
+ assert page.locator('.ticket-card').count()==0
+ assert page.locator('.ticket-city-group').count()==3
+ page.locator('[data-interest="music"]').check()
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===3")
+ page.reload()
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===3")
+ assert page.locator('[data-interest="party"]').is_checked()
+ assert page.locator('[data-interest="music"]').is_checked()
+ page.locator('#clearInterests').click()
+ page.locator('[data-interest="fair"]').check()
+ page.wait_for_function("document.querySelectorAll('.local-interest-link').length===3")
+ assert page.locator('.ticket-card').count()==0
+ assert 'Kirmes' in page.locator('.local-interest-link').first.inner_text()
+ # Adding and removing a destination updates results automatically, preserving interests.
+ page.locator('[data-interest="music"]').check()
+ page.locator('#eventCity').fill('Wien')
+ page.locator('#eventCityOptions [role=option]').first.wait_for()
+ page.locator('#eventCityOptions [role=option]').first.click()
+ page.wait_for_function("document.querySelectorAll('.ticket-city-group').length===4 && document.querySelectorAll('.ticket-card').length===4")
+ assert page.locator('[data-interest="fair"]').is_checked()
+ page.locator('[aria-label="Wien aus Veranstaltungsorten entfernen"]').click()
+ page.wait_for_function("document.querySelectorAll('.ticket-city-group').length===3 && document.querySelectorAll('.ticket-card').length===3")
+ assert 'Wien' not in page.locator('#ticketResults').inner_text()
+ assert page.locator('[data-interest="music"]').is_checked()
+ page.set_viewport_size({'width':390,'height':844})
+ assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+ assert not errors,errors
+ print('PASS automatic destination addition/removal and preserved interests on mobile')
+ print('PASS interest union, no unrelated results, per-city groups, persisted choices and local fair searches')
  browser.close()

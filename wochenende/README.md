@@ -59,3 +59,20 @@ Der Backend-Test prüft fehlende/ungültige Schlüssel, Koordinaten und Daten, C
 - Die Open-Meteo-Free-API ist für nicht kommerzielle Nutzung vorgesehen. Vor kommerziellem Einsatz die Bedingungen und den passenden Tarif prüfen: https://open-meteo.com/en/terms
 
 Die Ausflugsideen ersetzen keine Tourenplanung oder amtlichen Warnungen. Vorhersagen, Termine und Ticketverfügbarkeit können sich ändern.
+
+
+### Persönliche Interessen und Top-Ereignisse
+
+Mehrere Interessen können gleichzeitig angeklickt werden: Konzerte, Party, Tanzen,
+Kirmes/Volksfeste, Märkte/Stadtfeste, Kultur, Familie und Sport. Die Auswahl bleibt
+in diesem Browser gespeichert; „Alles entdecken“ setzt sie zurück.
+
+Pro gewähltem Ort erscheinen höchstens drei passende Ticketmaster-Termine im
+Umkreis von 20 km. Mindestens ein Interesse muss zum Namen oder zur gelieferten
+Klassifikation passen. Mehrere passende Interessen erhöhen den Rang; bei Gleichstand
+entscheidet das Datum. Die Auswahl berücksichtigt die ersten 100 gelieferten Termine
+im Zeitraum. Derselbe Termin kann bei benachbarten Zielorten in beiden Gruppen stehen.
+Lokale Kirmes- und Markttermine sind oft nicht erfasst; dafür erscheinen gesonderte,
+orts- und datumsbezogene Suchlinks. Diese Links sind keine bestätigten Termine.
+Orte hinzufügen/entfernen sowie Änderungen an Tagen und Interessen aktualisieren
+Wetter und Veranstaltungen automatisch, ohne die ganze Seite neu zu laden.

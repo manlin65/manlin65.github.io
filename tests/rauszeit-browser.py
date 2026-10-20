@@ -16,6 +16,7 @@ with sync_playwright() as p:
   lat=float(parse_qs(urlparse(route.request.url).query)['latitude'][0]);rain=5 if lat==49.89 else 75
   route.fulfill(json={'timezone':'Europe/Berlin','daily':{'time':dates,'weather_code':[0 if rain==5 else 61]*len(dates),'temperature_2m_max':[20]*len(dates),'temperature_2m_min':[8]*len(dates),'precipitation_probability_max':[rain]*len(dates),'wind_speed_10m_max':[10]*len(dates),'precipitation_sum':[0]*len(dates)}})
  page.route('https://geocoding-api.open-meteo.com/**',geo);page.route('https://api.open-meteo.com/**',weather)
+ page.route('**/config.js',lambda route:route.fulfill(body='window.RAUSZEIT_CONFIG = {};',content_type='application/javascript'))
  page.goto(os.environ.get('RAUSZEIT_BASE_URL','http://127.0.0.1:8000/wochenende/'))
  page.wait_for_function("document.querySelectorAll('.city-weather-day').length===9")
  assert page.locator('.top-result-card').count()==3
@@ -39,27 +40,28 @@ with sync_playwright() as p:
  def tickets(route):
   q=parse_qs(urlparse(route.request.url).query);ticket_calls.append(q)
   start=date.fromisoformat(q['start'][0]);end=date.fromisoformat(q['end'][0]);lat=q['latitude'][0]
-  events=[{'id':lat+str(start),'name':'Live Konzert <img src=x onerror=alert(1)>','date':str(start),'time':'19:00','city':'Bamberg','venue':'Testhalle','status':'onsale','url':'https://www.ticketmaster.de/event/123'}, {'id':'shared','name':'Gemeinsamer Treffer','date':str(end),'time':None,'city':'Nürnberg','venue':'Bühne','status':'onsale','url':'javascript:alert(1)'}]
+  events=[{'id':lat+str(start),'category':'Music','name':'Live Konzert <img src=x onerror=alert(1)>','date':str(start),'time':'19:00','city':'Bamberg','venue':'Testhalle','status':'onsale','url':'https://www.ticketmaster.de/event/123'}, {'id':'shared','name':'Gemeinsamer Treffer','date':str(end),'time':None,'city':'Nürnberg','venue':'Bühne','status':'onsale','url':'javascript:alert(1)'}]
   route.fulfill(json={'events':events,'source':'Ticketmaster'})
  page.route('https://rauszeit-test.netlify.app/.netlify/functions/events?**',tickets)
  page.locator('.ticket-setup').click()
  page.locator('#ticketEndpoint').fill('https://rauszeit-test.netlify.app');page.locator('#ticketEndpointForm button').click()
- page.wait_for_function("document.querySelectorAll('.ticket-card').length===4")
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===6")
  assert page.locator('.ticket-card img').count()==0
  assert page.locator('.ticket-card a[href^="javascript"]').count()==0
- assert page.locator('.ticket-weather').count()==4
+ assert page.locator('.ticket-weather').count()==6
  assert 'Gemeinsamer Treffer' in page.locator('#ticketResults').inner_text()
- assert page.locator('.ticket-card h4').all_text_contents().count('Gemeinsamer Treffer')==1
+ assert page.locator('.ticket-card h4').all_text_contents().count('Gemeinsamer Treffer')==3
  page.locator('[data-date-preset="sa"]').click()
- page.wait_for_function("document.querySelectorAll('.ticket-card').length===4 && document.querySelector('#ticketStatus').textContent.includes('direkt angezeigt')")
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===6 && document.querySelector('#ticketStatus').textContent.includes('passende')")
  assert all(q['start'][0]==q['end'][0] for q in ticket_calls[-3:])
- page.locator('#eventCategory').select_option('music')
- page.wait_for_timeout(500)
- assert ticket_calls[-1]['category']==['music']
+ page.locator('[data-interest=music]').check()
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===3")
+ assert ticket_calls[-1]['category']==['all']
+ page.locator('#clearInterests').click()
  page.route('https://strato-test.example/wochenende/api/events.php?**',tickets)
  page.locator('#ticketEndpoint').fill('https://strato-test.example/wochenende/api/events.php')
  page.locator('#ticketEndpointForm button').click()
- page.wait_for_function("document.querySelectorAll('.ticket-card').length===4")
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===6")
  assert page.evaluate("localStorage.getItem('rauszeit.ticketBackend.v1')").endswith('/wochenende/api/events.php')
  print('PASS STRATO PHP backend URL connection')
  print('PASS backend connection, real-schema event cards, weather on tickets, safe text/links, deduplication, date/category API parameters')
@@ -77,7 +79,7 @@ with sync_playwright() as p:
  page.route('https://api.open-meteo.com/**',lambda route:route.abort())
  page.locator('#loadCityWeather').click()
  page.wait_for_function("document.querySelectorAll('.city-weather').length===3 && [...document.querySelectorAll('.city-weather')].every(element=>element.textContent.includes('nicht erreichbar'))")
- page.wait_for_function("document.querySelectorAll('.ticket-card').length===4")
+ page.wait_for_function("document.querySelectorAll('.ticket-card').length===6")
  assert all('Noch keine Wettervorhersage' in text for text in page.locator('.ticket-weather').all_text_contents())
  print('PASS Ticketmaster results remain usable during a weather outage')
  assert not errors,errors

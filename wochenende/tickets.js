@@ -13,16 +13,9 @@
   $('#ticketEndpoint').value=backend;
   const status=message=>{$('#ticketStatus').textContent=message;};
   const safeURL=value=>{try {const url=new URL(value);return url.protocol==='https:'?url.href:null;}catch{return null;}};
-  function renderCards(items,dates) {
-    $('#ticketResults').replaceChildren();
-    const seen=new Map();
-    for(const item of items) {
-      if(!dates.includes(item.date)) continue;
-      const id=item.id || `${item.name}|${item.date}|${item.venue}`;
-      if(!seen.has(id)) seen.set(id,item);
-    }
-    const events=[...seen.values()].sort((a,b)=>`${a.date}T${a.time || '23:59'}`.localeCompare(`${b.date}T${b.time || '23:59'}`));
-    for(const event of events.slice(0,12)) {
+  function renderCards(items,dates,interests,container) {
+    const events=window.RauszeitInterests.top(items,dates,interests);
+    for(const event of events) {
       const card=document.createElement('article');card.className='ticket-card';
       const city=document.createElement('p');city.className='ticket-city';city.textContent=event.city || event.searchCity;
       const heading=document.createElement('h4');heading.textContent=event.name;
@@ -37,7 +30,7 @@
       const href=safeURL(event.url);
       if(href) {const link=document.createElement('a');link.href=href;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Details & Tickets →';card.append(link);}
       const source=document.createElement('small');source.textContent='Quelle: Ticketmaster · Ortszeit am Veranstaltungsort';card.append(source);
-      $('#ticketResults').append(card);
+      container.append(card);
     }
     return events.length;
   }
@@ -69,11 +62,28 @@
       }));
       if(myGeneration!==generation) return;
       const failures=results.filter(result=>result.error),successes=results.filter(result=>result.data);
-      const events=successes.flatMap(({city,data})=>data.events.map(event=>({...event,searchCity:city.name,forecast:window.RauszeitCityWeather?.(city.name,event.date)})));
-      const count=renderCards(events,current.dates);
+      let count=0;
+      for(const {city,data,error} of results) {
+        const group=document.createElement('section');group.className='ticket-city-group';
+        const title=document.createElement('h4');title.className='ticket-group-title';title.textContent='Top-Ereignisse für '+(city.place.name || city.name)+' & Umgebung';
+        const grid=document.createElement('div');grid.className='ticket-grid';group.append(title,grid);
+        const events=(data?.events || []).map(event=>({...event,searchCity:city.name,forecast:window.RauszeitCityWeather?.(city.name,event.date)}));
+        const shown=renderCards(events,current.dates,current.interests || [],grid);count+=shown;
+        if(!shown) {const empty=document.createElement('p');empty.className='source-note';empty.textContent=error || 'Keine passenden Ticketmaster-Termine für deine Interessen an den gewählten Tagen gefunden.';group.append(empty);}
+        const local=(current.interests || []).filter(id=>window.RauszeitInterests.options[id]?.local);
+        for(const id of local) {
+          const option=window.RauszeitInterests.options[id];
+          const link=document.createElement('a');link.className='local-interest-link';link.target='_blank';link.rel='noopener noreferrer';
+          const dates=current.dates.map(day=>'"'+formatDate(day,{year:'numeric'})+'"').join(' OR ');
+          link.href='https://www.google.com/search?q='+encodeURIComponent('('+option.terms.split(' ').join(' OR ')+') '+(city.place.name || city.name)+' ('+dates+')');
+          link.textContent=option.label+': lokale Termine suchen →';group.append(link);
+        }
+        if(local.length) {const note=document.createElement('p');note.className='source-note';note.textContent='Externe Suche, keine bestätigten Termine. Kirmes und lokale Feste sind bei Ticketmaster oft nicht erfasst.';group.append(note);}
+        $('#ticketResults').append(group);
+      }
       const notices=[...new Set(successes.map(result=>result.data.notice).filter(Boolean))];
       const unresolved=current.cities.length-resolved.length;
-      status(`${count?`${Math.min(count,12)} Veranstaltung${Math.min(count,12)===1?'':'en'} direkt angezeigt${count>12?' (erste 12 nach Datum)':''}.`:'Keine passenden Ticketmaster-Termine für diese Auswahl gefunden.'}${failures.length?' '+failures.map(result=>result.city.name+': '+result.error).join(' '):''}${unresolved?' Für '+unresolved+' Ort(e) fehlen noch Koordinaten.':''}${notices.length?' '+notices.join(' '):''} Angaben und Verfügbarkeit bitte beim Veranstalter prüfen.`);
+      status(`${count?`${count} passende Veranstaltung${count===1?'':'en'} angezeigt – höchstens drei pro Ort.`:'Keine passenden Ticketmaster-Termine für diese Auswahl gefunden.'}${failures.length?' '+failures.map(result=>result.city.name+': '+result.error).join(' '):''}${unresolved?' Für '+unresolved+' Ort(e) fehlen noch Koordinaten.':''}${notices.length?' '+notices.join(' '):''} Angaben und Verfügbarkeit bitte beim Veranstalter prüfen.`);
     } catch(error) {if(myGeneration===generation) status(error.name==='AbortError'?'Die Veranstaltungssuche dauert zu lange. Bitte erneut versuchen.':'Veranstaltungssuche nicht erreichbar. Wetter und Kalenderlinks bleiben verfügbar.');}
     finally {clearTimeout(timeout);}
   }
