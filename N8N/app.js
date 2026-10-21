@@ -39,6 +39,14 @@ function render() {
       entry.append(quote); el('material').append(entry);
     }
   }
+  const quizTitle=document.createElement('h3');quizTitle.textContent='Quiz: erst selbst antworten';el('material').append(quizTitle);
+  material.questions.forEach((record,index)=>{
+    const entry=document.createElement('div');entry.className='entry';
+    const label=document.createElement('label');label.textContent=(index+1)+'. '+record.question;
+    const answer=document.createElement('textarea');answer.placeholder='Deine eigene Antwort …';label.append(answer);entry.append(label);
+    const solution=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Lösung vergleichen';solution.append(summary);
+    const explanation=document.createElement('p');explanation.textContent=record.answer+' – '+record.explanation;solution.append(explanation);entry.append(solution);el('material').append(entry);
+  });
   el('results').hidden = false;
 }
 el('load').addEventListener('click', async () => {

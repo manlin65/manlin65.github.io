@@ -1,3 +1,4 @@
 {
-  "productionFormUrl": "https://sonja1.app.n8n.cloud/form/2efc6d51-6acd-4e5a-b0e9-4879914dcfc6"
+  "productionFormUrl": "https://sonja1.app.n8n.cloud/form/2efc6d51-6acd-4e5a-b0e9-4879914dcfc6",
+  "analysisWebhookUrl": "https://sonja1.app.n8n.cloud/webhook/ki-lernassistent-analyse"
 }
