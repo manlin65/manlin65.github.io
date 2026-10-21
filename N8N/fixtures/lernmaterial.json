@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "mode": "demo",
+  "title": "Automatisierte Lernabläufe verstehen",
+  "source": {
+    "file": "test-schulung.pdf",
+    "pageCount": 1,
+    "sha256": "a2c666b56b0e0496625acef8cfa1761963450db53629b5340becadca5898fbc0"
+  },
+  "summary": [
+    {
+      "text": "Ein Trigger startet einen Workflow aus verbundenen Verarbeitungsschritten.",
+      "page": 1,
+      "quote": "Ein Trigger startet einen Workflow."
+    },
+    {
+      "text": "Vor dem Speichern prüft ein Mensch die Lernmaterialien.",
+      "page": 1,
+      "quote": "Vor dem Speichern werden Lernmaterialien von einem Menschen geprueft."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Trigger",
+      "definition": "Auslöser, der einen Ablauf startet.",
+      "page": 1,
+      "quote": "Ein Trigger startet einen Workflow."
+    },
+    {
+      "term": "Webhook",
+      "definition": "Eine Adresse, die eine HTTP-Anfrage entgegennimmt.",
+      "page": 1,
+      "quote": "Ein Webhook nimmt eine HTTP-Anfrage entgegen."
+    },
+    {
+      "term": "OAuth",
+      "definition": "Ein Verfahren, das begrenzten Zugriff ohne Weitergabe eines Passworts erlaubt.",
+      "page": 1,
+      "quote": "OAuth erlaubt begrenzten Zugriff, ohne ein Passwort weiterzugeben."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Was startet einen Workflow?",
+      "answer": "Ein Trigger.",
+      "explanation": "Der Trigger ist der Auslöser des Ablaufs.",
+      "page": 1,
+      "quote": "Ein Trigger startet einen Workflow."
+    },
+    {
+      "question": "Darf das Ergebnis vor der menschlichen Prüfung automatisch gespeichert werden?",
+      "answer": "In diesem Ablauf: nein.",
+      "explanation": "Die Schulung verlangt eine menschliche Prüfung vor dem Speichern.",
+      "page": 1,
+      "quote": "Vor dem Speichern werden Lernmaterialien von einem Menschen geprueft."
+    },
+    {
+      "question": "Begrenzt ein eigener Drive-Ordner automatisch die OAuth-Rechte?",
+      "answer": "Nein.",
+      "explanation": "Organisation im Zielordner und die erteilten Zugriffsrechte müssen getrennt geprüft werden.",
+      "page": 1,
+      "quote": "Ein Zielordner begrenzt nicht automatisch die OAuth-Zugriffsrechte."
+    }
+  ]
+}
