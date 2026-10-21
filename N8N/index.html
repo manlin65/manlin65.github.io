@@ -132,7 +132,7 @@
       .footer-inner { align-items: flex-start; flex-direction: column; }
     }
   </style>
-<link rel="stylesheet" href="app.css"><script src="app.js" defer></script>
+<link rel="stylesheet" href="app.css"><style>#start-workflow[hidden]{display:none}</style><script src="app.js" defer></script><script src="workflow.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -181,7 +181,13 @@
           <h2>Vom Schulungs-PDF zum Lernmaterial.</h2>
           <p class="section-intro">Hier entsteht die Bedienoberfläche. Test mit künstlicher PDF und erfundenen Lernmaterialien. Keine KI-Auswertung und keine Verbindung zu n8n oder Google Drive.</p>
         </div>
-        <p class="notice"><strong>Nur künstliche Testdaten verwenden.</strong> <a class="button" href="fixtures/test-schulung.pdf" target="_blank" rel="noopener">Mitgelieferte Test-PDF ansehen</a> Die Ergebnisse gehören ausschließlich zu dieser PDF.</p>
+        <article class="panel" id="live-workflow" style="margin-bottom:24px">
+<div class="panel-top"><div><h3>Eigene Test-PDF mit Gemini auswerten</h3><p class="panel-hint">Der echte Ablauf öffnet das n8n-Formular in einem neuen Tab. Dort lädst du deine PDF hoch und prüfst die daraus erzeugten Lernmaterialien. Nach Freigabe speichert n8n das Ergebnis in Google Drive.</p></div></div>
+<p id="workflow-status" role="status">Die Verbindung zum veröffentlichten n8n-Formular wird eingerichtet.</p>
+<a class="button button-primary" id="start-workflow" hidden target="_blank" rel="noopener noreferrer">PDF-Workflow starten ↗</a>
+<p class="panel-hint">Verwende zunächst nur künstliche Testunterlagen. Der PDF-Text wird an Google Gemini übertragen. Die Ergebnisse erscheinen im n8n-Prüfformular; sie werden noch nicht automatisch in diese Website zurückgeladen.</p>
+</article>
+<p class="notice"><strong>Nur künstliche Testdaten verwenden.</strong> <a class="button" href="fixtures/test-schulung.pdf" target="_blank" rel="noopener">Mitgelieferte Test-PDF ansehen</a> Die Ergebnisse gehören ausschließlich zu dieser PDF.</p>
 <div class="workspace">
           <div class="panel">
             <div class="panel-top"><div><h3>Unterlage auswählen</h3><p class="panel-hint">Eigene Auswahl: nur Dateiname, kein Lesen oder Upload. Der Testablauf nutzt immer die mitgelieferte Test-PDF.</p></div><span class="demo-tag">Oberflächen-Demo</span></div>
