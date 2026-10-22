@@ -2,7 +2,7 @@
 
 Öffentliche Anwendung: https://www.mlinner-software.de/N8N/
 
-How-to für die Klasse: https://www.mlinner-software.de/N8N/howTo/
+PDF-Anleitung für die Klasse: https://www.mlinner-software.de/N8N/howTo/KI-Lernassistent-HowTo.pdf
 
 Die Website sendet eine neue textlesbare PDF als multipart/form-data (`pdf`) an den n8n-Webhook aus `workflow-config.json`. n8n extrahiert Text, ruft Gemini auf, prüft JSON und Quellenzitate und antwortet mit Zusammenfassung, Glossar und Quizfragen. Der Browser zeigt die eigene Antwort, erlaubt Bearbeitung und nach persönlicher Prüfbestätigung einen lokalen JSON-Download. Der Demobereich wurde entfernt.
 
@@ -14,7 +14,7 @@ Frontend: GitHub Pages und Browser. Backend: n8n Cloud. Externer KI-Dienst: Goog
 - `workflow-config.json`: öffentliche Endpunktadressen, keine Secrets.
 - `workflow.js`: optionaler Link zum älteren Formular.
 - `workflows/ki-lernassistent-web-analyse.json`: neue Importvorlage ohne Credentials.
-- `howTo/index.html`: Anleitung und Erklärung für die Klasse.
+- Keine separate How-to-Webseite: Alle Anleitungslinks öffnen die ausführliche PDF direkt in einem neuen Tab.
 - `howTo/KI-Lernassistent-HowTo.pdf`: neunseitige Anleitung, Backend-Erklärung, Zugänge, Kontakt und Workflow-Skizze.
 - `howTo/build_pdf.py`: PDF-Erzeugung mit ReportLab und fontTools; lokale Schriften aus assets/fonts, Logos aus dem bereitgestellten Markenpaket.
 
