@@ -38,7 +38,7 @@ def page(num,kicker,title,intro):
  _,h=p.wrap(507,100);p.drawOn(c,44,y-h+25);y=y-h+10
  text(intro)
  c.setFont('Source',9);c.setFillColor(HexColor(muted));c.drawString(44,34,'info@mlinner-software.de · +49 160 7838773')
- c.drawString(44,21,'www.mlinner-software.de · KI-Lernassistent · 21.10.2026');c.drawRightString(551,30,str(num))
+ c.drawString(44,21,'www.mlinner-software.de · KI-Lernassistent · 22.10.2026');c.drawRightString(551,30,str(num))
 
 def text(s):
  global y
@@ -131,5 +131,43 @@ box(44,220,'Webanwendung','Glossar + Quiz anzeigen');arrow(116,340,116,282)
 y=175
 text('<b>Durchgehende Pfeile:</b> Datenfluss. <b>Gestrichelter Pfeil:</b> Modellanschluss. Die Antwort enthält die erzeugten Lernmaterialien; der Browser stellt sie dar.')
 text('<b>Älterer Ablauf mit Drive:</b> Formular → PDF_Text → LLM-Kette → JavaScript3 → Warten auf Prüfung → JavaScript2 → JSON-Datei → Drive-Update. Ablehnen beendet diesen älteren Ablauf vor der Speicherung.')
+c.showPage()
+page(10,'Die Oberfläche · Bild','So startest du die Analyse','Abbildung der aktuellen Webanwendung. Es gibt nur eine Dateiauswahl für deine neue PDF; der frühere Demobereich ist entfernt.')
+img=ImageReader(str(Path(__file__).with_name('images')/'pdf-upload.png'))
+iw,ih=img.getSize();height=507*ih/iw
+c.drawImage(img,44,y-height,507,height,mask='auto');y-=height+18
+text('<b>Abbildung:</b> Die Uploadkarte der Webanwendung, lokal aufgenommen. Sie zeigt die Bedienung und ist kein Nachweis einer erfolgreichen Gemini-Auswertung.')
+item('So liest du den Bildschirm','PDF wählen → Übertragung bestätigen → „Glossar und Quiz erstellen“. Der Status darunter meldet Bereit, Verarbeitung, Erfolg oder einen Fehler. Ergebnisse erscheinen nach erfolgreicher Antwort unterhalb der Uploadkarte.')
+item('Was passiert bei einem Fehler?','Ohne erfolgreiche KI-Antwort gibt es kein neues Glossar und kein neues Quiz. Die Anwendung zeigt deshalb eine Fehlermeldung und ersetzt den Entwurf nicht durch feste Beispieldaten.')
+c.showPage()
+page(11,'Architektur · Bild','Dein Backend ist n8n Cloud.','Das Backend ist kein zusätzlicher Ordner auf GitHub. Es ist der Dienst, der deine Anfrage im Hintergrund verarbeitet: hier dein veröffentlichter Workflow in n8n Cloud.')
+box(44,500,'Dein Browser','Frontend · Bedienung');box(225,500,'n8n Cloud','Backend · Verarbeitung');box(406,500,'Google Gemini','KI-Dienst · Entwurf')
+arrow(189,545,225,545);arrow(370,545,406,545)
+arrow(406,512,370,512);arrow(225,512,189,512)
+c.setFont('Source',9);c.setFillColor(HexColor(petrol));c.drawString(191,560,'PDF');c.drawString(370,560,'Text')
+box(44,375,'GitHub Pages','Liefert die Website');arrow(116,437,116,500)
+box(406,375,'Google Drive','Nur im älteren Ablauf')
+y=345
+item('GitHub Pages liefert – n8n verarbeitet','GitHub Pages liefert HTML, CSS und JavaScript. Der Browser baut daraus die Oberfläche auf. Erst der Klick auf die Analyse-Schaltfläche sendet eine PDF an den n8n-Webhook. GitHub Pages selbst ruft Gemini nicht auf.')
+item('Hinweg und Rückweg','Hinweg: Browser sendet die PDF an n8n; n8n sendet den extrahierten Text an Gemini. Rückweg: Gemini sendet den Entwurf an n8n; n8n prüft ihn und sendet JSON zurück an den Browser. Daraus entstehen die sichtbaren Lernmaterialien.')
+item('Wo liegen Zugangsdaten?','Der Gemini-Schlüssel und die Drive-OAuth-Zugangsdaten liegen in n8n-Credentials. Die Website enthält nur die öffentliche Webhook-Adresse. Der neue Analyseworkflow schreibt nicht nach Drive.')
+text('<b>Merksatz für die Klasse:</b> „Meine Website ist das Frontend. n8n Cloud ist mein Backend. Gemini ist der aufgerufene KI-Dienst.“')
+c.showPage()
+page(12,'Gemini-Aussetzer · Bild','Warum bleibt die Antwort aus?','Im beobachteten Web-Lauf kamen Upload und PDF-Auslesen erfolgreich durch. Der Ablauf stoppte am KI-Schritt mit „Dienst nicht verfügbar“. Damit ist die Störung am KI-Aufruf eingegrenzt.')
+box(44,500,'PDF-Verarbeitung','Grün · bereits erfolgt');box(225,500,'Gemini-Aufruf','Fehler · keine Antwort');box(406,500,'Website','Zeigt HTTP 500')
+arrow(189,531,225,531);arrow(370,531,406,531)
+y=460
+item('Was ein 503 von Google bedeutet','Die zuvor gezeigte Google-Meldung nannte HTTP 503 und ein stark ausgelastetes Modell. Ein 503 bedeutet: Der Dienst ist momentan nicht verfügbar. Nachfragespitzen oder vorübergehende Betriebsstörungen können dahinterstecken. Das ist nicht automatisch ein Fehler in deinem PDF oder API-Schlüssel.')
+item('Warum die Website stattdessen 500 zeigt','Gemini und deine Website kommunizieren über n8n. Scheitert der KI-Aufruf, erreicht der Ablauf den letzten Antwortknoten nicht. In deinem Fall meldete die Website HTTP 500 vom n8n-Endpunkt. Diese äußere Fehlermeldung erklärt noch nicht die Ursache beim KI-Anbieter. Dafür muss man die betroffene n8n-Ausführung öffnen.')
+item('Was wir wissen – und was nicht','Die Screenshots zeigen einen Fehler am Gemini-/LLM-Knoten. Eine frühere Detailmeldung bestätigte Modellüberlastung. Daraus folgt nicht, dass jeder neue 500-Fehler dieselbe Ursache hat. Die genaue Google-Meldung des jeweiligen neuen Laufs ist maßgeblich.')
+item('Kostenlose Stufe und Modellwahl','Kontingente und Modellverfügbarkeit hängen vom Projekt und Konto ab. Ein ausgeschöpftes Kontingent zeigt typischerweise 429; es darf nicht pauschal mit einer 503-Überlastung gleichgesetzt werden. Auch ein kostenpflichtiger Zugang garantiert keine unterbrechungsfreie Verfügbarkeit.')
+c.showPage()
+page(13,'Fehler verstehen','Was tun bei einem Aussetzer?','Dieser Abschnitt erklärt sinnvolle Maßnahmen. Er ändert deinen n8n-Workflow nicht automatisch. Ein Ersatzmodell oder eine eigene Fehlerantwort sind bisher nicht nachgewiesen eingerichtet.')
+item('1 · Den richtigen Lauf öffnen','In „KI-Lernassistent – Web-Analyse“ auf Ausführungen klicken (bei automatischer Übersetzung eventuell „Hinrichtungen“). Den neuesten roten Lauf öffnen. Den roten Gemini- oder LLM-Knoten auswählen und die vollständige Meldung lesen.')
+item('2 · Den Fehlercode einordnen','503: Dienst vorübergehend nicht verfügbar; bei passender Meldung Modellüberlastung. 429: Anfragerate oder Kontingent erreicht. 401/403: Anmeldung oder Berechtigung prüfen. 404: Modellname oder veröffentlichter Webhook prüfen. HTTP 500 am Browser allein erlaubt keine sichere Diagnose.')
+item('3 · Begrenzt erneut versuchen','Bei vorübergehender Überlastung später erneut starten. Automatische Wiederholungen können kurze Störungen überbrücken, aber keine Verfügbarkeit garantieren. Nicht mehrfach parallel klicken. Jeder tatsächliche KI-Aufruf kann Kontingent verbrauchen. Nach Browser-Zeitlimit kann der Server noch arbeiten.')
+item('4 · Mögliche spätere Verbesserungen','Ein verfügbares alternatives Modell als Fallback, begrenzte Wiederholungen mit Warteabstand und eine definierte Fehlerantwort an den Browser können den Ablauf robuster machen. Ein Fallback kann andere Ergebnisse liefern. Diese Maßnahmen müssen ausdrücklich eingerichtet und getestet werden; sie sind keine bereits zugesicherte Funktion.')
+item('5 · Für eine Klassenvorführung','Vorher einen kleinen künstlichen Text testen. Eine bereits erzeugte Ausgabe als gekennzeichnetes Beispiel bereithalten. Bei einer Störung ehrlich zeigen: Upload und Textextraktion funktionieren, der externe KI-Dienst liefert gerade keine Antwort. Kein altes Ergebnis als neue erfolgreiche Analyse ausgeben.')
+text('<b>Wichtig:</b> Inhaltliche Fehler und Dienstfehler sind verschieden. Selbst bei einem grünen technischen Ablauf müssen Glossar, Lösungen und Quellen fachlich geprüft werden.')
 c.save()
 print(OUT)

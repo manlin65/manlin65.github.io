@@ -15,7 +15,7 @@ Frontend: GitHub Pages und Browser. Backend: n8n Cloud. Externer KI-Dienst: Goog
 - `workflow.js`: optionaler Link zum älteren Formular.
 - `workflows/ki-lernassistent-web-analyse.json`: neue Importvorlage ohne Credentials.
 - Keine separate How-to-Webseite: Alle Anleitungslinks öffnen die ausführliche PDF direkt in einem neuen Tab.
-- `howTo/KI-Lernassistent-HowTo.pdf`: neunseitige Anleitung, Backend-Erklärung, Zugänge, Kontakt und Workflow-Skizze.
+- `howTo/KI-Lernassistent-HowTo.pdf`: dreizehnseitige bebilderte Anleitung, Backend-Erklärung, Zugänge, Kontakt und Workflow-Skizze.
 - `howTo/build_pdf.py`: PDF-Erzeugung mit ReportLab und fontTools; lokale Schriften aus assets/fonts, Logos aus dem bereitgestellten Markenpaket.
 
 ## Prüfen
