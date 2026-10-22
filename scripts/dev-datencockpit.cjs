@@ -1,8 +1,10 @@
 'use strict';
-require('./datencockpit-proxy.cjs');
 const http=require('node:http');
 const fs=require('node:fs/promises');
 const path=require('node:path');
+const envFile=path.resolve(__dirname,'../.env.local');
+if(require('node:fs').existsSync(envFile))process.loadEnvFile(envFile);
+require('./datencockpit-proxy.cjs');
 // Match the browser's local Origin header without broadening production CORS.
 process.env.URL='http://127.0.0.1:'+Number(process.env.PORT || 8888);
 const handlers={
@@ -41,8 +43,9 @@ http.createServer(async(req,res)=>{
  const file=files[url.pathname];
  if(!file){res.writeHead(404);res.end('Not found');return;}
  if(file[0]==='config.js'){
+  const config=await fs.readFile(path.join(root,'config.js'),'utf8');
   res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store'});
-  res.end(req.method==='HEAD'?undefined:"window.DATENCOCKPIT_CONFIG=Object.freeze({apiUrl:'',dataApiUrl:''});");return;
+  res.end(req.method==='HEAD'?undefined:/provider\s*:\s*['"]supabase['"]/.test(config)?config:"window.DATENCOCKPIT_CONFIG=Object.freeze({apiUrl:'',dataApiUrl:''});");return;
  }
  try{const body=await fs.readFile(path.join(root,file[0]));res.writeHead(200,{'Content-Type':file[1],'Cache-Control':'no-store'});res.end(req.method==='HEAD'?undefined:body);}
  catch{res.writeHead(500);res.end('File unavailable');}

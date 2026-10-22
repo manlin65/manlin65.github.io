@@ -1,6 +1,6 @@
-// Public API address only. Never put DATABASE_URL or API keys in this file.
-// For GitHub Pages, set apiUrl to the deployed Netlify function's HTTPS URL.
+// Public Supabase project settings only. Never add database passwords or secret keys.
 window.DATENCOCKPIT_CONFIG=Object.freeze({
-  apiUrl:'https://rauszeitml.netlify.app/.netlify/functions/datencockpit-status',
-  dataApiUrl:'https://rauszeitml.netlify.app/.netlify/functions/datencockpit-data'
+  provider:'supabase',
+  supabaseUrl:'https://ebjoamsxkjufmilzabyp.supabase.co',
+  supabasePublishableKey:'sb_publishable_f3KDOicBWiB3A21_aR4Grg_05Ttcyzc'
 });

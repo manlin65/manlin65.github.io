@@ -8,10 +8,11 @@
   "scripts": {
     "build": "node scripts/build-netlify.mjs",
     "test": "node --test tests/*.test.cjs",
-    "dev:datencockpit": "node --env-file=.env.local scripts/dev-datencockpit.cjs",
+    "dev:datencockpit": "node scripts/dev-datencockpit.cjs",
     "predev:datencockpit": "node scripts/build-datencockpit.mjs",
     "migrate:datencockpit": "node --env-file=.env.local scripts/migrate-datencockpit.cjs",
-    "test:datencockpit:browser": "node scripts/test-datencockpit-browser.cjs"
+    "test:datencockpit:browser": "node scripts/test-datencockpit-browser.cjs",
+    "test:datencockpit:supabase": "node scripts/test-datencockpit-supabase.cjs"
   },
   "dependencies": {
     "@neon/config": "^1.9.3",
