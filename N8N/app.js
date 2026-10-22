@@ -94,6 +94,11 @@ function showAnalysis(data, file) {
   if(signature!=='%PDF-'){status.textContent='Die Datei hat keinen gültigen PDF-Dateianfang.';return;}
   button.disabled=true; el('results').hidden=true;material=null;invalidateReview();
   status.dataset.state='busy';status.textContent='Deine PDF wird verarbeitet. Das kann etwas dauern. Die Ergebnisse erscheinen anschließend hier.';
+  const progress=el('analysis-progress'), elapsed=el('analysis-elapsed');
+  const started=Date.now(), originalLabel=button.textContent;
+  progress.hidden=false;el('live-workflow').setAttribute('aria-busy','true');
+  button.textContent='Analyse läuft …';elapsed.textContent='Wartezeit: 0 Sekunden';
+  const ticker=setInterval(()=>{const seconds=Math.floor((Date.now()-started)/1000);elapsed.textContent='Wartezeit: '+seconds+' Sekunden';},1000);
   const controller=new AbortController(), timeout=setTimeout(()=>controller.abort(),180000);
   try{
    const body=new FormData();body.append('pdf',file,file.name);
@@ -109,6 +114,6 @@ function showAnalysis(data, file) {
    else if(error instanceof TypeError)status.textContent='Keine Verbindung zum Analysedienst. Bitte Internetverbindung prüfen oder später erneut versuchen.';
    else status.textContent='Die Antwort konnte nicht angezeigt werden. Bitte den Analyse-Workflow prüfen lassen.';
   }
-  finally{clearTimeout(timeout);button.disabled=false;}
+  finally{clearTimeout(timeout);clearInterval(ticker);progress.hidden=true;el('live-workflow').setAttribute('aria-busy','false');button.textContent=originalLabel;button.disabled=false;}
  });
 })();
