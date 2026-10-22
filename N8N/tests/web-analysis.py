@@ -13,7 +13,7 @@ with sync_playwright() as p:
  page.locator('#analysis-file').set_input_files({'name':'neu.pdf','mimeType':'application/pdf','buffer':b'%PDF-1.4 new'})
  page.locator('#analyze').click();assert not sent
  page.locator('#analysis-consent').check();page.locator('#analyze').click()
- page.wait_for_function("document.querySelector('#analysis-status').textContent.includes('wurden')")
+ page.wait_for_function("document.querySelector('#analysis-status').textContent.includes('Fertig')")
  assert len(sent)==1 and b'neu.pdf' in sent[0]
  assert 'Neuer Begriff' in page.locator('#material').inner_text() or page.locator('textarea').nth(1).input_value()=='Neuer Begriff'
  assert page.locator('#download').is_disabled()

@@ -135,114 +135,17 @@
 <link rel="stylesheet" href="app.css"><style>#start-workflow[hidden]{display:none}</style><script src="app.js" defer></script><script src="workflow.js" defer></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="shell nav">
-      <a class="brand" href="#start" aria-label="Manfred Linner – Startseite">
-        <span class="brand-mark" aria-hidden="true"><span>ML</span><img src="howTo/ml-logo-kompakt.png" alt="" onerror="this.style.display='none'"></span>
-        <span><span class="brand-name">Manfred Linner</span><span class="brand-sub">KI. Datenbanken. Programmierung.</span></span>
-      </a>
-      <nav class="nav-links" aria-label="Hauptnavigation">
-        <a href="#assistent">Lernassistent</a>
-        <a href="#ablauf">Ablauf</a>
-        <a href="howTo/">How-to &amp; PDF</a>
-        <a class="nav-cta" href="#assistent">PDF analysieren <span aria-hidden="true">↗</span></a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="start">
-    <section class="hero">
-      <div class="shell hero-grid">
-        <div>
-          <div class="eyebrow">N8N · KI-LERNASSISTENT · PROTOTYP</div>
-          <h1>Lernstoff verstehen.<br><span class="accent">Wissen festigen.</span></h1>
-          <p class="hero-copy">Ein Schulungsprojekt von Manfred Linner: Aus Kursunterlagen werden klare Zusammenfassungen, ein Glossar und passende Übungsfragen – nachvollziehbar vorbereitet und anschließend von dir geprüft.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#assistent">Lernunterlage ausprobieren <span aria-hidden="true">→</span></a>
-            <a class="button" href="#ablauf">So funktioniert es</a>
-          </div>
-          <div class="hero-note"><span class="check" aria-hidden="true">✓</span><span>Erst strukturieren. Dann lernen. Du behältst die Kontrolle über das Ergebnis.</span></div>
-        </div>
-        <div class="visual" aria-label="Vorschau des n8n Lernworkflows">
-          <div class="flow-card">
-            <div class="flow-head"><span class="flow-title">Lernmaterial aufbereiten</span><span class="live-pill">PDF → QUIZ</span></div>
-            <div class="flow-step"><span class="flow-icon">01</span><span>Unterlage bereitstellen</span></div><div class="flow-line"></div>
-            <div class="flow-step"><span class="flow-icon">02</span><span>Inhalte strukturieren</span></div><div class="flow-line"></div>
-            <div class="flow-step"><span class="flow-icon">03</span><span>Lernfragen prüfen</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-muted" id="assistent">
-      <div class="shell">
-        <div class="section-head">
-          <div class="kicker">DEINE PDF · DEIN LERNMATERIAL</div>
-          <h2>Vom Schulungs-PDF zum Lernmaterial.</h2>
-          <p class="section-intro">Lade eine neue PDF hoch. n8n und Gemini erstellen Zusammenfassung, Glossar und Quizfragen direkt für deine Unterlage. Alternativ kannst du die getrennte Beispieldemo ausprobieren.</p>
-        </div>
-        <article class="panel" id="live-workflow" style="margin-bottom:24px">
-<h3>Neue PDF analysieren</h3>
-<p>Lade eine textlesbare Test-PDF hoch. Gemini erstellt daraus ein Glossar, Quizfragen mit Lösungen und eine Zusammenfassung. Die Ergebnisse erscheinen direkt unten auf dieser Seite.</p>
-<label for="analysis-file">PDF auswählen (maximal 10 MB)</label><input id="analysis-file" type="file" accept=".pdf,application/pdf">
-<p><label><input id="analysis-consent" type="checkbox"> Ich möchte diese Test-PDF zur Analyse an n8n und Google Gemini senden.</label></p>
-<button class="button button-primary" id="analyze" type="button" disabled>PDF analysieren</button>
-<p id="analysis-status" role="status">Der Analyse-Endpunkt wird noch in n8n eingerichtet.</p>
-<p class="panel-hint">Nur textlesbare Testunterlagen ohne persönliche Daten. Maximal 60.000 ausgelesene Textzeichen. Ergebnisse prüfen, bevor du sie herunterlädst. Dieser Web-Ablauf speichert nichts automatisch in Drive.</p>
-<details><summary>Bisheriges n8n-Testformular</summary><p id="workflow-status" role="status"></p><a class="button" id="start-workflow" hidden target="_blank" rel="noopener noreferrer">Altes Testformular öffnen ↗</a></details>
-</article>
-<p class="notice"><strong>Nur künstliche Testdaten verwenden.</strong> <a class="button" href="fixtures/test-schulung.pdf" target="_blank" rel="noopener">Mitgelieferte Test-PDF ansehen</a> Die Ergebnisse gehören ausschließlich zu dieser PDF.</p>
-<div class="workspace">
-          <div class="panel">
-            <div class="panel-top"><div><h3>Unterlage auswählen</h3><p class="panel-hint">Eigene Auswahl: nur Dateiname, kein Lesen oder Upload. Der Testablauf nutzt immer die mitgelieferte Test-PDF.</p></div><span class="demo-tag">Oberflächen-Demo</span></div>
-            <div class="dropzone" id="dropzone">
-              <div><div class="upload-symbol" aria-hidden="true">↑</div><p class="drop-title">PDF hier ablegen</p><p class="drop-sub">oder auf „Datei auswählen“ klicken</p><label class="button" for="pdf">Datei auswählen</label><input id="pdf" type="file" accept="application/pdf,.pdf" hidden><div class="file-name" id="file-status" aria-live="polite">Keine eigene Datei ausgewählt. Der Testablauf benötigt keine Auswahl.</div></div>
-            </div>
-            <div class="upload-actions"><button class="button button-primary" id="load" type="button">Testablauf mit Beispieldaten starten <span aria-hidden="true">→</span></button><span class="privacy-note">Demo: Die Datei wird nicht hochgeladen.</span></div>
-            <div class="status visible" id="status" role="status" aria-live="polite"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-top"><div><h3>Geplante Ausgabe</h3><p class="panel-hint">Die n8n-Automatisierung soll diese Bausteine erzeugen.</p></div></div>
-            <div class="output-list">
-              <div class="output-item"><span class="output-num">01</span><div><strong>Kurze Zusammenfassung</strong><p>Die wichtigsten Aussagen in verständlicher Form.</p></div></div>
-              <div class="output-item"><span class="output-num">02</span><div><strong>Glossar</strong><p>Fachbegriffe mit knappen Erklärungen.</p></div></div>
-              <div class="output-item"><span class="output-num">03</span><div><strong>Übungsfragen</strong><p>Wissensfragen mit Lösung und kurzer Begründung.</p></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="ablauf">
-      <div class="shell">
-        <div class="section-head"><div class="kicker">DER WORKFLOW</div><h2>Erst verstehen. Dann sinnvoll automatisieren.</h2><p class="section-intro">Das Gerüst ist so angelegt, dass die Automatisierung Schritt für Schritt ergänzt werden kann.</p></div>
-        <div class="workflow-grid">
-          <article class="workflow-card"><span class="step-no">01 / MATERIAL</span><h3>Unterlage bereitstellen</h3><p>Ein PDF wird ausgewählt oder später automatisch aus einem festgelegten Drive-Ordner übernommen.</p></article>
-          <article class="workflow-card"><span class="step-no">02 / AUFBEREITEN</span><h3>Inhalte strukturieren</h3><p>n8n übergibt den extrahierten Text an den vereinbarten KI-Schritt und fordert ein festes Ausgabeformat an.</p></article>
-          <article class="workflow-card"><span class="step-no">03 / PRÜFEN</span><h3>Lernen und verbessern</h3><p>Zusammenfassung, Glossar und Fragen werden als Entwurf angezeigt, geprüft und danach gespeichert.</p></article>
-        </div>
-        <div class="tech-strip" aria-label="Geplante Technologien"><span class="tech-pill">n8n</span><span class="tech-pill">Google Drive</span><span class="tech-pill">PDF-Text</span><span class="tech-pill">KI-Auswertung</span><span class="tech-pill">Menschliche Prüfung</span></div>
-      </div>
-    </section>
-
-    <section class="section section-muted">
-      <div class="shell"><div class="callout"><div><div class="kicker">SCHRITT FÜR SCHRITT</div><h2>Eine klare Oberfläche. Ein nachvollziehbarer Workflow.</h2><p>Deine PDF geht vom Browser an n8n Cloud. Dort wird Text ausgelesen, von Gemini aufbereitet und technisch geprüft. Das Ergebnis kommt als JSON zurück und wird hier angezeigt. <a href="howTo/">Anleitung und Erklärung für die Klasse →</a></p></div><a class="button button-primary" href="#assistent">Zur Demo <span aria-hidden="true">↑</span></a></div></div>
-    </section>
-<section id="results" class="panel shell learner" hidden aria-labelledby="review-title">
-<h2 id="review-title">2. Lernmaterial prüfen</h2>
-<p>Vergleiche jeden Eintrag mit der Test-PDF. Du kannst die Texte überarbeiten. Die Quellenzitate bleiben zum Vergleich erhalten; eigene Änderungen sind damit noch nicht automatisch belegt.</p>
-<p id="source-info" class="source-info"></p>
-<div id="material"></div>
-<h2>3. Geprüftes Ergebnis lokal speichern</h2>
-<p>Der Download enthält Texte, Belege und Prüfstatus als JSON-Datei. Google Drive ist noch nicht angebunden.</p>
-<label class="approval"><input id="approve" type="checkbox"> Ich habe alle Texte, Antworten und Quellen mit der Test-PDF verglichen.</label>
-<div class="actions"><button id="download" class="button button-primary" type="button" disabled>Geprüfte JSON-Datei herunterladen</button></div>
-<p id="save-status" role="status"></p>
-</section>
-
-  </main>
-
-  <footer><div class="shell footer-inner"><span class="footer-brand">Manfred Linner · KI-Integration & Automatisierung</span><span>© 2026 · N8N Lernassistent · Prototyp</span><a href="https://www.mlinner-software.de/">Zur Hauptseite ↗</a></div></footer>
-
-</body>
-</html>
+<a class="skip-link" href="#assistent">Zur PDF-Analyse</a>
+<header class="topbar"><div class="shell nav"><a class="brand" href="#start"><span class="brand-mark" aria-hidden="true"><img src="howTo/ml-logo-kompakt.png" alt=""></span><span><span class="brand-name">Manfred Linner</span><span class="brand-sub">KI. Datenbanken. Programmierung.</span></span></a><nav class="nav-links" aria-label="Hauptnavigation"><a href="#assistent">PDF analysieren</a><a href="#beispiel">Beispiel testen</a><a href="howTo/">Anleitung für die Klasse ↗</a></nav></div></header>
+<main id="start">
+<section class="intro shell"><p class="eyebrow">DEIN PDF-LERNASSISTENT</p><h1>Deine PDF.<br><span class="accent">Dein Glossar. Dein Quiz.</span></h1><p class="hero-copy">Lade eine Unterlage hoch. Du erhältst eine Zusammenfassung, erklärte Fachbegriffe und Quizfragen mit Lösungen – direkt auf dieser Seite.</p><ol class="progress-guide" aria-label="So funktioniert es"><li><span>1</span> PDF auswählen</li><li><span>2</span> Analyse starten</li><li><span>3</span> Lernen und prüfen</li></ol></section>
+<section class="shell" id="assistent" aria-labelledby="upload-title"><article class="panel upload-panel" id="live-workflow"><div class="section-label">SCHRITT 1 UND 2</div><h2 id="upload-title">Neue PDF analysieren</h2><p>Wähle eine PDF mit lesbarem Text. Für den Unterricht bitte künstliche Unterlagen ohne persönliche Daten verwenden.</p>
+<label class="file-label" for="analysis-file">Deine PDF <span>· maximal 10 MB</span></label><input id="analysis-file" type="file" accept=".pdf,application/pdf" aria-describedby="file-help"><p id="file-help" class="panel-hint">Gescannte Bilder werden nicht erkannt. Maximal 60.000 ausgelesene Textzeichen.</p>
+<label class="consent-row"><input id="analysis-consent" type="checkbox"><span>Diese PDF darf zur Analyse an n8n und Google Gemini gesendet werden.</span></label>
+<button class="button button-primary" id="analyze" type="button" disabled>Glossar und Quiz erstellen →</button><p id="analysis-status" class="analysis-feedback" role="status" aria-live="polite">Verbindung wird vorbereitet …</p>
+<details class="help-details"><summary>Was passiert mit meiner PDF?</summary><p>n8n liest den Text aus. Gemini erstellt die Lernmaterialien. Danach prüft n8n das Format und die Quellenzitate und sendet die Antwort an diese Seite. Du kannst die Ergebnisse prüfen und herunterladen. Dieser Ablauf speichert nichts automatisch in Google Drive.</p><a href="howTo/">Workflow und Backend einfach erklärt →</a></details>
+</article></section>
+<section id="results" class="panel shell learner" hidden aria-labelledby="review-title"><div class="section-label">SCHRITT 3</div><h2 id="review-title">Deine Lernmaterialien</h2><p>Vergleiche die Inhalte mit deiner PDF. Du kannst Texte korrigieren. Ein Quellenzitat allein beweist noch nicht die Richtigkeit aller Aussagen.</p><p id="source-info" class="source-info"></p><p id="status" role="status" aria-live="polite"></p><div id="material"></div><div class="download-area"><h3>Ergebnis herunterladen</h3><p>Nach deiner Prüfung kannst du die Lernmaterialien als JSON-Datei speichern.</p><label class="approval"><input id="approve" type="checkbox"> Ich habe Inhalte, Antworten und Quellen mit der zugehörigen PDF verglichen.</label><div class="actions"><button id="download" class="button button-primary" type="button" disabled>Geprüfte Lernmaterialien herunterladen</button></div><p id="save-status" role="status"></p></div></section>
+<section class="shell example-section" id="beispiel"><details class="panel example-panel"><summary><span>Ohne eigene PDF ausprobieren</span><small>Beispiel mit festen Daten · kein KI-Aufruf</small></summary><p>Die Beispieldaten gehören zur mitgelieferten Test-PDF. So kannst du die Ergebnisanzeige ausprobieren, auch wenn Gemini gerade nicht verfügbar ist.</p><div class="actions"><a class="button" href="fixtures/test-schulung.pdf" target="_blank" rel="noopener">Beispiel-PDF ansehen ↗</a><button class="button button-primary" id="load" type="button">Beispiel laden</button></div><div hidden><input id="pdf" type="file"><div id="dropzone"></div><div id="file-status"></div></div></details></section>
+<section class="shell explanation" id="ablauf"><h2>Was passiert im Hintergrund?</h2><div class="explanation-grid"><article><h3>Website</h3><p>Hier lädst du die PDF hoch und siehst das Ergebnis. Die Oberfläche läuft in deinem Browser.</p></article><article><h3>n8n + Gemini</h3><p>n8n ist das Backend: Es liest die PDF, ruft Gemini auf und prüft die Antwort. Gemini erstellt den Entwurf.</p></article><article><h3>Deine Prüfung</h3><p>Du vergleichst Glossar und Quiz mit der Quelle und korrigierst bei Bedarf. KI kann Fehler machen.</p></article></div><a class="button" href="howTo/">How-to, Workflow-Skizze und PDF-Anleitung ↗</a><div hidden><p id="workflow-status"></p><a id="start-workflow" hidden></a></div></section>
+</main><footer><div class="shell footer-inner"><span>Manfred Linner · KI. Datenbanken. Programmierung.</span><a href="mailto:info@mlinner-software.de">info@mlinner-software.de</a><a href="../">Zur Hauptseite ↗</a></div></footer></body></html>

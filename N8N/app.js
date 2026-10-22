@@ -25,8 +25,7 @@ function render() {
   el('source-info').textContent = `Quelle: ${material.source.file}, ${material.source.pageCount} Seite(n)${material.source.sha256 ? ' · SHA-256: ' + material.source.sha256 : ''}`;
   const groups = [
     ['summary', 'Zusammenfassung', [['Text', 'text']]],
-    ['glossary', 'Glossar', [['Begriff', 'term'], ['Erklärung', 'definition']]],
-    ['questions', 'Übungsfragen mit Lösungen', [['Frage', 'question'], ['Lösung', 'answer'], ['Warum ist das richtig?', 'explanation']]]
+    ['glossary', 'Glossar', [['Begriff', 'term'], ['Erklärung', 'definition']]]
   ];
   for (const [key, title, fields] of groups) {
     const heading = document.createElement('h3'); heading.textContent = title;
@@ -45,7 +44,7 @@ function render() {
     const label=document.createElement('label');label.textContent=(index+1)+'. '+record.question;
     const answer=document.createElement('textarea');answer.placeholder='Deine eigene Antwort …';label.append(answer);entry.append(label);
     const solution=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Lösung vergleichen';solution.append(summary);
-    const explanation=document.createElement('p');explanation.textContent=record.answer+' – '+record.explanation;solution.append(explanation);entry.append(solution);el('material').append(entry);
+    field(solution,'Musterlösung',record,'answer');field(solution,'Erklärung',record,'explanation');const quote=document.createElement('blockquote');quote.textContent=`${record.page ? 'Seite ' + record.page : 'Quelltext'}: „${record.quote}“`;solution.append(quote);entry.append(solution);el('material').append(entry);
   });
   el('results').hidden = false;
 }
@@ -61,9 +60,9 @@ el('load').addEventListener('click', async () => {
     if (data.mode !== 'demo' || data.schemaVersion !== 1) throw new Error('Unbekannte Testdaten');
     material = data; revision = 0;
     render();
-    el('status').textContent = 'Testdaten geladen. Keine PDF verarbeitet und kein externer Dienst aufgerufen.';
+    el('status').textContent = 'Beispiel geladen · feste Daten, kein KI-Aufruf.';el('results').scrollIntoView({behavior:'smooth',block:'start'});
   } catch {
-    el('status').textContent = 'Testdaten konnten nicht geladen werden. Bitte die Seite über einen lokalen Webserver öffnen und erneut versuchen.';
+    el('results').hidden=false;el('status').textContent = 'Das Beispiel konnte nicht geladen werden. Bitte die Seite neu laden und erneut versuchen.';
   } finally { el('load').disabled = false; }
 });
 el('pdf').addEventListener('change', () => {
@@ -115,7 +114,7 @@ function showAnalysis(data, file) {
   if(config.analysisWebhookUrl){
    const url=new URL(config.analysisWebhookUrl);
    if(url.protocol!=='https:' || !url.hostname.endsWith('.app.n8n.cloud') || !url.pathname.startsWith('/webhook/') || url.username || url.password || url.search || url.hash) throw new Error();
-   endpoint=url.href;button.disabled=false;status.textContent='Wähle eine PDF und bestätige die Übertragung.';
+   endpoint=url.href;button.disabled=false;status.textContent='Bereit. Wähle deine PDF und bestätige die Übertragung.';
   }
  }catch{status.textContent='Analyse-Verbindung nicht verfügbar. Bitte später erneut versuchen.';}
  button.addEventListener('click',async()=>{
@@ -126,14 +125,22 @@ function showAnalysis(data, file) {
   const signature=new TextDecoder().decode(await file.slice(0,5).arrayBuffer());
   if(signature!=='%PDF-'){status.textContent='Die Datei hat keinen gültigen PDF-Dateianfang.';return;}
   button.disabled=true; el('load').disabled=true; el('results').hidden=true;material=null;invalidateReview();
-  status.textContent='PDF wird analysiert. Bitte warten und nicht erneut starten.';
+  status.dataset.state='busy';status.textContent='Deine PDF wird verarbeitet. Das kann etwas dauern. Die Ergebnisse erscheinen anschließend hier.';
   const controller=new AbortController(), timeout=setTimeout(()=>controller.abort(),180000);
   try{
    const body=new FormData();body.append('pdf',file,file.name);
    const response=await fetch(endpoint,{method:'POST',body,signal:controller.signal});
-   if(!response.ok)throw new Error('Analyse fehlgeschlagen (HTTP '+response.status+'). Bitte den n8n-Workflow prüfen.');
-   const data=await response.json();showAnalysis(data,file);status.textContent='Glossar und Quizfragen wurden aus deiner PDF erstellt.';
-  }catch(error){status.textContent=error.name==='AbortError'?'Zeitlimit erreicht. Die Verarbeitung in n8n kann noch laufen. Bitte dort prüfen, bevor du erneut startest.':error.message;}
+   if(!response.ok){const error=new Error('Die Analyse konnte nicht abgeschlossen werden.');error.httpStatus=response.status;throw error;}
+   const data=await response.json();showAnalysis(data,file);status.dataset.state='success';status.textContent='Fertig. Dein Glossar und Quiz stehen unten bereit.';
+  }catch(error){
+   status.dataset.state='error';
+   if(error.name==='AbortError')status.textContent='Die Analyse dauert länger als erwartet. Die Verarbeitung kann noch laufen. Bitte nicht sofort erneut starten.';
+   else if(error.httpStatus===500)status.textContent='Der Analysedienst konnte deine PDF gerade nicht verarbeiten. Bitte später erneut versuchen. Für Manfred: n8n-Ausführung prüfen (HTTP 500).';
+   else if(error.httpStatus===404)status.textContent='Die Analyse ist gerade nicht erreichbar. Für Manfred: den Web-Analyse-Workflow in n8n veröffentlichen (HTTP 404).';
+   else if(error.httpStatus)status.textContent='Der Analysedienst antwortet mit einem Fehler (HTTP '+error.httpStatus+'). Bitte später erneut versuchen.';
+   else if(error instanceof TypeError)status.textContent='Keine Verbindung zum Analysedienst. Bitte Internetverbindung prüfen oder später erneut versuchen.';
+   else status.textContent='Die Antwort konnte nicht angezeigt werden. Bitte den Analyse-Workflow prüfen lassen.';
+  }
   finally{clearTimeout(timeout);button.disabled=false;el('load').disabled=false;}
  });
 })();
