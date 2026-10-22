@@ -116,3 +116,22 @@ Cockpit die Supabase-Konfiguration; andere Funktionen werden nicht verändert.
 Die alte Neon-/Netlify-Anbindung bleibt als Alternative im Repository, ist aber
 für das aktive Cockpit nicht erforderlich. Die alte Neon-Datenbank wird weder
 zurückgesetzt noch gelöscht.
+
+## How-to auf der Projektseite
+
+Der sichtbare Downloadbereich vor den Arbeitsschritten öffnet die 12-seitige PDF
+`downloads/DatenCockpit-Howto.pdf`. Sie erklärt Projektzweck, Architektur,
+Dateiformate, Datenbank, Rechte, Einrichtung, GitHub Pages und Korrekturübungen.
+Die fünf Beispieldateien sind als PDF-Anhänge eingebettet. Das daneben verlinkte
+ZIP enthält zusätzlich die PDF, alle fünf Originaldateien, die beiden SQL-Skripte
+und die SVG-Architekturgrafik.
+
+Die Dokumente sind vorab erzeugt; der normale Node-Build braucht keine PDF-Tools.
+Zum Aktualisieren auf einem Rechner mit Python, reportlab und pypdf:
+
+```sh
+python3 scripts/create-datencockpit-guide.py
+npm run build
+```
+
+Danach PDF, ZIP und SVG prüfen und die erzeugten Dateien mit veröffentlichen.

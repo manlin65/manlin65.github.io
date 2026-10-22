@@ -33,3 +33,11 @@ body.datencockpit-page{background:var(--page)}.cockpit-app{--ink:var(--navy);--t
 .cockpit-app footer{margin-bottom:20px}
 .cockpit-app footer a{color:var(--petrol)}
 @media(max-width:760px){.cockpit-app{width:calc(100% - 40px);padding-top:24px}.cockpit-app .cockpit-breadcrumb{gap:8px;font-size:11px;margin-bottom:28px}.cockpit-app .cockpit-breadcrumb .demo-badge{font-size:9px}.cockpit-app .intro{font-size:16px}.cockpit-app h2{font-size:23px}.cockpit-app .steps button{font-size:12px}}
+
+.cockpit-app .howto-downloads{display:grid;grid-template-columns:1fr auto;align-items:center;gap:30px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:23px 26px;margin:0 0 26px}
+.cockpit-app .howto-downloads .eyebrow{font-size:9px;margin-bottom:8px}
+.cockpit-app .howto-downloads h2{font-size:19px;margin:0 0 9px}
+.cockpit-app .howto-downloads p{font-size:14px;line-height:1.65;color:var(--muted);max-width:620px;margin:0}
+.cockpit-app .howto-buttons{display:grid;gap:9px;min-width:252px}
+.cockpit-app .howto-buttons a{text-decoration:none;font-size:13px}
+@media(max-width:850px){.cockpit-app .howto-downloads{grid-template-columns:1fr;gap:18px;padding:22px}.cockpit-app .howto-buttons{min-width:0}.cockpit-app .howto-downloads h2{font-size:18px}}

@@ -23,6 +23,8 @@ const files={
  '/datencockpit/config.js':['config.js','text/javascript; charset=utf-8'],
  '/datencockpit/beispiel.csv':['beispiel.csv','text/csv; charset=utf-8']
 };
+files['/datencockpit/downloads/DatenCockpit-Howto.pdf']=['downloads/DatenCockpit-Howto.pdf','application/pdf'];
+files['/datencockpit/downloads/DatenCockpit-Anleitung-und-Beispiele.zip']=['downloads/DatenCockpit-Anleitung-und-Beispiele.zip','application/zip'];
 http.createServer(async(req,res)=>{
  const url=new URL(req.url,'http://localhost');
  if(handlers[url.pathname]){

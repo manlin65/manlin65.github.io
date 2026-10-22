@@ -17,6 +17,9 @@ for(const name of ['site.css','site.js','brand','fonts']) {
 for(const name of ['index.html','app.js','config.js','styles.css','beispiel.csv','THIRD_PARTY_LICENSES.txt']) {
   await cp(path.join(root,'datencockpit',name),path.join(output,'datencockpit',name));
 }
+for(const name of ['downloads','assets']) {
+  await cp(path.join(root,'datencockpit',name),path.join(output,'datencockpit',name),{recursive:true});
+}
 // On Netlify use the functions belonging to this deployment, including previews.
 const cockpitConfig=await readFile(path.join(root,'datencockpit','config.js'),'utf8');
 if(!/provider\s*:\s*['"]supabase['"]/.test(cockpitConfig)) {
