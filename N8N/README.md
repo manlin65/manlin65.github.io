@@ -4,7 +4,7 @@
 
 How-to für die Klasse: https://www.mlinner-software.de/N8N/howTo/
 
-Die Website sendet eine neue textlesbare PDF als multipart/form-data (`pdf`) an den n8n-Webhook aus `workflow-config.json`. n8n extrahiert Text, ruft Gemini auf, prüft JSON und Quellenzitate und antwortet mit Zusammenfassung, Glossar und Quizfragen. Der Browser zeigt die eigene Antwort, erlaubt Bearbeitung und nach persönlicher Prüfbestätigung einen lokalen JSON-Download. Die untere Beispieldemo ist davon getrennt.
+Die Website sendet eine neue textlesbare PDF als multipart/form-data (`pdf`) an den n8n-Webhook aus `workflow-config.json`. n8n extrahiert Text, ruft Gemini auf, prüft JSON und Quellenzitate und antwortet mit Zusammenfassung, Glossar und Quizfragen. Der Browser zeigt die eigene Antwort, erlaubt Bearbeitung und nach persönlicher Prüfbestätigung einen lokalen JSON-Download. Der Demobereich wurde entfernt.
 
 Frontend: GitHub Pages und Browser. Backend: n8n Cloud. Externer KI-Dienst: Google Gemini. API-Schlüssel ausschließlich in n8n-Credentials. Der neue Webworkflow schreibt nichts nach Drive. Der ältere, separat getestete Formularworkflow aktualisiert nach menschlicher Freigabe eine Drive-Datei.
 

@@ -48,28 +48,6 @@ function render() {
   });
   el('results').hidden = false;
 }
-el('load').addEventListener('click', async () => {
-  el('load').disabled = true;
-  invalidateReview();
-  el('results').hidden = true;
-  material = null;
-  try {
-    const response = await fetch('fixtures/lernmaterial.json', {cache:'no-store'});
-    if (!response.ok) throw new Error('Testdaten nicht erreichbar');
-    const data = await response.json();
-    if (data.mode !== 'demo' || data.schemaVersion !== 1) throw new Error('Unbekannte Testdaten');
-    material = data; revision = 0;
-    render();
-    el('status').textContent = 'Beispiel geladen · feste Daten, kein KI-Aufruf.';el('results').scrollIntoView({behavior:'smooth',block:'start'});
-  } catch {
-    el('results').hidden=false;el('status').textContent = 'Das Beispiel konnte nicht geladen werden. Bitte die Seite neu laden und erneut versuchen.';
-  } finally { el('load').disabled = false; }
-});
-el('pdf').addEventListener('change', () => {
-  const file = el('pdf').files[0];
-  el('file-status').textContent = file ? `Ausgewählt: ${file.name}. Nur Oberflächen-Demo: kein Lesen, Upload oder Auswerten. Die Testdaten gehören weiterhin ausschließlich zur mitgelieferten Test-PDF.` : 'Eine eigene Auswahl wird weder gelesen noch ausgewertet.';
-  invalidateReview();
-});
 el('approve').addEventListener('change', () => {
   el('download').disabled = !material || !el('approve').checked;
 });
@@ -83,16 +61,6 @@ el('download').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   el('save-status').textContent = 'Lokaler Download ausgelöst. Bitte die Datei im Downloadordner prüfen. Es wurde nichts in Google Drive gespeichert.';
 });
-const dropzone = el('dropzone');
-dropzone.addEventListener('dragover', event => { event.preventDefault(); dropzone.classList.add('dragover'); });
-dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-dropzone.addEventListener('drop', event => {
-  event.preventDefault(); dropzone.classList.remove('dragover');
-  const file = event.dataTransfer.files[0];
-  el('file-status').textContent = file ? `Abgelegt: ${file.name}. Nur Dateiname, kein Lesen oder Upload. Der Test nutzt weiterhin die mitgelieferte Test-PDF.` : 'Keine Datei abgelegt.';
-  invalidateReview();
-});
-
 // Render real API results using text-only DOM fields, never model-generated HTML.
 function showAnalysis(data, file) {
   if (!data || data.technischePruefung !== 'Bestanden' || !data.quelle || typeof data.zusammenfassung !== 'string' || !Array.isArray(data.glossar) || !Array.isArray(data.uebungsfragen)) throw new Error('Unvollständige Antwort vom Analyse-Workflow.');
@@ -124,7 +92,7 @@ function showAnalysis(data, file) {
   if(!el('analysis-consent').checked){status.textContent='Bitte die Übertragung an n8n und Gemini bestätigen.';return;}
   const signature=new TextDecoder().decode(await file.slice(0,5).arrayBuffer());
   if(signature!=='%PDF-'){status.textContent='Die Datei hat keinen gültigen PDF-Dateianfang.';return;}
-  button.disabled=true; el('load').disabled=true; el('results').hidden=true;material=null;invalidateReview();
+  button.disabled=true; el('results').hidden=true;material=null;invalidateReview();
   status.dataset.state='busy';status.textContent='Deine PDF wird verarbeitet. Das kann etwas dauern. Die Ergebnisse erscheinen anschließend hier.';
   const controller=new AbortController(), timeout=setTimeout(()=>controller.abort(),180000);
   try{
@@ -141,6 +109,6 @@ function showAnalysis(data, file) {
    else if(error instanceof TypeError)status.textContent='Keine Verbindung zum Analysedienst. Bitte Internetverbindung prüfen oder später erneut versuchen.';
    else status.textContent='Die Antwort konnte nicht angezeigt werden. Bitte den Analyse-Workflow prüfen lassen.';
   }
-  finally{clearTimeout(timeout);button.disabled=false;el('load').disabled=false;}
+  finally{clearTimeout(timeout);button.disabled=false;}
  });
 })();
