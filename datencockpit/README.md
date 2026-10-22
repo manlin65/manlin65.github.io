@@ -1,6 +1,6 @@
 # DatenCockpit
 
-Portfolio-Demo von manlin für den Ablauf **Datei einlesen → Daten prüfen →
+Portfolio-Demo von Manfred Linner für den Ablauf **Datei einlesen → Daten prüfen →
 Auffälligkeiten bearbeiten und freigeben → Kennzahlen anzeigen**. Die Oberfläche
 liegt unter `/datencockpit/` auf GitHub Pages. Die Daten liegen in Supabase
 PostgreSQL; eng begrenzte SQL-Funktionen bilden die API. Netlify und Azure sind
@@ -127,7 +127,7 @@ ZIP enthält zusätzlich die PDF, alle fünf Originaldateien, die beiden SQL-Skr
 und die SVG-Architekturgrafik.
 
 Die Dokumente sind vorab erzeugt; der normale Node-Build braucht keine PDF-Tools.
-Zum Aktualisieren auf einem Rechner mit Python, reportlab und pypdf:
+Zum Aktualisieren auf einem Rechner mit Python, reportlab, pypdf und fontTools:
 
 ```sh
 python3 scripts/create-datencockpit-guide.py

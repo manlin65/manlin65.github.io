@@ -11,6 +11,10 @@ from reportlab.lib.styles import getSampleStyleSheet,ParagraphStyle
 from reportlab.lib.enums import TA_LEFT
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.utils import ImageReader
+from fontTools.ttLib import TTFont as VariableFont
+from fontTools.varLib.instancer import instantiateVariableFont
+import tempfile
 from reportlab.graphics.shapes import Drawing,Rect,String,Line,Polygon
 from reportlab.graphics import renderSVG
 from pypdf import PdfReader,PdfWriter
@@ -20,8 +24,17 @@ OUT=ROOT/'datencockpit/downloads';OUT.mkdir(parents=True,exist_ok=True)
 ASSETS=ROOT/'datencockpit/assets';ASSETS.mkdir(parents=True,exist_ok=True)
 PDF=OUT/'DatenCockpit-Howto.pdf'
 ZIP=OUT/'DatenCockpit-Anleitung-und-Beispiele.zip'
-for name,file in [('Body','DejaVuSans.ttf'),('Bold','DejaVuSans-Bold.ttf'),('Mono','DejaVuSansMono.ttf')]:
- pdfmetrics.registerFont(TTFont(name,'/usr/share/fonts/truetype/dejavu/'+file))
+font_cache=Path(tempfile.gettempdir())/'datencockpit-pdf-fonts';font_cache.mkdir(exist_ok=True)
+for name,file,weight in [('Body','source-sans-3-variable.ttf',400),('Bold','manrope-variable.ttf',700)]:
+ target=font_cache/(name+'.ttf')
+ font=VariableFont(ROOT/'assets/fonts'/file)
+ axes={a.axisTag:(weight if a.axisTag=='wght' else a.defaultValue) for a in font['fvar'].axes}
+ instantiateVariableFont(font,axes,inplace=True)
+ for platform,encoding,language in [(3,1,1033),(1,0,0)]:
+  font['name'].setName('Manrope-Bold' if name=='Bold' else 'SourceSans3-Regular',6,platform,encoding,language)
+ font.save(target)
+ pdfmetrics.registerFont(TTFont(name,str(target)))
+pdfmetrics.registerFont(TTFont('Mono','/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'))
 pdfmetrics.registerFontFamily('Body',normal='Body',bold='Bold',italic='Body',boldItalic='Bold')
 NAVY=colors.HexColor('#0e4759');PETROL=colors.HexColor('#155e75');INK=colors.HexColor('#17202a');MUTED=colors.HexColor('#64748b');LINE=colors.HexColor('#dce4ec');SOFT=colors.HexColor('#eef3f8')
 styles={
@@ -79,7 +92,10 @@ add('Ein Monatsbericht zeigt bezahlten Umsatz, offene Aufträge, offenes Auftrag
 h('Projekt und Unterlagen')
 add(link('DatenCockpit öffnen','https://www.mlinner-software.de/datencockpit/'))
 add(link('Quellcode auf GitHub','https://github.com/manlin65/manlin65.github.io'))
-add('Stand: 22. Oktober 2026 · Manfred Linner / manlin · Portfolio-Demo mit fiktiven Daten.','small')
+add('Stand: 22. Oktober 2026 · Manfred Linner · Portfolio-Demo mit fiktiven Daten.','small')
+h('Kontakt für Ihr Datenprojekt')
+add('<b>Manfred Linner</b> · Softwareentwicklung & Dienstleistungen<br/>Schwabach bei Nürnberg · Remote deutschlandweit und international')
+add(link('info@mlinner-software.de','mailto:info@mlinner-software.de')+' · '+link('+49 160 7838773','tel:+491607838773'))
 add('Diese Anleitung beschreibt die aktive Lösung: GitHub Pages + Supabase. Netlify, Azure und die zuvor getestete Neon-Datenbank werden für das aktive Cockpit nicht benötigt.','small')
 
 page(2,'Die Architektur auf einen Blick')
@@ -137,7 +153,7 @@ add('Dies ist ein Beispieldaten-Projekt ohne Mitarbeiterkonten. Für echte Gesch
 
 page(8,'Supabase einrichten und kontrollieren')
 for title,text in [
- ('1. Kostenloses Projekt anlegen','Im Supabase-Dashboard ein eigenes Projekt anlegen, z. B. manlin-datencockpit. Eine EU-Region wählen. Das Datenbankpasswort sicher speichern und nicht in GitHub oder Website-Dateien übernehmen.'),
+ ('1. Kostenloses Projekt anlegen','Im Supabase-Dashboard ein eigenes Projekt anlegen, mit einem passenden Projektnamen. Eine EU-Region wählen. Das Datenbankpasswort sicher speichern und nicht in GitHub oder Website-Dateien übernehmen.'),
  ('2. Tabellen und Rechte einrichten','SQL Editor öffnen. Zuerst 202610220001_datencockpit_tables.sql aus dem Paket vollständig ausführen. Danach 202610220002_datencockpit_functions.sql ausführen. Beide Dateien liegen zusätzlich unter supabase/migrations im Repository.'),
  ('3. Auf Originalsprache achten','Automatische Browser-Übersetzung ausschalten, bevor SQL kopiert oder ausgeführt wird. Befehle müssen SELECT, CREATE und GRANT heißen, nicht „WÄHLE“, „ERSTELLEN“ oder übersetzte Varianten.'),
  ('4. Öffentliche Konfiguration übernehmen','Project Settings → Data API: Project URL kopieren. Unter API Keys den Publishable-Key verwenden (sb_publishable_…). Nur diese öffentlichen Werte in datencockpit/config.js eintragen.'),
@@ -193,13 +209,22 @@ add(link('Projektseite und Downloads','https://www.mlinner-software.de/datencock
 add('Diese Anleitung beschreibt eine Portfolio-Demo und keinen fertig abgenommenen Mehrbenutzerbetrieb für echte Unternehmensdaten.','small')
 
 def footer(c,doc):
- c.saveState();c.setStrokeColor(LINE);c.line(44,39,PAGE_W-44,39)
- c.setFont('Body',7.2);c.setFillColor(MUTED);c.drawString(44,26,'manlin · DatenCockpit · How-to · 22.10.2026');c.drawRightString(PAGE_W-44,26,f'{doc.page} / 12')
- if doc.page>1:
-  c.setFont('Bold',8);c.setFillColor(NAVY);c.drawString(44,PAGE_H-31,'DATENCOCKPIT');c.setFont('Body',7.2);c.setFillColor(MUTED);c.drawRightString(PAGE_W-44,PAGE_H-31,'AUFBAU · DATENBANK · GITHUB PAGES')
+ c.saveState()
+ c.drawImage(ImageReader(str(ASSETS/'ml-logo-pdf.png')),44,PAGE_H-45,width=55,height=25,mask='auto',preserveAspectRatio=True)
+ c.setFont('Bold',10.5);c.setFillColor(INK);c.drawString(110,PAGE_H-27,'Manfred Linner')
+ c.setFont('Body',7.7);c.setFillColor(MUTED);c.drawString(110,PAGE_H-40,'KI. Datenbanken. Programmierung.')
+ c.setFont('Body',7);c.drawRightString(PAGE_W-44,PAGE_H-30,'DATENCOCKPIT · HOW-TO')
+ c.setStrokeColor(LINE);c.line(44,46,PAGE_W-44,46)
+ c.setFont('Body',7.5);c.setFillColor(NAVY);c.drawString(44,31,'info@mlinner-software.de')
+ c.drawString(230,31,'+49 160 7838773');c.drawRightString(PAGE_W-44,31,'www.mlinner-software.de')
+ c.linkURL('mailto:info@mlinner-software.de',(44,28,180,41),relative=0,thickness=0)
+ c.linkURL('tel:+491607838773',(230,28,320,41),relative=0,thickness=0)
+ c.linkURL('https://www.mlinner-software.de/',(370,28,PAGE_W-44,41),relative=0,thickness=0)
+ c.setFont('Body',6.7);c.setFillColor(MUTED);c.drawString(44,17,'M. Linner Softwareentwicklung & Dienstleistungen · Schwabach · 22.10.2026')
+ c.drawRightString(PAGE_W-44,17,f'{doc.page} / 12')
  c.restoreState()
 buffer=BytesIO()
-doc=SimpleDocTemplate(buffer,pagesize=(PAGE_W,PAGE_H),leftMargin=44,rightMargin=44,topMargin=58,bottomMargin=54,title='DatenCockpit – How-to: Aufbau, Datenbank und Veröffentlichung',author='Manfred Linner / manlin',subject='Anleitung zur Portfolio-Demo mit Supabase und GitHub Pages')
+doc=SimpleDocTemplate(buffer,pagesize=(PAGE_W,PAGE_H),leftMargin=44,rightMargin=44,topMargin=65,bottomMargin=62,title='DatenCockpit – How-to: Aufbau, Datenbank und Veröffentlichung',author='Manfred Linner',subject='Anleitung zur Portfolio-Demo mit Supabase und GitHub Pages')
 doc.build(story,onFirstPage=footer,onLaterPages=footer)
 reader=PdfReader(BytesIO(buffer.getvalue()))
 
@@ -208,7 +233,7 @@ if len(reader.pages)!=12:
   text=pg.extract_text();print(i, text[:130].replace('\n',' | '), '...', text[-100:].replace('\n',' | '))
 assert len(reader.pages)==12,f'Unexpected page count: {len(reader.pages)}'
 writer=PdfWriter();writer.append(reader)
-writer.add_metadata({'/Title':'DatenCockpit – How-to','/Author':'Manfred Linner / manlin','/Subject':'Bedienung, Architektur, Supabase, GitHub Pages und fünf Beispieldateien'})
+writer.add_metadata({'/Title':'DatenCockpit – How-to','/Author':'Manfred Linner','/Subject':'Bedienung, Architektur, Supabase, GitHub Pages und fünf Beispieldateien'})
 with ZipFile(ROOT/'datencockpit/beispieldateien.zip') as examples:
  for name in examples.namelist():writer.add_attachment(name,examples.read(name))
  with PDF.open('wb') as f:writer.write(f)

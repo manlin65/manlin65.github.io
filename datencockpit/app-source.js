@@ -94,7 +94,7 @@ for(const type of ['dragenter','dragover'])zone.addEventListener(type,event=>{ev
 for(const type of ['dragleave','drop'])zone.addEventListener(type,event=>{event.preventDefault();zone.classList.remove('drag');});
 zone.addEventListener('drop',event=>loadFile(event.dataTransfer.files[0]));
 $('sample').addEventListener('click',async()=>{
-  try{const response=await fetch('beispiel.csv');if(!response.ok)throw Error('Beispieldatei nicht erreichbar.');await loadFile(new File([await response.text()],'manlin-beispiel.csv',{type:'text/csv'}));}catch(error){notice(error.message,true);}
+  try{const response=await fetch('beispiel.csv');if(!response.ok)throw Error('Beispieldatei nicht erreichbar.');await loadFile(new File([await response.text()],'datencockpit-beispiel.csv',{type:'text/csv'}));}catch(error){notice(error.message,true);}
 });
 $('new-import').addEventListener('click',()=>{if(!state.busy){notice('');step('upload');}});
 for(const [id,issues] of [['filter-all',false],['filter-issues',true]])$(id).addEventListener('click',()=>{state.issuesOnly=issues;$('filter-all').classList.toggle('active',!issues);$('filter-issues').classList.toggle('active',issues);renderReview();});
@@ -139,7 +139,7 @@ $('show-sql').addEventListener('click',()=>{const hidden=$('sql').hidden;$('sql'
 $('export').addEventListener('click',()=>{
   if(!state.report)return;
   const rows=[['Monat','Aufträge','Umsatz bezahlt EUR','Offene Aufträge','Offenes Volumen EUR'],...state.report.months.map(m=>[m.month,m.orders,(m.revenueCents/100).toFixed(2).replace('.',','),m.openOrders,(m.openCents/100).toFixed(2).replace('.',',')])];
-  const blob=new Blob(['\uFEFF'+rows.map(r=>r.join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='manlin-monatsbericht.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const blob=new Blob(['\uFEFF'+rows.map(r=>r.join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='datencockpit-monatsbericht.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 $('check').addEventListener('click',async()=>{
   $('check').disabled=true;$('status').textContent='Verbindung wird geprüft …';
