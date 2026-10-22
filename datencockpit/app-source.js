@@ -1,11 +1,13 @@
 import {readSheet} from 'read-excel-file/browser';
 import data from './data.cjs';
+import supabase from './supabase.cjs';
 const {FIELDS,HEADERS,parseCSV,fromMatrix,inspect}=data;
 const $=id=>document.getElementById(id);
 const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(cents/100);
 const monthLabel=value=>new Intl.DateTimeFormat('de-DE',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(value+'-01T00:00:00Z'));
 const state={rows:[],excluded:new Set(),issuesOnly:false,batch:null,report:null,busy:false,fileName:''};
-const sessionKey='manlin.datencockpit.import.v1';
+const useSupabase=window.DATENCOCKPIT_CONFIG?.provider==='supabase';
+const sessionKey=useSupabase?'manlin.datencockpit.supabase.v1':'manlin.datencockpit.import.v1';
 try{const b=JSON.parse(sessionStorage.getItem(sessionKey));if(b && /^[0-9a-f-]{36}$/.test(b.batchId) && /^[0-9a-f]{64}$/.test(b.accessToken))state.batch=b;}catch{}
 function notice(message,error=false){$('notice').textContent=message;$('notice').classList.toggle('error',error);$('notice').hidden=!message;}
 function step(name){
@@ -21,6 +23,7 @@ function api(kind){
   return config.dataApiUrl || (config.apiUrl?config.apiUrl.replace(/datencockpit-status(?:\?.*)?$/,'datencockpit-data'):'/.netlify/functions/datencockpit-data');
 }
 async function request(method,body,batch=state.batch){
+  if(useSupabase)return supabase.createSupabaseClient(window.DATENCOCKPIT_CONFIG).request(method,body,batch);
   const url=new URL(api('data'),window.location.href),headers={Accept:'application/json'};
   if(method!=='POST'){
     if(!batch)throw Error('Kein freigegebener Import verfügbar.');
@@ -140,7 +143,7 @@ $('export').addEventListener('click',()=>{
 });
 $('check').addEventListener('click',async()=>{
   $('check').disabled=true;$('status').textContent='Verbindung wird geprüft …';
-  try{const response=await fetch(api('status'),{cache:'no-store'});const result=await response.json();$('status').textContent=response.ok&&result.connected?'PostgreSQL verbunden · SQL-Test erfolgreich':(result.error || 'Verbindung fehlgeschlagen.');}
+  try{if(useSupabase){const result=await supabase.createSupabaseClient(window.DATENCOCKPIT_CONFIG).status();$('status').textContent=result.connected?'Supabase verbunden · SQL-Test erfolgreich':'Verbindung fehlgeschlagen.';}else{const response=await fetch(api('status'),{cache:'no-store'});const result=await response.json();$('status').textContent=response.ok&&result.connected?'PostgreSQL verbunden · SQL-Test erfolgreich':(result.error || 'Verbindung fehlgeschlagen.');}}
   catch{$('status').textContent='Backend nicht erreichbar. API-Adresse und Verbindung prüfen.';}
   finally{$('check').disabled=false;}
 });
