@@ -15,6 +15,8 @@ from reportlab.lib.utils import ImageReader
 from fontTools.ttLib import TTFont as VariableFont
 from fontTools.varLib.instancer import instantiateVariableFont
 import tempfile
+import hashlib
+import re
 from reportlab.graphics.shapes import Drawing,Rect,String,Line,Polygon
 from reportlab.graphics import renderSVG
 from pypdf import PdfReader,PdfWriter
@@ -244,5 +246,12 @@ with ZipFile(ROOT/'datencockpit/beispieldateien.zip') as examples:
    bundle.write(ROOT/'supabase/migrations'/name,'SQL/'+name)
   bundle.write(ASSETS/'architektur.svg','Grafik/architektur.svg')
   bundle.writestr('LIESMICH.txt','DatenCockpit – Anleitung und Beispiele\n\n1. DatenCockpit-Howto.pdf öffnen.\n2. ZIP entpacken; einzelne Dateien aus Beispieldateien/ auf der Projektseite hochladen.\n3. SQL/ enthält die beiden Einrichtungsskripte für ein eigenes Supabase-Projekt. Im aktuellen Projekt sind sie bereits eingerichtet.\n4. Grafik/ enthält die Architekturgrafik als SVG.\n\nProjekt: https://www.mlinner-software.de/datencockpit/\nAlle Beispieldaten sind fiktiv. Stand: 22.10.2026.\n')
+# Version the on-page links so an updated document cannot reopen from browser cache.
+version=hashlib.sha256(PDF.read_bytes()).hexdigest()[:12]
+page_path=ROOT/'datencockpit/index.html'
+html=page_path.read_text()
+for name in [PDF.name,ZIP.name]:
+ html=re.sub(r'href="downloads/'+re.escape(name)+r'(?:\?[^"]*)?"',f'href="downloads/{name}?v={version}"',html)
+page_path.write_text(html)
 print(f'PDF: {len(reader.pages)} Seiten, 5 eingebettete Beispieldateien, {PDF.stat().st_size} Bytes')
 print(f'ZIP: {ZIP.stat().st_size} Bytes')
