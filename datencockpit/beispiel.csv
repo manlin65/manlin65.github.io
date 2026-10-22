@@ -1,0 +1,9 @@
+Auftragsnummer;Datum;Kunde;Betrag;Status
+A-1001;01.09.2026;Berg & Sohn;1250,00;bezahlt
+A-1002;05.09.2026;Studio Nord;840,50;offen
+A-1003;12.09.2026;Werkstatt West;320,00;bezahlt
+A-1003;12.09.2026;Werkstatt West;320,00;bezahlt
+A-1004;02.10.2026;;2100,00;bezahlt
+A-1005;09.10.2026;Bäckerei Morgen;650,00;offen
+A-1006;14.10.2026;Planwerk;450,00;storniert
+A-1007;18.10.2026;Atelier Grün;980,00;bezahlt

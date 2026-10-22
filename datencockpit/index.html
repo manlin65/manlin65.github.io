@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="DatenCockpit von manlin: Tabellen prüfen, Aufträge freigeben und Monatskennzahlen aus PostgreSQL auswerten.">
+<title>DatenCockpit · manlin</title>
+<meta name="theme-color" content="#0e4759">
+<link rel="icon" type="image/png" href="../assets/brand/favicon.png">
+<link rel="preload" href="../assets/fonts/manrope-variable.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="../assets/fonts/source-sans-3-variable.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="styles.css">
+<script src="../assets/site.js" defer></script>
+<script src="config.js" defer></script><script src="app.js" defer></script>
+</head>
+<body class="datencockpit-page">
+<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="../" aria-label="Manfred Linner – Startseite"><img src="../assets/brand/ml-icon.svg" alt="" width="64" height="34"><span>Manfred Linner<small>KI. Datenbanken. Programmierung.</small></span></a>
+<button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Menü öffnen"><span></span><span></span></button>
+<nav id="main-nav" class="main-nav" aria-label="Hauptnavigation"><a href="../#leistungen">Leistungen</a><a href="../#ki-praxis">Praxisprojekte</a><a href="../#ueber-mich">Über mich</a><a class="nav-contact" href="../#kontakt">Projekt besprechen <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></nav>
+</div></header>
+<main id="inhalt" class="cockpit-app">
+<div class="cockpit-breadcrumb"><a href="../#ki-praxis">Praxisprojekte</a><span aria-hidden="true">/</span><span>DatenCockpit</span><span class="demo-badge">Interaktive Demo</span></div>
+<div class="eyebrow"><span class="short-line"></span> DATENQUALITÄT & REPORTING</div>
+<div class="dc-hero"><div><h1>Daten prüfen.<br><em>Klarheit gewinnen.</em></h1><p class="intro">Aus Ihrer Auftragsliste wird ein verlässlicher Monatsbericht.<br>Einlesen, prüfen, freigeben – und Klarheit gewinnen.</p></div><div class="hero-note"><span class="note-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19 19 5M5 5h14v14"/></svg></span><strong>Von der Datei<br>zur Entscheidung.</strong><span>Ein nachvollziehbarer Ablauf.<br>Keine versteckten Korrekturen.</span></div></div>
+<nav class="steps" aria-label="Arbeitsschritte"><button type="button" data-step="upload" aria-current="step"><span>01</span> Datei einlesen</button><button type="button" data-step="review" disabled><span>02</span> Daten prüfen</button><button type="button" data-step="report" disabled><span>03</span> Bericht ansehen</button></nav>
+<div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+<section id="upload" class="panel">
+<div class="panel-heading"><div><span class="eyebrow">01 / DER AUSGANGSPUNKT</span><h2>Ihre Daten. Ein klarer Anfang.</h2><p>Starten Sie mit unseren Beispieldaten oder einer eigenen Testdatei.</p></div><span class="pill">CSV & XLSX</span></div>
+<div class="upload-grid"><label class="dropzone" id="dropzone"><span class="upload-icon" aria-hidden="true">↑</span><strong>Datei auswählen oder hier ablegen</strong><span>CSV oder Excel (.xlsx) · bis 2 MB · bis 1.000 Zeilen</span><input id="file" type="file" accept=".csv,.xlsx" aria-label="CSV- oder Excel-Testdatei auswählen"><span class="fake-button">Datei auswählen <span aria-hidden="true">→</span></span></label><aside class="sample-card"><span class="sample-tag">ZUM AUSPROBIEREN</span><h3>Ein kleiner Datensatz.<br>Ein echter Aha-Moment.</h3><p>8 Aufträge, zwei Monate und ein paar typische Datenfehler. Finden und beheben Sie die Auffälligkeiten.</p><button id="sample" class="button dark" type="button">Beispieldaten laden <span>→</span></button><a href="beispiel.csv" download>Beispiel als CSV herunterladen ↓</a></aside></div>
+<div class="requirements"><strong>Diese Spalten werden benötigt</strong><div class="chips"><span>Auftragsnummer</span><span>Datum</span><span>Kunde</span><span>Betrag</span><span>Status</span></div><p>Datum: TT.MM.JJJJ oder JJJJ-MM-TT. Betrag in Euro. Status: offen, bezahlt oder storniert.<br>Bei Excel wird das erste Tabellenblatt gelesen. Bitte nur fiktive Daten verwenden.</p></div>
+</section>
+<section id="review" class="panel" hidden>
+<div class="panel-heading"><div><span class="eyebrow">02 / QUALITÄT VOR QUANTITÄT</span><h2>Erst prüfen. Dann vertrauen.</h2><p id="file-label"></p></div><button id="new-import" type="button" class="button light">Andere Datei</button></div>
+<div class="quality-grid"><div><span>Zeilen insgesamt</span><strong id="row-count">0</strong></div><div class="good"><span>Bereit zur Freigabe</span><strong id="valid-count">0</strong></div><div class="warning"><span>Mit Auffälligkeiten</span><strong id="issue-count">0</strong></div><div><span>Ausgeschlossen</span><strong id="excluded-count">0</strong></div></div>
+<div class="review-toolbar"><div class="tabs" role="group" aria-label="Zeilen filtern"><button class="active" id="filter-all" type="button">Alle Zeilen</button><button id="filter-issues" type="button">Nur Auffälligkeiten</button></div><p>Werte direkt bearbeiten oder Zeilen ausschließen.</p></div>
+<div class="table-wrap"><table class="review-table"><caption class="sr-only">Importierte Aufträge mit editierbaren Werten und Prüfergebnissen</caption><thead><tr><th>Nr.</th><th>Auftragsnummer</th><th>Datum</th><th>Kunde</th><th>Betrag (€)</th><th>Status</th><th>Prüfergebnis</th><th>Übernehmen</th></tr></thead><tbody id="review-body"></tbody></table></div>
+<div class="approval"><label><input type="checkbox" id="approval"> Ich habe die ausgewählten Daten geprüft und gebe sie für den Bericht frei.</label><div><p id="approval-hint"></p><button id="save" type="button" class="button dark" disabled>Freigeben & Bericht erstellen <span>→</span></button></div></div>
+<p class="privacy-note">Bis zur Freigabe bleiben die Daten in Ihrem Browser. Danach wird nur die Auswahl gespeichert. Jeder Import ist getrennt zugänglich und nach 24 Stunden nicht mehr abrufbar. Abgelaufene Daten werden beim nächsten Import entfernt.</p>
+</section>
+<section id="report" hidden>
+<div class="report-heading"><div><span class="eyebrow">03 / AUS DATEN WIRD ÜBERBLICK</span><h2>Ihr Geschäft. Klarer gesehen.</h2><p>Nur geprüfte und freigegebene Aufträge · live aus PostgreSQL</p></div><span class="pill success">● SQL-Auswertung</span></div>
+<div class="metrics"><article><span>Umsatz · bezahlt</span><strong id="revenue">—</strong><small>Nach Auftragsmonat, keine Buchhaltungsabrechnung</small></article><article><span>Offenes Auftragsvolumen</span><strong id="open-value">—</strong><small id="open-count"></small></article><article><span>Freigegebene Aufträge</span><strong id="orders">—</strong><small id="cancelled-count"></small></article></div>
+<div class="report-grid"><article class="panel chart-panel"><div class="panel-heading"><div><span class="eyebrow">MONAT FÜR MONAT</span><h3>Bezahlt und noch offen</h3></div></div><div class="legend"><span><i class="paid"></i> Bezahlt</span><span><i class="open"></i> Offen</span></div><div id="chart" aria-label="Monatliche Beträge; genaue Werte in der Tabelle darunter"></div></article><aside class="insight"><span class="note-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19 19 5M5 5h14v14"/></svg></span><h3>Ein Bericht, dessen<br>Grundlage Sie kennen.</h3><p>Fehlende Werte korrigiert. Dubletten geklärt. Nur freigegebene Aufträge ausgewertet.</p><p>Stornierte Aufträge zählen zur Anzahl, aber weder zum Umsatz noch zum offenen Volumen.</p><button id="show-sql" class="text-button" type="button" aria-expanded="false">SQL-Abfrage ansehen +</button></aside></div>
+<div class="panel"><h3>Monatsübersicht</h3><div class="table-wrap"><table><caption class="sr-only">Kennzahlen pro Auftragsmonat</caption><thead><tr><th>Monat</th><th>Aufträge</th><th>Bezahlt (€)</th><th>Offene Aufträge</th><th>Offenes Volumen (€)</th></tr></thead><tbody id="report-body"></tbody></table></div><pre id="sql" hidden><code>SELECT to_char(order_date, 'YYYY-MM') AS monat,
+       count(*) AS auftraege,
+       sum(amount_cents) FILTER (WHERE status = 'bezahlt') AS umsatz_cent,
+       count(*) FILTER (WHERE status = 'offen') AS offene_auftraege,
+       sum(amount_cents) FILTER (WHERE status = 'offen') AS offen_cent
+FROM datencockpit_orders
+WHERE batch_id = $1
+GROUP BY 1 ORDER BY 1;</code></pre></div>
+<div class="report-actions"><button id="refresh" class="button light" type="button">Bericht aktualisieren ↻</button><button id="export" class="button light" type="button">Monatsbericht als CSV ↓</button><button id="delete" class="text-button danger" type="button">Import aus der Datenbank löschen</button></div>
+<p class="privacy-note">Der Zugriffsschlüssel bleibt in diesem Browser-Tab. Er wird nicht in der URL angezeigt. Nach dem Schließen des Tabs lässt sich der Bericht ohne diesen Schlüssel nicht wieder öffnen.</p>
+</section>
+<footer><div><strong>DatenCockpit</strong><span>Ein Praxisbeispiel von manlin.</span></div><a href="/">Datenqualität für Ihr Unternehmen →</a><button id="check" class="text-button" type="button">Verbindung prüfen</button><span id="status" role="status"></span></footer>
+</main><footer class="site-footer"><div class="container footer-main"><a class="brand" href="#inhalt"><img src="../assets/brand/ml-icon.svg" alt="" width="58" height="30"><span>Manfred Linner<small>KI. Datenbanken. Programmierung.</small></span></a><p>KI sinnvoll einsetzen. Daten nutzbar machen. Lösungen entwickeln.</p><a class="back-top" href="#inhalt">Nach oben <svg class="icon " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div><div class="container footer-bottom"><span>© <span data-year>2026</span> M. Linner Softwareentwicklung & Dienstleistungen</span><div><a href="../datenschutz.html">Datenschutz</a><a href="../impressum.html">Impressum</a></div></div></footer>
+</body></html>
