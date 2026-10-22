@@ -25,6 +25,11 @@ const files={
 };
 files['/datencockpit/downloads/DatenCockpit-Howto.pdf']=['downloads/DatenCockpit-Howto.pdf','application/pdf'];
 files['/datencockpit/downloads/DatenCockpit-Anleitung-und-Beispiele.zip']=['downloads/DatenCockpit-Anleitung-und-Beispiele.zip','application/zip'];
+files['/datencockpit/downloads/beispiele/01_saubere_auftraege.csv']=['downloads/beispiele/01_saubere_auftraege.csv','text/csv; charset=utf-8'];
+files['/datencockpit/downloads/beispiele/02_dubletten.csv']=['downloads/beispiele/02_dubletten.csv','text/csv; charset=utf-8'];
+files['/datencockpit/downloads/beispiele/03_fehlende_und_ungueltige_werte.csv']=['downloads/beispiele/03_fehlende_und_ungueltige_werte.csv','text/csv; charset=utf-8'];
+files['/datencockpit/downloads/beispiele/04_monatsreport_2026.xlsx']=['downloads/beispiele/04_monatsreport_2026.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+files['/datencockpit/downloads/beispiele/05_gemischte_pruefliste.xlsx']=['downloads/beispiele/05_gemischte_pruefliste.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 http.createServer(async(req,res)=>{
  const url=new URL(req.url,'http://localhost');
  if(handlers[url.pathname]){

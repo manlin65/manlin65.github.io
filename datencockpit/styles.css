@@ -41,3 +41,5 @@ body.datencockpit-page{background:var(--page)}.cockpit-app{--ink:var(--navy);--t
 .cockpit-app .howto-buttons{display:grid;gap:9px;min-width:252px}
 .cockpit-app .howto-buttons a{text-decoration:none;font-size:13px}
 @media(max-width:850px){.cockpit-app .howto-downloads{grid-template-columns:1fr;gap:18px;padding:22px}.cockpit-app .howto-buttons{min-width:0}.cockpit-app .howto-downloads h2{font-size:18px}}
+
+.cockpit-app .example-downloads{margin:0 0 28px;padding:20px 24px;border:1px solid var(--line,#d9e3ec);border-radius:12px;background:#fff}.cockpit-app .example-downloads summary{cursor:pointer;font-weight:700;color:#155e75}.cockpit-app .example-downloads ul{padding-left:20px}.cockpit-app .example-downloads li{margin:16px 0}.cockpit-app .example-downloads li p{margin:4px 0;font-size:15px}.cockpit-app .example-downloads a{font-weight:600}

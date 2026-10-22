@@ -1,0 +1,9 @@
+﻿Auftragsnummer;Datum;Kunde;Betrag;Status
+D-1001;2026-09-01;Studio Nord;1200,00;bezahlt
+D-1002;2026-09-05;Werkstatt West;750,00;offen
+D-1002;2026-09-05;Werkstatt West;750,00;offen
+D-1003;2026-09-10;Atelier Süd;320,50;bezahlt
+d-1003;2026-09-10;Atelier Süd;320,50;bezahlt
+D-1004;2026-10-01;Berg & Sohn;2100,00;bezahlt
+D-1005;2026-10-04;Planwerk;480,00;storniert
+D-1006;2026-10-09;Bäckerei Morgen;650,00;offen

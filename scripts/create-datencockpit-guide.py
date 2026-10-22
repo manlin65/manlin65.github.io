@@ -66,19 +66,28 @@ def page(number,title):
 def link(label,url):return f'<link href="{escape(url)}" color="#155e75"><u>{escape(label)}</u></link>'
 
 def architecture():
- d=Drawing(WIDTH,398)
- def box(x,y,w,h,title,lines,fill=colors.white):
-  d.add(Rect(x,y,w,h,rx=9,ry=9,fillColor=fill,strokeColor=LINE,strokeWidth=1))
-  d.add(String(x+14,y+h-24,title,fontName='Bold',fontSize=11,fillColor=NAVY))
-  for i,line in enumerate(lines):d.add(String(x+14,y+h-43-i*15,line,fontName='Body',fontSize=8.3,fillColor=INK))
- def arrow(x1,y1,x2,y2,label):
-  d.add(Line(x1,y1,x2,y2,strokeColor=PETROL,strokeWidth=1.8));d.add(Polygon([x2,y2,x2-4,y2+8,x2+4,y2+8],fillColor=PETROL,strokeColor=PETROL))
-  if label:d.add(String(x1+11,(y1+y2)/2-2,label,fontName='Body',fontSize=8,fillColor=PETROL))
- box(0,300,WIDTH,88,'1  GitHub → GitHub Pages',['Quellcode im Repository · Branch main · Ordner / (root)','Liefert HTML, CSS, JavaScript und öffentliche Downloads.'],SOFT)
- arrow(55,299,55,269,'HTTPS: Seite und Dateien')
- box(0,171,WIDTH,98,'2  Browser / DatenCockpit',['CSV/XLSX einlesen → Regeln prüfen → Zeilen bearbeiten/ausschließen','Erst nach ausdrücklicher Freigabe werden Aufträge übertragen.','Der Import-Zugriffsschlüssel bleibt im aktuellen Browser-Tab.'])
- arrow(55,170,55,131,'HTTPS + öffentlicher Publishable-Key; RPC mit Daten/Import-Schlüssel')
- box(0,3,WIDTH,128,'3  Supabase / PostgreSQL',['Data API → vier gezielt freigegebene SQL-Funktionen','Status · validierter Import · Monatsbericht · Löschen','Tabellen: datencockpit_batches  1 : n  datencockpit_orders','RLS aktiv · direkte Tabellenzugriffe gesperrt · nur Token-Hash gespeichert'],SOFT)
+ d=Drawing(WIDTH,410)
+ def box(x,y,w,h,title,lines,fill=colors.white,size=10):
+  d.add(Rect(x,y,w,h,rx=8,ry=8,fillColor=fill,strokeColor=LINE,strokeWidth=1))
+  d.add(String(x+12,y+h-22,title,fontName='Bold',fontSize=size,fillColor=NAVY))
+  for i,line in enumerate(lines):d.add(String(x+12,y+h-40-i*14,line,fontName='Body',fontSize=8 if w>200 else 7.1,fillColor=INK))
+ def down(x,y1,y2):
+  d.add(Line(x,y1,x,y2,strokeColor=PETROL,strokeWidth=1.7));d.add(Polygon([x,y2,x-4,y2+8,x+4,y2+8],fillColor=PETROL,strokeColor=PETROL))
+ def right(x1,x2,y):
+  d.add(Line(x1,y,x2,y,strokeColor=PETROL,strokeWidth=1.5));d.add(Polygon([x2,y,x2-6,y+3,x2-6,y-3],fillColor=PETROL,strokeColor=PETROL))
+ box(0,330,WIDTH,72,'Frontend-Hosting: GitHub Pages',['Repository → Veröffentlichung aus main → /datencockpit/','Liefert die statischen Dateien. Speichert keine Auftragsdaten.'],SOFT)
+ down(60,330,292);d.add(String(74,308,'HTML, CSS und JavaScript werden in deinen Browser geladen.',fontName='Body',fontSize=8,fillColor=PETROL))
+ box(0,200,WIDTH,92,'Frontend: dein Browser',['CSV/XLSX lokal einlesen → prüfen → korrigieren → ausdrücklich freigeben','Bedienoberfläche, Prüfliste, Diagramm und Monatsbericht','Bis zur Freigabe bleibt die neue Datei nur im Browser.'])
+ down(65,200,140);d.add(String(77,171,'Anfrage: Import / Bericht / Löschen',fontName='Body',fontSize=8,fillColor=PETROL))
+ d.add(Line(438,140,438,200,strokeColor=PETROL,strokeWidth=1.7));d.add(Polygon([438,200,434,192,442,192],fillColor=PETROL,strokeColor=PETROL))
+ d.add(String(279,181,'Antwort: Kennzahlen als JSON',fontName='Body',fontSize=8,fillColor=PETROL))
+ d.add(Rect(0,5,WIDTH,135,rx=9,ry=9,fillColor=SOFT,strokeColor=LINE,strokeWidth=1))
+ d.add(String(13,119,'DEIN BACKEND: SUPABASE',fontName='Bold',fontSize=11,fillColor=NAVY))
+ box(13,27,119,77,'Data API',['HTTPS-Zugang','Öffentlicher API-Key','Aufruf fester Funktionen'],size=9)
+ box(154,27,168,77,'SQL-Funktionen',['Import prüfen und speichern','Schlüssel und Ablauf prüfen','Monatskennzahlen berechnen'],size=9)
+ box(344,27,150,77,'PostgreSQL',['Importe und Aufträge','Zwei geschützte Tabellen','Gespeicherte Cent-Beträge'],size=9)
+ right(132,154,65);right(322,344,65)
+ d.add(String(14,12,'RLS aktiv · direkte Tabellenzugriffe gesperrt · API-Antwort zurück an das Frontend',fontName='Body',fontSize=7.1,fillColor=MUTED))
  return d
 DIAGRAM=architecture();renderSVG.drawToFile(DIAGRAM,str(ASSETS/'architektur.svg'))
 
@@ -100,19 +109,34 @@ add('<b>Manfred Linner</b> · Softwareentwicklung & Dienstleistungen<br/>Schwaba
 add(link('info@mlinner-software.de','mailto:info@mlinner-software.de')+' · '+link('+49 160 7838773','tel:+491607838773'))
 add('Diese Anleitung beschreibt die aktive Lösung: GitHub Pages + Supabase. Netlify, Azure und die zuvor getestete Neon-Datenbank werden für das aktive Cockpit nicht benötigt.','small')
 
-page(2,'Die Architektur auf einen Blick')
+page(2,'Wie läuft alles zusammen?')
+add('<b>Dein Frontend</b> ist die Website in deinem Browser. <b>Dein Backend ist Supabase</b>: der HTTPS-Zugang, die gespeicherten SQL-Funktionen und die PostgreSQL-Datenbank arbeiten dort zusammen.')
 story.extend([DIAGRAM,Spacer(1,14)])
-h('Wer übernimmt welche Aufgabe?')
-table(['Baustein','Aufgabe'],[['GitHub / GitHub Pages','Quellcode, Versionshistorie und Veröffentlichung der statischen Website.'],['Browser','Datei lesen, Regeln anwenden, Eingaben bearbeiten, Freigabe und Bericht anzeigen.'],['Supabase Data API','HTTPS-Zugang zu genau definierten PostgreSQL-Funktionen (RPC).'],['PostgreSQL','Erneute Datenprüfung, transaktionales Speichern, Zugriffsschutz und SQL-Kennzahlen.']],[145,WIDTH-145])
-add('Wichtig: GitHub Pages führt kein serverseitiges Node.js oder PHP aus. Die Datenbank liegt separat bei Supabase. Nur der öffentliche Publishable-Key steht im Website-Code; Secret-Keys und Datenbankpasswörter gehören dort niemals hinein.','small')
+h('Die Pfeile zeigen zwei unterschiedliche Wege')
+add('<b>Veröffentlichen:</b> Eine Codeänderung wird auf GitHub gespeichert. GitHub Pages stellt daraus die Website bereit. Das ist der Weg des Programmcodes – nicht der Weg deiner Auftragsdaten.')
+add('<b>Benutzen:</b> Die bereits geladene Website ruft nach deiner Freigabe Supabase über HTTPS auf. Supabase prüft und speichert die Aufträge, berechnet die Kennzahlen und sendet das Ergebnis zurück. Der Browser zeichnet daraus Tabelle und Diagramm.')
+add('Ein öffentlicher Publishable-Key identifiziert das Projekt, gibt aber keinen freien Tabellenzugriff. Lesen und Löschen eines Imports benötigen zusätzlich den richtigen Import-Schlüssel.','small')
 
-page(3,'So ist das Projekt aufgebaut')
+page(3,'Was genau ist bei mir das Backend?')
+add('<b>Supabase ist dein Backend.</b> Die Datenbank allein ist nur ein Teil davon. Die eigentliche Verarbeitung erfolgt in den gespeicherten SQL-Funktionen; die Data API macht diese Funktionen für deine Website über HTTPS erreichbar.')
+h('So läuft ein Import wirklich ab')
+for title,text in [
+ ('1. Du öffnest die Seite','GitHub Pages liefert HTML, CSS und das JavaScript-Bundle. Dein Browser zeigt die Oberfläche im Design von Manfred Linner.'),
+ ('2. Du wählst eine Datei','JavaScript liest CSV oder XLSX lokal. Die Prüfliste entsteht im Browser. In diesem Schritt wird noch kein neuer Auftrag in Supabase gespeichert.'),
+ ('3. Du korrigierst und gibst frei','Erst nach fehlerfreier Auswahl und ausdrücklicher Zustimmung sendet der Browser die ausgewählten Aufträge an datencockpit_import.'),
+ ('4. Das Backend prüft und speichert','Die SQL-Funktion prüft unabhängig vom Browser erneut. Ist alles gültig, werden Import und Aufträge gemeinsam gespeichert. Bei einem Fehler wird der ganze Import zurückgerollt.'),
+ ('5. Das Backend erstellt den Bericht','Der Browser ruft datencockpit_report mit Import-ID und Zugriffsschlüssel auf. Die Funktion prüft den Zugriff und berechnet die Monatswerte mit SQL.'),
+ ('6. Du siehst das Ergebnis','Supabase antwortet mit strukturierten Daten (JSON). Der Browser zeigt daraus die Kennzahlen, die Monatstabelle und das Diagramm. Auch Export und Bedienung erfolgen im Browser.')]:
+ h(title);add(text)
+add('<b>Konkretes Beispiel:</b> Nach den beschriebenen Korrekturen der eingebauten Beispieldatei speichert Supabase 7 Aufträge und liefert 4.650,00 € bezahlten Umsatz sowie 1.490,50 € offenes Volumen zurück.','small')
+
+page(4,'So ist das Projekt aufgebaut')
 code('manlin65.github.io/\n  index.html                 Homepage und Projektverweis\n  assets/                    Logo, Schriften, gemeinsames Layout\n  datencockpit/\n    index.html               Oberfläche unter /datencockpit/\n    styles.css               Auf das Cockpit begrenzte Styles\n    app-source.js            Editierbarer Browser-Quelltext\n    app.js                   Erzeugtes Browser-Bundle\n    data.cjs                 CSV, Normalisierung, Prüfregeln\n    supabase.cjs             Geschützte RPC-Aufrufe\n    config.js                Öffentliche Projektkonfiguration\n    beispieldateien.zip      Fünf Testdateien\n    downloads/               PDF und vollständiges Beispielpaket\n  supabase/migrations/       Tabellen, Rechte und SQL-Funktionen\n  scripts/                   Build, Entwicklungsserver, Prüfungen\n  tests/                     Node-, SQL- und Clienttests')
 h('Technische Grundlage')
 table(['Technik','Wofür?'],[['HTML / CSS / JavaScript','Statische Oberfläche im bestehenden Homepage-Layout.'],['read-excel-file','Liest das erste Tabellenblatt einer XLSX-Datei.'],['esbuild','Bündelt Quellcode und Bibliothek in app.js.'],['Supabase / PostgreSQL','API, geprüfte Speicherung und SQL-Berichte.'],['Playwright / Chromium','Prüft den Ablauf im echten Browser.'],['PGlite','Lokale PostgreSQL-Engine für SQL- und Rechteprüfungen.']],[145,WIDTH-145])
 add('Der Homepage-Stil bleibt erhalten: originales ML-Logo, lokal gehostete Schriften Manrope und Source Sans 3, Petrolfarben, Navigation und Fußzeile. app.js wird erzeugt; Änderungen gehören in app-source.js und werden anschließend neu gebaut.','small')
 
-page(4,'Bedienung: vom Upload zur Freigabe')
+page(5,'Bedienung: vom Upload zur Freigabe')
 for title,text in [
  ('1. Datei wählen','Die Seite öffnen und „Datei auswählen“ oder „Beispieldaten laden“ verwenden. Unterstützt werden CSV und XLSX; alte XLS-Dateien vorher als XLSX speichern. Das ZIP zuerst entpacken, dann eine einzelne Datei hochladen.'),
  ('2. Ergebnis prüfen','Die Übersicht zählt Gesamtzeilen, gültige Zeilen, auffällige Zeilen und Ausschlüsse. „Nur Auffälligkeiten“ blendet fehlerfreie Zeilen aus. Die sichtbare Zeilennummer orientiert sich an den eingelesenen Daten inklusive Kopfzeile.'),
@@ -123,7 +147,7 @@ for title,text in [
  h(title);add(text)
 add('Ausgeschlossene Zeilen und die ursprüngliche Upload-Datei werden nicht in der Datenbank gespeichert. Die API prüft die übermittelten Daten erneut; Browserprüfungen allein reichen nicht aus.','small')
 
-page(5,'Dateiformat und Prüfregeln')
+page(6,'Dateiformat und Prüfregeln')
 table(['Spalte','Erwartet / Beispiel'],[['Auftragsnummer','Pflichtwert, maximal 80 Zeichen; z. B. A-1001. Keine Dublette innerhalb des Imports.'],['Datum','TT.MM.JJJJ oder JJJJ-MM-TT; gültiges Kalenderdatum von 2000 bis 2100. Excel-Datumszellen werden unterstützt.'],['Kunde','Pflichtwert, maximal 160 Zeichen; in der Demo nur fiktive Namen.'],['Betrag','Euro, 0 bis 10.000.000; maximal zwei Nachkommastellen. Z. B. 1.234,56 oder 1234.56.'],['Status','Genau offen, bezahlt oder storniert. Schreibweise wird normalisiert.']],[115,WIDTH-115])
 h('Dateigrenzen')
 bullet('Maximal 2 MB pro Datei und 1.000 Auftragszeilen; die API akzeptiert höchstens 1 MB JSON-Nutzdaten.')
@@ -134,7 +158,7 @@ add('Ein Haken bei der Zustimmung hebt Datenfehler nicht auf. Korrigieren oder e
 h('Prüfung versus fachliche Freigabe')
 add('Das Cockpit prüft Formate, Pflichtangaben und Dubletten. Es weiß nicht, ob ein Betrag fachlich stimmt oder ob ein Kunde tatsächlich existiert. Diese Entscheidung trifft die Person, die die Datei prüft und freigibt.')
 
-page(6,'Datenbank: zwei Tabellen, ein Import')
+page(7,'Datenbank: zwei Tabellen, ein Import')
 table(['datencockpit_batches','Bedeutung'],[['id · uuid · Primärschlüssel','Eindeutige Kennung eines freigegebenen Imports.'],['token_hash · text','SHA-256-Hash des zufälligen Import-Zugriffsschlüssels; nicht der Schlüssel selbst.'],['created_at · timestamptz','Zeitpunkt des Imports.'],['expires_at · timestamptz','Zugriffsende, standardmäßig nach 24 Stunden.']],[185,WIDTH-185])
 add('<b>Beziehung:</b> Ein Import hat mehrere Aufträge. datencockpit_orders.batch_id verweist auf datencockpit_batches.id. Beim Löschen des Imports werden seine Aufträge durch ON DELETE CASCADE mit gelöscht.')
 table(['datencockpit_orders','Bedeutung'],[['batch_id · uuid','Zugehöriger Import / Fremdschlüssel.'],['order_number · varchar(80)','Auftragsnummer; zusammen mit batch_id der Primärschlüssel. Ein zusätzlicher Index verhindert Dubletten unabhängig von Groß-/Kleinschreibung.'],['order_date · date','Auftragsdatum für die Monatszuordnung.'],['customer · varchar(160)','Fiktiver Kundenname.'],['amount_cents · bigint','Betrag als ganze Cent-Zahl, z. B. 12345 = 123,45 €.'],['status · text','Nur offen, bezahlt oder storniert.']],[185,WIDTH-185])
@@ -143,7 +167,7 @@ add('Supabase-Projekt öffnen → Table Editor → datencockpit_orders. Einträg
 code('SELECT order_number, order_date, customer, amount_cents, status\nFROM public.datencockpit_orders\nORDER BY order_date, order_number;')
 add('Die Abfrage oben ist für den administrativen SQL-Editor gedacht. Die öffentliche Website darf die Tabellen nicht direkt lesen.','small')
 
-page(7,'Geschützte Funktionen und SQL-Bericht')
+page(8,'Geschützte Funktionen und SQL-Bericht')
 table(['RPC-Funktion','Aufgabe'],[['datencockpit_status()','Bestätigt, dass die SQL-Funktion über die Supabase-API erreichbar ist.'],['datencockpit_import(p_rows)','Prüft alle Aufträge erneut, erzeugt Import-ID und Zugriffsschlüssel und speichert atomar. Fehler rollen den gesamten Import zurück.'],['datencockpit_report(p_batch_id, p_token)','Prüft Schlüssel und Ablaufzeit; liefert Monatswerte und Gesamtsummen.'],['datencockpit_delete(p_batch_id, p_token)','Entfernt nur den Import mit passendem Schlüssel; Aufträge werden mit gelöscht.']],[205,WIDTH-205])
 h('Die Kennzahlen entstehen in PostgreSQL')
 code("SELECT to_char(order_date, 'YYYY-MM') AS monat,\n       count(*) AS auftraege,\n       sum(amount_cents) FILTER\n         (WHERE status = 'bezahlt') AS umsatz_cent,\n       count(*) FILTER\n         (WHERE status = 'offen') AS offene_auftraege,\n       sum(amount_cents) FILTER\n         (WHERE status = 'offen') AS offen_cent\nFROM public.datencockpit_orders\nWHERE batch_id = 'HIER-IMPORT-UUID-EINSETZEN'::uuid\nGROUP BY 1 ORDER BY 1;")
@@ -153,7 +177,7 @@ add('Row Level Security ist auf beiden Tabellen aktiv. Den API-Rollen anon und a
 add('Der Schlüssel liegt im sessionStorage des aktuellen Tabs. Nach Schließen des Tabs ist er normalerweise nicht mehr verfügbar; Browser-Sitzungswiederherstellung kann ihn erhalten. Nach 24 Stunden endet der Zugriff in jedem Fall. Abgelaufene Daten werden beim nächsten erfolgreichen Import physisch entfernt. Es gibt keinen automatischen Löschjob.','small')
 add('Dies ist ein Beispieldaten-Projekt ohne Mitarbeiterkonten. Für echte Geschäftsdaten fehlen insbesondere Benutzerverwaltung, Rollen, Missbrauchsschutz und ein verbindlicher Löschprozess.','small')
 
-page(8,'Supabase einrichten und kontrollieren')
+page(9,'Supabase einrichten und kontrollieren')
 for title,text in [
  ('1. Kostenloses Projekt anlegen','Im Supabase-Dashboard ein eigenes Projekt anlegen, mit einem passenden Projektnamen. Eine EU-Region wählen. Das Datenbankpasswort sicher speichern und nicht in GitHub oder Website-Dateien übernehmen.'),
  ('2. Tabellen und Rechte einrichten','SQL Editor öffnen. Zuerst 202610220001_datencockpit_tables.sql aus dem Paket vollständig ausführen. Danach 202610220002_datencockpit_functions.sql ausführen. Beide Dateien liegen zusätzlich unter supabase/migrations im Repository.'),
@@ -164,7 +188,7 @@ for title,text in [
 code("window.DATENCOCKPIT_CONFIG = Object.freeze({\n  provider: 'supabase',\n  supabaseUrl: 'https://DEIN-PROJEKT.supabase.co',\n  supabasePublishableKey: 'sb_publishable_DEIN_OEFFENTLICHER_KEY'\n});")
 add('Die aktuelle Projektadresse ist '+link('ebjoamsxkjufmilzabyp.supabase.co','https://ebjoamsxkjufmilzabyp.supabase.co')+'. Ein Secret- oder service_role-Key darf niemals in diese Datei. Der Client weist solche Schlüssel zurück.','small')
 
-page(9,'Lokal entwickeln und auf GitHub veröffentlichen')
+page(10,'Lokal entwickeln und auf GitHub veröffentlichen')
 h('Vorbereitung auf dem Entwicklungsrechner')
 add('Node.js ab Version 22 installieren. Repository klonen bzw. vorhandenen Checkout verwenden. Im Projektverzeichnis ausführen:')
 code('npm ci --include=dev\nnpm run build\nnpm test\nnpm run test:datencockpit:supabase\nnpm run dev:datencockpit')
@@ -178,7 +202,7 @@ h('Veröffentlichung überprüfen')
 add('Unter Actions den Lauf „pages build and deployment“ prüfen. Erst nach erfolgreichem Deploy die öffentliche URL öffnen und mit Strg+F5 aktualisieren. Auf der Website Verbindung, Beispieldatei, Freigabe und Bericht testen. Die gesamte Homepage wird mit demselben Branch veröffentlicht; andere Projekte nicht versehentlich überschreiben.')
 add('Netlify und Azure sind für die aktive Lösung nicht erforderlich. Alte Adapter im Repository dürfen bestehen bleiben. Die aktive Auswahl steht in datencockpit/config.js auf provider: supabase.','small')
 
-page(10,'Fünf Dateien zum Ausprobieren')
+page(11,'Fünf Dateien zum Ausprobieren')
 add('Alle Beispiele enthalten ausschließlich fiktive Aufträge. Entpacken Sie das ZIP und laden Sie eine einzelne CSV- oder XLSX-Datei hoch. Beide Excel-Dateien verwenden echte Excel-Datums- und Zahlenzellen.')
 table(['Datei','Zeilen','Auffällig','Zweck'],[['01_saubere_auftraege.csv','12','0','Direkt freigeben; vier Monate und alle drei Status.'],['02_dubletten.csv','8','4','Zwei Dublettengruppen; Groß-/Kleinschreibung testen.'],['03_fehlende_und_ungueltige_werte.csv','10','6','Pflichtwerte, Datum, Betrag und Status korrigieren.'],['04_monatsreport_2026.xlsx','24','0','Zwölf Monate mit je einem bezahlten und offenen Auftrag.'],['05_gemischte_pruefliste.xlsx','12','5','Excel-Import mit Dublette, fehlendem Kunden, Datum und negativem Betrag.']],[231,42,52,WIDTH-325])
 h('Beispiel 01 und 04: direkt freigeben')
@@ -190,7 +214,7 @@ add('„4 auffällige Zeilen“ bedeutet bei Beispiel 02 nicht vier zusätzliche
 h('Dateien auch direkt in der PDF')
 add('Die fünf Originaldateien sind zusätzlich als PDF-Anhänge eingebettet. Viele Desktop-PDF-Reader zeigen sie im Bereich „Anhänge“ / Büroklammer. Browser-PDF-Viewer unterstützen das nicht immer. Das ZIP auf der Projektseite ist deshalb der verlässlichere Downloadweg.')
 
-page(11,'Korrekturübungen und erwartete Ergebnisse')
+page(12,'Korrekturübungen und erwartete Ergebnisse')
 h('Beispiel 03: diese sechs Werte berichtigen')
 table(['Auftrag','Korrektur'],[['F-2002','Kunde ergänzen, z. B. Musterbetrieb.'],['F-2003','Datum ergänzen: 2026-10-03.'],['F-2004','2026-02-30 auf 2026-02-28 korrigieren.'],['F-2005','Betrag -50,00 auf 50,00 korrigieren.'],['F-2006','Betrag 125,999 auf 126,00 korrigieren.'],['F-2007','Status in Bearbeitung auf offen ändern.']],[100,WIDTH-100])
 h('Beispiel 05: Auswahl und Werte klären')
@@ -201,7 +225,7 @@ add('Die Beträge „Offen“ sind offene Euro-Volumen, keine Auftragsanzahlen. 
 h('Schneller Vortrag mit den eingebauten Beispieldaten')
 add('„Beispieldaten laden“ auf der Seite verwendet einen separaten 8-Zeilen-Datensatz. Die zweite A-1003-Zeile ausschließen und den Kunden bei A-1004 ergänzen. Ergebnis: 7 Aufträge, 4.650,00 € bezahlt und 1.490,50 € offen. Diese Werte gehören nicht zu Datei 01 des ZIPs.','small')
 
-page(12,'Hilfe, Abnahme und nächste Schritte')
+page(13,'Hilfe, Abnahme und nächste Schritte')
 table(['Beobachtung','Was tun?'],[['Freigabe-Button ist grau','Alle verbleibenden Auffälligkeiten korrigieren oder ausschließen. Mindestens eine Zeile auswählen und Zustimmung erneut aktivieren.'],['SQL enthält übersetzte Wörter','Browser-Übersetzung abschalten, Original-SQL erneut kopieren und vollständig ausführen.'],['Verbindung schlägt fehl','Project URL und öffentlichen Publishable-Key prüfen. Beide SQL-Skripte vollständig ausführen. Supabase-Projektstatus kontrollieren.'],['Neuer Code erscheint nicht','GitHub-Actions-Deployment abwarten und die Seite mit Strg+F5 neu laden. Bei Bedarf Browsercache prüfen.'],['Import nicht gefunden / abgelaufen','Richtigen Browser-Tab nutzen. Nach 24 Stunden Datei erneut importieren. Ohne gespeicherten Import-Schlüssel kann der Bericht nicht geöffnet werden.'],['Tabellen sind leer','Es wurde noch nichts freigegeben, der Import wurde gelöscht oder nur ein automatischer Test lief. Tests räumen ihre eigenen Daten auf.'],['Excel wird nicht angenommen','XLSX statt XLS verwenden; erste Tabelle, Pflichtüberschriften, Dateigröße und Zeilenlimit kontrollieren.']],[173,WIDTH-173])
 h('Nachweisbarer Prüfstand')
 add('Zum dokumentierten Stand bestanden Build und 38 Node-Tests. Zusätzlich wurden die reale Supabase-Verbindung, gesperrte direkte Tabellenzugriffe, gültige und fremde Import-Schlüssel, SQL-Kennzahlen und Löschung geprüft. Der vollständige CSV- und XLSX-Ablauf wurde auf der veröffentlichten Website mit Chromium ausgeführt. Eigene Testimporte wurden danach entfernt.')
@@ -223,17 +247,17 @@ def footer(c,doc):
  c.linkURL('tel:+491607838773',(230,28,320,41),relative=0,thickness=0)
  c.linkURL('https://www.mlinner-software.de/',(370,28,PAGE_W-44,41),relative=0,thickness=0)
  c.setFont('Body',6.7);c.setFillColor(MUTED);c.drawString(44,17,'M. Linner Softwareentwicklung & Dienstleistungen · Schwabach · 22.10.2026')
- c.drawRightString(PAGE_W-44,17,f'{doc.page} / 12')
+ c.drawRightString(PAGE_W-44,17,f'{doc.page} / 13')
  c.restoreState()
 buffer=BytesIO()
 doc=SimpleDocTemplate(buffer,pagesize=(PAGE_W,PAGE_H),leftMargin=44,rightMargin=44,topMargin=65,bottomMargin=62,title='DatenCockpit – How-to: Aufbau, Datenbank und Veröffentlichung',author='Manfred Linner',subject='Anleitung zur Portfolio-Demo mit Supabase und GitHub Pages')
 doc.build(story,onFirstPage=footer,onLaterPages=footer)
 reader=PdfReader(BytesIO(buffer.getvalue()))
 
-if len(reader.pages)!=12:
+if len(reader.pages)!=13:
  for i,pg in enumerate(reader.pages,1):
   text=pg.extract_text();print(i, text[:130].replace('\n',' | '), '...', text[-100:].replace('\n',' | '))
-assert len(reader.pages)==12,f'Unexpected page count: {len(reader.pages)}'
+assert len(reader.pages)==13,f'Unexpected page count: {len(reader.pages)}'
 writer=PdfWriter();writer.append(reader)
 writer.add_metadata({'/Title':'DatenCockpit – How-to','/Author':'Manfred Linner','/Subject':'Bedienung, Architektur, Supabase, GitHub Pages und fünf Beispieldateien'})
 with ZipFile(ROOT/'datencockpit/beispieldateien.zip') as examples:

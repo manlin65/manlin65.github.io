@@ -1,0 +1,11 @@
+﻿Auftragsnummer;Datum;Kunde;Betrag;Status
+F-2001;2026-10-01;Studio Nord;1250,00;bezahlt
+F-2002;2026-10-02;;850,00;offen
+F-2003;;Planwerk;400,00;bezahlt
+F-2004;2026-02-30;Atelier Süd;720,00;bezahlt
+F-2005;2026-10-05;Berg & Sohn;-50,00;offen
+F-2006;2026-10-06;Werkstatt West;125,999;bezahlt
+F-2007;2026-10-07;Musterladen;310,00;in Bearbeitung
+F-2008;2026-10-08;Gartenbau Grün;200,00;bezahlt
+F-2009;2026-10-09;Designraum;990,00;offen
+F-2010;2026-10-10;Technik Süd;600,00;storniert

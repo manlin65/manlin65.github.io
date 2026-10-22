@@ -119,7 +119,7 @@ zurückgesetzt noch gelöscht.
 
 ## How-to auf der Projektseite
 
-Der sichtbare Downloadbereich vor den Arbeitsschritten öffnet die 12-seitige PDF
+Der sichtbare Downloadbereich vor den Arbeitsschritten öffnet die 13-seitige PDF
 `downloads/DatenCockpit-Howto.pdf`. Sie erklärt Projektzweck, Architektur,
 Dateiformate, Datenbank, Rechte, Einrichtung, GitHub Pages und Korrekturübungen.
 Die fünf Beispieldateien sind als PDF-Anhänge eingebettet. Das daneben verlinkte

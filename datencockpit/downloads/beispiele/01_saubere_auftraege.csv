@@ -1,0 +1,13 @@
+﻿Auftragsnummer;Datum;Kunde;Betrag;Status
+S-0101;2026-01-05;Musterbetrieb 1-1;325,50;bezahlt
+S-0102;2026-01-10;Musterbetrieb 1-2;400,50;offen
+S-0103;2026-01-15;Musterbetrieb 1-3;475,50;storniert
+S-0201;2026-02-05;Musterbetrieb 2-1;575,50;bezahlt
+S-0202;2026-02-10;Musterbetrieb 2-2;650,50;offen
+S-0203;2026-02-15;Musterbetrieb 2-3;725,50;storniert
+S-0301;2026-03-05;Musterbetrieb 3-1;825,50;bezahlt
+S-0302;2026-03-10;Musterbetrieb 3-2;900,50;offen
+S-0303;2026-03-15;Musterbetrieb 3-3;975,50;storniert
+S-0401;2026-04-05;Musterbetrieb 4-1;1075,50;bezahlt
+S-0402;2026-04-10;Musterbetrieb 4-2;1150,50;offen
+S-0403;2026-04-15;Musterbetrieb 4-3;1225,50;storniert
