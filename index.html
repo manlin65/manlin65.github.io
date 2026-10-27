@@ -151,6 +151,10 @@ img{display:block;max-width:100%}
 /* ── ÜBER MICH ───────────────────────────────── */
 .about-in{display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start}
 .about-sidebar{display:flex;flex-direction:column;gap:0}
+.about-cta{margin-top:32px;padding:24px;background:var(--page);border-left:3px solid var(--petrol);border-radius:0 var(--r) var(--r) 0}
+.about-cta-text{font-size:16px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.btn-about-cta{display:inline-block;color:var(--petrol);font-weight:700;font-size:15px;text-decoration:none}
+.btn-about-cta:hover{color:var(--teal)}
 .about-text p{font-size:17px;line-height:1.75;color:var(--muted);margin-bottom:16px}
 .about-text p:last-child{margin-bottom:0}
 .about-photo{width:100%;border-radius:var(--r);margin-bottom:20px;display:block;border:2px solid var(--line)}
@@ -511,6 +515,10 @@ img{display:block;max-width:100%}
       <div class="about-text">
         <p>Ich bin Manfred Linner, Diplom-Informatiker (FH), und entwickle seit über 25 Jahren individuelle Unternehmenssoftware. Meine Schwerpunkte sind C#/.NET, Delphi, SQL Server und die Weiterentwicklung bestehender Anwendungen.</p>
         <p>Heute verbinde ich dieses technische Fundament mit künstlicher Intelligenz und Automatisierung. Mein Ziel sind keine KI-Spielereien, sondern zuverlässige Lösungen, die Unternehmen im Alltag tatsächlich entlasten.</p>
+        <div class="about-cta">
+          <p class="about-cta-text">Sie haben ein konkretes Projekt oder eine offene Frage? Ich freue mich auf den Austausch.</p>
+          <a href="mailto:info@mlinner-software.de" class="btn-about-cta">Nachricht schreiben →</a>
+        </div>
       </div>
       <div class="about-sidebar">
         <img src="assets/images/manfred-linner.jpg" alt="Manfred Linner – Softwareentwickler &amp; KI-Integration" class="about-photo"/>
