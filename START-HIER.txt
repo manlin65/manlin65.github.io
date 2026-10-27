@@ -1,0 +1,11 @@
+MANLIN HOMEPAGE – LOKAL TESTEN
+
+1. ZIP komplett entpacken.
+2. Im entpackten Ordner die Datei index.html doppelklicken.
+3. Auf 'Legacy Check' klicken – öffnet legacy-check.html.
+4. Alternativ legacy-check.html direkt doppelklicken.
+
+Wichtig: Nicht den Ordner legacy-check im Browser öffnen.
+Dessen index.html ist fuer die spaetere Online-URL /legacy-check/ vorgesehen.
+
+GitHub Pages: Inhalte dieses Ordners ins Repository-Hauptverzeichnis hochladen.
