@@ -9,7 +9,7 @@
 <style>
 @font-face{font-family:Manrope;src:url("../assets/fonts/manrope-variable.ttf") format("truetype");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Source Sans 3";src:url("../assets/fonts/source-sans-3-variable.ttf") format("truetype");font-weight:200 900;font-display:swap}
-:root{--navy:#12294C;--petrol:#157D83;--teal:#1CB3A1;--green:#83E572;--bg:#F4F7F6;--muted:#586B79;--line:#DCE5E2;--white:#fff;--soft:#EAF4F2}
+:root{--navy:#12294C;--petrol:#157D83;--teal:#1CB3A1;--green:#83E572;--bg:#F4F7F6;--muted:#586B79;--line:#DCE5E2;--white:#fff;--soft:#EAF4F2;--red:#a4332b}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--navy);font:17px/1.6 "Source Sans 3",Arial,sans-serif}
 .wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
@@ -18,16 +18,17 @@ header{background:#fff;border-bottom:1px solid var(--line)}
 .logo{width:76px;height:44px;object-fit:contain;object-position:left center}
 .brand{font:700 14px/1.35 Manrope,sans-serif;letter-spacing:.04em}
 .brand small{display:block;margin-top:3px;color:var(--muted);font:500 12px/1.4 "Source Sans 3",Arial,sans-serif;letter-spacing:0}
-main{padding:48px 0 60px}
+main{padding:42px 0 56px}
 .kicker{margin:0 0 10px;color:var(--petrol);font:650 13px/1.4 "Source Sans 3",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
 h1,h2,h3{font-family:Manrope,Arial,sans-serif;line-height:1.2;letter-spacing:-.025em}
 h1{font-size:clamp(36px,5vw,54px);margin:0 0 12px}
 h2{font-size:clamp(24px,3vw,32px);margin:0 0 14px}
 h3{font-size:18px;margin:0 0 7px}
+p{margin-top:0}
 .lead{max-width:740px;color:var(--muted);font-size:19px;line-height:1.55;margin:0}
-.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.75fr);gap:28px;align-items:center;margin-bottom:34px}
-.hero-mark{display:flex;justify-content:center;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px;min-height:190px}
-.hero-mark img{width:min(100%,300px);height:auto}
+.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.75fr);gap:28px;align-items:center;margin-bottom:28px}
+.hero-mark{display:flex;justify-content:center;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px;min-height:170px}
+.hero-mark img{width:min(100%,280px);height:auto}
 .panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:24px;margin:18px 0;box-shadow:0 10px 28px #12294c0b}
 .summary{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .summary p{margin:0;color:var(--muted)}
@@ -37,8 +38,34 @@ h3{font-size:18px;margin:0 0 7px}
 .outcome{background:var(--soft);border-left:4px solid var(--petrol);padding:16px 18px;border-radius:4px}
 .outcome strong{font-family:Manrope,sans-serif}
 .pill{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--petrol);font:650 12px Manrope,sans-serif}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field label{display:block;font:650 14px Manrope,sans-serif;margin:0 0 7px}
+input,textarea{width:100%;border:1px solid #ccd8d8;border-radius:6px;background:#fff;padding:11px 12px;color:var(--navy);font:16px/1.5 "Source Sans 3",Arial,sans-serif}
+textarea{min-height:155px;resize:vertical}
+input:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid #1CB3A155;outline-offset:2px}
+.hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:17px}
+.button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:6px;padding:10px 16px;background:var(--petrol);color:#fff;text-decoration:none;font:650 15px Manrope,sans-serif;cursor:pointer}
+.button:hover{background:var(--navy)}
+.button.secondary{background:var(--soft);color:var(--petrol)}
+.button.secondary:hover{background:#dbece9}
+.button:disabled{opacity:.65;cursor:wait}
+.status{color:var(--muted);font-size:14px}
+.message{display:none;margin-top:16px;padding:12px 14px;border-radius:6px;background:#fceeed;color:var(--red);font-size:14px}
+.message.show{display:block}
+.results{display:none;border-top:1px solid var(--line);margin-top:22px;padding-top:20px}
+.results.show{display:block}
+.result-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.result-block{margin-top:16px}
+.result-block h3{font-size:16px}
+.result-block p{margin:0;color:var(--muted);white-space:pre-wrap}
+.result-list{margin:6px 0 0;padding-left:20px;color:var(--muted)}
+.result-table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+.result-table th,.result-table td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+.result-table th{color:var(--muted);font-weight:650}
+.draft{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:14px;color:var(--navy);max-height:420px;overflow:auto;font-size:14px}
 .workflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:step;margin-top:20px}
-.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 14px;min-height:160px}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 14px;min-height:155px}
 .step:before{counter-increment:step;content:counter(step,decimal-leading-zero);display:block;color:var(--petrol);font:800 18px/1.1 Manrope,sans-serif;margin-bottom:14px}
 .step:not(:last-child):after{content:"";position:absolute;right:-13px;top:28px;width:13px;border-top:2px solid var(--teal);z-index:1}
 .step p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
@@ -50,6 +77,7 @@ h3{font-size:18px;margin:0 0 7px}
 .moment span{display:block;color:var(--muted);font-size:14px}
 .time-note{margin:12px 0 0;color:var(--muted);font-size:14px}
 .notice{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:14px 16px;color:var(--muted);font-size:14px;margin-top:18px}
+.pdf-link{display:inline-flex;align-items:center;gap:8px;margin-top:12px}
 footer{background:var(--navy);color:#fff;padding:26px 0}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
 .footer-title{font:700 15px Manrope,sans-serif}
@@ -58,8 +86,8 @@ footer a{color:#fff;text-decoration:none}
 footer a:hover{text-decoration:underline}
 .footer-small{font-size:13px;color:#e2e9ef}
 @media(max-width:820px){.hero{grid-template-columns:1fr}.hero-mark{min-height:140px}.hero-mark img{max-width:220px}.workflow{grid-template-columns:1fr}.step{min-height:0;padding:14px 16px 14px 58px}.step:before{position:absolute;left:16px;top:15px;margin:0}.step:not(:last-child):after{right:auto;left:25px;top:auto;bottom:-13px;width:0;height:13px;border-top:0;border-left:2px solid var(--teal)}}
-@media(max-width:560px){.wrap{width:min(100% - 30px,1120px)}main{padding:32px 0 42px}.panel{padding:18px}.summary{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.moment{border-right:0;border-bottom:1px solid var(--line)}.footer-inner{align-items:flex-start;flex-direction:column}}
-\n.pdf-link{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 16px;border-radius:6px;background:var(--petrol);color:#fff;text-decoration:none;font:600 15px Manrope,sans-serif}.pdf-link:hover{background:var(--navy)}\n</style>
+@media(max-width:600px){.wrap{width:min(100% - 30px,1120px)}main{padding:30px 0 40px}.panel{padding:18px}.summary,.form-grid{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.moment{border-right:0;border-bottom:1px solid var(--line)}.footer-inner{align-items:flex-start;flex-direction:column}.result-table{font-size:12px}}
+</style>
 </head>
 <body>
 <header><div class="wrap head"><img class="logo" src="../assets/brand/ml-icon.svg" alt="ML-Logo"><div class="brand">MANFRED LINNER<small>KI. Datenbanken. Programmierung.</small></div></div></header>
@@ -68,8 +96,23 @@ footer a:hover{text-decoration:underline}
 <div><p class="kicker">Praxisprojekt · Workflow-Automatisierung</p><h1>WorkflowPilot</h1><p class="lead">Stellenanzeigen strukturiert analysieren: Ein n8n-Workflow vergleicht Anforderungen mit einem Kurzprofil, ordnet Belege und offene Punkte ein und erstellt bei hoher Passung einen Bewerbungstext-Entwurf.</p></div>
 <div class="hero-mark"><img src="../assets/brand/ml-detail.svg" alt="Manfred Linner - KI, Datenbanken und Programmierung"></div>
 </section>
+<section class="panel" id="tool-test">
+<p class="kicker">Interaktiver Test · synthetische Beispieldaten</p><h2>WorkflowPilot ausprobieren</h2>
+<p>Stellenanzeige und Kurzprofil eingeben oder Beispieldaten laden. Der n8n-Workflow wertet die Angaben aus und gibt eine strukturierte Einschätzung zurück.</p>
+<form id="analyzeForm">
+<div class="form-grid">
+<div class="field"><label for="jobText">Stellenanzeige</label><textarea id="jobText" maxlength="15000" required placeholder="Text der Stellenanzeige …"></textarea></div>
+<div class="field"><label for="profile">Kurzprofil</label><textarea id="profile" maxlength="15000" required placeholder="Erfahrung, Kenntnisse und Stärken …"></textarea></div>
+</div>
+<div class="field" id="tokenField" style="margin-top:14px"><label for="token">Workflow-Token</label><input id="token" type="password" autocomplete="off" placeholder="X-WorkflowPilot-Token" required><p class="hint" id="tokenHint">Auf dieser GitHub-Pages-Seite wird der Token nur für die Anfrage verwendet, nicht gespeichert und danach aus dem Feld gelöscht.</p></div>
+<div class="actions"><button class="button secondary" id="sample" type="button">Beispieldaten laden</button><button class="button" id="submit" type="submit">Analyse starten</button><span id="status" class="status" aria-live="polite"></span></div>
+<div id="message" class="message" role="alert"></div>
+</form>
+<div id="results" class="results" aria-live="polite"></div>
+<div class="notice" id="proxyNote">Für den direkten Test wird der Token aus deiner n8n-Header-Auth-Credential benötigt. Er wird nicht im Quelltext der Seite hinterlegt.</div>
+</section>
 <section class="panel">
-<p class="kicker">Beispielanalyse · synthetische Testdaten</p><h2>Was liefert der Workflow?</h2>
+<p class="kicker">Beispielanalyse · synthetische Testdaten</p><h2>Beispielergebnis</h2>
 <div class="summary">
 <div class="example"><p class="example-label">Stellenanzeige</p><p>Projektassistenz zur Unterstützung bei Planung, Kommunikation und Dokumentation. Gewünscht sind Terminorganisation, Unterlagenerstellung und sorgfältige Teamarbeit.</p></div>
 <div class="example"><p class="example-label">Kurzprofil</p><p>Erfahrene Bürokraft mit Organisationstalent, sehr guten Deutschkenntnissen und sicherem Umgang mit Office-Programmen.</p></div>
@@ -86,18 +129,65 @@ footer a:hover{text-decoration:underline}
 <article class="step"><h3>Verzweigen &amp; prüfen</h3><p>Passungszweig steuert Entwurf und zusätzliche Qualitätsprüfung.</p></article>
 <article class="step"><h3>Ergebnis zurückgeben</h3><p>Zusammenfassung und Entwurf werden zur menschlichen Kontrolle ausgegeben.</p></article>
 </div>
-<div class="notice">Der Workflow ist eine dokumentierte Projektarbeit. Diese Seite enthält keine interaktive Demo und sendet keine Daten an n8n.</div>
 </section>
 <section class="panel">
-<section class="panel">\n<p class="kicker">Dokumentation</p><h2>Projektbericht als PDF</h2><p style="margin:0;color:var(--muted)">Kurze Erklärung des Workflows und des dokumentierten Ablaufs mit n8n-Screenshots.</p><a class="pdf-link" href="./WorkflowPilot-n8n-Ablauf-27-10-2026.pdf" target="_blank" rel="noopener">PDF öffnen <span aria-hidden="true">↗</span></a>\n</section>\n<section class="panel">\n<p class="kicker">Dokumentierter Projektverlauf · 27.10.2026</p><h2>Umsetzung am Vormittag und Nachmittag</h2>
+<p class="kicker">Dokumentierter Projektverlauf · 27.10.2026</p><h2>Umsetzung am Vormittag und Nachmittag</h2>
 <div class="timeline">
 <div class="moment"><time>14:24</time><strong>Arbeitsbeginn</strong><span>Erste Anfrage im n8n-Ausführungsverlauf.</span></div>
 <div class="moment"><time>15:33</time><strong>Erfolgreicher Test</strong><span>Ausführung #63, Laufzeit 43,117 Sekunden.</span></div>
 <div class="moment"><time>15:47</time><strong>Projektseite ergänzt</strong><span>GitHub-Seite mit Projektlink aktualisiert.</span></div>
 </div>
 <p class="time-note">Von 14:24 bis 15:47 vergingen 1 Stunde 23 Minuten einschließlich Test- und Wartephasen.</p>
+<p style="margin:18px 0 0">Kurze Erklärung des Workflows und des dokumentierten Ablaufs mit n8n-Screenshots.</p>
+<a class="button pdf-link" href="./WorkflowPilot-n8n-Ablauf-27-10-2026.pdf" target="_blank" rel="noopener">Projektbericht als PDF öffnen ↗</a>
 </section>
 </main>
 <footer><div class="wrap footer-inner"><div><div class="footer-title">Manfred Linner</div><div class="footer-small">Softwareentwicklung &amp; Dienstleistungen · Schwabach bei Nürnberg</div></div><div class="footer-links"><a href="mailto:info@mlinner-software.de">info@mlinner-software.de</a><a href="tel:+491607838773">+49 160 7838773</a><a href="https://www.linkedin.com/in/manfred-linner-4a346727/">LinkedIn</a></div></div></footer>
+<script>
+const SAMPLE_JOB="Wir suchen eine Projektassistenz zur Unterstützung bei Planung, Kommunikation und Dokumentation laufender Projekte. Sie koordiniert Termine, erstellt Unterlagen und arbeitet sorgfältig im Team.";
+const SAMPLE_PROFILE="Erfahrene Bürokraft mit Organisationstalent, sehr guten Deutschkenntnissen und sicherem Umgang mit Office-Programmen.";
+const directEndpoint="https://sonja1.app.n8n.cloud/webhook/workflowpilot/analyze";
+const useNetlifyProxy=location.hostname.endsWith(".netlify.app");
+const endpoint=useNetlifyProxy?"/.netlify/functions/analyze":directEndpoint;
+const $=id=>document.getElementById(id);
+if(useNetlifyProxy){$("tokenField").hidden=true;$("token").required=false;$("proxyNote").textContent="Der n8n-Zugang wird serverseitig verwahrt. Der Token wird nicht an deinen Browser ausgegeben.";$("tokenHint").textContent="Netlify leitet die Anfrage geschützt an n8n weiter."}
+$("sample").addEventListener("click",()=>{$("jobText").value=SAMPLE_JOB;$("profile").value=SAMPLE_PROFILE});
+$("analyzeForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ $("message").className="message";$("message").textContent="";
+ $("results").className="results";$("results").innerHTML="";
+ $("submit").disabled=true;$("status").textContent="Analyse läuft …";
+ const token=$("token").value.trim();
+ try{
+  const headers={"Content-Type":"application/json"};
+  if(!useNetlifyProxy)headers["X-WorkflowPilot-Token"]=token;
+  const response=await fetch(endpoint,{method:"POST",headers:headers,body:JSON.stringify({jobText:$("jobText").value.trim(),profile:$("profile").value.trim()})});
+  const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{data={message:raw}}
+  if(!response.ok)throw new Error(response.status===401||response.status===403?"Zugriff verweigert (401/403). Prüfe den Token und die Header-Auth-Credential in n8n.":(data.message||("n8n antwortete mit HTTP "+response.status+".")));
+  if(data.success===false)throw new Error(data.message||"Der Workflow meldet einen Fehler.");
+  renderResult(data);$("status").textContent="Analyse abgeschlossen.";
+ }catch(error){
+  $("message").textContent=error instanceof TypeError?"Verbindung fehlgeschlagen. Prüfe CORS am n8n-Webhook und die Internetverbindung.":(error.message||"Anfrage fehlgeschlagen.");
+  $("message").className="message show";$("status").textContent="";
+ }finally{
+  $("submit").disabled=false;
+  if(!useNetlifyProxy)$("token").value="";
+ }
+});
+function esc(value){return String(value==null?"":value).replace(/[&<>\"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]))}
+function list(items){return Array.isArray(items)&&items.length?"<ul class=\"result-list\">"+items.map(item=>"<li>"+esc(item)+"</li>").join("")+"</ul>":"<p>Keine Angaben.</p>"}
+function renderResult(data){
+ let html="<div class=\"result-head\"><h2>Analyseergebnis</h2><span class=\"pill\">"+esc(data.fitCategory||data.status||"Ergebnis")+"</span></div>";
+ if(data.summary)html+="<div class=\"result-block\"><h3>Zusammenfassung</h3><p>"+esc(data.summary)+"</p></div>";
+ if(Array.isArray(data.requirements)&&data.requirements.length){html+="<div class=\"result-block\"><h3>Anforderungen</h3><div style=\"overflow:auto\"><table class=\"result-table\"><thead><tr><th>Anforderung</th><th>Beleg</th><th>Status</th></tr></thead><tbody>"+data.requirements.map(row=>"<tr><td>"+esc(row.requirement)+"</td><td>"+esc(row.evidence||"—")+"</td><td>"+esc(row.status||"—")+"</td></tr>").join("")+"</tbody></table></div></div>"}
+ if(Array.isArray(data.gaps)&&data.gaps.length)html+="<div class=\"result-block\"><h3>Fehlende Nachweise</h3>"+list(data.gaps)+"</div>";
+ if(Array.isArray(data.questions)&&data.questions.length)html+="<div class=\"result-block\"><h3>Rückfragen</h3>"+list(data.questions)+"</div>";
+ if(data.recommendation)html+="<div class=\"result-block\"><h3>Empfehlung</h3><p>"+esc(data.recommendation)+"</p></div>";
+ if(Array.isArray(data.qualityConcerns)&&data.qualityConcerns.length)html+="<div class=\"result-block\"><h3>Qualitätshinweise</h3>"+list(data.qualityConcerns)+"</div>";
+ if(data.draft)html+="<div class=\"result-block\"><h3>Entwurf zur Prüfung</h3><div class=\"draft\">"+esc(data.draft)+"</div></div>";
+ if(data.humanReviewRequired)html+="<div class=\"notice\">Bitte prüfe die Analyse und den Bewerbungstext vor einer Verwendung persönlich.</div>";
+ $("results").innerHTML=html;$("results").className="results show";
+}
+</script>
 </body>
 </html>
