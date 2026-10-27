@@ -43,9 +43,12 @@
 <script>
 const SAMPLE_JOB="Wir suchen eine Projektassistenz zur Unterstützung bei Planung, Kommunikation und Dokumentation laufender Projekte. Sie koordiniert Termine, erstellt Unterlagen und arbeitet sorgfältig im Team.";
 const SAMPLE_PROFILE="Erfahrene Bürokraft mit Organisationstalent, sehr guten Deutschkenntnissen und sicherem Umgang mit Office-Programmen.";
-const endpoint="https://sonja1.app.n8n.cloud/webhook/workflowpilot/analyze";
+const directEndpoint="https://sonja1.app.n8n.cloud/webhook/workflowpilot/analyze";
+const useNetlifyProxy=location.hostname.endsWith(".netlify.app");
+const endpoint=useNetlifyProxy?"/.netlify/functions/analyze":directEndpoint;
 const $=s=>document.querySelector(s), esc=v=>String(v==null?"":v).replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])), arr=x=>Array.isArray(x)?x:[];
 const tokenKey="workflowpilot-n8n-token";
+if(useNetlifyProxy){document.querySelector('label[for="token"]').hidden=true;$("#token").hidden=true;$("#token").required=false;$("#rememberToken").parentElement.hidden=true;document.querySelector(".hint").hidden=true;document.querySelector(".layout .card .sub").textContent="Die Anfrage läuft über eine serverseitige Netlify Function zu deinem n8n-Workflow." ;document.querySelector(".security").textContent="Netlify verwaltet den n8n-Zugang serverseitig. Der Token wird nicht an den Browser der Tester ausgegeben."}
 $("#token").value=localStorage.getItem(tokenKey)||"";
 $("#rememberToken").checked=Boolean(localStorage.getItem(tokenKey));
 $("#rememberToken").addEventListener("change",()=>{if($("#rememberToken").checked){localStorage.setItem(tokenKey,$("#token").value.trim())}else{localStorage.removeItem(tokenKey)}});
@@ -55,13 +58,14 @@ $("#analyzeForm").addEventListener("submit",async e=>{
  e.preventDefault();$("#message").className="message";$("#message").textContent="";$("#results").className="results";$("#results").innerHTML="";$("#submit").disabled=true;$("#status").textContent="Analysiere …";
  const token=$("#token").value.trim();
  try{
-  const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json","X-WorkflowPilot-Token":token},body:JSON.stringify({jobText:$("#jobText").value.trim(),profile:$("#profile").value.trim()})});
+  const requestHeaders={"Content-Type":"application/json"};if(!useNetlifyProxy)requestHeaders["X-WorkflowPilot-Token"]=token;
+  const response=await fetch(endpoint,{method:"POST",headers:requestHeaders,body:JSON.stringify({jobText:$("#jobText").value.trim(),profile:$("#profile").value.trim()})});
   const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{data={message:raw}}
   if(!response.ok)throw new Error(response.status===401||response.status===403?"Token abgelehnt (401/403). In n8n muss der Header-Name X-WorkflowPilot-Token lauten; hier gehört nur der zugehörige Wert hinein. Prüfe auch, ob der veröffentlichte Workflow dieselbe Credential nutzt.":"n8n antwortete mit HTTP "+response.status+".");
   if(data.success===false)throw new Error(data.message||"Der Workflow meldet einen Fehler.");
   render(data);$("#status").textContent="Fertig";
  }catch(error){$("#message").textContent=error instanceof TypeError?"Verbindung fehlgeschlagen. Prüfe CORS am Webhook und die Internetverbindung.":error.message||"Anfrage fehlgeschlagen." ;$("#message").className="message error";$("#status").textContent=""}
- finally{if($("#rememberToken").checked){localStorage.setItem(tokenKey,token);$("#token").value=token}else{localStorage.removeItem(tokenKey);$("#token").value=""}$("#submit").disabled=false}
+ finally{if(!useNetlifyProxy){if($("#rememberToken").checked){localStorage.setItem(tokenKey,token);$("#token").value=token}else{localStorage.removeItem(tokenKey);$("#token").value=""}}$("#submit").disabled=false}
 });
 function render(d){
  const rows=arr(d.requirements).map(r=>"<tr><td>"+esc(r.requirement)+"</td><td>"+esc(r.evidence||"—")+"</td><td>"+esc(r.status||"—")+"</td></tr>").join("");
