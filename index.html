@@ -190,14 +190,38 @@ img{display:block;max-width:100%}
   .about-in{grid-template-columns:1fr}
 }
 @media(max-width:680px){
-  :root{--pad:20px}
+  :root{--pad:16px}
   .nav-links{display:none}
+  /* Hero auf Mobile */
+  .hero-h{font-size:clamp(28px,8vw,40px);margin-bottom:20px}
+  .hero-sub{font-size:16px;margin-bottom:24px}
+  .hero-ctas{flex-direction:column;align-items:stretch;gap:12px}
+  .btn-primary,.btn-ghost{text-align:center;justify-content:center;padding:14px 20px}
+  .hero-cred{font-size:12px;flex-wrap:wrap;gap:6px}
+  /* Proof-Kacheln 2×2 */
   .proof-tiles{grid-template-columns:1fr 1fr}
   .proof-tile:nth-child(2){border-right:none}
   .proof-tile:nth-child(3){border-top:1px solid var(--line)}
   .proof-tile:nth-child(4){border-top:1px solid var(--line);border-right:none}
+  /* Ticker etwas kleiner */
+  .tech-item{padding:0 18px;font-size:12px}
+  /* Section-Intro schmaler */
+  .sec-intro{font-size:16px;margin-bottom:36px}
+  /* Leistungen */
+  .leist-h{font-size:16px}
+  .leist-body{font-size:15px}
+  /* Projekte */
+  .proj-h{font-size:16px}
+  .proj-body{font-size:15px}
+  /* Beruf */
   .beruf-row{grid-template-columns:1fr;gap:6px}
+  /* Über mich */
+  .about-text p{font-size:15px}
+  /* Kontakt */
+  .kontakt-grid{grid-template-columns:1fr}
+  /* Footer */
   .footer-in{flex-direction:column;gap:12px;text-align:center}
+  .footer-nav{justify-content:center;flex-wrap:wrap;gap:16px}
 }
 
 /* Restored practice example detail popups */
@@ -239,16 +263,16 @@ img{display:block;max-width:100%}
 </header>
 <!-- ── HERO ───────────────────────────────────── -->
 <section class="hero">
-<div class="wrap hero-in">
-<div class="hero-content">
-<div class="hero-label"><span></span>Freelancer · Nürnberg &amp; Remote</div>
-<h1 class="hero-h">
-        KI sinnvoll einsetzen.<br/>
-<span class="ac">Daten nutzbar machen.</span><br/>
-        Lösungen entwickeln.
+  <div class="wrap hero-in">
+    <div class="hero-content">
+      <div class="hero-label"><span></span>Freelancer · Nürnberg &amp; Remote</div>
+      <h1 class="hero-h">
+        Bestehende Software.<br>
+        <span class="ac">Echte Daten.</span><br>
+        KI, die damit arbeitet.
       </h1>
-<p class="hero-sub">
-        Ich verbinde langjährige Software- und Datenbankpraxis mit dem praktischen Nutzen von KI. Für Lösungen, die in Ihre bestehenden Systeme passen und im Alltag weiterhelfen.
+      <p class="hero-sub">
+        Ich verbinde über 25 Jahre Erfahrung in Softwareentwicklung und Datenbanken mit moderner KI. Statt alles neu zu entwickeln, integriere ich intelligente Lösungen in Ihre bestehenden Systeme und Geschäftsprozesse.
       </p>
 <div class="hero-ctas">
 <a class="btn-primary" href="#kontakt">Mein Projekt besprechen ↗</a>
@@ -478,19 +502,18 @@ img{display:block;max-width:100%}
 </section>
 <!-- ── ÜBER MICH ───────────────────────────────── -->
 <section class="section" id="ueber">
-<div class="wrap">
-<p class="sec-label">— Über mich</p>
-<h2 class="sec-h">Erfahrung, die verbindet.</h2>
-<div class="about-in">
-<div class="about-text">
-<p>Ich bin Manfred Linner, Diplom-Informatiker (FH) und seit 2001 in der Softwareentwicklung tätig – seit 2018 freiberuflich. Mein Schwerpunkt liegt auf der Entwicklung und Modernisierung individueller Software, komplexen Datenbanksystemen und der Automatisierung von Geschäftsprozessen.</p>
-<p>Ich verbinde langjährige Erfahrung in C#/.NET, SQL Server und Delphi mit modernen Technologien und künstlicher Intelligenz – für praxisnahe Lösungen, die bestehende Systeme verbessern, Daten nutzbar machen und Arbeitsabläufe vereinfachen. Ich verbinde über 25 Jahre Erfahrung in der Softwareentwicklung mit modernen KI-Technologien. KI setze ich gezielt dort ein, wo sie nachvollziehbaren Nutzen bringt.</p>
-<p>Nicht jede Herausforderung braucht eine neue Software. Oft liegt die bessere Lösung darin, vorhandene Systeme zu verstehen, gezielt zu verbessern und sinnvoll miteinander zu verbinden.</p>
-</div>
-<div class="about-box">
-<p class="about-box-h">Qualifikationen</p>
-<div class="about-fact">
-<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 16 16" width="16"><circle cx="8" cy="8" r="6.5"></circle><path d="M5.5 8l1.8 1.8 3.2-3.6"></path></svg>
+  <div class="wrap">
+    <p class="sec-label">— Über mich</p>
+    <h2 class="sec-h">Erfahrung, die verbindet.</h2>
+    <div class="about-in">
+      <div class="about-text">
+        <p>Ich bin Manfred Linner, Diplom-Informatiker (FH), und entwickle seit über 25 Jahren individuelle Unternehmenssoftware. Meine Schwerpunkte sind C#/.NET, Delphi, SQL Server und die Weiterentwicklung bestehender Anwendungen.</p>
+        <p>Heute verbinde ich dieses technische Fundament mit künstlicher Intelligenz und Automatisierung. Mein Ziel sind keine KI-Spielereien, sondern zuverlässige Lösungen, die Unternehmen im Alltag tatsächlich entlasten.</p>
+      </div>
+      <div class="about-box">
+        <p class="about-box-h">Qualifikationen</p>
+        <div class="about-fact">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="M5.5 8l1.8 1.8 3.2-3.6"/></svg>
           Dipl.-Informatiker (FH)
         </div>
 <div class="about-fact">
