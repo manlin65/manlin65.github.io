@@ -149,9 +149,11 @@ img{display:block;max-width:100%}
 .beruf-desc-p{font-size:14px;color:var(--muted);line-height:1.65}
 
 /* ── ÜBER MICH ───────────────────────────────── */
-.about-in{display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:start}
+.about-in{display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start}
+.about-sidebar{display:flex;flex-direction:column;gap:0}
 .about-text p{font-size:17px;line-height:1.75;color:var(--muted);margin-bottom:16px}
 .about-text p:last-child{margin-bottom:0}
+.about-photo{width:100%;border-radius:var(--r);margin-bottom:20px;display:block;border:2px solid var(--line)}
 .about-box{background:var(--page);border-radius:var(--r);padding:28px;border:1px solid var(--line)}
 .about-box-h{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
 .about-fact{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;color:var(--muted)}
@@ -510,6 +512,8 @@ img{display:block;max-width:100%}
         <p>Ich bin Manfred Linner, Diplom-Informatiker (FH), und entwickle seit über 25 Jahren individuelle Unternehmenssoftware. Meine Schwerpunkte sind C#/.NET, Delphi, SQL Server und die Weiterentwicklung bestehender Anwendungen.</p>
         <p>Heute verbinde ich dieses technische Fundament mit künstlicher Intelligenz und Automatisierung. Mein Ziel sind keine KI-Spielereien, sondern zuverlässige Lösungen, die Unternehmen im Alltag tatsächlich entlasten.</p>
       </div>
+      <div class="about-sidebar">
+        <img src="assets/images/manfred-linner.jpg" alt="Manfred Linner – Softwareentwickler &amp; KI-Integration" class="about-photo"/>
       <div class="about-box">
         <p class="about-box-h">Qualifikationen</p>
         <div class="about-fact">
@@ -532,6 +536,7 @@ img{display:block;max-width:100%}
 <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 16 16" width="16"><circle cx="8" cy="8" r="6.5"></circle><path d="M5.5 8l1.8 1.8 3.2-3.6"></path></svg>
           Nürnberg &amp; Remote
         </div>
+</div>
 </div>
 </div>
 </div>
