@@ -104,12 +104,12 @@ footer a:hover{text-decoration:underline}
 <div class="field"><label for="jobText">Stellenanzeige</label><textarea id="jobText" maxlength="15000" required placeholder="Text der Stellenanzeige …"></textarea></div>
 <div class="field"><label for="profile">Kurzprofil</label><textarea id="profile" maxlength="15000" required placeholder="Erfahrung, Kenntnisse und Stärken …"></textarea></div>
 </div>
-<div class="field" id="tokenField" style="margin-top:14px"><label for="token">Workflow-Token</label><input id="token" type="password" autocomplete="off" placeholder="X-WorkflowPilot-Token" required><p class="hint" id="tokenHint">Auf dieser GitHub-Pages-Seite wird der Token nur für die Anfrage verwendet, nicht gespeichert und danach aus dem Feld gelöscht.</p></div>
+<div class="field" id="tokenField" style="margin-top:14px"><label for="token">Workflow-Token</label><input id="token" type="password" autocomplete="off" placeholder="X-WorkflowPilot-Token" required><p class="hint" id="tokenHint">Der Token wird nur für diese Anfrage verwendet und danach aus dem Feld gelöscht.</p></div>
 <div class="actions"><button class="button secondary" id="sample" type="button">Beispieldaten laden</button><button class="button" id="submit" type="submit">Analyse starten</button><span id="status" class="status" aria-live="polite"></span></div>
 <div id="message" class="message" role="alert"></div>
 </form>
 <div id="results" class="results" aria-live="polite"></div>
-<div class="notice" id="proxyNote">Für den direkten Test wird der Token aus deiner n8n-Header-Auth-Credential benötigt. Er wird nicht im Quelltext der Seite hinterlegt.</div>
+<div class="notice" id="proxyNote">Der Token steht nicht im Quelltext der Website. Du gibst ihn für den Test selbst ein; gespeichert wird er nicht.</div>
 </section>
 <section class="panel">
 <p class="kicker">Beispielanalyse · synthetische Testdaten</p><h2>Beispielergebnis</h2>
@@ -147,10 +147,8 @@ footer a:hover{text-decoration:underline}
 const SAMPLE_JOB="Wir suchen eine Projektassistenz zur Unterstützung bei Planung, Kommunikation und Dokumentation laufender Projekte. Sie koordiniert Termine, erstellt Unterlagen und arbeitet sorgfältig im Team.";
 const SAMPLE_PROFILE="Erfahrene Bürokraft mit Organisationstalent, sehr guten Deutschkenntnissen und sicherem Umgang mit Office-Programmen.";
 const directEndpoint="https://sonja1.app.n8n.cloud/webhook/workflowpilot/analyze";
-const useNetlifyProxy=location.hostname.endsWith(".netlify.app");
-const endpoint=useNetlifyProxy?"/.netlify/functions/analyze":directEndpoint;
+const endpoint=directEndpoint;
 const $=id=>document.getElementById(id);
-if(useNetlifyProxy){$("tokenField").hidden=true;$("token").required=false;$("proxyNote").textContent="Der n8n-Zugang wird serverseitig verwahrt. Der Token wird nicht an deinen Browser ausgegeben.";$("tokenHint").textContent="Netlify leitet die Anfrage geschützt an n8n weiter."}
 $("sample").addEventListener("click",()=>{$("jobText").value=SAMPLE_JOB;$("profile").value=SAMPLE_PROFILE});
 $("analyzeForm").addEventListener("submit",async event=>{
  event.preventDefault();
@@ -159,8 +157,7 @@ $("analyzeForm").addEventListener("submit",async event=>{
  $("submit").disabled=true;$("status").textContent="Analyse läuft …";
  const token=$("token").value.trim();
  try{
-  const headers={"Content-Type":"application/json"};
-  if(!useNetlifyProxy)headers["X-WorkflowPilot-Token"]=token;
+  const headers={"Content-Type":"application/json","X-WorkflowPilot-Token":token};
   const response=await fetch(endpoint,{method:"POST",headers:headers,body:JSON.stringify({jobText:$("jobText").value.trim(),profile:$("profile").value.trim()})});
   const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{data={message:raw}}
   if(!response.ok)throw new Error(response.status===401||response.status===403?"Zugriff verweigert (401/403). Prüfe den Token und die Header-Auth-Credential in n8n.":(data.message||("n8n antwortete mit HTTP "+response.status+".")));
@@ -171,7 +168,7 @@ $("analyzeForm").addEventListener("submit",async event=>{
   $("message").className="message show";$("status").textContent="";
  }finally{
   $("submit").disabled=false;
-  if(!useNetlifyProxy)$("token").value="";
+  $("token").value="";
  }
 });
 function esc(value){return String(value==null?"":value).replace(/[&<>\"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]))}
