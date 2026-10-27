@@ -184,14 +184,38 @@ img{display:block;max-width:100%}
   .about-in{grid-template-columns:1fr}
 }
 @media(max-width:680px){
-  :root{--pad:20px}
+  :root{--pad:16px}
   .nav-links{display:none}
+  /* Hero auf Mobile */
+  .hero-h{font-size:clamp(28px,8vw,40px);margin-bottom:20px}
+  .hero-sub{font-size:16px;margin-bottom:24px}
+  .hero-ctas{flex-direction:column;align-items:stretch;gap:12px}
+  .btn-primary,.btn-ghost{text-align:center;justify-content:center;padding:14px 20px}
+  .hero-cred{font-size:12px;flex-wrap:wrap;gap:6px}
+  /* Proof-Kacheln 2×2 */
   .proof-tiles{grid-template-columns:1fr 1fr}
   .proof-tile:nth-child(2){border-right:none}
   .proof-tile:nth-child(3){border-top:1px solid var(--line)}
   .proof-tile:nth-child(4){border-top:1px solid var(--line);border-right:none}
+  /* Ticker etwas kleiner */
+  .tech-item{padding:0 18px;font-size:12px}
+  /* Section-Intro schmaler */
+  .sec-intro{font-size:16px;margin-bottom:36px}
+  /* Leistungen */
+  .leist-h{font-size:16px}
+  .leist-body{font-size:15px}
+  /* Projekte */
+  .proj-h{font-size:16px}
+  .proj-body{font-size:15px}
+  /* Beruf */
   .beruf-row{grid-template-columns:1fr;gap:6px}
+  /* Über mich */
+  .about-text p{font-size:15px}
+  /* Kontakt */
+  .kontakt-grid{grid-template-columns:1fr}
+  /* Footer */
   .footer-in{flex-direction:column;gap:12px;text-align:center}
+  .footer-nav{justify-content:center;flex-wrap:wrap;gap:16px}
 }
 </style>
 </head>
@@ -229,7 +253,7 @@ img{display:block;max-width:100%}
         Lösungen entwickeln.
       </h1>
       <p class="hero-sub">
-        Ich verbinde langjährige Software- und Datenbankpraxis mit dem praktischen Nutzen von KI. Für Lösungen, die in Ihre bestehenden Systeme passen und im Alltag weiterhelfen.
+        Kein Neuanfang auf der grünen Wiese. Ich integriere KI in das, was bei Ihnen bereits läuft — Ihre Software, Ihre Datenbank, Ihre Abläufe.
       </p>
       <div class="hero-ctas">
         <a href="#kontakt" class="btn-primary">Mein Projekt besprechen ↗</a>
@@ -537,7 +561,7 @@ img{display:block;max-width:100%}
     <h2 class="sec-h">Erfahrung, die verbindet.</h2>
     <div class="about-in">
       <div class="about-text">
-        <p>Ich bin Manfred Linner, Diplom-Informatiker (FH) und seit 2001 in der Softwareentwicklung tätig – seit 2018 freiberuflich. Mein Schwerpunkt liegt auf der Entwicklung und Modernisierung individueller Software, komplexen Datenbanksystemen und der Automatisierung von Geschäftsprozessen.</p>
+        <p>Ich entwickle Software seit 2001 — und kenne Unternehmenssysteme von innen. Was ich heute mache: KI dort einbauen, wo sie wirklich nützt. Nicht als Experiment, sondern als funktionierende Erweiterung dessen, was schon da ist.</p>
         <p>Ich verbinde langjährige Erfahrung in C#/.NET, SQL Server und Delphi mit modernen Technologien und künstlicher Intelligenz – für praxisnahe Lösungen, die bestehende Systeme verbessern, Daten nutzbar machen und Arbeitsabläufe vereinfachen. Als zertifizierter KI-Manager (Cert-IT) setze ich KI dort ein, wo sie nachvollziehbaren Nutzen bringt.</p>
         <p>Nicht jede Herausforderung braucht eine neue Software. Oft liegt die bessere Lösung darin, vorhandene Systeme zu verstehen, gezielt zu verbessern und sinnvoll miteinander zu verbinden.</p>
       </div>
