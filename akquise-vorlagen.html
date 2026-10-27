@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Akquise-Vorlagen | Manfred Linner</title>
+<meta name="description" content="Beispiel-E-Mails für die Akquise von KI-Integrationsprojekten – fünf Varianten für verschiedene Kontaktsituationen."/>
+<link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#12294C;--petrol:#157D83;--teal:#1CB3A1;--green:#83E572;
+  --page:#F4F7F6;--muted:#586B79;--line:#DCE5E2;--white:#fff;
+  --max:1264px;--pad:2rem;--r:6px;
+  --fh:'Manrope',sans-serif;--fb:'Source Sans 3',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);font-size:17px;line-height:1.6;color:var(--navy);background:var(--white);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-name{font-family:var(--fh);font-weight:700;font-size:15px;color:var(--navy)}
+.brand-tag{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--muted);border:1px solid var(--line);padding:7px 16px;border-radius:var(--r);transition:color .15s,border-color .15s}
+.nav-back:hover{color:var(--petrol);border-color:var(--petrol)}
+
+/* PAGE HEADER */
+.page-header{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+.page-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--petrol);margin-bottom:16px}
+.page-label span{display:block;width:8px;height:8px;background:var(--petrol);border-radius:50%}
+.page-h{font-family:var(--fh);font-weight:800;font-size:clamp(28px,3.5vw,44px);line-height:1.1;color:var(--navy);margin-bottom:16px}
+.page-sub{font-size:17px;color:var(--muted);max-width:640px;line-height:1.65}
+
+/* FILTER TABS */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;padding:28px 0 0}
+.filter-btn{font-size:13px;font-weight:600;padding:7px 16px;border-radius:100px;border:1px solid var(--line);color:var(--muted);cursor:pointer;background:none;transition:all .15s;font-family:var(--fb)}
+.filter-btn:hover,.filter-btn.active{background:var(--petrol);color:var(--white);border-color:var(--petrol)}
+
+/* MAIL CARDS */
+.mails{padding:40px 0 80px;display:flex;flex-direction:column;gap:28px}
+
+.mail-card{border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:box-shadow .2s}
+.mail-card:hover{box-shadow:0 4px 24px rgba(18,41,76,.08)}
+
+.mail-header{padding:20px 28px;background:var(--page);border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mail-meta{flex:1}
+.mail-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--petrol);margin-bottom:8px}
+.mail-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--petrol);flex-shrink:0}
+.mail-subject{font-family:var(--fh);font-weight:700;font-size:17px;color:var(--navy);margin-bottom:6px}
+.mail-to{font-size:13px;color:var(--muted)}
+
+.mail-copy-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--petrol);border:1px solid var(--line);padding:7px 14px;border-radius:var(--r);cursor:pointer;background:var(--white);font-family:var(--fb);transition:all .15s;flex-shrink:0}
+.mail-copy-btn:hover{border-color:var(--petrol);background:rgba(21,125,131,.05)}
+.mail-copy-btn.copied{color:var(--teal);border-color:var(--teal)}
+
+.mail-body{padding:28px;font-size:16px;line-height:1.8;color:var(--navy);white-space:pre-wrap;font-family:var(--fb)}
+.mail-body .placeholder{color:var(--petrol);font-style:italic;background:rgba(28,179,161,.08);padding:1px 5px;border-radius:3px}
+
+/* HINT BOX */
+.hint-box{margin:0 0 40px;padding:20px 24px;background:rgba(21,125,131,.06);border-left:3px solid var(--petrol);border-radius:0 var(--r) var(--r) 0;font-size:15px;color:var(--muted);line-height:1.6}
+.hint-box strong{color:var(--navy)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--line);padding:32px 0;text-align:center;font-size:13px;color:var(--muted)}
+
+@media(max-width:680px){
+  .mail-header{flex-direction:column}
+  .mail-body{padding:20px}
+  .filter-bar{gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <div class="brand-text">
+        <span class="brand-name">Manfred Linner</span>
+        <span class="brand-tag">KI-Integration & Automatisierung</span>
+      </div>
+    </a>
+    <a class="nav-back" href="index.html">
+      ← Zurück zur Website
+    </a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <div class="page-label"><span></span>Vorlagen</div>
+    <h1 class="page-h">Akquise-Mails: 5 Beispiele</h1>
+    <p class="page-sub">Verschiedene Ansätze für unterschiedliche Kontaktsituationen — von kalt bis warm. Einfach anpassen und verwenden.</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterMails('all',this)">Alle</button>
+      <button class="filter-btn" onclick="filterMails('kalt',this)">Kalt</button>
+      <button class="filter-btn" onclick="filterMails('warm',this)">Warm / Empfehlung</button>
+      <button class="filter-btn" onclick="filterMails('followup',this)">Follow-up</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="mails" id="mailList">
+
+    <!-- MAIL 1 -->
+    <div class="mail-card" data-type="kalt">
+      <div class="mail-header">
+        <div class="mail-meta">
+          <div class="mail-tag"><span class="mail-tag-dot"></span>Kalt · Mittelstand</div>
+          <div class="mail-subject">KI in Ihre bestehenden Systeme integrieren – ohne Neuimplementierung</div>
+          <div class="mail-to">An: Thomas Großmann, Geschäftsführer, Großmann Logistik GmbH</div>
+        </div>
+        <button class="mail-copy-btn" onclick="copyMail(this, 'mail1')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="mail-body" id="mail1">Sehr geehrter Herr Großmann,
+
+viele Unternehmen im Mittelstand stehen vor der gleichen Frage: Wie nutze ich KI sinnvoll, ohne meine bewährten Systeme zu ersetzen?
+
+Genau das ist mein Spezialgebiet. Als freiberuflicher Softwareentwickler (Dipl.-Informatiker, 25 Jahre Erfahrung mit C#/.NET und SQL Server) integriere ich KI-Funktionen direkt in bestehende Unternehmensanwendungen – praxisnah, ohne großen Aufwand, mit messbarem Nutzen.
+
+Beispiele aus meiner Praxis:
+– Automatische Dokumentenprüfung (Rechnungen, Lieferscheine) per KI
+– KI-gestützte Suche und Auswertung in vorhandenen Datenbanken
+– Prozessautomatisierung mit n8n und bestehenden ERP-Schnittstellen
+
+Ich arbeite typischerweise projektweise und remote – flexibel, ohne Overhead.
+
+Hätten Sie Interesse an einem kurzen Austausch, ob KI-Integration für Ihr Unternehmen aktuell ein Thema ist?
+
+Mit freundlichen Grüßen
+Manfred Linner
+Dipl.-Informatiker (FH) · KI-Integration & Automatisierung
+Tel. +49 160 7838773
+www.mlinner-software.de</div>
+    </div>
+
+    <!-- MAIL 2 -->
+    <div class="mail-card" data-type="kalt">
+      <div class="mail-header">
+        <div class="mail-meta">
+          <div class="mail-tag"><span class="mail-tag-dot"></span>Kalt · IT-Leiter / CTO</div>
+          <div class="mail-subject">KI-Integration ohne Vendor-Lock-in – kurze Anfrage</div>
+          <div class="mail-to">An: Sandra Weiß, IT-Leiterin, Metallbau Riedl AG</div>
+        </div>
+        <button class="mail-copy-btn" onclick="copyMail(this, 'mail2')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="mail-body" id="mail2">Hallo Frau Weiß,
+
+als IT-Verantwortliche kennen Sie das Problem: KI klingt interessant, aber die eigentliche Frage ist, wie sie sich sinnvoll in bestehende Systeme integrieren lässt – ohne riesige Lizenzkosten oder Abhängigkeiten von Plattformen.
+
+Genau hier helfe ich. Ich bin freiberuflicher Entwickler (C#/.NET, SQL Server, 25 Jahre Praxis) und verbinde KI-Komponenten – z. B. OpenAI-APIs, lokale Modelle, n8n-Workflows – mit vorhandener Unternehmensinfrastruktur.
+
+Keine Slides, keine Beratungsware: ich entwickle direkt.
+
+Falls Sie gerade ein konkretes Thema haben oder sich das für nächstes Jahr abzeichnet – ich bin für ein kurzes Gespräch offen.
+
+Mit freundlichen Grüßen
+Manfred Linner
+Dipl.-Informatiker (FH) · Freelancer
+Tel. +49 160 7838773
+www.mlinner-software.de</div>
+    </div>
+
+    <!-- MAIL 3 -->
+    <div class="mail-card" data-type="warm">
+      <div class="mail-header">
+        <div class="mail-meta">
+          <div class="mail-tag"><span class="mail-tag-dot"></span>Warm · LinkedIn-Kontakt</div>
+          <div class="mail-subject">Kurze Frage zu KI-Automatisierung in Ihrem Unternehmen</div>
+          <div class="mail-to">An: Markus Pfeiffer, Prokurist, Pfeiffer & Partner Steuerberatung</div>
+        </div>
+        <button class="mail-copy-btn" onclick="copyMail(this, 'mail3')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="mail-body" id="mail3">Hallo Herr Pfeiffer,
+
+danke für die Vernetzung auf LinkedIn!
+
+Ich habe gesehen, dass Sie bei Pfeiffer & Partner tätig sind – Kanzleien und Beratungsunternehmen sind ein Bereich, in dem ich häufig unterwegs bin.
+
+Ich bin freiberuflicher Entwickler mit Schwerpunkt KI-Integration: Ich helfe Unternehmen, KI-Funktionen direkt in bestehende Systeme einzubauen – ohne alles neu zu bauen. Typische Themen: automatische Dokumentenauswertung, smarte Suche in Altbeständen, Prozessautomatisierung.
+
+Falls bei Ihnen gerade etwas in die Richtung Automatisierung oder KI-Integration auf der Agenda steht – ich freue mich über einen kurzen Austausch.
+
+Beste Grüße
+Manfred Linner
+www.mlinner-software.de</div>
+    </div>
+
+    <!-- MAIL 4 -->
+    <div class="mail-card" data-type="warm">
+      <div class="mail-header">
+        <div class="mail-meta">
+          <div class="mail-tag"><span class="mail-tag-dot"></span>Warm · Empfehlung</div>
+          <div class="mail-subject">Klaus Hartmann hat mich empfohlen – kurze Vorstellung</div>
+          <div class="mail-to">An: Brigitte Seemann, Inhaberin, Seemann Medizintechnik GmbH</div>
+        </div>
+        <button class="mail-copy-btn" onclick="copyMail(this, 'mail4')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="mail-body" id="mail4">Hallo Frau Seemann,
+
+Klaus Hartmann hat mir Ihren Namen gegeben und gemeint, das könnte passen.
+
+Ich bin Manfred Linner, freiberuflicher Softwareentwickler aus Schwabach bei Nürnberg. Mein Fokus liegt auf KI-Integration: Ich baue KI-Funktionen in bestehende Systeme ein – C#/.NET, SQL Server, Schnittstellen, Dokumentenverarbeitung.
+
+Keine großen Transformationsprojekte, sondern gezielter Nutzen: ein Prozess, der vorher manuell war, läuft danach automatisch.
+
+Haben Sie 15 Minuten für ein kurzes Gespräch – einfach um zu schauen, ob etwas passt?
+
+Mit freundlichen Grüßen
+Manfred Linner
+Tel. +49 160 7838773
+www.mlinner-software.de</div>
+    </div>
+
+    <!-- MAIL 5 -->
+    <div class="mail-card" data-type="followup">
+      <div class="mail-header">
+        <div class="mail-meta">
+          <div class="mail-tag"><span class="mail-tag-dot"></span>Follow-up · Nach Gespräch</div>
+          <div class="mail-subject">Nachfassung zu unserem Gespräch – Manfred Linner</div>
+          <div class="mail-to">An: Robert Danner, Leiter Operations, Danner Verpackungstechnik KG</div>
+        </div>
+        <button class="mail-copy-btn" onclick="copyMail(this, 'mail5')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopieren
+        </button>
+      </div>
+      <div class="mail-body" id="mail5">Hallo Herr Danner,
+
+kurze Nachfassung zu unserem Gespräch letzte Woche auf der Hannover Messe.
+
+Sie hatten erwähnt, dass die manuelle Prüfung von Lieferdokumenten bei Ihnen viel Zeit kostet – genau das ist ein typisches Einsatzgebiet für mich. Ich integriere KI-Funktionen direkt in bestehende Systeme, ohne große Neu-Implementierungen.
+
+Damit Sie sich vorab einen Eindruck machen können: www.mlinner-software.de
+
+Wenn Sie möchten, können wir gerne einen Termin für ein kurzes Gespräch vereinbaren – 30 Minuten reichen, um zu klären, ob und wie ich helfen kann.
+
+Mit freundlichen Grüßen
+Manfred Linner
+Tel. +49 160 7838773</div>
+    </div>
+
+  </div><!-- /mails -->
+
+  <div class="hint-box">
+    <strong>Tipp:</strong> Die eckigen Klammern in den Vorlagen markieren Stellen, die individuell angepasst werden sollten. Je konkreter der Bezug zum Empfänger, desto besser die Rücklaufquote.
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    © 2026 Manfred Linner · <a href="index.html#kontakt" style="color:var(--petrol)">Kontakt</a>
+  </div>
+</footer>
+
+<script>
+function filterMails(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.mail-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function copyMail(btn, id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Kopiert!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Kopieren`;
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
