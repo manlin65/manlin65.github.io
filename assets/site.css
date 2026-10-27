@@ -74,3 +74,4 @@
 .about-copy>p:not(.eyebrow){margin-bottom:14px}
 .about-copy .lead{margin-top:18px;margin-bottom:14px}
 .experience{margin-top:20px}
+\n/* WorkflowPilot-Startseiten-Pop-up: kompakt und innerhalb des sichtbaren Fensters */\n#modal-n8n{width:min(760px,calc(100% - 32px));max-height:min(86vh,760px);overflow-y:auto;overscroll-behavior:contain}\n#modal-n8n .modal-head{padding:16px 22px}\n#modal-n8n .modal-head h3{font-size:20px}\n#modal-n8n .modal-body{padding:18px 22px}\n#modal-n8n .tech-block{padding:16px;margin:14px 0}\n#modal-n8n .tech-block ul{line-height:1.6}\n#modal-n8n .mini-note{margin-top:14px}\n@media(max-width:600px){#modal-n8n{width:calc(100% - 24px);max-height:90vh}#modal-n8n .modal-head,#modal-n8n .modal-body{padding:16px}}\n
