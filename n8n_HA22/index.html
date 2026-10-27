@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WorkflowPilot · Stellenanzeigen</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#172033;--muted:#697386;--line:#e5e9f1;--blue:#465cf5;--green:#12805c;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}header{background:#fff;border-bottom:1px solid var(--line)}.top{max-width:1180px;margin:auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border-radius:13px;background:var(--blue);color:white;display:grid;place-items:center;font-weight:800;font-size:20px}.brand h1{margin:0;font-size:18px}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.live{font-size:12px;color:var(--green);background:#e9f7f1;border-radius:99px;padding:6px 10px;font-weight:700}main{max-width:1180px;margin:30px auto;padding:0 24px 48px}.intro{margin-bottom:22px}.intro h2{font-size:26px;margin:0 0 4px;letter-spacing:-.03em}.intro p{margin:0;color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr);gap:20px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 36px #17203312;padding:22px}.card h3{margin:0 0 4px;font-size:18px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}label{display:block;font-weight:650;font-size:13px;margin:16px 0 7px}input,textarea{width:100%;border:1px solid #d6dce8;border-radius:10px;padding:11px 12px;font:inherit;background:#fff;color:var(--ink)}textarea{min-height:142px;resize:vertical}input:focus,textarea:focus{outline:3px solid #465cf526;border-color:var(--blue)}.hint{color:var(--muted);font-size:12px;margin:6px 0 0}.row{display:flex;gap:10px;align-items:center;margin-top:18px}.btn{border:0;border-radius:10px;padding:10px 15px;background:var(--blue);color:white;font-weight:700;font:inherit;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}.btn.secondary{background:#eef0ff;color:var(--blue)}.status{font-size:13px;color:var(--muted)}.message{display:none;margin-top:16px;padding:12px 14px;border-radius:10px;background:#fff3e8;color:#854d0e;font-size:13px}.message.error,.message.show{display:block}.message.error{background:#fff0f0;color:var(--red)}.results{display:none;margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.results.show{display:block}.resulthead{display:flex;justify-content:space-between;gap:12px;align-items:center}.badge{display:inline-block;border-radius:99px;padding:5px 10px;background:#e8f7f0;color:var(--green);font-size:12px;font-weight:750}.resultblock{margin-top:14px}.resultblock h4{margin:0 0 5px;font-size:14px}.resultblock p{margin:0;color:#39445a;white-space:pre-wrap}.list{margin:6px 0 0;padding-left:19px;color:#39445a}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:650}.draft{white-space:pre-wrap;background:#f8f9fc;padding:14px;border:1px solid var(--line);border-radius:10px;max-height:440px;overflow:auto;font-size:13px}.smallbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 9px;font:inherit;font-size:12px;cursor:pointer}.todo-add{display:flex;gap:8px;margin:14px 0}.todo-add input{min-width:0}.todo-add .btn{white-space:nowrap}.todos{list-style:none;padding:0;margin:0}.todos li{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.todos li:last-child{border-bottom:0}.todos input[type=checkbox]{width:17px;height:17px;margin:3px 0 0;accent-color:var(--blue)}.todo-text{flex:1;min-width:0;overflow-wrap:anywhere}.done .todo-text{text-decoration:line-through;color:#929bad}.remove{border:0;background:transparent;color:#929bad;cursor:pointer;font-size:17px}.todo-foot,.empty{font-size:12px;color:var(--muted);margin-top:12px}.security{margin-top:18px;padding:12px;border-radius:10px;background:#f6f7fb;color:#596477;font-size:12px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.top{padding:16px 18px}main{padding:0 16px 32px;margin-top:22px}.intro h2{font-size:23px}.card{padding:18px}}
+</style></head>
+<body>
+<header><div class="top"><div class="brand"><div class="mark">W</div><div><h1>WorkflowPilot</h1><p>Stellenanzeigen-Analyse</p></div></div><span class="live">● Workflow bereit</span></div></header>
+<main><section class="intro"><h2>Passt die Stelle zu deinem Profil?</h2><p>Stellenanzeige und Kurzprofil eingeben. Der Workflow analysiert die Passung und erstellt einen Bewerbungsvorschlag.</p></section>
+<div class="layout"><section class="card">
+<h3>Analyse starten</h3><p class="sub">Die Anfrage läuft über deinen veröffentlichten n8n-Workflow.</p>
+<form id="analyzeForm">
+<label for="jobText">Stellenanzeige</label><textarea id="jobText" required placeholder="Text der Stellenanzeige …"></textarea>
+<label for="profile">Dein Kurzprofil</label><textarea id="profile" required placeholder="Erfahrung, Kenntnisse und Stärken …" style="min-height:105px"></textarea>
+<button id="sample" class="btn secondary" type="button">Beispieldaten laden</button>
+<label for="token">Workflow-Token</label><input id="token" type="password" required autocomplete="off" placeholder="X-WorkflowPilot-Token">
+<p class="hint">Das Token wird nicht gespeichert. Auf einer öffentlichen Website muss es später serverseitig geschützt werden.</p>
+<div class="row"><button id="submit" class="btn" type="submit">Analyse starten</button><span id="status" class="status" aria-live="polite"></span></div><div id="message" class="message" role="alert"></div>
+</form><div id="results" class="results"></div>
+<div class="security">Diese Demo ruft n8n direkt aus dem Browser auf. Bei einem CORS-Fehler muss die erlaubte Herkunft im Webhook gesetzt werden. Für eine öffentliche Website den Token über einen Server schützen.</div>
+</section>
+<aside class="card"><h3>Meine To-dos</h3><p class="sub">Bewerbungsaufgaben im Blick behalten.</p>
+<form id="todoForm" class="todo-add"><input id="todoInput" aria-label="Neue Aufgabe" placeholder="Neue Aufgabe …" maxlength="160" required><button class="btn" type="submit">Hinzufügen</button></form>
+<ul id="todos" class="todos"></ul><p id="todoEmpty" class="empty">Noch keine Aufgaben. Zum Beispiel: Lebenslauf aktualisieren.</p><p class="todo-foot">Die Aufgaben bleiben lokal in diesem Browser gespeichert.</p></aside></div></main>
+<script>
+const SAMPLE_JOB="Wir suchen eine Projektassistenz zur Unterstützung bei Planung, Kommunikation und Dokumentation laufender Projekte. Sie koordiniert Termine, erstellt Unterlagen und arbeitet sorgfältig im Team.";
+const SAMPLE_PROFILE="Erfahrene Bürokraft mit Organisationstalent, sehr guten Deutschkenntnissen und sicherem Umgang mit Office-Programmen.";
+const endpoint="https://sonja1.app.n8n.cloud/webhook/workflowpilot/analyze";
+const $=s=>document.querySelector(s), esc=v=>String(v==null?"":v).replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])), arr=x=>Array.isArray(x)?x:[];
+$("#sample").addEventListener("click",()=>{$("#jobText").value=SAMPLE_JOB;$("#profile").value=SAMPLE_PROFILE});
+$("#analyzeForm").addEventListener("submit",async e=>{
+ e.preventDefault();$("#message").className="message";$("#message").textContent="";$("#results").className="results";$("#results").innerHTML="";$("#submit").disabled=true;$("#status").textContent="Analysiere …";
+ const token=$("#token").value.trim();
+ try{
+  const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json","X-WorkflowPilot-Token":token},body:JSON.stringify({jobText:$("#jobText").value.trim(),profile:$("#profile").value.trim()})});
+  const raw=await response.text();let data;try{data=JSON.parse(raw)}catch{data={message:raw}}
+  if(!response.ok)throw new Error(response.status===401||response.status===403?"Zugriff verweigert (401/403). Token und Header-Auth in n8n prüfen.":"n8n antwortete mit HTTP "+response.status+".");
+  if(data.success===false)throw new Error(data.message||"Der Workflow meldet einen Fehler.");
+  render(data);$("#status").textContent="Fertig";
+ }catch(error){$("#message").textContent=error instanceof TypeError?"Verbindung fehlgeschlagen. Prüfe CORS am Webhook und die Internetverbindung.":error.message||"Anfrage fehlgeschlagen." ;$("#message").className="message error";$("#status").textContent=""}
+ finally{$("#token").value="";$("#submit").disabled=false}
+});
+function render(d){
+ const rows=arr(d.requirements).map(r=>"<tr><td>"+esc(r.requirement)+"</td><td>"+esc(r.evidence||"—")+"</td><td>"+esc(r.status||"—")+"</td></tr>").join("");
+ const ul=x=>arr(x).map(v=>"<li>"+esc(v)+"</li>").join("");
+ let html="<div class='resulthead'><h3>Analyseergebnis</h3><span class='badge'>"+esc(d.fitCategory||"analysiert")+"</span></div>";
+ if(d.summary)html+="<div class='resultblock'><h4>Zusammenfassung</h4><p>"+esc(d.summary)+"</p></div>";
+ if(d.recommendation)html+="<div class='resultblock'><h4>Empfehlung</h4><p>"+esc(d.recommendation)+"</p></div>";
+ if(rows)html+="<div class='resultblock'><h4>Anforderungen</h4><div class='tablewrap'><table><thead><tr><th>Anforderung</th><th>Beleg im Profil</th><th>Status</th></tr></thead><tbody>"+rows+"</tbody></table></div></div>";
+ if(arr(d.gaps).length)html+="<div class='resultblock'><h4>Fehlende Nachweise</h4><ul class='list'>"+ul(d.gaps)+"</ul></div>";
+ if(arr(d.questions).length)html+="<div class='resultblock'><h4>Rückfragen</h4><ul class='list'>"+ul(d.questions)+"</ul></div>";
+ if(arr(d.qualityConcerns).length)html+="<div class='resultblock'><h4>Qualitätshinweise</h4><ul class='list'>"+ul(d.qualityConcerns)+"</ul></div>";
+ if(d.draft)html+="<div class='resultblock'><div class='resulthead'><h4>Entwurf (bitte prüfen)</h4><button class='smallbtn' id='copyDraft' type='button'>Entwurf kopieren</button></div><div class='draft' id='draft'>"+esc(d.draft)+"</div></div>";
+ if(d.humanReviewRequired)html+="<div class='message show'>Bitte Ergebnis und Bewerbungstext vor Verwendung selbst prüfen.</div>";
+ $("#results").innerHTML=html;$("#results").className="results show";
+ if(d.draft)$("#copyDraft").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(d.draft);$("#copyDraft").textContent="Kopiert";setTimeout(()=>$("#copyDraft").textContent="Entwurf kopieren",1500)}catch{$("#copyDraft").textContent="Kopieren nicht möglich"}});
+}
+const todoForm=$("#todoForm"),todoInput=$("#todoInput"),todoList=$("#todos"),todoEmpty=$("#todoEmpty");
+function readTodos(){try{return JSON.parse(localStorage.getItem("workflowpilot-todos")||"[]")}catch{return []}}
+let todos=readTodos();
+function saveTodos(){localStorage.setItem("workflowpilot-todos",JSON.stringify(todos));renderTodos()}
+function renderTodos(){todoList.innerHTML="";todoEmpty.hidden=todos.length>0;todos.forEach(todo=>{const li=document.createElement("li");if(todo.done)li.classList.add("done");const cb=document.createElement("input");cb.type="checkbox";cb.checked=todo.done;cb.setAttribute("aria-label","Als erledigt markieren");cb.addEventListener("change",()=>{todo.done=cb.checked;saveTodos()});const text=document.createElement("span");text.className="todo-text";text.textContent=todo.text;const del=document.createElement("button");del.type="button";del.className="remove";del.textContent="×";del.setAttribute("aria-label","Aufgabe löschen");del.addEventListener("click",()=>{todos=todos.filter(t=>t.id!==todo.id);saveTodos()});li.append(cb,text,del);todoList.append(li)})}
+todoForm.addEventListener("submit",e=>{e.preventDefault();const text=todoInput.value.trim();if(!text)return;todos.unshift({id:Date.now()+Math.random(),text:text,done:false});todoInput.value="";saveTodos()});renderTodos();
+</script></body></html>
