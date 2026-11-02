@@ -5,3 +5,6 @@
 .flashcard-launch{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.flashcard-review{display:flex;align-items:center;gap:10px;margin:0 0 18px;color:#d9f0dd;font-size:15px}.flashcard-review input{width:20px;height:20px;accent-color:var(--accent)}
 
 .download-link{display:inline-block;border:1px solid var(--accent);border-radius:12px;padding:12px 17px;background:var(--accent);color:#03220c;font-weight:750;text-decoration:none}.download-link:hover{background:#9cffad;color:#03220c}.download-link:focus-visible{outline:3px solid #ab9aff;outline-offset:3px}
+
+.quiz-reset-row{display:flex;justify-content:flex-end;margin:-8px 0 18px}
+.quiz-reset-row button:disabled{opacity:.5;cursor:not-allowed}
