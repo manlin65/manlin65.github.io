@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KI Tag 27 · Open-Source-Potenziale | Manfred Linner</title>
+<meta name="description" content="Open-Source-KI in der Praxis: Docling, Ollama und Haystack – Vergleich und dokumentierter Docling-Test.">
+<link rel="canonical" href="https://www.mlinner-software.de/KI_Tag27/">
+<style>
+:root{color-scheme:dark;--bg:#071829;--panel:#10283b;--text:#edf7fc;--muted:#b8cbd8;--orange:#ff9b40;--cyan:#42d6f4}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#163d55 0,transparent 47%),var(--bg);color:var(--text);font:16px/1.65 system-ui,"Segoe UI",Arial,sans-serif}
+a{color:var(--cyan)}a:hover{text-decoration:none}header,main,footer{max-width:1080px;margin:auto;padding:32px 24px}header{padding-top:66px}.eyebrow{color:var(--cyan);font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;font-weight:750}
+h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1.08;letter-spacing:-.04em;margin:16px 0}h1 span{color:var(--orange)}.intro{font-size:1.18rem;color:#d1e0ec;max-width:800px}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 10px}.tags span{padding:5px 12px;border:1px solid #3a6278;border-radius:99px;font-size:.83rem}
+section{margin:15px 0 54px}h2{font-size:1.8rem}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:linear-gradient(140deg,#15334a,#0a2132);border:1px solid #31536a;padding:24px;border-radius:18px}.card h3{font-size:1.55rem;margin:7px 0}.card p{color:#cedce6}.small{font-size:.83rem;color:var(--orange);font-weight:750}
+.panel{background:#10283b;border-left:4px solid var(--orange);border-radius:0 12px 12px 0;padding:19px 24px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}.metric{background:var(--panel);padding:20px;border:1px solid #31536a;border-radius:14px}.metric strong{display:block;font-size:1.7rem;color:var(--cyan)}.metric small{color:var(--muted)}li{margin:8px 0}footer{border-top:1px solid #34506a;color:var(--muted);font-size:.86rem;padding-top:25px;padding-bottom:45px}
+@media(max-width:750px){.grid,.metrics{grid-template-columns:1fr}header{padding-top:42px}}
+</style></head><body>
+<header><div class="eyebrow">KI-Manager-Weiterbildung · Tag 27 · 03.11.2026</div><h1>Open Source.<br><span>Konkreter Nutzen.</span></h1>
+<p class="intro">Drei offene KI-Werkzeuge für Dokumentenanalyse, lokale Modelle und Wissenssuche – mit einem echten Docling-Praxistest. Technische Einordnung für DataScout, InvoiceCheck und SELVAMO AI by manliNova.</p>
+<div class="tags"><span>Recherche</span><span>Projektvergleich</span><span>Dokumentierter Praxistest</span></div></header>
+<main>
+<section><h2>01 · Drei Projekte im Vergleich</h2><div class="grid">
+<article class="card"><div class="small">MIT · Open-Source-Software</div><h3>Docling</h3><p>Dokumente aus PDFs in strukturierte Daten überführen, einschließlich Tabellen und Layout.</p><p><b>Potenzial:</b> Datenextraktion für DataScout und InvoiceCheck.</p><p><b>Offen:</b> Scan-OCR, Stabilität und Laufzeit bei vielen Dokumenten.</p><a href="https://github.com/docling-project/docling" target="_blank" rel="noopener noreferrer">Repository ansehen</a></article>
+<article class="card"><div class="small">MIT · Open-Source-Runtime</div><h3>Ollama</h3><p>Sprachmodelle auf eigener Infrastruktur ausführen und über eine lokale API nutzen.</p><p><b>Potenzial:</b> Datensensible Analysen für SELVAMO AI.</p><p><b>Offen:</b> Hardware, Betrieb, Modellqualität und separate Modelllizenzen.</p><a href="https://github.com/ollama/ollama" target="_blank" rel="noopener noreferrer">Repository ansehen</a></article>
+<article class="card"><div class="small">Apache 2.0 · Open-Source-Software</div><h3>Haystack</h3><p>Framework für Retrieval, RAG und quellenbasierte Wissenssuche.</p><p><b>Potenzial:</b> Wissensarchiv und Quellenbelege für SELVAMO AI.</p><p><b>Offen:</b> Architekturaufwand und Qualität der angebundenen Quellen.</p><a href="https://github.com/deepset-ai/haystack" target="_blank" rel="noopener noreferrer">Repository ansehen</a></article>
+</div></section>
+<section><h2>02 · Open Source und Open Weight</h2><div class="panel"><b>Open Source</b> beschreibt frei nutzbare und unter offenen Lizenzbedingungen verfügbare Software. <b>Open Weight</b> gibt Modellgewichte frei, aber nicht zwangsläufig Trainingsdaten oder Trainingspipeline. Eine Open-Source-Runtime wie Ollama bedeutet nicht, dass jedes damit ausgeführte Modell ebenfalls Open Source ist. API-Modelle externer Anbieter bieten oft einen schnellen Start, erzeugen aber zusätzliche Abhängigkeiten.</div></section>
+<section><h2>03 · Docling: Der Praxistest</h2><div class="metrics"><div class="metric"><strong>Erfolgreich</strong><small>Standardlauf</small></div><div class="metric"><strong>42,593 s</strong><small>Ein Testlauf, kein Benchmark</small></div><div class="metric"><strong>1 Tabelle</strong><small>Korrekt erkannt</small></div></div>
+<div class="panel"><p>Verarbeitet wurde eine synthetische, einseitige PDF-Rechnung <b>mit auslesbarer Textebene</b>. Die Verarbeitung unter Docling 2.146.0 erzeugte Markdown- und JSON-Ergebnisse. Rechnungsinhalte, Zahlen und Umlaute blieben beim Abgleich erhalten. Der notwendige Modell-Download gelang nach Freigabe des Zugriffs.</p><p><b>Wichtig:</b> Die eigentliche Scan-OCR-Qualität wurde <b>nicht</b> geprüft. Aus einer einzelnen Laufzeit lässt sich keine allgemeingültige Performance ableiten.</p></div></section>
+<section><h2>04 · Bewertung für die Praxis</h2><ul>
+<li><b>Docling:</b> Höchste direkte Relevanz für Dokumentenanwendungen. Empfehlung: Erst weitere Tests mit unterschiedlichen PDFs und Scans durchführen.</li>
+<li><b>Ollama:</b> Für lokale Verarbeitung interessant, sofern Modellqualität, Hardwarebedarf und Lizenzbedingungen passen.</li>
+<li><b>Haystack:</b> Für eine spätere, nachvollziehbare Suche in eigenen Dokumenten geeignet, aber mit zusätzlichem Integrationsaufwand.</li>
+</ul><p><b>Fazit:</b> Für einen nächsten technischen Versuch ist Docling der beste Kandidat. Ein produktiver Einsatz ist auf Basis dieses einzelnen Tests noch nicht freigegeben.</p></section>
+<section><h2>05 · Grenzen und Quellen</h2><p>GitHub-Stars und Forks können auf Community-Interesse hinweisen, sind aber keine Garantie für Qualität oder Sicherheit. Lizenzen, Versionsstand und Wartung müssen bei einer produktiven Integration erneut geprüft werden.</p><ul><li><a href="https://github.com/docling-project/docling">Docling auf GitHub</a></li><li><a href="https://github.com/ollama/ollama">Ollama auf GitHub</a></li><li><a href="https://github.com/deepset-ai/haystack">Haystack auf GitHub</a></li></ul></section>
+</main><footer>KI-Schulung · Tag 27 · Manfred Linner · SELVAMO AI by manliNova · Stand 03.11.2026</footer></body></html>
