@@ -14,3 +14,16 @@
 /* KI-Hintergrund an den äußeren Rändern; die Mitte bleibt ruhig für die Fragen. */
 body{background-color:var(--navy);background-image:url("assets/quizlab-ai-background.png");background-repeat:no-repeat;background-position:center top;background-size:cover;background-attachment:fixed}
 @media(max-width:760px){body{background-size:auto 100vh;background-position:center top;background-attachment:fixed}}
+
+/* Correct answers are marked with a clear green overlay, without inline “Richtig:” text. */
+.answer-list,.choice-list{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
+.answer-option{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 13px;border:1px solid #385872;border-radius:8px;background:var(--navy);color:var(--text);line-height:1.5}
+.answer-option.is-correct{border-color:#39d98a;background:linear-gradient(100deg,rgba(20,130,78,.4),rgba(20,130,78,.16));box-shadow:inset 4px 0 0 #39d98a,0 0 14px rgba(57,217,138,.14);color:#effff6}
+.answer-badge{flex:none;border:1px solid rgba(99,232,155,.65);border-radius:999px;padding:2px 9px;background:rgba(24,126,76,.75);color:#b7ffd3;font-size:.76rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+
+/* Wortmarke mit separat gesetztem Absender, damit der Zusatz sauber aktualisierbar bleibt. */
+.brand-lockup{width:min(520px,48%);flex:none;display:flex;flex-direction:column;align-items:center;gap:0}
+.page-header .brand-lockup .brand-logo{width:100%;max-height:250px;object-fit:contain}
+.brand-powered{margin-top:-8px;color:#fff;font-size:clamp(1rem,1.5vw,1.3rem);font-weight:700;letter-spacing:.015em;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.page-footer img{width:155px}
+@media(max-width:760px){.brand-lockup{width:min(480px,100%)}.brand-powered{margin-top:-3px}}

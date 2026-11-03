@@ -82,7 +82,7 @@
       const section=document.createElement('article');section.className='review-item';
       const title=document.createElement('h3');title.className=ok?'correct-text':'wrong-text';title.textContent=`${i+1}. ${ok?'Richtig':'Falsch oder nicht beantwortet'} · Woche ${it.variant.week||'–'}`;section.append(title);
       const question=document.createElement('p');question.textContent=it.variant.question;section.append(question);
-      const list=document.createElement('ul');list.className='choice-list';it.options.forEach((o,j)=>{const li=document.createElement('li');li.textContent=`${o.correct?'✓ Richtig':'○'} ${o.text}${it.selected.has(j)&&!o.correct?' · Deine Auswahl':''}`;if(o.correct)li.className='correct-text';list.append(li);});section.append(list);
+      const list=document.createElement('ul');list.className='choice-list';it.options.forEach((o,j)=>{const li=document.createElement('li');li.className=o.correct?'answer-option is-correct':'answer-option';const text=document.createElement('span');text.textContent=`${o.text}${it.selected.has(j)&&!o.correct?' · Deine Auswahl':''}`;li.append(text);if(o.correct){const badge=document.createElement('span');badge.className='answer-badge';badge.textContent='Korrekt';li.append(badge);}list.append(li);});section.append(list);
       if(it.variant.explanation){const ex=document.createElement('p');ex.textContent=it.variant.explanation;section.append(ex);}detail.append(section);
     });result.append(detail);
   }
@@ -107,7 +107,7 @@
       const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`Woche ${(q.weeks||[]).join(', ')} · ${multi?`Mehrfachauswahl (${v.correct.length})`:'Einfachauswahl'} · ${sources(q).join(' + ')}`;article.append(meta);
       const h=document.createElement('h3');h.textContent=v.question;article.append(h);
       const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Antworten und Erklärung anzeigen';details.append(summary);
-      const ul=document.createElement('ul');(v.options||[]).forEach((opt,i)=>{const li=document.createElement('li');li.textContent=`${(v.correct||[]).includes(i)?'✓ Richtig: ':'○ '}${opt}`;ul.append(li);});details.append(ul);
+      const ul=document.createElement('ul');ul.className='answer-list';(v.options||[]).forEach((opt,i)=>{const isCorrect=(v.correct||[]).includes(i),li=document.createElement('li');li.className=isCorrect?'answer-option is-correct':'answer-option';const text=document.createElement('span');text.textContent=opt;li.append(text);if(isCorrect){const badge=document.createElement('span');badge.className='answer-badge';badge.textContent='Korrekt';li.append(badge);}ul.append(li);});details.append(ul);
       if(v.explanation){const ex=document.createElement('p');ex.textContent=v.explanation;details.append(ex);}
       const alts=allVariants(q).filter(x=>x.question!==v.question);if(alts.length){const alt=document.createElement('details');alt.className='match-variants';const sm=document.createElement('summary');sm.textContent=`Weitere zusammengeführte Formulierung${alts.length>1?'en':''} (${alts.length})`;alt.append(sm);alts.forEach(x=>{const p=document.createElement('p');p.textContent=`${x.source||'Quelle'}: ${x.question}`;alt.append(p);});details.append(alt);}
       article.append(details);list.append(article);
