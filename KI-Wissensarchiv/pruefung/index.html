@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061224">
+  <meta name="description" content="mama quizlab: Fragen finden, üben und eine Prüfung mit zufälligen Fragen simulieren.">
+  <title>mama quizlab · Prüfungsfragen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topline" aria-hidden="true"></div>
+  <main class="page-shell">
+    <header class="page-header">
+      <img class="brand-logo" src="assets/mama-quizlab-header.png" alt="mama quizlab – by marc und manni">
+      <div class="header-copy">
+        <div class="eyebrow">QUIZARCHIV · PRÜFUNGSSIMULATOR</div>
+        <h1>Prüfungsfragen</h1>
+        <p class="lead">Finde Fragen zum Üben oder simuliere eine Prüfung mit zufälliger Auswahl. Die Fragenbank enthält Inhalte aus dem Wissensarchiv und dem Marc-Fragenpool.</p>
+        <div class="fact-row"><span>640 bereinigte Fragen</span><span>Woche 1–6</span><span>Einfach- und Mehrfachauswahl</span></div>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Bereiche">
+      <button role="tab" id="tab-all" aria-controls="all" aria-selected="true" data-tab="all">Alle Fragen</button>
+      <button role="tab" id="tab-sim" aria-controls="sim" aria-selected="false" data-tab="sim">Simulation</button>
+    </nav>
+
+    <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
+      <div class="surface">
+        <div class="section-heading"><div><div class="eyebrow">01 · FRAGEN FINDEN UND ÜBEN</div><h2>Alle Fragen</h2></div><span class="count-badge" id="catalog-count">640 Fragen</span></div>
+        <p class="section-intro">Suche nach Thema oder Begriff. Filtere nach Woche, Quelle und Auswahltyp. Antwort und Erklärung kannst du pro Frage aufklappen.</p>
+        <div class="filter-grid">
+          <label class="search-field">Suche nach Thema oder Begriff<input id="search" type="search" placeholder="z. B. API, Agent, Datenbank …"></label>
+          <label>Woche<select id="filter-week"><option value="all">Alle Wochen</option><option value="1">Woche 1</option><option value="2">Woche 2</option><option value="3">Woche 3</option><option value="4">Woche 4</option><option value="5">Woche 5</option><option value="6">Woche 6</option></select></label>
+          <label>Quelle<select id="filter-source"><option value="all">Alle Quellen</option><option value="Manni">Wissensarchiv</option><option value="Marc">Marc</option></select></label>
+          <label>Fragentyp<select id="filter-type"><option value="all">Alle Fragentypen</option><option value="single">Einfachauswahl</option><option value="multiple">Mehrfachauswahl</option></select></label>
+        </div>
+        <div id="catalog-list" class="catalog-list" aria-live="polite"></div>
+        <button id="load-more" class="button button-secondary">Weitere Fragen laden</button>
+      </div>
+    </section>
+
+    <section id="sim" role="tabpanel" aria-labelledby="tab-sim" class="tab-panel" hidden>
+      <div id="setup" class="surface">
+        <div class="eyebrow">02 · ZUFÄLLIGE AUSWAHL</div><h2>Prüfungssimulation</h2>
+        <p class="section-intro">Wähle Umfang, Woche und Zeitlimit. Während der Prüfung kannst du vor- und zurückblättern. Die Lösungen erscheinen erst nach Abgabe oder wenn die Zeit abläuft.</p>
+        <div class="setup-grid">
+          <label>Anzahl Fragen<select id="count"><option>20</option><option selected>40</option><option>60</option><option value="all">Alle verfügbaren</option></select></label>
+          <label>Fragen aus<select id="week"><option value="all">Alle Wochen</option><option value="1">Woche 1</option><option value="2">Woche 2</option><option value="3">Woche 3</option><option value="4">Woche 4</option><option value="5">Woche 5</option><option value="6">Woche 6</option></select></label>
+          <label>Zeitlimit<select id="duration"><option value="0">Kein Zeitlimit</option><option value="15">15 Minuten</option><option value="30" selected>30 Minuten</option><option value="45">45 Minuten</option></select></label>
+        </div>
+        <div class="start-row"><button class="button button-orange" id="start">Prüfung starten</button><span id="pool-count" class="quiet"></span></div>
+      </div>
+      <div id="run" class="surface" hidden>
+        <div class="run-top"><span id="progress"></span><span id="timer" aria-live="polite"></span></div>
+        <div class="progress-track" aria-hidden="true"><div id="progressbar"></div></div>
+        <div id="question-box"></div>
+        <div class="run-actions"><button id="prev" class="button button-secondary">Zurück</button><button id="next" class="button button-cyan">Weiter</button><button id="finish" class="button button-orange" hidden>Prüfung abgeben</button></div>
+        <p id="unanswered-note" class="quiet"></p>
+      </div>
+      <div id="result" class="surface" hidden></div>
+      <div id="history" class="surface history"><h2>Letzte Ergebnisse</h2><p id="history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="clear-history">Wiederholungen zurücksetzen</button></div>
+    </section>
+
+    <footer class="page-footer"><img src="assets/mama-quizlab-logo.png" alt=""><p>mama quizlab <span>/</span> by marc und manni<br><small>Die Seite arbeitet lokal im Browser. Antworten und Ergebnisse werden nicht übertragen.</small></p></footer>
+  </main>
+  <script src="fragen.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

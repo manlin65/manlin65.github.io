@@ -1,0 +1,90 @@
+DUBLETTEN- UND FRAGENABGLEICH
+
+Manni: 407 Fragen aus Woche 1–5
+Marc: 303 STARTPLATZ-Prüfungsfragen aus Woche 1–6
+Wortgleiche Gruppen zwischen den Quellen: 48
+Sehr ähnliche Gruppen zusammengeführt: 20
+Interne wortgleiche Wiederholungen zusammengefasst: 2
+Ergebnis: 640 eindeutige Fragegruppen
+
+Sehr ähnliche zusammengeführte Paare (Score aus Wortlaut und richtiger Antwort):
+
+1. Woche 2 (Score 0.86)
+Manni: Was sind zentrale Elemente erfolgreicher Prompts? (2 Antworten)
+Marc:  Was sind zentrale Elemente erfolgreicher Prompts?
+
+2. Woche 2 (Score 0.88)
+Manni: Welche grundlegende Unterscheidung gibt es bei Prompting-Techniken?
+Marc:  Welche grundlegende Unterscheidung gibt es bei der Anwendung von Prompting-Techniken?
+
+3. Woche 3 (Score 0.75)
+Manni: Was sollte ein gut strukturierter Prompt für KI-Videogenerierung enthalten, um die zeitliche Abfolge festzulegen?
+Marc:  Welche Komponente sollte ein gut strukturierter Prompt für die KI-Videogenerierung unbedingt enthalten, um die zeitliche Abfolge klar zu definieren?
+
+4. Woche 3 (Score 0.75)
+Manni: Welche Innovation zeichnet Perplexity im Vergleich zu traditionellen Suchmaschinen aus?
+Marc:  Welche Innovation zeichnet die Perplexity-Suchmaschine im Vergleich zu traditionellen Suchmaschinen aus?
+
+5. Woche 3 (Score 0.84)
+Manni: Welche Kriterien sind bei der Auswahl von KI-Modellen für den Unternehmenseinsatz entscheidend? (2 Antworten sind richtig)
+Marc:  Welche Kriterien sind bei der Auswahl von KI-Modellen für den Unternehmenseinsatz entscheidend?
+
+6. Woche 3 (Score 0.82)
+Manni: Welcher Faktor ist bei der Auswahl eines Text-to-Video-Modells für E-Commerce-Produktpräsentationen besonders wichtig?
+Marc:  Welcher Faktor ist bei der Auswahl eines geeigneten Text-to-Video-Modells für Produktpräsentationen im E-Commerce besonders wichtig?
+
+7. Woche 3 (Score 0.76)
+Manni: Welcher Unterschied besteht zwischen DALL·E 3 und Midjourney v6.1 bei der Prompt-Verarbeitung?
+Marc:  Welcher entscheidende Unterschied besteht zwischen DALL-E 3 und Midjourney v6.1 hinsichtlich der Prompt-Verarbeitung?
+
+8. Woche 3 (Score 0.80)
+Manni: Wie unterscheidet sich Claude von Anthropic hinsichtlich der ethischen Ausrichtung?
+Marc:  Wie unterscheidet sich Claude von Anthropic von anderen KI-Modellen hinsichtlich der ethischen Ausrichtung?
+
+9. Woche 3 (Score 0.91)
+Manni: Wodurch unterscheiden sich Consumer- und Experten-Tools zur Bildgenerierung hauptsächlich?
+Marc:  Wodurch unterscheiden sich Consumer-KI und Experten-KI bei der Bildgenerierung hauptsächlich?
+
+10. Woche 4 (Score 0.79)
+Manni: Für welchen Anwendungsfall eignet sich biometrische Authentifizierung am wenigsten?
+Marc:  Für welchen Anwendungsfall eignet sich die biometrische Authentifizierung am wenigsten?
+
+11. Woche 4 (Score 0.79)
+Manni: Was ist ein wesentlicher Vorteil von API-Integration in KI-Anwendungen?
+Marc:  Was ist ein wesentlicher Vorteil der API-Integration in KI-Anwendungen?
+
+12. Woche 4 (Score 0.90)
+Manni: Welchen Hauptvorteil bieten KI-Entwicklungstools wie Cursor bei der Webentwicklung?
+Marc:  Welchen Hauptvorteil bieten KI-gestützte Entwicklungstools wie Cursor.ai bei der Webentwicklung?
+
+13. Woche 4 (Score 0.82)
+Manni: Wie werden Daten in der Regel zwischen Frontend und Backend ausgetauscht?
+Marc:  Wie werden in der Regel Daten zwischen Frontend und Backend einer Webanwendung ausgetauscht?
+
+14. Woche 4 (Score 0.77)
+Manni: Wofür steht CRUD bei Datenbankoperationen?
+Marc:  Wofür steht das Akronym CRUD im Kontext von Datenbankoperationen?
+
+15. Woche 5 (Score 0.84)
+Manni: Für welchen praktischen Anwendungsfall eignet sich die Nutzung eines KI-gestützten Automatisierungstools besonders gut?
+Marc:  Für welchen praktischen Anwendungsfall eignet sich die Nutzung eines KI-gestützten Automatisierungs-Tools besonders gut?
+
+16. Woche 5 (Score 0.88)
+Manni: Was beschreibt die Agenda als Bestandteil eines KI-Agenten am treffendsten?
+Marc:  Was beschreibt die "Agenda" als wesentlicher Bestandteil eines KI-Agenten am treffendsten?
+
+17. Woche 5 (Score 0.90)
+Manni: Was zeichnet Make im Vergleich zu anderen Automatisierungstools besonders aus?
+Marc:  Was zeichnet das Tool "Make" im Vergleich zu anderen Automatisierungstools besonders aus?
+
+18. Woche 5 (Score 0.88)
+Manni: Welche Plattformen werden in den Materialien als Frameworks für die Entwicklung von KI-Agenten genannt? (2 Antworten sind richtig)
+Marc:  Welche der folgenden Plattformen werden in den Materialien als aktuelle Frameworks für die Entwicklung von KI-Agenten genannt? (2 von 5 Antworten richtig)
+
+19. Woche 5 (Score 0.82)
+Manni: Welche drei wesentlichen Bestandteile bilden in diesem Kursmodell die Grundstruktur eines KI-Agenten?
+Marc:  Welche drei wesentlichen Bestandteile bilden die Grundstruktur eines KI-Agenten?
+
+20. Woche 5 (Score 0.77)
+Manni: Welche primäre Eigenschaft unterscheidet einen KI-Agenten von einer einfachen Workflow-Automatisierung?
+Marc:  Was ist die primäre Eigenschaft, die einen KI-Agenten von einer einfachen Workflowautomatisierung unterscheidet?
