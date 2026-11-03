@@ -29,12 +29,13 @@
     <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
       <div class="surface">
         <div class="section-heading"><div><div class="eyebrow">01 · FRAGEN FINDEN UND ÜBEN</div><h2>Alle Fragen</h2></div><span class="count-badge" id="catalog-count">640 Fragen</span></div>
-        <p class="section-intro">Suche nach Thema oder Begriff. Filtere nach Woche, Quelle und Auswahltyp. Antwort und Erklärung kannst du pro Frage aufklappen.</p>
+        <p class="section-intro">Suche nach Thema oder Begriff und wähle, ob du Lösungen sehen oder die Fragen selbst beantworten möchtest.</p>
         <div class="filter-grid">
           <label class="search-field">Suche nach Thema oder Begriff<input id="search" type="search" placeholder="z. B. API, Agent, Datenbank …"></label>
           <label>Woche<select id="filter-week"><option value="all">Alle Wochen</option><option value="1">Woche 1</option><option value="2">Woche 2</option><option value="3">Woche 3</option><option value="4">Woche 4</option><option value="5">Woche 5</option><option value="6">Woche 6</option></select></label>
           <label>Quelle<select id="filter-source"><option value="all">Alle Quellen</option><option value="Manni">Manni</option><option value="Marc">Marc</option></select></label>
           <label>Fragentyp<select id="filter-type"><option value="all">Alle Fragentypen</option><option value="single">Einfachauswahl</option><option value="multiple">Mehrfachauswahl</option></select></label>
+          <label>Ansicht<select id="catalog-mode"><option value="solutions">Fragen mit Lösungen</option><option value="practice">Selbst lösen</option></select></label>
         </div>
         <div id="catalog-list" class="catalog-list" aria-live="polite"></div>
         <button id="load-more" class="button button-secondary">Weitere Fragen laden</button>
@@ -44,19 +45,20 @@
     <section id="sim" role="tabpanel" aria-labelledby="tab-sim" class="tab-panel" hidden>
       <div id="setup" class="surface">
         <div class="eyebrow">02 · ZUFÄLLIGE AUSWAHL</div><h2>Prüfungssimulation</h2>
-        <p class="section-intro">Wähle Umfang, Woche und Zeitlimit. Während der Prüfung kannst du vor- und zurückblättern. Die Lösungen erscheinen erst nach Abgabe oder wenn die Zeit abläuft.</p>
+        <p class="section-intro">Wähle Umfang, eine oder mehrere Wochen und das Zeitlimit. Während der Prüfung kannst du vor- und zurückblättern. Die Lösungen erscheinen erst nach Abgabe oder wenn die Zeit abläuft.</p>
         <div class="setup-grid">
           <label>Anzahl Fragen<select id="count"><option>20</option><option selected>40</option><option>60</option><option value="all">Alle verfügbaren</option></select></label>
-          <label>Fragen aus<select id="week"><option value="all">Alle Wochen</option><option value="1">Woche 1</option><option value="2">Woche 2</option><option value="3">Woche 3</option><option value="4">Woche 4</option><option value="5">Woche 5</option><option value="6">Woche 6</option></select></label>
+          <div class="week-picker"><span class="week-label">Fragen aus</span><details class="week-dropdown"><summary id="week-summary">Alle Fragen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="all-weeks" checked> Alle Fragen</label><div id="week-options" class="week-options"></div></div></details></div>
           <label>Zeitlimit<select id="duration"><option value="0">Kein Zeitlimit</option><option value="15">15 Minuten</option><option value="30" selected>30 Minuten</option><option value="45">45 Minuten</option></select></label>
         </div>
         <div class="start-row"><button class="button button-orange" id="start">Prüfung starten</button><span id="pool-count" class="quiet"></span></div>
+        <div class="saved-retries"><div><strong>Wiederholungsliste</strong><span id="saved-count" class="quiet"></span></div><div class="saved-actions"><button class="button button-cyan" id="repeat-saved">Gemerkte falsche Fragen wiederholen</button><button class="button button-secondary" id="clear-saved">Merkliste löschen</button></div><p class="quiet">Falsch beantwortete Fragen werden hier auf diesem Gerät gespeichert, bis du die Merkliste löschst.</p></div>
       </div>
       <div id="run" class="surface" hidden>
         <div class="run-top"><span id="progress"></span><span id="timer" aria-live="polite"></span></div>
         <div class="progress-track" aria-hidden="true"><div id="progressbar"></div></div>
         <div id="question-box"></div>
-        <div class="run-actions"><button id="prev" class="button button-secondary">Zurück</button><button id="next" class="button button-cyan">Weiter</button><button id="finish" class="button button-orange" hidden>Prüfung abgeben</button></div>
+        <div class="run-actions"><button id="abort" class="button button-secondary">Prüfung abbrechen</button><button id="prev" class="button button-secondary">Zurück</button><button id="next" class="button button-cyan">Weiter</button><button id="finish" class="button button-orange" hidden>Prüfung abgeben</button></div>
         <p id="unanswered-note" class="quiet"></p>
       </div>
       <div id="result" class="surface" hidden></div>
