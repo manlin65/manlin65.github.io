@@ -71,3 +71,17 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
 @media(max-width:480px){.filter-grid{grid-template-columns:1fr}.filter-grid .search-field{grid-column:auto}}
 .run-actions #abort{margin-right:auto}.run-actions #prev{margin-right:0}
 @media(max-width:480px){.run-actions #abort{flex-basis:100%}}
+
+/* Separate Startplatz exam simulator; shares the archive's visual language. */
+#tab-startplatz{border-color:#805115;background:linear-gradient(135deg,#172b43,#1d3149)}
+#tab-startplatz[aria-selected=true]{background:linear-gradient(135deg,#8b4b08,#bd6508);border-color:#ff9800;color:#fffaf2}
+#startplatz .section-heading{margin:10px 0 2px}
+#sp-pool-count{min-height:1.5em}
+#sp-question-box .question-options{margin-bottom:18px}
+#sp-result .review-item .source-meta{margin-bottom:5px}
+#sp-result .answer-option.is-correct{border-color:#39d98a;background:linear-gradient(100deg,rgba(20,130,78,.4),rgba(20,130,78,.16));box-shadow:inset 4px 0 0 #39d98a,0 0 14px rgba(57,217,138,.14);color:#effff6}
+#sp-result .answer-option.is-wrong{border-color:#ff5c70;background:linear-gradient(100deg,rgba(160,35,55,.42),rgba(120,24,44,.18));box-shadow:inset 4px 0 0 #ff5c70,0 0 14px rgba(255,92,112,.12);color:#fff0f2}
+#sp-result .answer-badge{flex:none;border:1px solid rgba(99,232,155,.65);border-radius:999px;padding:2px 9px;background:rgba(24,126,76,.75);color:#b7ffd3;font-size:.76rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+#sp-result .answer-badge-wrong{border-color:rgba(255,125,140,.7);background:rgba(145,35,52,.82);color:#ffd0d6}
+@media(max-width:760px){.tabs{flex-wrap:wrap}.tabs button{min-width:0;flex:1 1 145px}}
+#sp-run .run-actions #sp-abort{margin-right:auto}

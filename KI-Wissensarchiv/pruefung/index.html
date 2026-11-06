@@ -16,14 +16,15 @@
       <div class="header-copy">
         <div class="eyebrow">MANNI · PRÜFUNGSSIMULATOR</div>
         <h1>Prüfungsfragen</h1>
-        <p class="lead">Finde Fragen zum Üben oder simuliere eine Prüfung mit zufälliger Auswahl. Die Fragenbank enthält Inhalte von Manni und Marc.</p>
-        <div class="fact-row"><span>640 bereinigte Fragen</span><span>Woche 1–6</span><span>Einfach- und Mehrfachauswahl</span></div>
+        <p class="lead">Übe mit Fragen aus Mannis und Marcs Wissensarchiv oder simuliere separat die offiziellen Startplatz-Prüfungsfragen.</p>
+        <div class="fact-row"><span>640 bereinigte Fragen</span><span>55 offizielle Startplatz-Fragen</span><span>Archiv: Woche 1–6</span><span>Einfach- und Mehrfachauswahl</span></div>
       </div>
     </header>
 
     <nav class="tabs" role="tablist" aria-label="Bereiche">
       <button role="tab" id="tab-all" aria-controls="all" aria-selected="true" data-tab="all">Alle Fragen</button>
       <button role="tab" id="tab-sim" aria-controls="sim" aria-selected="false" data-tab="sim">Simulation</button>
+      <button role="tab" id="tab-startplatz" aria-controls="startplatz" aria-selected="false" data-tab="startplatz">Prüfungsfragen Startplatz</button>
     </nav>
 
     <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
@@ -65,9 +66,34 @@
       <div id="history" class="surface history"><h2>Letzte Ergebnisse</h2><p id="history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="clear-history">Wiederholungen zurücksetzen</button></div>
     </section>
 
+    <section id="startplatz" role="tabpanel" aria-labelledby="tab-startplatz" class="tab-panel" hidden>
+      <div id="sp-setup" class="surface">
+        <div class="eyebrow">03 · OFFIZIELLER FRAGENPOOL</div><h2>Prüfungsfragen Startplatz</h2>
+        <p class="section-intro">Simuliere die Prüfung mit den offiziellen Startplatz-Fragen. Fragen und Antwortoptionen werden zufällig ausgewählt und gemischt. Lösungen und Erklärungen siehst du erst nach der Abgabe oder wenn die Zeit abläuft. Du kannst vor- und zurückblättern oder die Prüfung abbrechen.</p>
+        <div class="section-heading"><span class="quiet">Fragenpool</span><span id="sp-total-count" class="count-badge">55 offizielle Fragen</span></div>
+        <div class="setup-grid">
+          <label>Anzahl Fragen<select id="sp-count"><option>10</option><option>20</option><option selected>40</option><option value="all">Alle verfügbaren</option></select></label>
+          <div class="week-picker"><span class="week-label">Fragen aus</span><details class="week-dropdown"><summary id="sp-week-summary">Alle Fragen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="sp-all-weeks" checked> Alle Fragen</label><div id="sp-week-options" class="week-options"></div></div></details></div>
+          <label>Zeitlimit<select id="sp-duration"><option value="0">Kein Zeitlimit</option><option value="30">30 Minuten</option><option value="45" selected>45 Minuten</option><option value="60">60 Minuten</option><option value="90">90 Minuten</option></select></label>
+        </div>
+        <div class="start-row"><button class="button button-orange" id="sp-start">Prüfung starten</button><span id="sp-pool-count" class="quiet"></span></div>
+        <div class="saved-retries"><div><strong>Wiederholungsliste</strong><span id="sp-saved-count" class="quiet"></span></div><div class="saved-actions"><button class="button button-cyan" id="sp-repeat-saved">Falsche Startplatz-Fragen wiederholen</button><button class="button button-secondary" id="sp-clear-saved">Merkliste löschen</button></div><p class="quiet">Falsch beantwortete Fragen werden nur auf diesem Gerät gespeichert. Du kannst sie für eine neue Runde merken oder die Liste löschen.</p></div>
+      </div>
+      <div id="sp-run" class="surface" hidden>
+        <div class="run-top"><span id="sp-progress"></span><span id="sp-timer" aria-live="polite"></span></div>
+        <div class="progress-track" aria-hidden="true"><div id="sp-progressbar"></div></div>
+        <div id="sp-question-box"></div>
+        <div class="run-actions"><button id="sp-abort" class="button button-secondary">Prüfung abbrechen</button><button id="sp-prev" class="button button-secondary">Zurück</button><button id="sp-next" class="button button-cyan">Weiter</button><button id="sp-finish" class="button button-orange" hidden>Prüfung abgeben</button></div>
+      </div>
+      <div id="sp-result" class="surface" hidden></div>
+      <div id="sp-history" class="surface history"><h2>Letzte Startplatz-Ergebnisse</h2><p id="sp-history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="sp-clear-history">Ergebnisse zurücksetzen</button></div>
+    </section>
+
     <footer class="page-footer"><img src="assets/mama-quizlab-logo-clean.png" alt=""><p>manni <span>/</span> powered by marc &amp; manni<br><small>Die Seite arbeitet lokal im Browser. Antworten und Ergebnisse werden nicht übertragen.</small></p></footer>
   </main>
   <script src="fragen.js"></script>
+  <script src="startplatz-fragen.js"></script>
   <script src="app.js"></script>
+  <script src="startplatz.js"></script>
 </body>
 </html>
