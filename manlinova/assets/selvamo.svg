@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="325" viewBox="0 0 1460 325"><defs>
+ <linearGradient id="upper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0C3F99"/><stop offset=".42" stop-color="#1179E8"/><stop offset="1" stop-color="#28E9D5"/></linearGradient>
+ <linearGradient id="lower" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0C397C"/><stop offset=".5" stop-color="#1060D7"/><stop offset="1" stop-color="#2FE6D5"/></linearGradient>
+ <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061A48"/><stop offset="1" stop-color="#0E59B3"/></linearGradient>
+ <linearGradient id="tip" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#0D65CB"/><stop offset="1" stop-color="#27F5E1"/></linearGradient>
+ <linearGradient id="ai" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#4F8EF7"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+ </defs><g transform="translate(20 25) scale(0.76)"><g>
+  <!-- upper ascending ribbon -->
+  <path d="M58 109 C43 81 59 55 91 37 L166 0 L166 57 L113 88 C99 97 97 108 116 121 L137 134 L111 169 L84 152 C68 142 63 131 58 109 Z" fill="url(#upper)"/>
+  <!-- central fold/overlap -->
+  <path d="M60 109 C69 128 87 135 115 153 L140 169 C167 192 158 219 128 240 L48 292 L48 236 L104 200 C120 190 119 178 104 169 L73 151 C43 133 38 107 54 85 C53 93 55 102 60 109 Z" fill="url(#lower)"/>
+  <path d="M58 105 C62 127 84 143 111 160 L125 168 L106 185 L72 165 C40 145 35 112 54 85 Z" fill="url(#shade)" opacity="0.72"/>
+  <!-- unmistakable upward directional tip -->
+  <path d="M101 37 L166 0 L166 57 L140 72 L140 40 Z" fill="url(#tip)"/>
+</g></g><text x="250" y="151" font-family="DejaVu Sans, Arial, sans-serif" font-size="84" font-weight="700" fill="#0D2B50" letter-spacing=".3">SELVAMO</text><text x="785" y="151" font-family="DejaVu Sans, Arial, sans-serif" font-size="84" font-weight="700" fill="#0E73D0">AI</text><text x="255" y="204" font-family="DejaVu Sans, Arial, sans-serif" font-size="31" letter-spacing="1.7" fill="#55758D">From Potential to Progress.</text><text x="255" y="260" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" fill="#55758D">by <tspan font-weight="700" fill="#0E73D0">manliNova</tspan></text></svg>

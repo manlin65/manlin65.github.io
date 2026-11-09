@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="manliNova Branding"><defs>
+<linearGradient id="ribbonA" x1=".06" y1=".94" x2=".95" y2=".06" objectBoundingBox="true"><stop offset="0" stop-color="#1465D9"/><stop offset=".47" stop-color="#159DFF"/><stop offset="1" stop-color="#00E3D2"/></linearGradient>
+<linearGradient id="ribbonB" x1=".12" y1=".14" x2=".92" y2=".88" objectBoundingBox="true"><stop offset="0" stop-color="#1878EC"/><stop offset=".42" stop-color="#00B2F5"/><stop offset="1" stop-color="#00DCC6"/></linearGradient>
+<linearGradient id="ribbonC" x1="0" y1="1" x2=".9" y2=".08" objectBoundingBox="true"><stop offset="0" stop-color="#1360CB"/><stop offset=".52" stop-color="#00AFEB"/><stop offset="1" stop-color="#00DDC5"/></linearGradient>
+<linearGradient id="novaG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#31B4FF"/><stop offset="1" stop-color="#00C9B7"/></linearGradient>
+<linearGradient id="techBg" x1="0" y1="0" x2="1" y2=".9"><stop offset="0" stop-color="#0A3658"/><stop offset=".54" stop-color="#081F40"/><stop offset="1" stop-color="#06152F"/></linearGradient>
+<radialGradient id="tealGlow"><stop offset="0" stop-color="#03CDDA" stop-opacity=".29"/><stop offset="1" stop-color="#03CDDA" stop-opacity="0"/></radialGradient>
+<pattern id="techGrid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#1595CC" stroke-width=".8" opacity=".2"/></pattern>
+</defs><g transform="translate(50 43) scale(0.98)">
+<g transform="translate(3 3)">
+  <path d="M17 125 L54 28 Q61 11 76 20 Q81 23 86 33 L104 68 L91 99 L68 58 L44 135 Q38 150 24 145 Q12 141 17 125 Z" fill="url(#ribbonA)"/>
+  <path d="M69 21 Q78 18 85 31 L119 93 Q123 101 129 90 L157 28 Q162 16 173 20 Q184 23 179 36 L140 124 Q128 150 112 122 L69 43 Q62 30 69 21 Z" fill="url(#ribbonB)"/>
+  <path d="M90 62 L106 89 L96 113 L78 81 Z" fill="#063C91" opacity=".30"/>
+  <path d="M139 124 L179 36 Q184 23 173 20 Q164 17 158 28 L122 106 Q128 123 139 124 Z" fill="url(#ribbonC)" opacity=".75"/>
+  <path d="M25 144 L43 136 L69 62 L57 83 L31 149 Z" fill="#0A4AA3" opacity=".18"/>
+</g></g><text x="285" y="189" font-family="'Space Grotesk', 'Clear Sans', 'DejaVu Sans', sans-serif" font-size="102" letter-spacing="-1.45" dominant-baseline="alphabetic"><tspan fill="#F6FAFF" font-weight="600">manli</tspan><tspan fill="url(#novaG)" font-weight="700">Nova</tspan></text><text x="290" y="237" font-family="Clear Sans, sans-serif" font-size="17" letter-spacing="4.8" font-weight="500" fill="#B9D0E0" opacity=".84">SOFTWARE WITH PURPOSE.</text></svg>
