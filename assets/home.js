@@ -61,3 +61,15 @@ if (location.hash === '#ueber-mich') document.getElementById('ueber')?.scrollInt
 document.querySelectorAll('[data-year]').forEach(element => {
   element.textContent = String(new Date().getFullYear());
 });
+
+// Keep the restored technology ticker independently pausable.
+const ticker = document.querySelector('.tech');
+const tickerControl = ticker?.querySelector('.tech-control');
+if (ticker && tickerControl) {
+  tickerControl.addEventListener('click', () => {
+    const paused = ticker.dataset.paused !== 'true';
+    ticker.dataset.paused = String(paused);
+    tickerControl.setAttribute('aria-pressed', String(paused));
+    tickerControl.setAttribute('aria-label', paused ? 'Laufleiste fortsetzen' : 'Laufleiste anhalten');
+  });
+}
