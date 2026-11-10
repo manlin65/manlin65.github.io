@@ -14,10 +14,10 @@
     <header class="page-header">
       <div class="brand-lockup"><img class="brand-logo" src="assets/mama-quizlab-header-clean.png" alt="mama quizlab mit KI-Gehirn"><div class="brand-powered">powered by marc &amp; manni</div></div>
       <div class="header-copy">
-        <div class="eyebrow">MANNI · PRÜFUNGSSIMULATOR</div>
+        <div class="eyebrow">PRÜFUNGSSIMULATOR</div>
         <h1>Prüfungsfragen</h1>
-        <p class="lead">Übe mit Fragen aus Mannis und Marcs Wissensarchiv oder simuliere separat die offiziellen Startplatz-Prüfungsfragen.</p>
-        <div class="fact-row"><span>640 bereinigte Fragen</span><span>55 offizielle Startplatz-Fragen</span><span>Archiv: Woche 1–6</span><span>Einfach- und Mehrfachauswahl</span></div>
+        <p class="lead">Übe mit Fragen aus Mannis und Marcs Wissensarchiv oder simuliere den separaten Startplatz-Fragenpool.</p>
+        <div class="fact-row"><span>674 bereinigte Fragen im Katalog</span><span>122 Prüfungs- und Übungsfragen im Startplatz-Reiter</span><span>Startplatz: Woche 1–7</span><span>Einfach- und Mehrfachauswahl</span></div>
       </div>
     </header>
 
@@ -29,12 +29,12 @@
 
     <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
       <div class="surface">
-        <div class="section-heading"><div><div class="eyebrow">01 · FRAGEN FINDEN UND ÜBEN</div><h2>Alle Fragen</h2></div><span class="count-badge" id="catalog-count">640 Fragen</span></div>
+        <div class="section-heading"><div><div class="eyebrow">01 · FRAGEN FINDEN UND ÜBEN</div><h2>Alle Fragen</h2></div><span class="count-badge" id="catalog-count">674 Fragen</span></div>
         <p class="section-intro">Suche nach Thema oder Begriff und wähle, ob du Lösungen sehen oder die Fragen selbst beantworten möchtest.</p>
         <div class="filter-grid">
           <label class="search-field">Suche nach Thema oder Begriff<input id="search" type="search" placeholder="z. B. API, Agent, Datenbank …"></label>
-          <label>Woche<select id="filter-week"><option value="all">Alle Wochen</option><option value="1">Woche 1</option><option value="2">Woche 2</option><option value="3">Woche 3</option><option value="4">Woche 4</option><option value="5">Woche 5</option><option value="6">Woche 6</option></select></label>
-          <label>Quelle<select id="filter-source"><option value="all">Alle Quellen</option><option value="Manni">Manni</option><option value="Marc">Marc</option></select></label>
+          <label>Woche<select id="filter-week"><option value="all">Alle Wochen</option><option value="1">Woche 1 · KI-Grundlagen</option><option value="2">Woche 2 · Prompting &amp; RAG</option><option value="3">Woche 3 · KI-Medien</option><option value="4">Woche 4 · Web-Apps &amp; Backend</option><option value="5">Woche 5 · Agenten &amp; Prozesse</option><option value="6">Woche 6 · Trends, Robotik &amp; Quanten-KI</option><option value="7">Woche 7 · EU AI Act &amp; vertrauenswürdige KI</option></select></label>
+          <label>Quelle<select id="filter-source"><option value="all">Alle Quellen</option><option value="Manni">Manni</option><option value="Marc">Marc</option><option value="Startplatz">Startplatz</option></select></label>
           <label>Fragentyp<select id="filter-type"><option value="all">Alle Fragentypen</option><option value="single">Einfachauswahl</option><option value="multiple">Mehrfachauswahl</option></select></label>
           <label>Ansicht<select id="catalog-mode"><option value="solutions">Fragen mit Lösungen</option><option value="practice">Selbst lösen</option></select></label>
         </div>
@@ -68,16 +68,16 @@
 
     <section id="startplatz" role="tabpanel" aria-labelledby="tab-startplatz" class="tab-panel" hidden>
       <div id="sp-setup" class="surface">
-        <div class="eyebrow">03 · OFFIZIELLER FRAGENPOOL</div><h2>Prüfungsfragen Startplatz</h2>
-        <p class="section-intro">Simuliere die Prüfung mit den offiziellen Startplatz-Fragen. Fragen und Antwortoptionen werden zufällig ausgewählt und gemischt. Lösungen und Erklärungen siehst du erst nach der Abgabe oder wenn die Zeit abläuft. Du kannst vor- und zurückblättern oder die Prüfung abbrechen.</p>
-        <div class="section-heading"><span class="quiet">Fragenpool</span><span id="sp-total-count" class="count-badge">55 offizielle Fragen</span></div>
+        <div class="eyebrow">03 · PRÜFUNGS- UND ÜBUNGSFRAGEN</div><h2>Prüfungsfragen Startplatz</h2>
+        <p class="section-intro">Der Pool enthält offizielle Startplatz-Prüfungsfragen sowie ergänzende Übungsfragen aus Marcs Woche-6-Quiz. Die Woche-6-Fragen sind nicht als offizielle Startplatz-Prüfungsfragen bestätigt. Wähle Wochen und Anzahl: Fragen und Antwortoptionen werden gemischt. Lösungen und Erklärungen siehst du nach der Abgabe oder nach Ablauf der Zeit. Du kannst vor- und zurückblättern oder abbrechen.</p>
+        <div class="section-heading"><span class="quiet">Fragenpool</span><span id="sp-total-count" class="count-badge">122 Fragen insgesamt</span></div>
         <div class="setup-grid">
           <label>Anzahl Fragen<select id="sp-count"><option>10</option><option>20</option><option selected>40</option><option value="all">Alle verfügbaren</option></select></label>
           <div class="week-picker"><span class="week-label">Fragen aus</span><details class="week-dropdown"><summary id="sp-week-summary">Alle Fragen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="sp-all-weeks" checked> Alle Fragen</label><div id="sp-week-options" class="week-options"></div></div></details></div>
           <label>Zeitlimit<select id="sp-duration"><option value="0">Kein Zeitlimit</option><option value="30">30 Minuten</option><option value="45" selected>45 Minuten</option><option value="60">60 Minuten</option><option value="90">90 Minuten</option></select></label>
         </div>
         <div class="start-row"><button class="button button-orange" id="sp-start">Prüfung starten</button><span id="sp-pool-count" class="quiet"></span></div>
-        <div class="saved-retries"><div><strong>Wiederholungsliste</strong><span id="sp-saved-count" class="quiet"></span></div><div class="saved-actions"><button class="button button-cyan" id="sp-repeat-saved">Falsche Startplatz-Fragen wiederholen</button><button class="button button-secondary" id="sp-clear-saved">Merkliste löschen</button></div><p class="quiet">Falsch beantwortete Fragen werden nur auf diesem Gerät gespeichert. Du kannst sie für eine neue Runde merken oder die Liste löschen.</p></div>
+        <div class="saved-retries"><div><strong>Wiederholungsliste</strong><span id="sp-saved-count" class="quiet"></span></div><div class="saved-actions"><button class="button button-cyan" id="sp-repeat-saved">Falsche Fragen wiederholen</button><button class="button button-secondary" id="sp-clear-saved">Merkliste löschen</button></div><p class="quiet">Falsch beantwortete Fragen werden nur auf diesem Gerät gespeichert. Du kannst sie für eine neue Runde merken oder die Liste löschen.</p></div>
       </div>
       <div id="sp-run" class="surface" hidden>
         <div class="run-top"><span id="sp-progress"></span><span id="sp-timer" aria-live="polite"></span></div>

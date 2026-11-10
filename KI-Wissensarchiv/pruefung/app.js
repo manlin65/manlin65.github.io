@@ -10,9 +10,10 @@
   const allVariants = q => q.variants?.length ? q.variants : [q.canonical];
   const getQuestionVariant = q => shuffle(allVariants(q))[0] || q.canonical;
   let run=[], pos=0, seconds=0, timerId=null, catalogShown=0, filtered=[];
-  const weekValues=[1,2,3,4,5,6];
+  const weekValues=[1,2,3,4,5,6,7];
+  const weekTopics={1:"KI-Grundlagen",2:"Prompting & RAG",3:"KI-Medien",4:"Web-Apps & Backend",5:"Agenten & Prozesse",6:"Trends, Robotik & Quanten-KI",7:"EU AI Act & vertrauenswürdige KI"};
   const missedKey='ki-archiv-pruefung-missed-questions';
-  weekValues.forEach(w=>{const label=document.createElement('label');label.className='week-check';const input=document.createElement('input');input.type='checkbox';input.value=String(w);input.checked=true;input.addEventListener('change',syncWeekChecks);label.append(input,document.createTextNode(`Woche ${w}`));$('#week-options').append(label);});
+  weekValues.forEach(w=>{const label=document.createElement('label');label.className='week-check';const input=document.createElement('input');input.type='checkbox';input.value=String(w);input.checked=true;input.addEventListener('change',syncWeekChecks);const name=document.createElement('span');name.className='week-name';const strong=document.createElement('strong');strong.textContent=`Woche ${w}`;const topic=document.createElement('small');topic.textContent=weekTopics[w];name.append(strong,topic);label.append(input,name);$('#week-options').append(label);});
 
   // Tabs
   $$('.tabs [role="tab"]').forEach(tab => tab.addEventListener('click', () => {
@@ -26,7 +27,7 @@
   }
   function refreshPoolCount(){const n=pool().length; $('#pool-count').textContent=n?`${n} unterschiedliche Fragen in dieser Auswahl.`:'Bitte wähle mindestens eine Woche aus.';$('#start').disabled=n===0;}
   function selectedWeeks(){return new Set($$('#week-options input:checked').map(x=>Number(x.value)));}
-  function syncWeekChecks(){let selected=selectedWeeks();if(!selected.size){$$('#week-options input').forEach(x=>x.checked=true);selected=selectedWeeks();}$('#all-weeks').checked=selected.size===weekValues.length;$('#week-summary').textContent=selected.size===weekValues.length?'Alle Fragen':`Woche ${[...selected].sort((a,b)=>a-b).join(', ')}`;refreshPoolCount();}
+  function syncWeekChecks(){let selected=selectedWeeks();if(!selected.size){$$('#week-options input').forEach(x=>x.checked=true);selected=selectedWeeks();}$('#all-weeks').checked=selected.size===weekValues.length;$('#week-summary').textContent=selected.size===weekValues.length?'Alle Fragen':`Woche ${[...selected].sort((a,b)=>a-b).map(w=>`${w} · ${weekTopics[w]}`).join(', ')}`;refreshPoolCount();}
   $('#all-weeks').addEventListener('change',()=>{if($('#all-weeks').checked){$$('#week-options input').forEach(x=>x.checked=true);}else{$$('#week-options input').forEach(x=>x.checked=false);$$('#week-options input').forEach(x=>x.checked=true);}syncWeekChecks();});
   refreshPoolCount();
 

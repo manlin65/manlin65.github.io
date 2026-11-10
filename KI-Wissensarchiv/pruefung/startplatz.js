@@ -7,6 +7,7 @@
   const shuffle = list => { const a=[...list]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
   const sameSet = (a,b) => a.size===b.size && [...a].every(x=>b.has(x));
   const weeks=[...new Set(questions.map(q=>q.week))].sort((a,b)=>a-b);
+  const weekTopics={1:'KI-Grundlagen',2:'Prompting & RAG',3:'KI-Medien',4:'Web-Apps & Backend',5:'Agenten & Prozesse',6:'Trends, Robotik & Quanten-KI',7:'EU AI Act & vertrauenswürdige KI'};
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
   let run=[],pos=0,seconds=0,timerId=null,finished=false;
@@ -14,14 +15,14 @@
   weeks.forEach(week=>{
     const label=document.createElement('label');label.className='week-check';
     const input=document.createElement('input');input.type='checkbox';input.value=String(week);input.checked=true;input.addEventListener('change',syncWeeks);
-    label.append(input,document.createTextNode(`Woche ${week}`));$('#sp-week-options').append(label);
+    const name=document.createElement('span');name.className='week-name';const strong=document.createElement('strong');strong.textContent=`Woche ${week}`;const topic=document.createElement('small');topic.textContent=weekTopics[week]||'Themen';name.append(strong,topic);label.append(input,name);$('#sp-week-options').append(label);
   });
   function selectedWeeks(){return new Set($$('#sp-week-options input:checked').map(input=>Number(input.value)));}
   function syncWeeks(){
     let selected=selectedWeeks();
     if(!selected.size){$$('#sp-week-options input').forEach(input=>input.checked=true);selected=selectedWeeks();}
     $('#sp-all-weeks').checked=selected.size===weeks.length;
-    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Fragen':`Woche ${[...selected].sort((a,b)=>a-b).join(', ')}`;
+    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Fragen':`Woche ${[...selected].sort((a,b)=>a-b).map(w=>`${w} · ${weekTopics[w]||'Themen'}`).join(', ')}`;
     refreshPool();
   }
   $('#sp-all-weeks').addEventListener('change',()=>{
@@ -31,7 +32,7 @@
     syncWeeks();
   });
   function pool(){const selected=selectedWeeks();return questions.filter(question=>selected.has(question.week));}
-  function refreshPool(){const count=pool().length;$('#sp-pool-count').textContent=count?`${count} offizielle Fragen in dieser Auswahl.`:'Keine Fragen in dieser Auswahl.';$('#sp-start').disabled=count===0;}
+  function refreshPool(){const count=pool().length;$('#sp-pool-count').textContent=count?`${count} Fragen in dieser Auswahl.`:'Keine Fragen in dieser Auswahl.';$('#sp-start').disabled=count===0;}
 
   function startExam(questionPool=pool(),forcedCount=null){
     if(timerId){clearInterval(timerId);timerId=null;}
@@ -57,7 +58,7 @@
     $('#sp-progressbar').style.width=`${((pos+1)/run.length)*100}%`;
     $('#sp-prev').disabled=pos===0;$('#sp-next').hidden=pos===run.length-1;$('#sp-finish').hidden=pos!==run.length-1;
     box.replaceChildren();
-    const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`Offizielle Startplatz-Frage · ${question.sourceId}${multi?` · Mehrfachauswahl (${question.correct.length} richtige Antworten)`:' · Eine Antwort'}`;box.append(meta);
+    const meta=document.createElement('div');meta.className='source-meta';const origin=question.week===6?'Ergänzende Übungsfrage aus Woche 6':'Offizielle Startplatz-Prüfungsfrage';meta.textContent=`${origin} · ${question.sourceId}${multi?` · Mehrfachauswahl (${question.correct.length} richtige Antworten)`:' · Eine Antwort'}`;box.append(meta);
     const title=document.createElement('h2');title.className='question-title';title.textContent=question.question;box.append(title);
     const choices=document.createElement('div');choices.className='question-options';
     item.options.forEach((option,index)=>{
@@ -122,6 +123,6 @@
   function writeHistory(history){try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}}
   function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong></div>`).join('');}
   $('#sp-clear-history').addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory();});
-  $('#sp-total-count').textContent=`${questions.length} offizielle Fragen`;
+  $('#sp-total-count').textContent=`${questions.length} Fragen insgesamt`;
   renderMissed();renderHistory();syncWeeks();
 })();

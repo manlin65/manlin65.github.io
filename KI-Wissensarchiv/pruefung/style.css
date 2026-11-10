@@ -85,3 +85,5 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
 #sp-result .answer-badge-wrong{border-color:rgba(255,125,140,.7);background:rgba(145,35,52,.82);color:#ffd0d6}
 @media(max-width:760px){.tabs{flex-wrap:wrap}.tabs button{min-width:0;flex:1 1 145px}}
 #sp-run .run-actions #sp-abort{margin-right:auto}
+
+.week-name{display:flex;flex-direction:column;line-height:1.2;white-space:normal}.week-name strong{font-size:.86rem}.week-name small{font-size:.68rem;color:var(--muted,#a9bdcf);font-weight:500}.week-options .week-check{align-items:flex-start}
