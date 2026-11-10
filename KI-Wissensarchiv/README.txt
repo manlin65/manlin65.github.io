@@ -1,12 +1,11 @@
-KI-Wissensarchiv – Woche 1 bis 7
+mama quizlab – Prüfungsfragen und Lernquerschnitt
 
-index.html: Einstiegspunkt. Öffne diese Datei im Browser.
-assets/css/styles.css: Gestaltung und Layout.
-assets/js/data.js: Glossar- und Quizdaten aus Woche 1–7. Skool-Fragen sind im Gesamtquiz enthalten; Reiter filtern dieselben Einträge.
-assets/js/app.js: Darstellung, Filter und Quizlogik.
-pruefung/: separate Seite „Prüfungsfragen Startplatz“ mit eigener Fragenbank und eigenem Simulationsmodus.
-downloads/KI-Wissensarchiv.zip: Downloadpaket der Website einschließlich der Prüfungsseite.
+index.html: Startseite mit den Reitern Alle Fragen, Simulation, Lernquerschnitt und Prüfungsfragen Startplatz.
+fragen.js: Fragenkatalog für den ersten Reiter und die allgemeine Simulation.
+startplatz-fragen.js: Fragenbank des Lernquerschnitts und des Prüfungsfragen-Startplatzes. Enthält 122 Fragen: 55 ursprüngliche Fragen und 67 Ergänzungen.
+lernquerschnitt.js: Pool mit 120 Fragen: 55 ursprüngliche Prüfungsfragen, 45 Archivfragen (je 9 aus Woche 1 bis 5) und 20 Fragen aus Woche 6 und 7 (je 10). Pro Runde können 10, 20 oder höchstens 30 Fragen zufällig gewählt werden.
+startplatz.js: Prüfungsfragen-Startplatz mit anklickbarer Auswahl zwischen den ursprünglichen 55 Fragen und allen 122 Fragen.
+style.css: Gestaltung.
+assets/: Logos und Hintergründe.
 
-Die Dateien müssen zusammen im Ordner bleiben. Für die lokale Nutzung ist kein Server erforderlich.
-
-Umfang: 338 Glossarbegriffe und 491 Quizfragen. Woche 6 ergänzt Marktanalyse, Open-Source-Plattformen, Unternehmensbeispiele, Robotik und Quantencomputing. Woche 7 ergänzt AI-Act- und Ethikbegriffe anhand der Prüfungsfragen und offizieller EU-Quellen. Für Woche 6 und 7 liegen in diesem Paket keine vollständigen Tagesnotizen vor; diese Ergänzungen sind als solche gekennzeichnet.
+Im dritten Reiter („Lernquerschnitt“) kann man eine kurze Zufallsrunde aus dem Pool von 120 Fragen durchlaufen. Die Reihenfolge der Fragen und Antwortmöglichkeiten wird gemischt. Im vierten Reiter („Prüfungsfragen Startplatz“) wählst du über zwei Optionsfelder zwischen den ursprünglichen 55 Fragen und allen 122 Fragen.
