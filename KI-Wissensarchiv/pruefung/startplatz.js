@@ -6,33 +6,40 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const shuffle = list => { const a=[...list]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
   const sameSet = (a,b) => a.size===b.size && [...a].every(x=>b.has(x));
-  const weeks=[...new Set(questions.map(q=>q.week))].sort((a,b)=>a-b);
   const weekTopics={1:'KI-Grundlagen',2:'Prompting & RAG',3:'KI-Medien',4:'Web-Apps & Backend',5:'Agenten & Prozesse',6:'Trends, Robotik & Quanten-KI',7:'EU AI Act & vertrauenswürdige KI'};
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
   let run=[],pos=0,seconds=0,timerId=null,finished=false;
 
-  weeks.forEach(week=>{
-    const label=document.createElement('label');label.className='week-check';
-    const input=document.createElement('input');input.type='checkbox';input.value=String(week);input.checked=true;input.addEventListener('change',syncWeeks);
-    const name=document.createElement('span');name.className='week-name';const strong=document.createElement('strong');strong.textContent=`Woche ${week}`;const topic=document.createElement('small');topic.textContent=weekTopics[week]||'Themen';name.append(strong,topic);label.append(input,name);$('#sp-week-options').append(label);
-  });
+  function selectedPool(){return $('#sp-question-scope').value==='original'?questions.filter(q=>q.isOriginal55):questions;}
+  function availableWeeks(){return [...new Set(selectedPool().map(q=>q.week))].sort((a,b)=>a-b);}
+  function renderWeekOptions(){
+    const host=$('#sp-week-options');host.replaceChildren();
+    availableWeeks().forEach(week=>{
+      const label=document.createElement('label');label.className='week-check';
+      const input=document.createElement('input');input.type='checkbox';input.value=String(week);input.checked=true;input.addEventListener('change',syncWeeks);
+      const name=document.createElement('span');name.className='week-name';const strong=document.createElement('strong');strong.textContent=`Woche ${week}`;const topic=document.createElement('small');topic.textContent=weekTopics[week]||'Themen';name.append(strong,topic);label.append(input,name);host.append(label);
+    });
+  }
   function selectedWeeks(){return new Set($$('#sp-week-options input:checked').map(input=>Number(input.value)));}
   function syncWeeks(){
+    const weeks=availableWeeks();
     let selected=selectedWeeks();
     if(!selected.size){$$('#sp-week-options input').forEach(input=>input.checked=true);selected=selectedWeeks();}
     $('#sp-all-weeks').checked=selected.size===weeks.length;
-    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Fragen':`Woche ${[...selected].sort((a,b)=>a-b).map(w=>`${w} · ${weekTopics[w]||'Themen'}`).join(', ')}`;
+    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Wochen':`Woche ${[...selected].sort((a,b)=>a-b).map(w=>`${w} · ${weekTopics[w]||'Themen'}`).join(', ')}`;
     refreshPool();
   }
+  $('#sp-question-scope').addEventListener('change',()=>{renderWeekOptions();syncWeeks();});
+  renderWeekOptions();
   $('#sp-all-weeks').addEventListener('change',()=>{
     // Clearing the final checked week restores the full question pool, matching the archive simulation.
     if(!$('#sp-all-weeks').checked){$$('#sp-week-options input').forEach(input=>input.checked=true);}
     else{$$('#sp-week-options input').forEach(input=>input.checked=true);}
     syncWeeks();
   });
-  function pool(){const selected=selectedWeeks();return questions.filter(question=>selected.has(question.week));}
-  function refreshPool(){const count=pool().length;$('#sp-pool-count').textContent=count?`${count} Fragen in dieser Auswahl.`:'Keine Fragen in dieser Auswahl.';$('#sp-start').disabled=count===0;}
+  function pool(){const selected=selectedWeeks();return selectedPool().filter(question=>selected.has(question.week));}
+  function refreshPool(){const count=pool().length;const original=$('#sp-question-scope').value==='original';$('#sp-total-count').textContent=original?'55 ursprüngliche Fragen':'122 Fragen insgesamt';$('#sp-pool-count').textContent=count?`${count} Fragen in dieser Auswahl.`:'Keine Fragen in dieser Auswahl.';$('#sp-start').disabled=count===0;}
 
   function startExam(questionPool=pool(),forcedCount=null){
     if(timerId){clearInterval(timerId);timerId=null;}
