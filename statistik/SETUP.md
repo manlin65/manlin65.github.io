@@ -1,16 +1,16 @@
-# Aktivierung noch ausstehend
+# Besucherstatistik
 
-Die Einbindung ist standardmäßig ausgeschaltet. Es werden keine Besuche erfasst.
+Umami Cloud: EU-Projekt, Website-ID 804a0ea5-b841-4155-9c00-157c981b191b.
+Die Website-ID ist oeffentlich und kein Zugangsschluessel.
+Dashboard: https://cloud.umami.is/analytics/eu/websites (Anmeldung erforderlich).
+Die Auswertung nicht ueber die Share-Funktion oeffentlich freigeben.
 
-1. In einem eigenen Umami-Cloud-Konto die Website mlinner-software.de anlegen.
-2. Den öffentlichen Einbindungscode (Website-ID, keine Zugangsdaten) bereitstellen.
-3. Datenschutztexte DE/EN anhand des tatsächlich verwendeten Dienstes aktualisieren.
-4. Website-ID in assets/analytics-config.json eintragen und enabled aktivieren.
-5. Echtes Erfassungsereignis und das private Dashboard prüfen; erst dann veröffentlichen.
+Eigene Browser: https://www.mlinner-software.de/statistik/ auf Rechner und
+Handy aufrufen und Ausschluss aktivieren. Je Browser und Origin gespeichert;
+nach Loeschen der Website-Daten erneut noetig. Die Einstellungsseite zaehlt nicht.
+Die Einbindung respektiert Do Not Track und Global Privacy Control.
+Kein IP-Ausschluss konfiguriert; die Browsermarkierung funktioniert auch unterwegs.
 
-Eigene Browser: /statistik/ auf Rechner und Handy aufrufen und Ausschluss aktivieren.
-Pro Browser und Origin gespeichert; nach Löschen der Website-Daten erneut nötig.
-Der Tracker respektiert zusätzlich Do Not Track und Global Privacy Control.
-Kein IP-Ausschluss konfiguriert. Dieser erfordert einen passenden Dienst und eine stabile IP.
-
-Nicht die noch unveröffentlichte Kunden-Startseite aus einem anderen Branch mit ausliefern.
+Ausschalten: enabled in assets/analytics-config.json auf false setzen.
+Einbindung nur auf den persoenlichen Seiten, nicht in manliNova oder den Demos.
+Die separate, noch unveroeffentlichte Kunden-Startseite bleibt in ihrem Branch.
