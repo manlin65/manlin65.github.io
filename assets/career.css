@@ -1,0 +1,81 @@
+@font-face{font-family:Manrope;src:url('fonts/manrope-variable.ttf') format('truetype');font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:'Source Sans 3';src:url('fonts/source-sans-3-variable.ttf') format('truetype');font-weight:200 900;font-style:normal;font-display:swap}
+
+/* Ergänzt den vorhandenen Auftritt für Projekte und Festanstellung. */
+.career-anchor{display:block;position:relative;scroll-margin-top:100px}
+#berufsprofil,#professional-profile{scroll-margin-top:96px}
+.career-entry{padding:49px 0 54px;border-bottom:1px solid var(--line);background:var(--white,#fff)}
+.career-entry-intro{display:flex;justify-content:space-between;align-items:baseline;gap:30px;margin-bottom:24px}
+.career-entry-intro h2{font-family:var(--fh);font-size:25px;font-weight:700;line-height:1.3;letter-spacing:-.035em;margin:0}
+.career-entry-intro>p{font-size:14px;line-height:1.6;color:var(--muted);margin:0;max-width:430px}
+.career-paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.career-path{padding:24px 26px;border:1px solid var(--line);border-radius:7px;display:flex;flex-direction:column;align-items:flex-start;background:var(--page)}
+.career-label{font-size:9px;letter-spacing:.11em;font-weight:650;text-transform:uppercase;color:var(--petrol);margin:0 0 9px}
+.career-path h3{font-family:var(--fh);font-size:21px;font-weight:700;letter-spacing:-.035em;line-height:1.3;margin:0 0 11px}
+.career-path>p:not(.career-label){font-size:15px;line-height:1.65;color:var(--muted);max-width:520px;margin:0 0 17px}
+.career-link{display:inline-flex;gap:12px;align-items:center;color:var(--petrol);font:650 13px/1.5 var(--fb);margin-top:auto;text-decoration:none}
+.career-link:hover{color:var(--navy);text-decoration:underline;text-underline-offset:4px}
+.career-link svg{height:16px;width:16px;flex-shrink:0}
+.career-profile-box{border:1px solid var(--line);border-left:3px solid var(--petrol);border-radius:0 6px 6px 0;padding:22px 24px;background:var(--page);margin-top:27px}
+.career-profile-box h3{font-family:var(--fh);font-size:20px;line-height:1.35;letter-spacing:-.035em;margin:0 0 12px}
+.career-profile-box>p:not(.career-label){font-size:15px!important;line-height:1.7;color:var(--muted);margin:0 0 18px}
+.career-profile-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.career-button{display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:46px;border:1px solid var(--petrol);border-radius:6px;padding:10px 17px;background:var(--petrol);color:white;font:650 13px/1.5 var(--fb);text-decoration:none}
+.career-button:hover{background:#10676c;border-color:#10676c;color:white}
+.career-button:focus-visible,.career-link:focus-visible{outline:3px solid var(--petrol);outline-offset:4px}
+.career-contact-secondary{color:white;background:transparent;border-color:#b4c5d2}
+.career-contact-secondary:hover{background:#203d60;border-color:white;color:white}
+.career-contact-secondary:focus-visible{outline-color:var(--green)}
+.career-contact-actions{display:flex;gap:15px;flex-wrap:wrap;align-items:center}
+.career-work-style{font-size:14px!important;color:var(--muted);margin-top:20px!important}
+.career-work-style strong{color:var(--navy);font-weight:650}
+
+/* English homepage keeps its existing layout and receives an operable menu. */
+html[lang=en]{scroll-padding-top:100px}
+html[lang=en] .menu-toggle{display:none;width:44px;height:44px;flex-shrink:0;padding:12px;border:1px solid var(--line);border-radius:6px;background:white;cursor:pointer;color:var(--navy)}
+html[lang=en] .menu-toggle span{display:block;height:1.5px;background:var(--navy);margin:5px 0;transition:transform .2s}
+html[lang=en] .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(3.25px) rotate(45deg)}
+html[lang=en] .menu-toggle[aria-expanded=true] span:last-child{transform:translateY(-3.25px) rotate(-45deg)}
+html[lang=en] a:focus-visible,html[lang=en] button:focus-visible,html[lang=en] summary:focus-visible{outline:3px solid var(--petrol);outline-offset:4px}
+html[lang=en] .kontakt .career-contact-secondary{font-size:15px;min-height:56px}
+html[lang=en] .kontakt .career-contact-secondary:focus-visible{outline-color:var(--green)}
+html[lang=en] .hero-illustration{height:auto}
+html[lang=en] .hero-vis{display:flex;width:100%;max-width:480px;margin-inline:auto}
+html[lang=en] .proof-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+html[lang=en] .proof-tile{min-width:0}
+html[lang=en] .proof-val{white-space:normal}
+
+@media(max-width:1120px){
+  .nav-in{height:76px;min-height:76px}
+  .menu-toggle,html[lang=en] .menu-toggle{display:block}
+  .nav-links{position:absolute;top:76px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;padding:18px 32px 25px;background:white;border-bottom:1px solid var(--line);box-shadow:0 18px 25px #12294c08}
+  .nav-links.open{display:flex}
+  .nav-links>a{padding:13px 10px;font-size:16px}
+  .nav-links .button,.nav-links .btn-nav{margin-top:14px;justify-content:center;font-size:15px}
+  .nav-links .lang-switch{padding:10px;gap:12px}
+  .nav-links .lang-switch a{padding:7px}
+}
+@media(max-width:760px){
+  .career-entry{padding:34px 0 38px}
+  .career-entry-intro{display:block;margin-bottom:22px}
+  .career-entry-intro h2{font-size:24px}
+  .career-entry-intro>p{font-size:14px;margin-top:12px;max-width:580px}
+  .career-paths{gap:16px}
+  .career-path{padding:22px}
+  .career-path h3{font-size:20px}
+  .career-path>p:not(.career-label){font-size:14px}
+  .career-profile-box{padding:21px}
+  .career-profile-box>p:not(.career-label){font-size:15px!important}
+  .nav-links{padding-inline:20px}
+}
+@media(max-width:560px){
+  .career-paths{grid-template-columns:1fr}
+  .career-path{padding:23px}
+  .career-path>p:not(.career-label){font-size:15px}
+  .career-contact-actions{align-items:flex-start;flex-direction:column}
+  .career-contact-secondary{font-size:12px;padding:12px 15px}
+  html[lang=en] .kontakt .career-contact-secondary{font-size:14px;padding:13px 20px}
+}
+@media(max-width:680px){html[lang=en] .proof-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}html[lang=en] .proof-val{font-size:15px}html[lang=en] .proof-tile{padding:12px 10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{.career-entry{padding:20px 0}.career-profile-box{break-inside:avoid}.career-button{border-color:var(--navy);background:white;color:var(--navy)}.career-contact-secondary{color:var(--navy)}.menu-toggle{display:none!important}}
