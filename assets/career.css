@@ -81,3 +81,13 @@ html[lang=en] .proof-val{white-space:normal}
 @media(max-width:680px){html[lang=en] .proof-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}html[lang=en] .proof-val{font-size:15px}html[lang=en] .proof-tile{padding:12px 10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{.career-entry{padding:20px 0}.career-profile-box{break-inside:avoid}.career-button{border-color:var(--navy);background:white;color:var(--navy)}.career-contact-secondary{color:var(--navy)}.menu-toggle{display:none!important}}
+
+/* Customer-focused offer and demo selection. */
+.customer-offers,.customer-projects{grid-template-columns:repeat(2,minmax(0,1fr))}
+.customer-offer-list{padding-left:19px;margin-top:20px;color:var(--muted);font-size:14px;line-height:1.7}
+.customer-offer-list li{margin-bottom:5px}
+.customer-more{margin-top:28px;border-top:1px solid var(--line);padding-top:20px}
+.customer-more summary{cursor:pointer;font-weight:650;color:var(--petrol);margin-bottom:22px}
+.customer-concepts{margin-top:20px}
+html[lang=en] .proj-links{display:flex;gap:18px;flex-wrap:wrap}
+@media(max-width:760px){.customer-offers,.customer-projects{grid-template-columns:1fr}}
