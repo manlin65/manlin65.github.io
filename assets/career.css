@@ -22,6 +22,8 @@
 .career-profile-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 .career-button{display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:46px;border:1px solid var(--petrol);border-radius:6px;padding:10px 17px;background:var(--petrol);color:white;font:650 13px/1.5 var(--fb);text-decoration:none}
 .career-button:hover{background:#10676c;border-color:#10676c;color:white}
+.career-profile-actions .career-button{background:transparent;color:var(--petrol);min-width:185px}
+.career-profile-actions .career-button:hover{background:var(--petrol);color:white}
 .career-button:focus-visible,.career-link:focus-visible{outline:3px solid var(--petrol);outline-offset:4px}
 .career-contact-secondary{color:white;background:transparent;border-color:#b4c5d2}
 .career-contact-secondary:hover{background:#203d60;border-color:white;color:white}
