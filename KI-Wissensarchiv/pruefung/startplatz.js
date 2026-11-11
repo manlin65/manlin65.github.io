@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const questions = window.STARTPLATZ_PRUEFUNGSFRAGEN || [];
+  const originalQuestions = questions.filter(question => question.isOriginal55);
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -9,10 +10,11 @@
   const weekTopics={1:'KI-Grundlagen',2:'Prompting & RAG',3:'KI-Medien',4:'Web-Apps & Backend',5:'Agenten & Prozesse',6:'Trends, Robotik & Quanten-KI',7:'EU AI Act & vertrauenswürdige KI'};
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
-  let run=[],pos=0,seconds=0,timerId=null,finished=false;
+  let run=[],pos=0,seconds=0,timerId=null,finished=false,reviewOnly=false;
 
-  function selectedPool(){return $('#sp-question-scope').value==='original'?questions.filter(q=>q.isOriginal55):questions;}
-  function availableWeeks(){return [...new Set(selectedPool().map(q=>q.week))].sort((a,b)=>a-b);}
+  function availableWeeks(){return [...new Set(originalQuestions.map(question=>question.week))].sort((a,b)=>a-b);}
+  function selectedWeeks(){return new Set($$('#sp-week-options input:checked').map(input=>Number(input.value)));}
+  function pool(){const weeks=selectedWeeks();return originalQuestions.filter(question=>weeks.has(question.week));}
   function renderWeekOptions(){
     const host=$('#sp-week-options');host.replaceChildren();
     availableWeeks().forEach(week=>{
@@ -21,27 +23,23 @@
       const name=document.createElement('span');name.className='week-name';const strong=document.createElement('strong');strong.textContent=`Woche ${week}`;const topic=document.createElement('small');topic.textContent=weekTopics[week]||'Themen';name.append(strong,topic);label.append(input,name);host.append(label);
     });
   }
-  function selectedWeeks(){return new Set($$('#sp-week-options input:checked').map(input=>Number(input.value)));}
   function syncWeeks(){
-    const weeks=availableWeeks();
-    let selected=selectedWeeks();
+    const weeks=availableWeeks();let selected=selectedWeeks();
     if(!selected.size){$$('#sp-week-options input').forEach(input=>input.checked=true);selected=selectedWeeks();}
     $('#sp-all-weeks').checked=selected.size===weeks.length;
-    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Wochen':`Woche ${[...selected].sort((a,b)=>a-b).map(w=>`${w} · ${weekTopics[w]||'Themen'}`).join(', ')}`;
+    $('#sp-week-summary').textContent=selected.size===weeks.length?'Alle Wochen':`Woche ${[...selected].sort((a,b)=>a-b).map(week=>`${week} · ${weekTopics[week]||'Themen'}`).join(', ')}`;
     refreshPool();
   }
-  $('#sp-question-scope').addEventListener('change',()=>{renderWeekOptions();syncWeeks();});
   renderWeekOptions();
-  $('#sp-all-weeks').addEventListener('change',()=>{
-    // Clearing the final checked week restores the full question pool, matching the archive simulation.
-    if(!$('#sp-all-weeks').checked){$$('#sp-week-options input').forEach(input=>input.checked=true);}
-    else{$$('#sp-week-options input').forEach(input=>input.checked=true);}
-    syncWeeks();
-  });
-  function pool(){const selected=selectedWeeks();return selectedPool().filter(question=>selected.has(question.week));}
-  function refreshPool(){const count=pool().length;const original=$('#sp-question-scope').value==='original';$('#sp-total-count').textContent=original?'55 ursprüngliche Fragen':'122 Fragen insgesamt';$('#sp-pool-count').textContent=count?`${count} Fragen in dieser Auswahl.`:'Keine Fragen in dieser Auswahl.';$('#sp-start').disabled=count===0;}
+  $('#sp-all-weeks').addEventListener('change',()=>{$$('#sp-week-options input').forEach(input=>input.checked=true);syncWeeks();});
+  $('#sp-count').addEventListener('change',refreshPool);
+  function refreshPool(){const count=pool().length;$('#sp-total-count').textContent=`${originalQuestions.length} Originalfragen im Pool`;
+    const fortyOption=$('#sp-count option[value="40"]'),allOption=$('#sp-count option[value="all"]');fortyOption.disabled=count<40;allOption.textContent=`Alle ${count} Fragen dieser Wochenauswahl`;
+    if(count<40&&$('#sp-count').value==='40')$('#sp-count').value='all';
+    $('#sp-pool-count').textContent=count<40?`Wochenauswahl: ${count} Originalfragen. Für die 40er-Prüfung bitte weitere Wochen auswählen; sonst kannst du alle Fragen dieser Auswahl beantworten.`:`Wochenauswahl: ${count} Originalfragen. Du kannst 40 zufällige Fragen oder alle Fragen dieser Auswahl wählen.`;
+    $('#sp-start').disabled=count===0;}
 
-  function startExam(questionPool=pool(),forcedCount=null){
+  function startExam(questionPool=pool(),forcedCount=null,isReview=false){
     if(timerId){clearInterval(timerId);timerId=null;}
     const requested=forcedCount ?? ($('#sp-count').value==='all'?questionPool.length:Number($('#sp-count').value));
     run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>({
@@ -50,10 +48,10 @@
       selected:new Set()
     }));
     if(!run.length)return;
-    pos=0;finished=false;seconds=Number($('#sp-duration').value)*60;
+    pos=0;finished=false;reviewOnly=isReview;seconds=Number($('#sp-duration').value)*60;
     $('#sp-setup').hidden=true;$('#sp-result').hidden=true;$('#sp-run').hidden=false;
     renderQuestion();
-    if(seconds>0){renderTimer();timerId=setInterval(()=>{seconds--;renderTimer();if(seconds<=0)finishExam();},1000);}
+    if(seconds>0){renderTimer();timerId=setInterval(()=>{seconds--;renderTimer();if(seconds<=0)finishExam(true);},1000);}
     else $('#sp-timer').textContent='Ohne Zeitlimit';
   }
   $('#sp-start').addEventListener('click',()=>startExam());
@@ -63,7 +61,7 @@
     const item=run[pos],question=item.question,multi=question.correct.length>1,box=$('#sp-question-box');
     $('#sp-progress').textContent=`Frage ${pos+1} von ${run.length} · Woche ${question.week}`;
     $('#sp-progressbar').style.width=`${((pos+1)/run.length)*100}%`;
-    $('#sp-prev').disabled=pos===0;$('#sp-next').hidden=pos===run.length-1;$('#sp-finish').hidden=pos!==run.length-1;
+    $('#sp-prev').disabled=pos===0;$('#sp-next').hidden=pos===run.length-1;$('#sp-finish').hidden=false;
     box.replaceChildren();
     const meta=document.createElement('div');meta.className='source-meta';const origin=question.week===6?'Ergänzende Übungsfrage aus Woche 6':'Offizielle Startplatz-Prüfungsfrage';meta.textContent=`${origin} · ${question.sourceId}${multi?` · Mehrfachauswahl (${question.correct.length} richtige Antworten)`:' · Eine Antwort'}`;box.append(meta);
     const title=document.createElement('h2');title.className='question-title';title.textContent=question.question;box.append(title);
@@ -79,24 +77,50 @@
   $('#sp-prev').addEventListener('click',()=>{if(pos>0){pos--;renderQuestion();}});
   $('#sp-next').addEventListener('click',()=>{if(pos<run.length-1){pos++;renderQuestion();}});
   $('#sp-abort').addEventListener('click',()=>{
+    if(!window.confirm('Prüfung wirklich abbrechen? Der aktuelle Versuch wird nicht ausgewertet.'))return;
     if(timerId){clearInterval(timerId);timerId=null;}
     run=[];pos=0;finished=false;$('#sp-run').hidden=true;$('#sp-result').hidden=true;$('#sp-setup').hidden=false;$('#sp-timer').textContent='';$('#sp-progress').textContent='';$('#sp-progressbar').style.width='0';
   });
   $('#sp-finish').addEventListener('click',finishExam);
 
+  function renderResultScene(passed){
+    const scene=$('#sp-dialog-scene');scene.replaceChildren();
+    const addEmoji=(className,text)=>{const el=document.createElement('span');el.className=className;el.textContent=text;el.setAttribute('aria-hidden','true');scene.append(el);return el;};
+    const caption=document.createElement('p');caption.className='scene-caption';
+    if(reviewOnly){
+      scene.className='dialog-scene scene-review';addEmoji('hero-emoji','📚');addEmoji('scene-toast','✨');caption.textContent='Noch eine Runde geübt – das sitzt beim nächsten Mal besser.';
+    }else if(passed){
+      scene.className='dialog-scene scene-pass';
+      for(let i=0;i<16;i++){const confetti=addEmoji('scene-confetti','');confetti.style.setProperty('--i',String(i));confetti.style.setProperty('--delay',`${(i%6)*-.31}s`);}
+      addEmoji('scene-balloon left','🎈');addEmoji('scene-balloon right','🎈');addEmoji('hero-emoji','🕺');addEmoji('scene-toast','🥂');
+      caption.textContent='Konfetti, Tanzfläche, Sekt – der KI-Manager-Cert-Check ist bestanden!';
+    }else{
+      scene.className='dialog-scene scene-fail';addEmoji('hero-emoji','😭');
+      const cleanup=document.createElement('div');cleanup.className='scene-cleanup';cleanup.setAttribute('aria-hidden','true');
+      const broom=document.createElement('span');broom.className='broom';broom.textContent='🧹';cleanup.append(broom);
+      const bottles=document.createElement('span');bottles.className='bottle';bottles.textContent='🍾';cleanup.append(bottles);
+      const secondBottle=document.createElement('span');secondBottle.className='bottle';secondBottle.textContent='🍾';cleanup.append(secondBottle);scene.append(cleanup);
+      caption.textContent='Kurz die Sektflaschen einsammeln und einmal schniefen – dann greifen wir die falschen Fragen an.';
+    }
+    scene.append(caption);
+  }
+
   function correctSet(item){return new Set(item.options.flatMap((option,index)=>option.correct?[index]:[]));}
-  function finishExam(){
-    if(!run.length||finished)return;finished=true;
+  function finishExam(timeExpired=false){
+    if(!run.length||finished)return;
+    const unanswered=run.filter(item=>item.selected.size===0).length;
+    if(unanswered&&!timeExpired&&!window.confirm(`${unanswered} ${unanswered===1?'Frage ist':'Fragen sind'} noch unbeantwortet und zählen als falsch. Prüfung trotzdem abgeben?`))return;
+    finished=true;
     if(timerId){clearInterval(timerId);timerId=null;}
     const score=run.reduce((total,item)=>total+(sameSet(item.selected,correctSet(item))?1:0),0);
     const missed=new Set(readMissed());run.forEach(item=>{if(!sameSet(item.selected,correctSet(item)))missed.add(item.question.id);});writeMissed([...missed]);renderMissed();
     $('#sp-run').hidden=true;$('#sp-result').hidden=false;
     const result=$('#sp-result');result.replaceChildren();
     const heading=document.createElement('h2');heading.textContent='Startplatz-Prüfung abgeschlossen';result.append(heading);
-    const pct=Math.round(score/run.length*100);const summary=document.createElement('p');summary.className='result-score';summary.textContent=`${score} von ${run.length} richtig · ${pct}%`;result.append(summary);
+    const pct=Math.round(score/run.length*100);const passingScore=Math.ceil(run.length*.7);const passed=score>=passingScore;const summary=document.createElement('p');summary.className='result-score';summary.textContent=`${score} von ${run.length} richtig · ${pct}%`;result.append(summary);
     const history=readHistory();history.unshift({score,total:run.length,pct,date:new Date().toLocaleString('de-DE')});writeHistory(history.slice(0,8));renderHistory();
     const actions=document.createElement('div');actions.className='run-actions';
-    const retry=document.createElement('button');retry.className='button button-secondary';retry.textContent='Falsche Fragen sofort wiederholen';retry.disabled=score===run.length;retry.addEventListener('click',()=>{const wrong=run.filter(item=>!sameSet(item.selected,correctSet(item))).map(item=>item.question);startExam(wrong,wrong.length);});
+    const retry=document.createElement('button');retry.className='button button-secondary';retry.textContent='Falsche Fragen sofort wiederholen';retry.disabled=score===run.length;retry.addEventListener('click',()=>{const wrong=run.filter(item=>!sameSet(item.selected,correctSet(item))).map(item=>item.question);startExam(wrong,wrong.length,true);});
     const again=document.createElement('button');again.className='button button-orange';again.textContent='Neue Prüfung';again.addEventListener('click',()=>{run=[];result.hidden=true;$('#sp-setup').hidden=false;});
     actions.append(retry,again);result.append(actions);
     const review=document.createElement('div');review.innerHTML='<h2>Auswertung</h2><p class="quiet">Grün zeigt die richtige Antwort. Rot markiert deine falsche Auswahl.</p>';
@@ -119,17 +143,25 @@
       review.append(article);
     });
     result.append(review);
+    const dialog=$('#sp-result-dialog');
+    $('#sp-dialog-status').textContent=reviewOnly?'WIEDERHOLUNG ABGESCHLOSSEN':passed?'BESTANDEN':'NICHT BESTANDEN';
+    $('#sp-dialog-status').className=`dialog-status ${reviewOnly?'passed':passed?'passed':'failed'}`;
+    $('#sp-dialog-score').textContent=`${score} / ${run.length} richtig · ${pct} %`;
+    $('#sp-dialog-note').textContent=reviewOnly?'Diese Runde dient der Wiederholung und zählt nicht als Prüfungssimulation.':passed?`Bestanden: mindestens ${passingScore} von ${run.length} Fragen richtig (70 %).`:`Zum Bestehen brauchst du mindestens ${passingScore} von ${run.length} richtigen Antworten (70 %).`;
+    renderResultScene(passed);
+    if(!dialog.open)dialog.showModal();
   }
+
+  $('#sp-dialog-close').addEventListener('click',()=>$('#sp-result-dialog').close());
 
   function readMissed(){try{return JSON.parse(localStorage.getItem(missedKey)||'[]');}catch{return[];}}
   function writeMissed(ids){try{localStorage.setItem(missedKey,JSON.stringify(ids));}catch{}}
   function renderMissed(){const ids=readMissed();$('#sp-saved-count').textContent=`${ids.length} Fragen gemerkt`;$(`#sp-repeat-saved`).disabled=ids.length===0;$('#sp-clear-saved').disabled=ids.length===0;}
-  $('#sp-repeat-saved').addEventListener('click',()=>{const ids=new Set(readMissed()),saved=questions.filter(question=>ids.has(question.id));if(saved.length)startExam(saved,saved.length);});
+  $('#sp-repeat-saved').addEventListener('click',()=>{const ids=new Set(readMissed()),saved=originalQuestions.filter(question=>ids.has(question.id));if(saved.length)startExam(saved,saved.length,true);});
   $('#sp-clear-saved').addEventListener('click',()=>{localStorage.removeItem(missedKey);renderMissed();});
   function readHistory(){try{return JSON.parse(localStorage.getItem(historyKey)||'[]');}catch{return[];}}
   function writeHistory(history){try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}}
   function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong></div>`).join('');}
   $('#sp-clear-history').addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory();});
-  $('#sp-total-count').textContent=`${questions.length} Fragen insgesamt`;
   renderMissed();renderHistory();syncWeeks();
 })();

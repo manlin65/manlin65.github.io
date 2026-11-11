@@ -1,10 +1,12 @@
-mama quizlab – Prüfungsfragen
+mama quizlab – Prüfungsfragen und Lernquerschnitt
 
-index.html: Startseite mit den Reitern Alle Fragen, Simulation und Prüfungsfragen Startplatz.
+index.html: Startseite mit den Reitern Alle Fragen, Simulation, Lernquerschnitt und Prüfungsfragen Startplatz.
 fragen.js: Fragenkatalog für den ersten Reiter und die allgemeine Simulation.
-startplatz-fragen.js: Fragenbank des dritten Reiters. Enthält alle 122 Fragen; 55 davon sind als ursprünglicher Fragenpool gekennzeichnet.
-startplatz.js: Logik für Auswahl zwischen ursprünglichen 55 Fragen und allen 122 Fragen, Wochenfilter, Prüfung, Auswertung und Wiederholungen.
+startplatz-fragen.js: Fragenbank des Lernquerschnitts und des Prüfungsfragen-Startplatzes. Enthält 122 Fragen: 55 ursprüngliche Fragen und 67 Ergänzungen.
+lernquerschnitt.js: Pool mit 120 Fragen: 55 ursprüngliche Prüfungsfragen, 45 Archivfragen (je 9 aus Woche 1 bis 5) und 20 Fragen aus Woche 6 und 7 (je 10). Pro Runde können 10, 20 oder höchstens 30 Fragen zufällig gewählt werden.
+startplatz.js: KI-Manager-Cert-Prüfungssimulation mit Wahl zwischen 40 zufälligen Fragen oder allen 55 Originalfragen. Bestehensgrenze: mindestens 70 % (28/40 beziehungsweise 39/55 richtige Antworten). Unbeantwortete Fragen zählen als falsch. Das Ergebnis-Pop-up zeigt eine kurze Feier-Animation bei Erfolg und eine humorvolle Flaschen-Sammel-Animation bei Nichtbestehen. Dies ist eine Übungssimulation, kein offizielles Zertifikat.
+antworten55.js: Fünfter Reiter mit allen 55 Originalfragen, nach Wochen gruppiert und nur mit der beziehungsweise den richtigen Antwort(en). Die Übersicht kann gedruckt werden.
 style.css: Gestaltung.
 assets/: Logos und Hintergründe.
 
-Im dritten Reiter ist standardmäßig der erweiterte Pool mit allen 122 Fragen ausgewählt. Über „Fragenpool“ kann man auf die ursprünglichen 55 Fragen umschalten. Die Wochenfilter passen sich an die jeweilige Auswahl an.
+Im dritten Reiter („Lernquerschnitt“) kann man eine kurze Zufallsrunde aus dem Pool von 120 Fragen durchlaufen. Die Reihenfolge der Fragen und Antwortmöglichkeiten wird gemischt. Im vierten Reiter („Prüfungsfragen Startplatz“) werden für die Prüfungssimulation 40 Fragen zufällig aus den 55 ursprünglichen Fragen gezogen. Zum Bestehen sind mindestens 28 richtige Antworten erforderlich. Nach der Abgabe zeigt ein Pop-up das Ergebnis; anschließend folgt die Auswertung mit den eigenen und richtigen Antworten.

@@ -17,14 +17,16 @@
         <div class="eyebrow">PRÜFUNGSSIMULATOR</div>
         <h1>Prüfungsfragen</h1>
         <p class="lead">Übe mit Fragen aus Mannis und Marcs Wissensarchiv oder simuliere den separaten Startplatz-Fragenpool.</p>
-        <div class="fact-row"><span>674 bereinigte Fragen im Katalog</span><span>122 Prüfungs- und Übungsfragen im Startplatz-Reiter</span><span>Startplatz: Woche 1–7</span><span>Einfach- und Mehrfachauswahl</span></div>
+        <div class="fact-row"><span>674 bereinigte Fragen im Katalog</span><span>55 Originalfragen für die KI-Manager-Cert-Prüfungssimulation</span><span>40 Zufallsfragen pro Prüfung</span><span>Einfach- und Mehrfachauswahl</span></div>
       </div>
     </header>
 
     <nav class="tabs" role="tablist" aria-label="Bereiche">
       <button role="tab" id="tab-all" aria-controls="all" aria-selected="true" data-tab="all">Alle Fragen</button>
       <button role="tab" id="tab-sim" aria-controls="sim" aria-selected="false" data-tab="sim">Simulation</button>
+      <button role="tab" id="tab-cross" aria-controls="cross" aria-selected="false" data-tab="cross">Lernquerschnitt · 120 Fragen</button>
       <button role="tab" id="tab-startplatz" aria-controls="startplatz" aria-selected="false" data-tab="startplatz">Prüfungsfragen Startplatz</button>
+      <button role="tab" id="tab-answer-key" aria-controls="answer-key" aria-selected="false" data-tab="answer-key">55 Fragen · Lösungen</button>
     </nav>
 
     <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
@@ -66,15 +68,41 @@
       <div id="history" class="surface history"><h2>Letzte Ergebnisse</h2><p id="history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="clear-history">Wiederholungen zurücksetzen</button></div>
     </section>
 
+    <section id="cross" role="tabpanel" aria-labelledby="tab-cross" class="tab-panel" hidden>
+      <div id="cx-setup" class="surface">
+        <div class="eyebrow">03 · ERGÄNZENDER LERNQUERSCHNITT</div>
+        <h2>Lernquerschnitt · 120 Fragen</h2>
+        <p class="section-intro">Der Pool verbindet die ursprünglichen 55 Prüfungsfragen mit 45 zusätzlichen Archivfragen aus Woche 1 bis 5 und 20 Fragen aus Woche 6 und 7. Jede Woche 1 bis 5 erhält neun zusätzliche Fragen; aus Woche 6 und 7 kommen je zehn dazu. Pro Runde kannst du höchstens 30 zufällig ausgewählte Fragen beantworten. Fragen und Antwortmöglichkeiten werden gemischt; die Lösungen siehst du am Ende.</p>
+        <div class="fact-row"><span>55 ursprüngliche Prüfungsfragen</span><span>45 Archivfragen: 9 je Woche 1–5</span><span>20 Fragen: 10 aus Woche 6 und 10 aus Woche 7</span></div>
+        <div class="section-heading" style="margin-top:20px"><span class="quiet">Themen im Querschnitt</span><span id="cx-total-count" class="count-badge">120 Fragen</span></div>
+        <div class="grid" style="margin-top:12px">
+          <article class="card"><div class="category">WOCHE 1–5</div><h3>Grundlagen bis Prozessmanagement</h3><p>Jede der fünf Wochen erhält neun zusätzliche Fragen aus dem Wissensarchiv.</p></article>
+          <article class="card"><div class="category">WOCHE 6</div><h3>Trends und Marktanalyse</h3><p>Marktindikatoren, Hype-Zyklen, Adoption und Fallstudien einordnen.</p></article>
+          <article class="card"><div class="category">WOCHE 6</div><h3>Open Source und Plattformen</h3><p>GitHub, Hugging Face, Modelle, Spaces und Unternehmensnutzung beurteilen.</p></article>
+          <article class="card"><div class="category">WOCHE 6</div><h3>Robotik und Quantencomputing</h3><p>Embodied AI, Robotik-Hardware und Quantencomputing verstehen.</p></article>
+          <article class="card"><div class="category">WOCHE 6 UND 7</div><h3>Trends, Regulierung und Verantwortung</h3><p>Je zehn ausgewählte Fragen zu Markttrends, Robotik, Quantencomputing und vertrauenswürdiger KI.</p></article>
+        </div>
+        <div class="setup-grid" style="margin-top:20px">
+          <label>Anzahl Fragen<select id="cx-count"><option>10</option><option selected>20</option><option>30</option></select></label>
+          <div class="week-picker"><span class="week-label">Fragen aus</span><details class="week-dropdown"><summary id="cx-week-summary">Alle Wochen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="cx-all-weeks" checked> Alle Wochen</label><div id="cx-week-options" class="week-options"></div></div></details></div>
+          <label>Zeitlimit<select id="cx-duration"><option value="0">Kein Zeitlimit</option><option value="30">30 Minuten</option><option value="45" selected>45 Minuten</option><option value="60">60 Minuten</option><option value="90">90 Minuten</option></select></label>
+        </div>
+        <div class="start-row"><button class="button button-orange" id="cx-start">Zufallsrunde starten</button><span id="cx-pool-count" class="quiet"></span></div>
+        <div class="saved-retries"><div><strong>Wiederholungsliste</strong><span id="cx-saved-count" class="quiet"></span></div><div class="saved-actions"><button class="button button-cyan" id="cx-repeat-saved">Falsche Fragen wiederholen</button><button class="button button-secondary" id="cx-clear-saved">Merkliste löschen</button></div><p class="quiet">Falsch beantwortete Fragen werden auf diesem Gerät gespeichert, bis du die Merkliste löschst.</p></div>
+      </div>
+      <div id="cx-run" class="surface" hidden><div class="run-top"><span id="cx-progress"></span><span id="cx-timer" aria-live="polite"></span></div><div class="progress-track" aria-hidden="true"><div id="cx-progressbar"></div></div><div id="cx-question-box"></div><div class="run-actions"><button id="cx-abort" class="button button-secondary">Prüfung abbrechen</button><button id="cx-prev" class="button button-secondary">Zurück</button><button id="cx-next" class="button button-cyan">Weiter</button><button id="cx-finish" class="button button-orange" hidden>Prüfung abgeben</button></div></div>
+      <div id="cx-result" class="surface" hidden></div>
+      <div id="cx-history" class="surface history"><h2>Letzte Ergebnisse des Lernquerschnitts</h2><p id="cx-history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="cx-clear-history">Ergebnisse zurücksetzen</button></div>
+    </section>
+
     <section id="startplatz" role="tabpanel" aria-labelledby="tab-startplatz" class="tab-panel" hidden>
       <div id="sp-setup" class="surface">
-        <div class="eyebrow">03 · PRÜFUNGS- UND ÜBUNGSFRAGEN</div><h2>Prüfungsfragen Startplatz</h2>
-        <p class="section-intro">Wähle zwischen den ursprünglichen 55 Fragen und dem erweiterten Pool mit allen 122 Prüfungs- und Übungsfragen. Der erweiterte Pool enthält ergänzende Übungsfragen aus Woche 6 und weitere Fragen aus Woche 7. Die Woche-6-Fragen sind nicht als offizielle Startplatz-Prüfungsfragen bestätigt. Wähle Wochen und Anzahl: Fragen und Antwortoptionen werden gemischt. Lösungen und Erklärungen siehst du nach der Abgabe oder nach Ablauf der Zeit. Du kannst vor- und zurückblättern oder abbrechen.</p>
-        <div class="section-heading"><span class="quiet">Fragenpool</span><span id="sp-total-count" class="count-badge">122 Fragen insgesamt</span></div>
-        <div class="setup-grid">
-          <label>Fragenpool<select id="sp-question-scope"><option value="all" selected>Alle 122 Fragen</option><option value="original">Nur ursprüngliche 55 Fragen</option></select></label>
-          <label>Anzahl Fragen<select id="sp-count"><option>10</option><option>20</option><option selected>40</option><option value="all">Alle verfügbaren</option></select></label>
-          <div class="week-picker"><span class="week-label">Fragen aus</span><details class="week-dropdown"><summary id="sp-week-summary">Alle Fragen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="sp-all-weeks" checked> Alle Fragen</label><div id="sp-week-options" class="week-options"></div></div></details></div>
+        <div class="eyebrow">04 · KI-MANAGER-CERT-PRÜFUNGSSIMULATION</div><h2>Prüfungsfragen Startplatz</h2>
+        <p class="section-intro">Trainiere für die KI-Manager-Cert-Prüfung: Wähle die Wochen aus und starte eine realistische Runde mit 40 zufälligen Fragen oder beantworte alle Originalfragen aus deiner Auswahl. Du kannst vor- und zurückblättern. Nach „Prüfung abgeben“ siehst du sofort, ob du diese Prüfungssimulation bestanden hast; die Lösungen und deine Antworten folgen in der Auswertung.</p>
+        <div class="exam-rules"><span class="count-badge">55 Originalfragen im Pool</span><span class="count-badge">40 Fragen: Prüfungssimulation</span><span class="count-badge">Alle 55: kompletter Durchlauf</span><span class="count-badge">Bestehen ab 70 %</span></div>
+        <div class="setup-grid exam-setup-grid">
+          <label>Fragen auswählen<select id="sp-count"><option value="40" selected>40 Fragen · Prüfungssimulation</option><option value="all">Alle 55 Fragen · kompletter Durchlauf</option></select></label>
+          <div class="week-picker"><span class="week-label">Fragen aus Woche(n)</span><details class="week-dropdown"><summary id="sp-week-summary">Alle Wochen</summary><div class="week-menu"><label class="week-check"><input type="checkbox" id="sp-all-weeks" checked> Alle Wochen</label><div id="sp-week-options" class="week-options"></div></div></details></div>
           <label>Zeitlimit<select id="sp-duration"><option value="0">Kein Zeitlimit</option><option value="30">30 Minuten</option><option value="45" selected>45 Minuten</option><option value="60">60 Minuten</option><option value="90">90 Minuten</option></select></label>
         </div>
         <div class="start-row"><button class="button button-orange" id="sp-start">Prüfung starten</button><span id="sp-pool-count" class="quiet"></span></div>
@@ -87,7 +115,17 @@
         <div class="run-actions"><button id="sp-abort" class="button button-secondary">Prüfung abbrechen</button><button id="sp-prev" class="button button-secondary">Zurück</button><button id="sp-next" class="button button-cyan">Weiter</button><button id="sp-finish" class="button button-orange" hidden>Prüfung abgeben</button></div>
       </div>
       <div id="sp-result" class="surface" hidden></div>
+      <dialog id="sp-result-dialog" class="exam-result-dialog" aria-labelledby="sp-dialog-title"><div class="dialog-mark" aria-hidden="true">✓</div><div class="eyebrow">KI-MANAGER-CERT · SIMULATION</div><h2 id="sp-dialog-title">Prüfungsergebnis</h2><p id="sp-dialog-status" class="dialog-status"></p><p id="sp-dialog-score" class="result-score"></p><div id="sp-dialog-scene" class="dialog-scene" aria-live="polite"></div><p id="sp-dialog-note" class="quiet"></p><button id="sp-dialog-close" class="button button-orange">Zur Auswertung</button></dialog>
       <div id="sp-history" class="surface history"><h2>Letzte Startplatz-Ergebnisse</h2><p id="sp-history-items" class="quiet">Noch keine gespeicherten Durchläufe auf diesem Gerät.</p><button class="button button-secondary" id="sp-clear-history">Ergebnisse zurücksetzen</button></div>
+    </section>
+
+    <section id="answer-key" role="tabpanel" aria-labelledby="tab-answer-key" class="tab-panel" hidden>
+      <div class="surface">
+        <div class="section-heading"><div><div class="eyebrow">05 · LÖSUNGSÜBERSICHT</div><h2>Die 55 Originalfragen</h2></div><span id="answer-key-count" class="count-badge">55 Fragen</span></div>
+        <p class="section-intro">Alle ursprünglichen Prüfungsfragen, nach Wochen geordnet. Angezeigt werden nur die richtigen Antworten – falsche Antwortmöglichkeiten und Erklärungen bleiben ausgeblendet.</p>
+        <div class="answer-key-actions"><button class="button button-secondary" id="answer-key-print" type="button">Übersicht drucken</button><button class="button button-cyan" id="answer-key-to-exam" type="button">Zur Prüfungssimulation</button></div>
+      </div>
+      <div id="answer-key-weeks" class="answer-key-weeks"></div>
     </section>
 
     <footer class="page-footer"><img src="assets/mama-quizlab-logo-clean.png" alt=""><p>manni <span>/</span> powered by marc &amp; manni<br><small>Die Seite arbeitet lokal im Browser. Antworten und Ergebnisse werden nicht übertragen.</small></p></footer>
@@ -95,6 +133,8 @@
   <script src="fragen.js"></script>
   <script src="startplatz-fragen.js"></script>
   <script src="app.js"></script>
+  <script src="lernquerschnitt.js"></script>
   <script src="startplatz.js"></script>
+  <script src="antworten55.js"></script>
 </body>
 </html>
