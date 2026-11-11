@@ -10,6 +10,7 @@
   const weekTopics={1:'KI-Grundlagen',2:'Prompting & RAG',3:'KI-Medien',4:'Web-Apps & Backend',5:'Agenten & Prozesse',6:'Trends, Robotik & Quanten-KI',7:'EU AI Act & vertrauenswürdige KI'};
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
+  const statsKey='startplatz-exam-question-stats-v1';
   let run=[],pos=0,seconds=0,timerId=null,finished=false,reviewOnly=false;
 
   function availableWeeks(){return [...new Set(originalQuestions.map(question=>question.week))].sort((a,b)=>a-b);}
@@ -114,6 +115,7 @@
     if(timerId){clearInterval(timerId);timerId=null;}
     const score=run.reduce((total,item)=>total+(sameSet(item.selected,correctSet(item))?1:0),0);
     const missed=new Set(readMissed());run.forEach(item=>{if(!sameSet(item.selected,correctSet(item)))missed.add(item.question.id);});writeMissed([...missed]);renderMissed();
+    recordQuestionStats();renderWeaknesses();
     $('#sp-run').hidden=true;$('#sp-result').hidden=false;
     const result=$('#sp-result');result.replaceChildren();
     const heading=document.createElement('h2');heading.textContent='Startplatz-Prüfung abgeschlossen';result.append(heading);
@@ -159,9 +161,52 @@
   function renderMissed(){const ids=readMissed();$('#sp-saved-count').textContent=`${ids.length} Fragen gemerkt`;$(`#sp-repeat-saved`).disabled=ids.length===0;$('#sp-clear-saved').disabled=ids.length===0;}
   $('#sp-repeat-saved').addEventListener('click',()=>{const ids=new Set(readMissed()),saved=originalQuestions.filter(question=>ids.has(question.id));if(saved.length)startExam(saved,saved.length,true);});
   $('#sp-clear-saved').addEventListener('click',()=>{localStorage.removeItem(missedKey);renderMissed();});
+  function readStats(){try{return JSON.parse(localStorage.getItem(statsKey)||'{}');}catch{return{};}}
+  function recordQuestionStats(){
+    const stats=readStats();
+    run.forEach(item=>{
+      const id=item.question.id,row=stats[id]||{attempts:0,wrong:0};
+      row.attempts+=1;if(!sameSet(item.selected,correctSet(item)))row.wrong+=1;
+      stats[id]=row;
+    });
+    try{localStorage.setItem(statsKey,JSON.stringify(stats));}catch{}
+  }
+  function weakestQuestions(){
+    const stats=readStats();
+    return originalQuestions.map(question=>({question,...(stats[question.id]||{attempts:0,wrong:0})}))
+      .filter(item=>item.attempts>0&&item.wrong>0)
+      .sort((a,b)=>(b.wrong/b.attempts)-(a.wrong/a.attempts)||b.wrong-a.wrong||b.attempts-a.attempts);
+  }
+  function renderWeaknesses(){
+    const chart=$('#sp-weakness-chart'),empty=$('#sp-weakness-empty'),stats=readStats(),rows=weakestQuestions();chart.replaceChildren();
+    const hasAttempts=Object.values(stats).some(item=>item.attempts>0);
+    $('#sp-weakness-count').textContent=rows.length?`${rows.length} Fragen mit Fehlversuchen`:hasAttempts?'Keine Fehlversuche':'Noch keine Auswertung';
+    empty.hidden=rows.length>0;empty.textContent=hasAttempts?'Bisher sind alle ausgewerteten Fragen richtig beantwortet.': 'Nach deinem ersten Versuch erscheinen hier deine Lernschwerpunkte.';
+    $('#sp-repeat-weakest').disabled=rows.length===0;$('#sp-clear-stats').disabled=!hasAttempts;
+    rows.slice(0,15).forEach(item=>{
+      const rate=Math.round(item.wrong/item.attempts*100),row=document.createElement('article');row.className='weakness-row';
+      const meta=document.createElement('div');meta.className='weakness-meta';
+      const source=document.createElement('span');source.textContent=`${item.question.sourceId} · Woche ${item.question.week}`;
+      const count=document.createElement('span');count.textContent=`${item.wrong} von ${item.attempts} falsch`;meta.append(source,count);
+      const title=document.createElement('p');title.className='weakness-question';title.textContent=item.question.question;
+      const line=document.createElement('div');line.className='weakness-bar-line';line.setAttribute('role','img');line.setAttribute('aria-label',`${rate} Prozent falsch`);
+      const track=document.createElement('div');track.className='weakness-track';const fill=document.createElement('div');fill.className='weakness-fill';fill.style.width=`${rate}%`;track.append(fill);
+      const percentage=document.createElement('span');percentage.className='weakness-rate';percentage.textContent=`${rate} % falsch`;
+      line.append(track,percentage);row.append(meta,title,line);chart.append(row);
+    });
+  }
+  $('#sp-repeat-weakest').addEventListener('click',()=>{
+    const list=weakestQuestions().slice(0,10).map(item=>item.question);
+    if(!list.length)return;
+    $('#tab-startplatz').click();startExam(list,list.length,true);
+  });
+  $('#sp-clear-stats').addEventListener('click',()=>{
+    if(!window.confirm('Deine Schwächen-Auswertung auf diesem Gerät zurücksetzen?'))return;
+    localStorage.removeItem(statsKey);renderWeaknesses();
+  });
   function readHistory(){try{return JSON.parse(localStorage.getItem(historyKey)||'[]');}catch{return[];}}
   function writeHistory(history){try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}}
   function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong></div>`).join('');}
   $('#sp-clear-history').addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory();});
-  renderMissed();renderHistory();syncWeeks();
+  renderMissed();renderHistory();syncWeeks();renderWeaknesses();
 })();

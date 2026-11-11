@@ -120,6 +120,8 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
 @media(prefers-reduced-motion:reduce){.dialog-scene *{animation:none!important}}
 @media(max-width:600px){.exam-setup-grid{grid-template-columns:1fr}}
 .answer-key-actions{display:flex;gap:10px;flex-wrap:wrap}
+.answer-key-tip{margin:0 0 18px;padding:12px 15px;border-left:4px solid var(--orange);border-radius:7px;background:rgba(255,152,0,.08);color:var(--text)}
+.answer-key-tip strong{color:#ffc46b}
 .answer-key-week{padding-top:22px}
 .answer-key-week>.section-heading{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
 .answer-key-question{padding:17px 0;border-bottom:1px solid rgba(110,145,174,.25)}
@@ -128,6 +130,18 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
 .answer-key-label{margin:0 0 6px;color:#82edb0;font-size:.9rem;font-weight:800}
 .answer-key-list{list-style:none;padding:0;margin:0;display:grid;gap:7px}
 .answer-key-list .answer-option{margin:0;border-color:rgba(57,217,138,.65);background:linear-gradient(100deg,rgba(20,130,78,.32),rgba(20,130,78,.12));box-shadow:inset 4px 0 0 #39d98a;color:#effff6}
+.weakness-section{margin-top:22px;padding:18px;border:1px solid #385872;border-radius:12px;background:rgba(6,18,36,.42)}
+.weakness-section .section-heading{align-items:flex-start}
+.weakness-section h3{margin:.15rem 0 .2rem}
+.weakness-chart{display:grid;gap:12px;margin:14px 0}
+.weakness-row{padding:12px;border:1px solid rgba(110,145,174,.3);border-radius:9px;background:rgba(14,39,64,.68)}
+.weakness-meta{display:flex;justify-content:space-between;gap:10px;margin-bottom:5px;color:var(--quiet);font-size:.82rem}
+.weakness-question{margin:0 0 8px;color:var(--white);font-size:.95rem;font-weight:650;line-height:1.45}
+.weakness-bar-line{display:flex;align-items:center;gap:10px}
+.weakness-track{height:12px;flex:1;overflow:hidden;border-radius:99px;background:#223c55}
+.weakness-fill{height:100%;min-width:0;border-radius:inherit;background:linear-gradient(90deg,#ffb347,#ff6347);transition:width .35s ease}
+.weakness-rate{min-width:78px;text-align:right;color:#ffd3a0;font-size:.84rem;font-weight:800}
+.weakness-section .saved-actions{margin-top:12px}
 @media print{
   body{background:#fff!important;color:#172331!important;font-size:11pt}
   .topline,.page-header,.tabs,.page-footer,.answer-key-actions{display:none!important}
@@ -135,6 +149,8 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
   #answer-key{display:block!important}
   #answer-key>.surface,.answer-key-week{margin:0 0 12px;padding:0;border:0;background:#fff;color:#172331;box-shadow:none;break-inside:auto}
   .answer-key-week h2,.answer-key-question h3,.answer-key-label,.source-meta{color:#172331!important}
+  .answer-key-tip{background:#f5f5f5;border-color:#bd6508;color:#172331}
+  .answer-key-tip strong{color:#653700}
   .answer-key-question{break-inside:avoid;border-color:#ccc}
   .answer-key-list .answer-option{background:#f0faf3!important;border:1px solid #83b894!important;box-shadow:inset 3px 0 #25834a!important;color:#172331!important}
   .count-badge{background:#fff;color:#172331;border-color:#999}

@@ -27,6 +27,7 @@
       <button role="tab" id="tab-cross" aria-controls="cross" aria-selected="false" data-tab="cross">Lernquerschnitt · 120 Fragen</button>
       <button role="tab" id="tab-startplatz" aria-controls="startplatz" aria-selected="false" data-tab="startplatz">Prüfungsfragen Startplatz</button>
       <button role="tab" id="tab-answer-key" aria-controls="answer-key" aria-selected="false" data-tab="answer-key">55 Fragen · Lösungen</button>
+      <button role="tab" id="tab-weaknesses" aria-controls="weaknesses" aria-selected="false" data-tab="weaknesses">Meine Schwächen</button>
     </nav>
 
     <section id="all" role="tabpanel" aria-labelledby="tab-all" class="tab-panel">
@@ -122,10 +123,21 @@
     <section id="answer-key" role="tabpanel" aria-labelledby="tab-answer-key" class="tab-panel" hidden>
       <div class="surface">
         <div class="section-heading"><div><div class="eyebrow">05 · LÖSUNGSÜBERSICHT</div><h2>Die 55 Originalfragen</h2></div><span id="answer-key-count" class="count-badge">55 Fragen</span></div>
-        <p class="section-intro">Alle ursprünglichen Prüfungsfragen, nach Wochen geordnet. Angezeigt werden nur die richtigen Antworten – falsche Antwortmöglichkeiten und Erklärungen bleiben ausgeblendet.</p>
+        <p class="section-intro">Alle 55 Originalfragen stehen nach Wochen geordnet untereinander. Angezeigt werden nur die richtigen Antworten – falsche Antwortmöglichkeiten und Erklärungen bleiben ausgeblendet. So kannst du Wissenslücken schnell erkennen und gezielt die passende Woche wiederholen.</p>
+        <p class="answer-key-tip"><strong>Lerntipp:</strong> Lies die Frage, überlege dir zuerst selbst eine Antwort und vergleiche sie erst dann mit der Lösung. So trainierst du den aktiven Abruf, statt nur Antworten wiederzuerkennen.</p>
         <div class="answer-key-actions"><button class="button button-secondary" id="answer-key-print" type="button">Übersicht drucken</button><button class="button button-cyan" id="answer-key-to-exam" type="button">Zur Prüfungssimulation</button></div>
       </div>
       <div id="answer-key-weeks" class="answer-key-weeks"></div>
+    </section>
+
+    <section id="weaknesses" role="tabpanel" aria-labelledby="tab-weaknesses" class="tab-panel" hidden>
+      <div class="surface weakness-section">
+        <div class="section-heading"><div><div class="eyebrow">DEIN LERNSTAND</div><h2>Meine Schwächen</h2></div><span id="sp-weakness-count" class="count-badge">Noch keine Auswertung</span></div>
+        <p class="section-intro">Hier siehst du, bei welchen Originalfragen du in Prüfungs- und Wiederholungsrunden am häufigsten danebenliegst. Die Auswertung wird nur auf diesem Gerät gespeichert.</p>
+        <div id="sp-weakness-empty" class="quiet">Nach deinem ersten Versuch erscheinen hier deine Lernschwerpunkte.</div>
+        <div id="sp-weakness-chart" class="weakness-chart" aria-live="polite"></div>
+        <div class="saved-actions"><button class="button button-cyan" id="sp-repeat-weakest" disabled>Schwächen gezielt wiederholen</button><button class="button button-secondary" id="sp-clear-stats" disabled>Auswertung zurücksetzen</button></div>
+      </div>
     </section>
 
     <footer class="page-footer"><img src="assets/mama-quizlab-logo-clean.png" alt=""><p>manni <span>/</span> powered by marc &amp; manni<br><small>Die Seite arbeitet lokal im Browser. Antworten und Ergebnisse werden nicht übertragen.</small></p></footer>
