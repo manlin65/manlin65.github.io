@@ -11,7 +11,7 @@
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
   const statsKey='startplatz-exam-question-stats-v1';
-  let run=[],pos=0,seconds=0,timerId=null,finished=false,reviewOnly=false;
+  let run=[],pos=0,seconds=0,timerId=null,finished=false,reviewOnly=false,startedAt=0;
 
   function availableWeeks(){return [...new Set(originalQuestions.map(question=>question.week))].sort((a,b)=>a-b);}
   function selectedWeeks(){return new Set($$('#sp-week-options input:checked').map(input=>Number(input.value)));}
@@ -49,7 +49,7 @@
       selected:new Set()
     }));
     if(!run.length)return;
-    pos=0;finished=false;reviewOnly=isReview;seconds=Number($('#sp-duration').value)*60;
+    pos=0;finished=false;reviewOnly=isReview;seconds=Number($('#sp-duration').value)*60;startedAt=Date.now();
     $('#sp-setup').hidden=true;$('#sp-result').hidden=true;$('#sp-run').hidden=false;
     renderQuestion();
     if(seconds>0){renderTimer();timerId=setInterval(()=>{seconds--;renderTimer();if(seconds<=0)finishExam(true);},1000);}
@@ -58,6 +58,10 @@
   $('#sp-start').addEventListener('click',()=>startExam());
 
   function renderTimer(){$('#sp-timer').textContent=`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')} Minuten`;}
+  function formatDuration(totalSeconds){
+    const value=Math.max(0,Math.floor(totalSeconds||0)),hours=Math.floor(value/3600),minutes=Math.floor((value%3600)/60),secs=value%60;
+    return hours?`${hours}:${String(minutes).padStart(2,'0')}:${String(secs).padStart(2,'0')} Std.`:`${minutes}:${String(secs).padStart(2,'0')} Min.`;
+  }
   function renderQuestion(){
     const item=run[pos],question=item.question,multi=question.correct.length>1,box=$('#sp-question-box');
     $('#sp-progress').textContent=`Frage ${pos+1} von ${run.length} · Woche ${question.week}`;
@@ -80,7 +84,7 @@
   $('#sp-abort').addEventListener('click',()=>{
     if(!window.confirm('Prüfung wirklich abbrechen? Der aktuelle Versuch wird nicht ausgewertet.'))return;
     if(timerId){clearInterval(timerId);timerId=null;}
-    run=[];pos=0;finished=false;$('#sp-run').hidden=true;$('#sp-result').hidden=true;$('#sp-setup').hidden=false;$('#sp-timer').textContent='';$('#sp-progress').textContent='';$('#sp-progressbar').style.width='0';
+    run=[];pos=0;finished=false;startedAt=0;$('#sp-run').hidden=true;$('#sp-result').hidden=true;$('#sp-setup').hidden=false;$('#sp-timer').textContent='';$('#sp-progress').textContent='';$('#sp-progressbar').style.width='0';
   });
   $('#sp-finish').addEventListener('click',finishExam);
 
@@ -112,6 +116,7 @@
     const unanswered=run.filter(item=>item.selected.size===0).length;
     if(unanswered&&!timeExpired&&!window.confirm(`${unanswered} ${unanswered===1?'Frage ist':'Fragen sind'} noch unbeantwortet und zählen als falsch. Prüfung trotzdem abgeben?`))return;
     finished=true;
+    const elapsedSeconds=startedAt?Math.floor((Date.now()-startedAt)/1000):0;
     if(timerId){clearInterval(timerId);timerId=null;}
     const score=run.reduce((total,item)=>total+(sameSet(item.selected,correctSet(item))?1:0),0);
     const missed=new Set(readMissed());run.forEach(item=>{if(!sameSet(item.selected,correctSet(item)))missed.add(item.question.id);});writeMissed([...missed]);renderMissed();
@@ -119,8 +124,8 @@
     $('#sp-run').hidden=true;$('#sp-result').hidden=false;
     const result=$('#sp-result');result.replaceChildren();
     const heading=document.createElement('h2');heading.textContent='Startplatz-Prüfung abgeschlossen';result.append(heading);
-    const pct=Math.round(score/run.length*100);const passingScore=Math.ceil(run.length*.7);const passed=score>=passingScore;const summary=document.createElement('p');summary.className='result-score';summary.textContent=`${score} von ${run.length} richtig · ${pct}%`;result.append(summary);
-    const history=readHistory();history.unshift({score,total:run.length,pct,date:new Date().toLocaleString('de-DE')});writeHistory(history.slice(0,8));renderHistory();
+    const pct=Math.round(score/run.length*100);const passingScore=Math.ceil(run.length*.7);const passed=score>=passingScore;const summary=document.createElement('p');summary.className='result-score';summary.textContent=`${score} von ${run.length} richtig · ${pct}% · Benötigte Zeit: ${formatDuration(elapsedSeconds)}`;result.append(summary);
+    const history=readHistory();history.unshift({score,total:run.length,pct,elapsedSeconds,date:new Date().toLocaleString('de-DE')});writeHistory(history.slice(0,8));renderHistory();
     const actions=document.createElement('div');actions.className='run-actions';
     const retry=document.createElement('button');retry.className='button button-secondary';retry.textContent='Falsche Fragen sofort wiederholen';retry.disabled=score===run.length;retry.addEventListener('click',()=>{const wrong=run.filter(item=>!sameSet(item.selected,correctSet(item))).map(item=>item.question);startExam(wrong,wrong.length,true);});
     const again=document.createElement('button');again.className='button button-orange';again.textContent='Neue Prüfung';again.addEventListener('click',()=>{run=[];result.hidden=true;$('#sp-setup').hidden=false;});
@@ -148,7 +153,7 @@
     const dialog=$('#sp-result-dialog');
     $('#sp-dialog-status').textContent=reviewOnly?'WIEDERHOLUNG ABGESCHLOSSEN':passed?'BESTANDEN':'NICHT BESTANDEN';
     $('#sp-dialog-status').className=`dialog-status ${reviewOnly?'passed':passed?'passed':'failed'}`;
-    $('#sp-dialog-score').textContent=`${score} / ${run.length} richtig · ${pct} %`;
+    $('#sp-dialog-score').textContent=`${score} / ${run.length} richtig · ${pct} % · ${formatDuration(elapsedSeconds)}`;
     $('#sp-dialog-note').textContent=reviewOnly?'Diese Runde dient der Wiederholung und zählt nicht als Prüfungssimulation.':passed?`Bestanden: mindestens ${passingScore} von ${run.length} Fragen richtig (70 %).`:`Zum Bestehen brauchst du mindestens ${passingScore} von ${run.length} richtigen Antworten (70 %).`;
     renderResultScene(passed);
     if(!dialog.open)dialog.showModal();
@@ -206,7 +211,7 @@
   });
   function readHistory(){try{return JSON.parse(localStorage.getItem(historyKey)||'[]');}catch{return[];}}
   function writeHistory(history){try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}}
-  function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong></div>`).join('');}
+  function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong> · Zeit: ${item.elapsedSeconds==null?'bei älteren Durchläufen nicht erfasst':esc(formatDuration(item.elapsedSeconds))}</div>`).join('');}
   $('#sp-clear-history').addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory();});
   renderMissed();renderHistory();syncWeeks();renderWeaknesses();
 })();
