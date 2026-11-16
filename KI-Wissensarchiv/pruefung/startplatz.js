@@ -2,6 +2,63 @@
   'use strict';
   const questions = window.STARTPLATZ_PRUEFUNGSFRAGEN || [];
   const originalQuestions = questions.filter(question => question.isOriginal55);
+  const wordingVariants = {
+  "startplatz-01-q1211": "Welche Neuerung aus dem Jahr 2017 veränderte die Entwicklung von Sprachmodellen grundlegend und wurde zur Basis moderner KI-Systeme?",
+  "startplatz-02-q1213": "Welche Entwicklung gilt als entscheidender Durchbruch neuronaler Netze in der Bildverarbeitung?",
+  "startplatz-03-q1311": "Wie lässt sich Machine Learning grundlegend definieren?",
+  "startplatz-04-q1321": "Welche Beschreibung trifft Supervised Learning am besten?",
+  "startplatz-05-q1351": "Welcher Arbeitsschritt beeinflusst die Qualität eines Machine-Learning-Modells besonders stark?",
+  "startplatz-06-q1332": "Welche Aufgabe übernehmen die Hidden Layer in einem neuronalen Netzwerk hauptsächlich?",
+  "startplatz-07-q1354": "Welche Funktion haben Tokens in aktuellen Transformer-Modellen?",
+  "startplatz-08-q1452": "Wodurch kann die Qualität von KI-Ergebnissen verlässlich geprüft werden?",
+  "startplatz-09-q1433": "Wie geht man am besten vor, wenn eine KI-Aufgabe besonders komplex ist?",
+  "startplatz-10-q1511": "Welche grundlegende Abgrenzung gibt es bei den Methoden des maschinellen Lernens?",
+  "startplatz-11-q1521": "Was ist typisch für die Transformer-Architektur moderner KI-Systeme?",
+  "startplatz-12-q1543": "Warum ist die Qualität der Daten für KI-Anwendungen wichtig?",
+  "startplatz-13-q2111": "Welches Ziel verfolgt Prompt Engineering in erster Linie?",
+  "startplatz-14-q2112": "Welche zentralen Bausteine sollte ein gut aufgebauter Prompt enthalten?",
+  "startplatz-15-q2121": "Worin unterscheiden sich Zero-Shot- und Few-Shot-Prompting?",
+  "startplatz-16-q2131": "Wozu wird Chain-of-Thought-Prompting eingesetzt?",
+  "startplatz-17-q2113": "Weshalb sollte ein Prompt die Rolle der KI festlegen?",
+  "startplatz-18-q2231": "Welche Aussage zur Verarbeitung von Tokens trifft zu?",
+  "startplatz-19-q2241": "Woran erkennt man eine Prompt-Injection?",
+  "startplatz-20-q2221": "Welcher Parameter beeinflusst, wie kreativ die KI antwortet?",
+  "startplatz-21-q2242": "Welche der folgenden Risiken für die KI-Sicherheit gibt es? (2 Antworten sind richtig)",
+  "startplatz-22-q2323": "Was macht ein wirksames Konzept zur KI-Schulung aus?",
+  "startplatz-23-q2411": "Welche grundlegenden Arten von Prompting-Techniken lassen sich unterscheiden?",
+  "startplatz-24-q2412": "Ein Unternehmen möchte Kundenanfragen automatisch klassifizieren. Welche Prompting-Methode passt dafür am besten?",
+  "startplatz-25-q2431": "Welche Aussage über die Chain-of-Thought-Technik ist richtig?",
+  "startplatz-26-q2422": "Welche Bestandteile gehören in einen gut strukturierten Prompt für automatisierte Systeme? (2 von 5 Antworten sind richtig)",
+  "startplatz-27-q2442": "Wozu dient die Formatierung mit Markdown beim Prompt Engineering?",
+  "startplatz-28-q2531": "Welchen Zweck erfüllt Retrieval-Augmented Generation (RAG) in einem KI-System vor allem?",
+  "startplatz-29-q2541": "Welche Eigenschaft beschreibt Fine-Tuning als Methode zur Optimierung von KI am treffendsten?",
+  "startplatz-30-q2532": "Welche Bausteine gehören zu einem RAG-System? (2 von 4 Antworten sind richtig)",
+  "startplatz-31-q3111": "Wodurch unterscheidet sich Claude von Anthropic bei der ethischen Ausrichtung von anderen KI-Modellen?",
+  "startplatz-32-q3211": "Wie funktionieren Diffusionsmodelle grundsätzlich bei der Erzeugung von Bildern?",
+  "startplatz-33-q4111": "Wie lässt sich das Frontend einer Anwendung am besten beschreiben?",
+  "startplatz-34-q4112": "Welche Aussage über das Backend einer modernen Webanwendung stimmt?",
+  "startplatz-35-q5311": "Was braucht es, um einen einfachen KI-Workflow für automatisch erstellte Social-Media-Inhalte zu planen?",
+  "startplatz-36-q5321": "Für welche praktische Aufgabe eignen sich KI-gestützte Automatisierungstools besonders?",
+  "startplatz-37-q5411": "Wie ist ein KI-Agent definiert?",
+  "startplatz-38-q5421": "Aus welchen drei wesentlichen Elementen besteht ein KI-Agent grundsätzlich?",
+  "startplatz-39-q7111": "Welche Rolle spielten die 2019 veröffentlichten EU-Leitlinien für vertrauenswürdige KI bei der europäischen KI-Regulierung?",
+  "startplatz-40-q7121": "Welches Prinzip der EU-Leitlinien verlangt, dass KI ihre Entscheidungen erklären kann?",
+  "startplatz-41-q7122": "Welche Punkte gehören laut EU-Leitlinien zu „Technische Robustheit und Sicherheit“?",
+  "startplatz-42-q7131": "Was erschwert die praktische Umsetzung des Transparenz-Prinzips bei komplexen neuronalen Netzen besonders?",
+  "startplatz-43-q7211": "Welches der folgenden Systeme zählt nach der KI-Verordnung NICHT als KI-System?",
+  "startplatz-44-q7221": "Nach welchem Grundprinzip ist die EU-KI-Verordnung aufgebaut?",
+  "startplatz-45-q7331": "Wie viele gewerbliche Nutzer muss ein KI-Modell mit allgemeinem Verwendungszweck mindestens erreichen, damit es als Modell mit systemischem Risiko eingestuft wird?",
+  "startplatz-46-q7411": "Was gehört nach der KI-Verordnung zur „KI-Kompetenz“?",
+  "startplatz-47-q7232": "Welche Tätigkeiten fallen unter die Regulierung der KI-Verordnung? (2 Antworten)",
+  "startplatz-48-q7511": "Welche Aussage zum Zusammenspiel der EU-KI-Verordnung mit anderen Rechtsgebieten ist korrekt?",
+  "startplatz-49-q7611": "Worin liegt im AI Act der wichtigste Unterschied zwischen Anbieter und Betreiber?",
+  "startplatz-50-q7614": "Durch welche Handlung übernimmt ein Betreiber die Pflichten eines Anbieters?",
+  "startplatz-51-q7623": "Was folgt regulatorisch daraus, wenn ein KI-System als „minimales Risiko“ eingestuft wird?",
+  "startplatz-52-q7712": "Wann muss ein Arbeitgeber seine Beschäftigten über den Einsatz von Hochrisiko-KI am Arbeitsplatz informieren?",
+  "startplatz-53-q7113": "Welche KI-Anwendung ist nach Artikel 5 der KI-Verordnung verboten?",
+  "startplatz-54-q7121": "Welche Aussage über Social-Scoring-Systeme nach Artikel 5 der KI-Verordnung stimmt?",
+  "startplatz-55-q7132": "Welche Methode zur Erstellung von Gesichtserkennungsdatenbanken verbietet Artikel 5 der KI-Verordnung?"
+};
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -45,6 +102,7 @@
     const requested=forcedCount ?? ($('#sp-count').value==='all'?questionPool.length:Number($('#sp-count').value));
     run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>({
       question,
+      displayQuestion: $('#sp-vary-wording')?.checked ? (wordingVariants[question.id] || question.question) : question.question,
       options:shuffle(question.options.map((text,index)=>({text,correct:question.correct.includes(index)}))),
       selected:new Set()
     }));
@@ -69,7 +127,7 @@
     $('#sp-prev').disabled=pos===0;$('#sp-next').hidden=pos===run.length-1;$('#sp-finish').hidden=false;
     box.replaceChildren();
     const meta=document.createElement('div');meta.className='source-meta';const origin=question.week===6?'Ergänzende Übungsfrage aus Woche 6':'Offizielle Startplatz-Prüfungsfrage';meta.textContent=`${origin} · ${question.sourceId}${multi?` · Mehrfachauswahl (${question.correct.length} richtige Antworten)`:' · Eine Antwort'}`;box.append(meta);
-    const title=document.createElement('h2');title.className='question-title';title.textContent=question.question;box.append(title);
+    const title=document.createElement('h2');title.className='question-title';title.textContent=item.displayQuestion;box.append(title);
     const choices=document.createElement('div');choices.className='question-options';
     item.options.forEach((option,index)=>{
       const label=document.createElement('label');label.className='option';
@@ -136,7 +194,7 @@
       const article=document.createElement('article');article.className='review-item';
       const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`${question.sourceId} · Woche ${question.week}`;article.append(meta);
       const status=document.createElement('h3');status.className=ok?'correct-text':'wrong-text';status.textContent=`${index+1}. ${ok?'Richtig':'Falsch oder nicht beantwortet'}`;article.append(status);
-      const prompt=document.createElement('p');prompt.textContent=question.question;article.append(prompt);
+      const prompt=document.createElement('p');prompt.textContent=item.displayQuestion || question.question;article.append(prompt);
       const list=document.createElement('ul');list.className='choice-list';
       item.options.forEach((option,optionIndex)=>{
         const isSelected=item.selected.has(optionIndex),wrongSelection=isSelected&&!option.correct;
