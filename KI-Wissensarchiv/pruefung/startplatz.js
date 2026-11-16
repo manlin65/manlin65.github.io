@@ -573,13 +573,21 @@
     "Rechner"
   ]
 ];
-  function rewordAnswer(text) {
-    for (const [from, to] of answerRewrites) {
+  function rewordAnswer(text,intensity=1) {
+    const candidates=[];
+    for (const [from,to] of answerRewrites) {
       const escaped=from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const pattern=new RegExp('(^|[^\\p{L}\\p{N}_])'+escaped+'(?=$|[^\\p{L}\\p{N}_])','u');
-      if (pattern.test(text)) return text.replace(pattern, (match,prefix)=>prefix+to);
+      const match=pattern.exec(text);
+      if(!match) continue;
+      const start=match.index+match[1].length,end=start+from.length;
+      if(candidates.some(item=>start<item.end&&end>item.start)) continue;
+      candidates.push({start,end,to});
     }
-    return text;
+    const selected=shuffle(candidates).slice(0,Math.min(intensity,candidates.length)).sort((x,y)=>y.start-x.start);
+    let result=text;
+    for(const item of selected) result=result.slice(0,item.start)+item.to+result.slice(item.end);
+    return result;
   }
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
@@ -622,12 +630,16 @@
   function startExam(questionPool=pool(),forcedCount=null,isReview=false){
     if(timerId){clearInterval(timerId);timerId=null;}
     const requested=forcedCount ?? ($('#sp-count').value==='all'?questionPool.length:Number($('#sp-count').value));
-    run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>({
-      question,
-      displayQuestion: $('#sp-vary-wording')?.checked ? (wordingVariants[question.id] || question.question) : question.question,
-      options:shuffle(question.options.map((text,index)=>({text:$('#sp-vary-wording')?.checked ? rewordAnswer(text) : text,correct:question.correct.includes(index)}))),
-      selected:new Set()
-    }));
+    run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>{
+      const wordingIntensity=$('#sp-vary-wording')?.checked ? 1+Math.floor(Math.random()*3) : 0;
+      const baseQuestion=wordingVariants[question.id] || question.question;
+      return {
+        question,
+        displayQuestion: wordingIntensity ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
+        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity ? rewordAnswer(text,wordingIntensity) : text,correct:question.correct.includes(index)}))),
+        selected:new Set()
+      };
+    });
     if(!run.length)return;
     pos=0;finished=false;reviewOnly=isReview;seconds=Number($('#sp-duration').value)*60;startedAt=Date.now();
     $('#sp-setup').hidden=true;$('#sp-result').hidden=true;$('#sp-run').hidden=false;
