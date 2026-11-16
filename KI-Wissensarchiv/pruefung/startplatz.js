@@ -1112,7 +1112,7 @@
       const values=stats[question.id]||{attempts:0,wrong:0};
       return {question,...values,legacyMissed:olderMisses.has(question.id)&&values.wrong===0};
     }).filter(item=>item.wrong>0||item.legacyMissed)
-      .sort((a,b)=>(Number(b.legacyMissed)-Number(a.legacyMissed))||(b.wrong/b.attempts)-(a.wrong/a.attempts)||b.wrong-a.wrong||b.attempts-a.attempts);
+      .sort((a,b)=>{if(a.legacyMissed!==b.legacyMissed)return Number(b.legacyMissed)-Number(a.legacyMissed);const ar=a.attempts? a.wrong/a.attempts:0,br=b.attempts? b.wrong/b.attempts:0;return br-ar||b.wrong-a.wrong||b.attempts-a.attempts;});
   }
   function renderWeaknesses(){
     const chart=$('#sp-weakness-chart'),empty=$('#sp-weakness-empty'),stats=readStats(),rows=weakestQuestions();chart.replaceChildren();
@@ -1127,10 +1127,18 @@
       const source=document.createElement('span');source.textContent=`${item.question.sourceId} · Woche ${item.question.week}`;
       const count=document.createElement('span');count.textContent=item.legacyMissed?'Ältere Merkliste · genaue Anzahl nicht gespeichert':`${item.wrong} von ${item.attempts} falsch`;meta.append(source,count);
       const title=document.createElement('p');title.className='weakness-question';title.textContent=item.question.question;
-      const line=document.createElement('div');line.className='weakness-bar-line';line.setAttribute('role','img');line.setAttribute('aria-label',`${rate} Prozent falsch`);
-      const track=document.createElement('div');track.className='weakness-track';const fill=document.createElement('div');fill.className='weakness-fill';fill.style.width=`${rate}%`;track.append(fill);
-      const percentage=document.createElement('span');percentage.className='weakness-rate';percentage.textContent=`${rate} % falsch`;
-      line.append(track,percentage);row.append(meta,title,line);chart.append(row);
+      const line=document.createElement('div');line.className='weakness-bar-line';line.setAttribute('role','img');
+      if(item.legacyMissed){
+        line.setAttribute('aria-label','Für Wiederholung vorgemerkt; ältere Fehlerzahl unbekannt');
+        const note=document.createElement('span');note.className='weakness-rate';note.textContent='Für Wiederholung vorgemerkt';
+        line.append(note);
+      }else{
+        line.setAttribute('aria-label',`${rate} Prozent falsch`);
+        const track=document.createElement('div');track.className='weakness-track';const fill=document.createElement('div');fill.className='weakness-fill';fill.style.width=`${rate}%`;track.append(fill);
+        const percentage=document.createElement('span');percentage.className='weakness-rate';percentage.textContent=`${rate} % falsch`;
+        line.append(track,percentage);
+      }
+      row.append(meta,title,line);chart.append(row);
     });
   }
   $('#sp-repeat-weakest').addEventListener('click',()=>{
