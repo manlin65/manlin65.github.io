@@ -161,10 +161,6 @@
     "Erzeugung"
   ],
   [
-    "Implementierung",
-    "Einführung"
-  ],
-  [
     "Analyse",
     "Auswertung"
   ],
@@ -189,20 +185,12 @@
     "Funktion"
   ],
   [
-    "Anzahl",
-    "Zahl"
-  ],
-  [
-    "Geschwindigkeit",
-    "Tempo"
-  ],
-  [
     "erfolgreich",
     "wirksam"
   ],
   [
-    "Erfolgreich",
-    "Wirksam"
+    "Erfolgreiche",
+    "Wirksame"
   ],
   [
     "komplexe",
@@ -213,12 +201,20 @@
     "Anspruchsvolle"
   ],
   [
+    "komplexen",
+    "anspruchsvollen"
+  ],
+  [
     "verschiedene",
     "unterschiedliche"
   ],
   [
     "Verschiedene",
     "Unterschiedliche"
+  ],
+  [
+    "verschiedenen",
+    "unterschiedlichen"
   ],
   [
     "kontinuierliche",
@@ -277,14 +273,6 @@
     "zusammen"
   ],
   [
-    "Gemeinsam",
-    "Zusammen"
-  ],
-  [
-    "verarbeiten",
-    "bearbeiten"
-  ],
-  [
     "Verarbeitung",
     "Bearbeitung"
   ],
@@ -298,10 +286,6 @@
   ],
   [
     "Grundlage",
-    "Basis"
-  ],
-  [
-    "grundlage",
     "Basis"
   ],
   [
@@ -377,20 +361,36 @@
     "Zweck"
   ],
   [
-    "automatisierte",
-    "automatisch gesteuerte"
+    "Kriterien",
+    "Merkmale"
   ],
   [
-    "automatisiert",
-    "automatisch gesteuert"
+    "Risiken",
+    "Gefahren"
   ],
   [
-    "basieren auf",
-    "sich stützen auf"
+    "regelbasiert",
+    "regelgestützt"
   ],
   [
-    "basiert auf",
-    "stützt sich auf"
+    "regelbasierten",
+    "regelgestützten"
+  ],
+  [
+    "Technologie",
+    "Technik"
+  ],
+  [
+    "technologische",
+    "technische"
+  ],
+  [
+    "Methode",
+    "Verfahren"
+  ],
+  [
+    "Methoden",
+    "Verfahren"
   ],
   [
     "Umsetzung",
@@ -413,18 +413,6 @@
     "Verknüpfung"
   ],
   [
-    "verhindert",
-    "beugt vor"
-  ],
-  [
-    "Verhindert",
-    "Beugt vor"
-  ],
-  [
-    "Lösung",
-    "Ergebnis"
-  ],
-  [
     "Lösungen",
     "Ergebnisse"
   ],
@@ -441,168 +429,20 @@
     "Anwender"
   ],
   [
-    "Nutzerinnen",
-    "Anwenderinnen"
+    "Nutzern",
+    "Anwendern"
   ],
   [
-    "Anwender",
-    "Nutzer"
+    "Nutzerin",
+    "Anwenderin"
   ],
   [
-    "Entscheidung",
-    "Beschluss"
-  ],
-  [
-    "Verfügbarkeit",
-    "Zugänglichkeit"
-  ],
-  [
-    "Fähigkeit",
-    "Kompetenz"
-  ],
-  [
-    "Fähigkeiten",
-    "Kompetenzen"
-  ],
-  [
-    "entwickeln",
-    "erarbeiten"
-  ],
-  [
-    "Entwicklung",
-    "Ausarbeitung"
-  ],
-  [
-    "verbessert",
-    "steigert"
-  ],
-  [
-    "Verbessert",
-    "Steigert"
-  ],
-  [
-    "Fehler",
-    "Abweichungen"
-  ],
-  [
-    "Risiko",
-    "Gefahr"
-  ],
-  [
-    "Risiken",
-    "Gefahren"
-  ],
-  [
-    "Kriterien",
-    "Merkmale"
-  ],
-  [
-    "Merkmal",
-    "Eigenschaft"
-  ],
-  [
-    "Merkmale",
-    "Eigenschaften"
-  ],
-  [
-    "Datenqualität",
-    "Qualität der Daten"
-  ],
-  [
-    "regelbasiert",
-    "regelgestützt"
-  ],
-  [
-    "regelbasierten",
-    "regelgestützten"
-  ],
-  [
-    "technologisch",
-    "technisch"
-  ],
-  [
-    "Technologie",
-    "Technik"
-  ],
-  [
-    "Methode",
-    "Verfahren"
-  ],
-  [
-    "Methoden",
-    "Verfahren"
-  ],
-  [
-    "Verfahren",
-    "Methode"
-  ],
-  [
-    "Ansatz",
-    "Vorgehensweise"
-  ],
-  [
-    "Konzept",
-    "Ansatz"
-  ],
-  [
-    "ermöglicht",
-    "erlaubt"
-  ],
-  [
-    "Ermöglicht",
-    "Erlaubt"
-  ],
-  [
-    "sicherstellen",
-    "gewährleisten"
-  ],
-  [
-    "Sicherstellen",
-    "Gewährleisten"
-  ],
-  [
-    "gekennzeichnet",
-    "charakterisiert"
-  ],
-  [
-    "Kennzeichnung",
-    "Markierung"
-  ],
-  [
-    "Durchführung",
-    "Ausführung"
-  ],
-  [
-    "durchgeführt",
-    "ausgeführt"
-  ],
-  [
-    "geeignet",
-    "passend"
-  ],
-  [
-    "Geeignet",
-    "Passend"
-  ],
-  [
-    "besonders",
-    "vor allem"
-  ],
-  [
-    "Besonders",
-    "Vor allem"
+    "Anpassbarkeit",
+    "Flexibilität"
   ],
   [
     "Speicherung",
     "Ablage"
-  ],
-  [
-    "speichern",
-    "ablegen"
-  ],
-  [
-    "Entscheidungen",
-    "Beschlüsse"
   ],
   [
     "Verantwortung",
@@ -621,212 +461,116 @@
     "Genauigkeit"
   ],
   [
-    "Nutzung",
-    "Verwendung"
-  ],
-  [
-    "Einführung",
-    "Implementierung"
-  ],
-  [
-    "Unternehmen",
-    "Betrieb"
-  ],
-  [
-    "Unternehmens",
-    "Betriebs"
-  ],
-  [
-    "Mitarbeiter",
-    "Beschäftigte"
-  ],
-  [
-    "Mitarbeitende",
-    "Beschäftigte"
-  ],
-  [
     "Geschäftsmodell",
     "Geschäftskonzept"
-  ],
-  [
-    "Kunden",
-    "Kundschaft"
-  ],
-  [
-    "Kundendaten",
-    "Daten von Kunden"
-  ],
-  [
-    "Einfluss",
-    "Auswirkung"
-  ],
-  [
-    "Auswirkung",
-    "Folge"
-  ],
-  [
-    "Auswirkungen",
-    "Folgen"
-  ],
-  [
-    "Zugriff",
-    "Zugang"
-  ],
-  [
-    "verfügbar",
-    "vorhanden"
-  ],
-  [
-    "Verfügbar",
-    "Vorhanden"
-  ],
-  [
-    "Zusammenarbeit",
-    "Kooperation"
-  ],
-  [
-    "Zusammenwirken",
-    "Kooperation"
-  ],
-  [
-    "Anpassbarkeit",
-    "Flexibilität"
   ],
   [
     "Anpassung",
     "Abstimmung"
   ],
   [
-    "automatisch",
-    "selbstständig"
-  ],
-  [
-    "Automatisch",
-    "Selbstständig"
-  ],
-  [
-    "selbstständig",
-    "eigenständig"
-  ],
-  [
-    "Selbstständig",
-    "Eigenständig"
-  ],
-  [
     "verwendet",
     "nutzt"
+  ],
+  [
+    "Verwendet",
+    "Nutzt"
   ],
   [
     "nutzen",
     "verwenden"
   ],
   [
-    "Nutzt",
-    "Verwendet"
+    "Nutzen",
+    "Verwenden"
   ],
   [
-    "nützt",
-    "hilft"
+    "verhindert",
+    "unterbindet"
   ],
   [
-    "durchführen",
-    "umsetzen"
+    "Verhindert",
+    "Unterbindet"
   ],
   [
-    "Durchführen",
-    "Umsetzen"
+    "ermöglicht",
+    "erlaubt"
   ],
   [
-    "erhöht",
-    "steigert"
+    "Ermöglicht",
+    "Erlaubt"
   ],
   [
-    "Erhöht",
-    "Steigert"
+    "umfasst",
+    "beinhaltet"
   ],
   [
-    "reduziert",
-    "senkt"
+    "Umfasst",
+    "Beinhaltet"
   ],
   [
-    "Reduziert",
-    "Senkt"
+    "beinhaltet",
+    "umfasst"
   ],
   [
-    "verringert",
-    "senkt"
+    "Beinhaltet",
+    "Umfasst"
   ],
   [
-    "Verringert",
-    "Senkt"
+    "basiert auf",
+    "beruht auf"
   ],
   [
-    "Priorisierung",
-    "Reihenfolge"
+    "Basiert auf",
+    "Beruht auf"
   ],
   [
-    "Priorisieren",
-    "in eine Reihenfolge bringen"
+    "kombiniert",
+    "verbindet"
   ],
   [
-    "Feedback",
-    "Rückmeldung"
+    "Kombiniert",
+    "Verbindet"
   ],
   [
-    "Rückmeldungen",
-    "Feedback"
+    "kombinieren",
+    "verbinden"
   ],
   [
-    "Aufbereitung",
-    "Vorbereitung"
+    "entwickelt",
+    "erarbeitet"
   ],
   [
-    "Qualität",
-    "Güte"
+    "Erstellt",
+    "Generiert"
   ],
   [
-    "Qualitäts",
-    "Güte"
+    "erstellt",
+    "generiert"
   ],
   [
-    "langfristig",
-    "dauerhaft"
+    "erhält",
+    "bekommt"
   ],
   [
-    "Langfristig",
-    "Dauerhaft"
+    "Erhält",
+    "Bekommt"
   ],
   [
-    "konkrete",
-    "spezifische"
+    "verarbeitet",
+    "bearbeitet"
   ],
   [
-    "Konkrete",
-    "Spezifische"
+    "Verarbeitet",
+    "Bearbeitet"
   ],
   [
-    "spezifische",
-    "konkrete"
+    "Computer",
+    "Rechner"
   ],
   [
-    "Spezifische",
-    "Konkrete"
-  ],
-  [
-    "umfassende",
-    "weitreichende"
-  ],
-  [
-    "Umfassende",
-    "Weitreichende"
-  ],
-  [
-    "vollständig",
-    "komplett"
-  ],
-  [
-    "Vollständig",
-    "Komplett"
+    "Computer",
+    "Rechner"
   ]
 ];
   function rewordAnswer(text) {
