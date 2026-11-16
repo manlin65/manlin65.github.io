@@ -635,8 +635,8 @@
       const baseQuestion=wordingVariants[question.id] || question.question;
       return {
         question,
-        displayQuestion: wordingIntensity ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
-        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity ? rewordAnswer(text,wordingIntensity) : text,correct:question.correct.includes(index)}))),
+        displayQuestion: wordingIntensity && Math.random()>=0.2 ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
+        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity && Math.random()>=0.5 ? rewordAnswer(text,wordingIntensity) : text,correct:question.correct.includes(index)}))),
         selected:new Set()
       };
     });
