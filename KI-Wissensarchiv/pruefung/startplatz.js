@@ -61,30 +61,22 @@
 };
   const answerRewrites = [
     ["ausschließlich", "nur"], ["Ausschließlich", "Nur"],
+    ["ausschließliche", "alleinige"], ["Ausschließliche", "Alleinige"],
     ["vollständige", "komplette"], ["Vollständige", "Komplette"],
     ["vollständig", "komplett"], ["Vollständig", "Komplett"],
     ["grundlegende", "wesentliche"], ["Grundlegende", "Wesentliche"],
-    ["grundlegend", "im Kern"], ["Grundlegend", "Im Kern"],
     ["entscheidenden", "maßgeblichen"], ["Entscheidenden", "Maßgeblichen"],
     ["entscheidende", "maßgebliche"], ["Entscheidende", "Maßgebliche"],
     ["entscheidend", "maßgeblich"], ["Entscheidend", "Maßgeblich"],
     ["wichtigsten", "zentralen"], ["Wichtigsten", "Zentralen"],
     ["wichtigste", "zentrale"], ["Wichtigste", "Zentrale"],
     ["insbesondere", "vor allem"], ["Insbesondere", "Vor allem"],
-    ["ausschließliche", "alleinige"], ["Ausschließliche", "Alleinige"],
-    ["Verwendung", "Nutzung"], ["verwendung", "Nutzung"],
-    ["Nutzung", "Verwendung"], ["nutzung", "Verwendung"],
-    ["Einsatz", "Verwendung"], ["Einsatzes", "Verwendung"],
-    ["Erstellung", "Erzeugung"], ["Erstellung", "Erzeugung"],
-    ["Implementierung", "Einführung"], ["Implementierung", "Einführung"],
-    ["Analyse", "Auswertung"], ["Analyse", "Auswertung"],
-    ["Bewertung", "Beurteilung"], ["Bewertung", "Beurteilung"],
-    ["Definition", "Begriffsbestimmung"], ["Definition", "Begriffsbestimmung"],
-    ["Möglichkeit", "Option"], ["Möglichkeiten", "Optionen"],
-    ["Anwendung", "Nutzung"], ["Anwendungen", "Einsatzbereiche"],
-    ["Rolle", "Funktion"], ["Aufgabe", "Funktion"],
+    ["Verwendung", "Nutzung"], ["Nutzung", "Verwendung"],
+    ["Erstellung", "Erzeugung"], ["Implementierung", "Einführung"],
+    ["Analyse", "Auswertung"], ["Bewertung", "Beurteilung"],
+    ["Definition", "Begriffsbestimmung"], ["Möglichkeit", "Option"],
+    ["Möglichkeiten", "Optionen"], ["Rolle", "Funktion"],
     ["Anzahl", "Zahl"], ["Geschwindigkeit", "Tempo"],
-    ["Sicherheit", "Schutz"], ["Risiken", "Gefahren"],
     ["erfolgreich", "wirksam"], ["Erfolgreich", "Wirksam"],
     ["komplexe", "anspruchsvolle"], ["Komplexe", "Anspruchsvolle"],
     ["verschiedene", "unterschiedliche"], ["Verschiedene", "Unterschiedliche"],
@@ -95,7 +87,9 @@
   ];
   function rewordAnswer(text) {
     for (const [from, to] of answerRewrites) {
-      if (text.includes(from)) return text.replace(from, to);
+      const escaped=from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern=new RegExp('(^|[^\\p{L}\\p{N}_])'+escaped+'(?=$|[^\\p{L}\\p{N}_])','u');
+      if (pattern.test(text)) return text.replace(pattern, (match,prefix)=>prefix+to);
     }
     return text;
   }
