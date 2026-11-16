@@ -165,8 +165,10 @@ body{background-color:var(--navy);background-image:url("assets/quizlab-ai-backgr
 .pool-scope-option span{display:grid;gap:3px}.pool-scope-option small{color:var(--quiet);line-height:1.35}
 @media(max-width:600px){.pool-scope-options{grid-template-columns:1fr}}
 
-.wording-toggle{display:flex;align-items:flex-start;gap:11px;max-width:940px;margin:-4px 0 18px;padding:13px 15px;border:1px solid #385872;border-radius:9px;background:rgba(6,18,36,.55);cursor:pointer}
-.wording-toggle input{accent-color:var(--orange);width:18px;height:18px;margin:2px 0 0;flex:none}
-.wording-toggle span{display:grid;gap:3px}
+.wording-toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:940px;margin:-4px 0 18px;padding:13px 15px;border:1px solid #385872;border-radius:9px;background:rgba(6,18,36,.55)}
+.wording-toggle label{display:grid;gap:3px;cursor:pointer}
 .wording-toggle strong{font-size:.92rem;color:var(--text)}
 .wording-toggle small{font-size:.82rem;color:var(--muted);line-height:1.45}
+.wording-toggle select{width:min(220px,40%);flex:none}
+
+@media(max-width:640px){.wording-toggle{align-items:stretch;flex-direction:column}.wording-toggle select{width:100%}}
