@@ -955,11 +955,13 @@
     if(timerId){clearInterval(timerId);timerId=null;}
     const requested=forcedCount ?? ($('#sp-count').value==='all'?questionPool.length:Number($('#sp-count').value));
     run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>{
-      const wordingIntensity=$('#sp-vary-wording')?.checked ? 1+Math.floor(Math.random()*3) : 0;
+      const wordingEnabled=$('#sp-wording-mode')?.value==='varied';
+      const wordingIntensity=wordingEnabled ? 1+Math.floor(Math.random()*3) : 0;
       const baseQuestion=wordingVariants[question.id] || question.question;
       return {
         question,
         displayQuestion: wordingIntensity && Math.random()<wordingIntensity*0.3 ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
+        displayExplanation: wordingIntensity && question.explanation ? rewordAnswer(question.explanation,wordingIntensity) : question.explanation,
         options:shuffle(question.options.map((text,index)=>({text:wordingIntensity && Math.random()<wordingIntensity*0.25 ? (answerVariants[question.id]?.[index] || rewordAnswer(text,wordingIntensity)) : text,correct:question.correct.includes(index)}))),
         selected:new Set()
       };
@@ -1062,7 +1064,7 @@
         list.append(li);
       });
       article.append(list);
-      if(question.explanation){const explanation=document.createElement('p');explanation.textContent=question.explanation;article.append(explanation);}
+      if(item.displayExplanation){const explanation=document.createElement('p');explanation.className='question-explanation';explanation.textContent=item.displayExplanation;article.append(explanation);}
       review.append(article);
     });
     result.append(review);
@@ -1119,7 +1121,10 @@
   $('#sp-repeat-weakest').addEventListener('click',()=>{
     const list=weakestQuestions().slice(0,10).map(item=>item.question);
     if(!list.length)return;
-    $('#tab-startplatz').click();startExam(list,list.length,true);
+    $('.tabs [role="tab"]').forEach(tab=>tab.setAttribute('aria-selected',String(tab.id==='tab-startplatz')));
+    $('.tab-panel').forEach(panel=>panel.hidden=panel.id!=='startplatz');
+    startExam(list,list.length,true);
+    requestAnimationFrame(()=>$('#sp-question-box').scrollIntoView({behavior:'smooth',block:'start'}));
   });
   $('#sp-clear-stats').addEventListener('click',()=>{
     if(!window.confirm('Deine Schwächen-Auswertung auf diesem Gerät zurücksetzen?'))return;
