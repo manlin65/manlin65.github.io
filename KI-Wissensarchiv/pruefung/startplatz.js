@@ -59,6 +59,46 @@
   "startplatz-54-q7121": "Welche Aussage über Social-Scoring-Systeme nach Artikel 5 der KI-Verordnung stimmt?",
   "startplatz-55-q7132": "Welche Methode zur Erstellung von Gesichtserkennungsdatenbanken verbietet Artikel 5 der KI-Verordnung?"
 };
+  const answerRewrites = [
+    ["ausschließlich", "nur"], ["Ausschließlich", "Nur"],
+    ["vollständige", "komplette"], ["Vollständige", "Komplette"],
+    ["vollständig", "komplett"], ["Vollständig", "Komplett"],
+    ["grundlegende", "wesentliche"], ["Grundlegende", "Wesentliche"],
+    ["grundlegend", "im Kern"], ["Grundlegend", "Im Kern"],
+    ["entscheidenden", "maßgeblichen"], ["Entscheidenden", "Maßgeblichen"],
+    ["entscheidende", "maßgebliche"], ["Entscheidende", "Maßgebliche"],
+    ["entscheidend", "maßgeblich"], ["Entscheidend", "Maßgeblich"],
+    ["wichtigsten", "zentralen"], ["Wichtigsten", "Zentralen"],
+    ["wichtigste", "zentrale"], ["Wichtigste", "Zentrale"],
+    ["insbesondere", "vor allem"], ["Insbesondere", "Vor allem"],
+    ["ausschließliche", "alleinige"], ["Ausschließliche", "Alleinige"],
+    ["Verwendung", "Nutzung"], ["verwendung", "Nutzung"],
+    ["Nutzung", "Verwendung"], ["nutzung", "Verwendung"],
+    ["Einsatz", "Verwendung"], ["Einsatzes", "Verwendung"],
+    ["Erstellung", "Erzeugung"], ["Erstellung", "Erzeugung"],
+    ["Implementierung", "Einführung"], ["Implementierung", "Einführung"],
+    ["Analyse", "Auswertung"], ["Analyse", "Auswertung"],
+    ["Bewertung", "Beurteilung"], ["Bewertung", "Beurteilung"],
+    ["Definition", "Begriffsbestimmung"], ["Definition", "Begriffsbestimmung"],
+    ["Möglichkeit", "Option"], ["Möglichkeiten", "Optionen"],
+    ["Anwendung", "Nutzung"], ["Anwendungen", "Einsatzbereiche"],
+    ["Rolle", "Funktion"], ["Aufgabe", "Funktion"],
+    ["Anzahl", "Zahl"], ["Geschwindigkeit", "Tempo"],
+    ["Sicherheit", "Schutz"], ["Risiken", "Gefahren"],
+    ["erfolgreich", "wirksam"], ["Erfolgreich", "Wirksam"],
+    ["komplexe", "anspruchsvolle"], ["Komplexe", "Anspruchsvolle"],
+    ["verschiedene", "unterschiedliche"], ["Verschiedene", "Unterschiedliche"],
+    ["kontinuierliche", "fortlaufende"], ["Kontinuierliche", "Fortlaufende"],
+    ["präzise", "genaue"], ["Präzise", "Genaue"],
+    ["erhöhte", "gesteigerte"], ["Erhöhte", "Gesteigerte"],
+    ["reduzierte", "verringerte"], ["Reduzierte", "Verringerte"]
+  ];
+  function rewordAnswer(text) {
+    for (const [from, to] of answerRewrites) {
+      if (text.includes(from)) return text.replace(from, to);
+    }
+    return text;
+  }
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -103,7 +143,7 @@
     run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>({
       question,
       displayQuestion: $('#sp-vary-wording')?.checked ? (wordingVariants[question.id] || question.question) : question.question,
-      options:shuffle(question.options.map((text,index)=>({text,correct:question.correct.includes(index)}))),
+      options:shuffle(question.options.map((text,index)=>({text:$('#sp-vary-wording')?.checked ? rewordAnswer(text) : text,correct:question.correct.includes(index)}))),
       selected:new Set()
     }));
     if(!run.length)return;
