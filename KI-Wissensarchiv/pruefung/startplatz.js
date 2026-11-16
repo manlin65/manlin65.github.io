@@ -959,8 +959,8 @@
       const baseQuestion=wordingVariants[question.id] || question.question;
       return {
         question,
-        displayQuestion: wordingIntensity && Math.random()>=0.2 ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
-        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity && Math.random()>=0.5 ? (answerVariants[question.id]?.[index] || rewordAnswer(text,wordingIntensity)) : text,correct:question.correct.includes(index)}))),
+        displayQuestion: wordingIntensity && Math.random()<wordingIntensity*0.3 ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
+        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity && Math.random()<wordingIntensity*0.25 ? (answerVariants[question.id]?.[index] || rewordAnswer(text,wordingIntensity)) : text,correct:question.correct.includes(index)}))),
         selected:new Set()
       };
     });
