@@ -922,6 +922,8 @@
   const missedKey='startplatz-exam-missed-v1';
   const historyKey='startplatz-exam-history-v1';
   const statsKey='startplatz-exam-question-stats-v1';
+  const legacyMissedKey='startplatz-exam-legacy-missed-v1';
+  const legacyImportKey='startplatz-exam-legacy-imported-v1';
   let run=[],pos=0,seconds=0,timerId=null,finished=false,reviewOnly=false,startedAt=0;
 
   function availableWeeks(){return [...new Set(originalQuestions.map(question=>question.week))].sort((a,b)=>a-b);}
@@ -1094,23 +1096,36 @@
     });
     try{localStorage.setItem(statsKey,JSON.stringify(stats));}catch{}
   }
+  function importOlderMisses(){
+    try{
+      if(localStorage.getItem(legacyImportKey)==='1')return;
+      const validIds=new Set(originalQuestions.map(question=>question.id));
+      const ids=readMissed().filter(id=>validIds.has(id));
+      localStorage.setItem(legacyMissedKey,JSON.stringify(ids));
+      localStorage.setItem(legacyImportKey,'1');
+    }catch{}
+  }
+  function readOlderMisses(){try{return JSON.parse(localStorage.getItem(legacyMissedKey)||'[]');}catch{return[];}}
   function weakestQuestions(){
-    const stats=readStats();
-    return originalQuestions.map(question=>({question,...(stats[question.id]||{attempts:0,wrong:0})}))
-      .filter(item=>item.attempts>0&&item.wrong>0)
-      .sort((a,b)=>(b.wrong/b.attempts)-(a.wrong/a.attempts)||b.wrong-a.wrong||b.attempts-a.attempts);
+    const stats=readStats(),olderMisses=new Set(readOlderMisses());
+    return originalQuestions.map(question=>{
+      const values=stats[question.id]||{attempts:0,wrong:0};
+      return {question,...values,legacyMissed:olderMisses.has(question.id)&&values.wrong===0};
+    }).filter(item=>item.wrong>0||item.legacyMissed)
+      .sort((a,b)=>(Number(b.legacyMissed)-Number(a.legacyMissed))||(b.wrong/b.attempts)-(a.wrong/a.attempts)||b.wrong-a.wrong||b.attempts-a.attempts);
   }
   function renderWeaknesses(){
     const chart=$('#sp-weakness-chart'),empty=$('#sp-weakness-empty'),stats=readStats(),rows=weakestQuestions();chart.replaceChildren();
-    const hasAttempts=Object.values(stats).some(item=>item.attempts>0);
-    $('#sp-weakness-count').textContent=rows.length?`${rows.length} Fragen mit Fehlversuchen`:hasAttempts?'Keine Fehlversuche':'Noch keine Auswertung';
+    const hasAttempts=Object.values(stats).some(item=>item.attempts>0)||rows.length>0;
+    const legacyCount=rows.filter(item=>item.legacyMissed).length;
+    $('#sp-weakness-count').textContent=rows.length?`${rows.length} Fragen zum Wiederholen${legacyCount?` · ${legacyCount} aus älterer Merkliste`:''}`:hasAttempts?'Keine Fehlversuche':'Noch keine Auswertung';
     empty.hidden=rows.length>0;empty.textContent=hasAttempts?'Bisher sind alle ausgewerteten Fragen richtig beantwortet.': 'Nach deinem ersten Versuch erscheinen hier deine Lernschwerpunkte.';
     $('#sp-repeat-weakest').disabled=rows.length===0;$('#sp-clear-stats').disabled=!hasAttempts;
     rows.slice(0,15).forEach(item=>{
       const rate=Math.round(item.wrong/item.attempts*100),row=document.createElement('article');row.className='weakness-row';
       const meta=document.createElement('div');meta.className='weakness-meta';
       const source=document.createElement('span');source.textContent=`${item.question.sourceId} · Woche ${item.question.week}`;
-      const count=document.createElement('span');count.textContent=`${item.wrong} von ${item.attempts} falsch`;meta.append(source,count);
+      const count=document.createElement('span');count.textContent=item.legacyMissed?'Ältere Merkliste · genaue Anzahl nicht gespeichert':`${item.wrong} von ${item.attempts} falsch`;meta.append(source,count);
       const title=document.createElement('p');title.className='weakness-question';title.textContent=item.question.question;
       const line=document.createElement('div');line.className='weakness-bar-line';line.setAttribute('role','img');line.setAttribute('aria-label',`${rate} Prozent falsch`);
       const track=document.createElement('div');track.className='weakness-track';const fill=document.createElement('div');fill.className='weakness-fill';fill.style.width=`${rate}%`;track.append(fill);
@@ -1127,12 +1142,12 @@
     requestAnimationFrame(()=>$('#sp-question-box').scrollIntoView({behavior:'smooth',block:'start'}));
   });
   $('#sp-clear-stats').addEventListener('click',()=>{
-    if(!window.confirm('Deine Schwächen-Auswertung auf diesem Gerät zurücksetzen?'))return;
-    localStorage.removeItem(statsKey);renderWeaknesses();
+    if(!window.confirm('Deine Schwächen-Auswertung einschließlich der übernommenen alten Merkliste auf diesem Gerät zurücksetzen?'))return;
+    localStorage.removeItem(statsKey);localStorage.removeItem(legacyMissedKey);renderWeaknesses();
   });
   function readHistory(){try{return JSON.parse(localStorage.getItem(historyKey)||'[]');}catch{return[];}}
   function writeHistory(history){try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}}
   function renderHistory(){const items=readHistory(),target=$('#sp-history-items');if(!items.length){target.textContent='Noch keine gespeicherten Durchläufe auf diesem Gerät.';return;}target.innerHTML=items.map(item=>`<div>${esc(item.date)} · <strong>${item.score}/${item.total} (${item.pct}%)</strong> · Zeit: ${item.elapsedSeconds==null?'bei älteren Durchläufen nicht erfasst':esc(formatDuration(item.elapsedSeconds))}</div>`).join('');}
   $('#sp-clear-history').addEventListener('click',()=>{localStorage.removeItem(historyKey);renderHistory();});
-  renderMissed();renderHistory();syncWeeks();renderWeaknesses();
+  importOlderMisses();renderMissed();renderHistory();syncWeeks();renderWeaknesses();
 })();
