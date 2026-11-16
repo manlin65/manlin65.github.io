@@ -385,14 +385,6 @@
     "technische"
   ],
   [
-    "Methode",
-    "Verfahren"
-  ],
-  [
-    "Methoden",
-    "Verfahren"
-  ],
-  [
     "Umsetzung",
     "Realisierung"
   ],
@@ -563,10 +555,6 @@
   [
     "Verarbeitet",
     "Bearbeitet"
-  ],
-  [
-    "Computer",
-    "Rechner"
   ],
   [
     "Computer",
