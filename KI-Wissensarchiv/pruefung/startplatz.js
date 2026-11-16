@@ -2,6 +2,917 @@
   'use strict';
   const questions = window.STARTPLATZ_PRUEFUNGSFRAGEN || [];
   const originalQuestions = questions.filter(question => question.isOriginal55);
+  const wordingVariants = {
+  "startplatz-01-q1211": "Welche Neuerung aus dem Jahr 2017 veränderte die Entwicklung von Sprachmodellen grundlegend und wurde zur Basis moderner KI-Systeme?",
+  "startplatz-02-q1213": "Welche Entwicklung gilt als entscheidender Durchbruch neuronaler Netze in der Bildverarbeitung?",
+  "startplatz-03-q1311": "Wie lässt sich Machine Learning grundlegend definieren?",
+  "startplatz-04-q1321": "Welche Beschreibung trifft Supervised Learning am besten?",
+  "startplatz-05-q1351": "Welcher Arbeitsschritt beeinflusst die Qualität eines Machine-Learning-Modells besonders stark?",
+  "startplatz-06-q1332": "Welche Aufgabe übernehmen die Hidden Layer in einem neuronalen Netzwerk hauptsächlich?",
+  "startplatz-07-q1354": "Welche Funktion haben Tokens in aktuellen Transformer-Modellen?",
+  "startplatz-08-q1452": "Wodurch kann die Qualität von KI-Ergebnissen verlässlich geprüft werden?",
+  "startplatz-09-q1433": "Wie geht man am besten vor, wenn eine KI-Aufgabe besonders komplex ist?",
+  "startplatz-10-q1511": "Welche grundlegende Abgrenzung gibt es bei den Methoden des maschinellen Lernens?",
+  "startplatz-11-q1521": "Was ist typisch für die Transformer-Architektur moderner KI-Systeme?",
+  "startplatz-12-q1543": "Warum ist die Qualität der Daten für KI-Anwendungen wichtig?",
+  "startplatz-13-q2111": "Welches Ziel verfolgt Prompt Engineering in erster Linie?",
+  "startplatz-14-q2112": "Welche zentralen Bausteine sollte ein gut aufgebauter Prompt enthalten?",
+  "startplatz-15-q2121": "Worin unterscheiden sich Zero-Shot- und Few-Shot-Prompting?",
+  "startplatz-16-q2131": "Wozu wird Chain-of-Thought-Prompting eingesetzt?",
+  "startplatz-17-q2113": "Weshalb sollte ein Prompt die Rolle der KI festlegen?",
+  "startplatz-18-q2231": "Welche Aussage zur Verarbeitung von Tokens trifft zu?",
+  "startplatz-19-q2241": "Woran erkennt man eine Prompt-Injection?",
+  "startplatz-20-q2221": "Welcher Parameter beeinflusst, wie kreativ die KI antwortet?",
+  "startplatz-21-q2242": "Welche der folgenden Risiken für die KI-Sicherheit gibt es? (2 Antworten sind richtig)",
+  "startplatz-22-q2323": "Was macht ein wirksames Konzept zur KI-Schulung aus?",
+  "startplatz-23-q2411": "Welche grundlegenden Arten von Prompting-Techniken lassen sich unterscheiden?",
+  "startplatz-24-q2412": "Ein Unternehmen möchte Kundenanfragen automatisch klassifizieren. Welche Prompting-Methode passt dafür am besten?",
+  "startplatz-25-q2431": "Welche Aussage über die Chain-of-Thought-Technik ist richtig?",
+  "startplatz-26-q2422": "Welche Bestandteile gehören in einen gut strukturierten Prompt für automatisierte Systeme? (2 von 5 Antworten sind richtig)",
+  "startplatz-27-q2442": "Wozu dient die Formatierung mit Markdown beim Prompt Engineering?",
+  "startplatz-28-q2531": "Welchen Zweck erfüllt Retrieval-Augmented Generation (RAG) in einem KI-System vor allem?",
+  "startplatz-29-q2541": "Welche Eigenschaft beschreibt Fine-Tuning als Methode zur Optimierung von KI am treffendsten?",
+  "startplatz-30-q2532": "Welche Bausteine gehören zu einem RAG-System? (2 von 4 Antworten sind richtig)",
+  "startplatz-31-q3111": "Wodurch unterscheidet sich Claude von Anthropic bei der ethischen Ausrichtung von anderen KI-Modellen?",
+  "startplatz-32-q3211": "Wie funktionieren Diffusionsmodelle grundsätzlich bei der Erzeugung von Bildern?",
+  "startplatz-33-q4111": "Wie lässt sich das Frontend einer Anwendung am besten beschreiben?",
+  "startplatz-34-q4112": "Welche Aussage über das Backend einer modernen Webanwendung stimmt?",
+  "startplatz-35-q5311": "Was braucht es, um einen einfachen KI-Workflow für automatisch erstellte Social-Media-Inhalte zu planen?",
+  "startplatz-36-q5321": "Für welche praktische Aufgabe eignen sich KI-gestützte Automatisierungstools besonders?",
+  "startplatz-37-q5411": "Wie ist ein KI-Agent definiert?",
+  "startplatz-38-q5421": "Aus welchen drei wesentlichen Elementen besteht ein KI-Agent grundsätzlich?",
+  "startplatz-39-q7111": "Welche Rolle spielten die 2019 veröffentlichten EU-Leitlinien für vertrauenswürdige KI bei der europäischen KI-Regulierung?",
+  "startplatz-40-q7121": "Welches Prinzip der EU-Leitlinien verlangt, dass KI ihre Entscheidungen erklären kann?",
+  "startplatz-41-q7122": "Welche Punkte gehören laut EU-Leitlinien zu „Technische Robustheit und Sicherheit“?",
+  "startplatz-42-q7131": "Was erschwert die praktische Umsetzung des Transparenz-Prinzips bei komplexen neuronalen Netzen besonders?",
+  "startplatz-43-q7211": "Welches der folgenden Systeme zählt nach der KI-Verordnung NICHT als KI-System?",
+  "startplatz-44-q7221": "Nach welchem Grundprinzip ist die EU-KI-Verordnung aufgebaut?",
+  "startplatz-45-q7331": "Wie viele gewerbliche Nutzer muss ein KI-Modell mit allgemeinem Verwendungszweck mindestens erreichen, damit es als Modell mit systemischem Risiko eingestuft wird?",
+  "startplatz-46-q7411": "Was gehört nach der KI-Verordnung zur „KI-Kompetenz“?",
+  "startplatz-47-q7232": "Welche Tätigkeiten fallen unter die Regulierung der KI-Verordnung? (2 Antworten)",
+  "startplatz-48-q7511": "Welche Aussage zum Zusammenspiel der EU-KI-Verordnung mit anderen Rechtsgebieten ist korrekt?",
+  "startplatz-49-q7611": "Worin liegt im AI Act der wichtigste Unterschied zwischen Anbieter und Betreiber?",
+  "startplatz-50-q7614": "Durch welche Handlung übernimmt ein Betreiber die Pflichten eines Anbieters?",
+  "startplatz-51-q7623": "Was folgt regulatorisch daraus, wenn ein KI-System als „minimales Risiko“ eingestuft wird?",
+  "startplatz-52-q7712": "Wann muss ein Arbeitgeber seine Beschäftigten über den Einsatz von Hochrisiko-KI am Arbeitsplatz informieren?",
+  "startplatz-53-q7113": "Welche KI-Anwendung ist nach Artikel 5 der KI-Verordnung verboten?",
+  "startplatz-54-q7121": "Welche Aussage über Social-Scoring-Systeme nach Artikel 5 der KI-Verordnung stimmt?",
+  "startplatz-55-q7132": "Welche Methode zur Erstellung von Gesichtserkennungsdatenbanken verbietet Artikel 5 der KI-Verordnung?"
+};
+  const answerVariants = {
+  "startplatz-01-q1211": [
+    "Rekurrente neuronale Netze, die LSTM-Technik mit evolutionärer Anpassung der Gewichte verbinden",
+    "Transformer mit mehrstufiger Self-Attention für eine kontextbezogene Textverarbeitung",
+    "Convolutional Neural Networks mit hierarchischen ResNet-Schichten und Gradientenverfahren",
+    "GANs, bei denen Generator und Diskriminator über eine adversariale Verlustfunktion trainieren"
+  ],
+  "startplatz-02-q1213": [
+    "Convolutional Neural Networks senkten die Fehlerrate bei der Objekterkennung deutlich",
+    "Transformer ermöglichten Bildanalysen mit gestufter Aufmerksamkeit und Kontextbezug",
+    "Regelbasierte Expertensysteme klassifizierten Merkmale hierarchisch und adaptiv",
+    "Random Forests nutzten Ensembles und Boosting zur Auswahl von Bildmerkmalen"
+  ],
+  "startplatz-03-q1311": [
+    "Ein Verfahren, bei dem Rechner aus Beispieldaten selbstständig Muster und Regeln ableiten",
+    "Ein Ansatz, bei dem Algorithmen mathematische Modelle automatisiert verbessern",
+    "Eine Methode, mit der Programme statistische Zusammenhänge in Datenbeständen erkennen",
+    "Ein Konzept, bei dem Maschinen Informationen nach festen Systematiken verarbeiten"
+  ],
+  "startplatz-04-q1321": [
+    "Das Modell entwickelt ohne konkrete Anleitung eigene Lösungsstrategien",
+    "Das Modell wird mit Eingaben und den passenden Zielwerten trainiert",
+    "Das Modell erkennt Muster eigenständig in nicht gekennzeichneten Daten",
+    "Das Modell lernt aus Rückmeldungen zu Aktionen und passt sein Verhalten daran an"
+  ],
+  "startplatz-05-q1351": [
+    "Die technische Umsetzung des ausgewählten Algorithmus in der Entwicklungsumgebung",
+    "Trainingsdaten vor dem Lernen systematisch bereinigen und vorbereiten",
+    "Das fertige Modell auf der Produktionsumgebung bereitstellen",
+    "Die Leistung des Modells im laufenden Betrieb regelmäßig kontrollieren"
+  ],
+  "startplatz-06-q1332": [
+    "Sie halten Zwischenergebnisse fest, damit sie später weiterverwendet werden",
+    "Sie gewinnen schrittweise aussagekräftige Merkmale aus den Eingabedaten",
+    "Sie passen die Verbindungsgewichte zwischen Neuronen an",
+    "Sie verdichten die Daten und verringern dadurch ihre Dimension"
+  ],
+  "startplatz-07-q1354": [
+    "Sie lenken den Informationsaustausch zwischen den Netzwerkschichten",
+    "Sie dienen als Basiseinheiten, mit denen Texte semantisch verarbeitet werden",
+    "Sie ermöglichen Transformern, mehrere Eingabesequenzen parallel zu bearbeiten",
+    "Sie halten vorübergehende Zustände während der Sequenzverarbeitung fest"
+  ],
+  "startplatz-08-q1452": [
+    "Indem pro Aufgabe mehr Rechenleistung eingesetzt wird",
+    "Indem drei unabhängige Kontrollstellen eingerichtet werden",
+    "Indem Ergebnisse an vorher festgelegten Qualitätszielen gemessen werden",
+    "Indem die Bearbeitung doppelt so lange dauert"
+  ],
+  "startplatz-09-q1433": [
+    "Indem die Aufgabe in einem einzigen Zeitfenster erledigt wird",
+    "Indem man sie in klar abgegrenzte Teilschritte zerlegt",
+    "Indem mehrere KI-Systeme gleichzeitig eingesetzt werden",
+    "Indem der technische Lösungsweg vollständig vorgegeben wird"
+  ],
+  "startplatz-10-q1511": [
+    "Fachleute wählen bestimmte Merkmale von Hand aus",
+    "Überwachtes Lernen wird vom unüberwachten Lernen abgegrenzt",
+    "Primäres Training wird von sekundärem Training unterschieden",
+    "Lernabläufe werden manuell oder automatisch gesteuert"
+  ],
+  "startplatz-11-q1521": [
+    "Sie verarbeitet Eingaben geordnet über symmetrisch aufgebaute Prozesseinheiten",
+    "Sie verarbeitet Informationen mithilfe gestaffelter Speichersysteme",
+    "Sie bearbeitet Sequenzen parallel und nutzt dynamische Aufmerksamkeitsmechanismen",
+    "Sie verarbeitet Daten nacheinander über hierarchisch angeordnete Filter"
+  ],
+  "startplatz-12-q1543": [
+    "Sie hilft dabei, festgelegte Projektvorgaben praktisch umzusetzen",
+    "Sie macht es möglich, einzelne Verarbeitungsschritte formell zu dokumentieren",
+    "Sie prüft, ob technische Systembausteine korrekt umgesetzt wurden",
+    "Sie ist eine Voraussetzung für verlässliche Auswertungen und Prognosen"
+  ],
+  "startplatz-13-q2111": [
+    "Neuronale Netze technisch leistungsfähiger zu machen",
+    "Anweisungen so zu formulieren, dass KI-Systeme gezielt reagieren",
+    "Machine-Learning-Verfahren zu programmieren",
+    "Datenbankabfragen in ein System einzubauen"
+  ],
+  "startplatz-14-q2112": [
+    "Syntax, System und Skalierungseinstellungen",
+    "Eingaben, Ausgaben und die Behandlung von Fehlern",
+    "Eine festgelegte Rolle, passenden Kontext und konkrete Anweisungen",
+    "Formatvorgaben, Funktionen und Fehlertoleranzen"
+  ],
+  "startplatz-15-q2121": [
+    "Sie unterscheiden sich in der Bearbeitungsgeschwindigkeit",
+    "Beim Few-Shot-Verfahren werden Beispiele mitgegeben, beim Zero-Shot nicht",
+    "Sie erlauben unterschiedlich lange Eingabetexte",
+    "Sie setzen grundsätzlich verschiedene KI-Modelle voraus"
+  ],
+  "startplatz-16-q2131": [
+    "Die Anfragen schneller verarbeiten zu lassen",
+    "Den Speicherbedarf bei Anfragen zu senken",
+    "Den Gedankengang beziehungsweise Lösungsweg schrittweise darzustellen",
+    "Regelmäßig wiederkehrende Aufgaben zu automatisieren"
+  ],
+  "startplatz-17-q2113": [
+    "Sie senkt den erforderlichen Rechenaufwand",
+    "Sie lenkt die Antworten der KI auf das gewünschte Thema",
+    "Sie verkürzt die benötigte Tokenfolge",
+    "Sie sorgt für eine kürzere Laufzeit"
+  ],
+  "startplatz-18-q2231": [
+    "Ein Wort entspricht immer genau einem Token",
+    "Ein Token besteht stets aus vier Buchstaben",
+    "Tokens können auch einzelne Wortbestandteile sein",
+    "Jedes einzelne Zeichen bildet ein Token"
+  ],
+  "startplatz-19-q2241": [
+    "Der Chat enthält ungewöhnlich viele Tokens",
+    "Eine Eingabe versucht, geltende Vorgaben der KI zu umgehen",
+    "Die Chat-Syntax enthält einen Fehler",
+    "Im Chatverlauf befindet sich unerwünschte Werbung"
+  ],
+  "startplatz-20-q2221": [
+    "Der Eingabeparameter",
+    "Der Systemparameter",
+    "Der Temperature-Wert",
+    "Der Kontextparameter"
+  ],
+  "startplatz-21-q2242": [
+    "Vertrauliche Prompts werden offengelegt",
+    "Der Chatserver ist zeitweise nicht erreichbar",
+    "Vorgegebene Regeln werden gezielt umgangen",
+    "Chatdaten gehen verloren"
+  ],
+  "startplatz-22-q2323": [
+    "Eine einmalige Einführung in die Grundlagen",
+    "Ein Training in Modulen mit praktischen Übungen",
+    "Unterlagen und Anleitungen werden bereitgestellt",
+    "Die Beschäftigten lernen ausschließlich selbstständig"
+  ],
+  "startplatz-23-q2411": [
+    "Prompting kann statisch oder dynamisch erfolgen",
+    "Man unterscheidet zwischen einmaliger Eingabe und fortlaufendem Dialog",
+    "Prompts werden dem Frontend oder Backend zugeordnet",
+    "Anfragen laufen synchron oder asynchron ab"
+  ],
+  "startplatz-24-q2412": [
+    "Conversational Prompting, weil es sich im Dialog an unterschiedliche Situationen anpassen lässt",
+    "Single-Shot Prompting, weil es automatisierte Abläufe ohne menschlichen Dialog unterstützt",
+    "Mixed Prompting, weil mehrere Prompting-Strategien flexibel kombiniert werden",
+    "Interactive Prompting, weil es Rückfragen und direkte Rückmeldungen einbezieht"
+  ],
+  "startplatz-25-q2431": [
+    "Bei einfachen und klar umrissenen Aufgaben erzielt sie die beste Wirkung",
+    "Bei komplexen Aufgaben führt sie zu schlechteren Ergebnissen",
+    "Bei mehrstufigen Aufgaben erhöht sie die Genauigkeit besonders stark",
+    "Sie ist nur für mathematische Berechnungen geeignet"
+  ],
+  "startplatz-26-q2422": [
+    "Eine klare Rollenbeschreibung samt Fachgebiet des KI-Modells",
+    "Technische Angaben zur Architektur des verwendeten KI-Modells",
+    "Vorgaben zum Format und Aufbau der gewünschten Ausgabe",
+    "Eine ausführliche Historie früherer Modellversionen und Änderungen",
+    "Der nötige Kontext und die Bedingungen der Aufgabe"
+  ],
+  "startplatz-27-q2442": [
+    "Sie macht die Verarbeitung durch das Modell schneller",
+    "Sie ordnet Prompts übersichtlich und verbessert ihre Lesbarkeit",
+    "Sie bringt komplexe Formatierungsbefehle direkt in das Modell ein",
+    "Sie beschleunigt die Tokenverarbeitung bei umfangreichen Texten"
+  ],
+  "startplatz-28-q2531": [
+    "Externes Wissen wird eingebunden, damit Antworten weniger halluzinieren",
+    "Die Eingabedaten werden optimiert, um das Modell schneller zu trainieren",
+    "Die Architektur wird angepasst, damit Antworten schneller erzeugt werden",
+    "Das System erstellt automatisch synthetische Trainingsdaten"
+  ],
+  "startplatz-29-q2541": [
+    "Ein Modell wird mit zusätzlichen, gezielt ausgewählten Daten weitertrainiert",
+    "Die Hardware wird verbessert, damit das Modell schneller läuft",
+    "Neue Prompts werden formuliert, um Antworten im Dialog zu verbessern",
+    "Externe Datenquellen werden während der Nutzung in die Wissensbasis eingebunden"
+  ],
+  "startplatz-30-q2532": [
+    "Ein Vektorindex speichert und erschließt das externe Wissen",
+    "Embeddings wandeln Text in numerische Vektordarstellungen um",
+    "Ein System erzeugt fortlaufend künstliche Trainingsdaten",
+    "Ein neuronales Netz entwirft selbstständig Prompt-Strategien"
+  ],
+  "startplatz-31-q3111": [
+    "Claude verarbeitet keine persönlichen Angaben",
+    "Claude richtet sich nach Constitutional AI und festgelegten ethischen Grundsätzen",
+    "Claude kooperiert nur mit geprüften Partnern",
+    "Claude legt keinen Verlauf von Gesprächen ab",
+    "Claude darf nur für wissenschaftliche Anwendungen genutzt werden"
+  ],
+  "startplatz-32-q3211": [
+    "Die Bilder werden direkt aus einer Bilddatenbank übernommen",
+    "Aus zufälligem Rauschen entsteht schrittweise ein Bild",
+    "Mehrere vorhandene Vorlagen werden zu einem Bild verschmolzen",
+    "Das Bild wird nach einem festen Schema Pixel für Pixel nachgezeichnet"
+  ],
+  "startplatz-33-q4111": [
+    "Der Anwendungsteil, der den Aufbau der Datenbank verwaltet",
+    "Die Oberfläche, die Nutzerinnen und Nutzer sehen und bedienen",
+    "Der Serverbereich, auf dem die Anwendung ausgeführt wird",
+    "Die Schnittstelle, über die andere Systeme kommunizieren"
+  ],
+  "startplatz-34-q4112": [
+    "Es übernimmt allein die visuelle Gestaltung",
+    "Es ist ausschließlich in lokalen Netzwerken erreichbar",
+    "Es verarbeitet Daten und enthält die Geschäftslogik im Hintergrund",
+    "Es ist für Anwender direkt sichtbar und bedienbar"
+  ],
+  "startplatz-35-q5311": [
+    "Vorhandene Inhalte auswerten, einen Redaktionsplan erstellen und Beiträge von Hand veröffentlichen",
+    "Auslöser festlegen, einen KI-Textgenerator wählen und Veröffentlichungsdienste anbinden",
+    "Eine App programmieren, die Oberfläche gestalten und einen Webserver betreiben",
+    "Alte Daten übertragen, eine Datenbank einrichten und Schnittstellen programmieren",
+    "Social-Media-Fachkräfte einstellen, Anzeigen schalten und einen Redaktionsplan verfassen"
+  ],
+  "startplatz-36-q5321": [
+    "Einmalige Vorhaben mit sehr individuellem Ablauf",
+    "Kreative Entscheidungen, die künstlerisches Gespür verlangen",
+    "Neue Leads automatisch an ein CRM-System weiterleiten",
+    "Den Lagerbestand einmal jährlich vor Ort prüfen",
+    "Persönliche Gespräche zur Beurteilung der Mitarbeitenden führen"
+  ],
+  "startplatz-37-q5411": [
+    "Eine Software, die mit maschinellem Lernen Daten auswertet und Prognosen erstellt",
+    "Ein selbstständig handelndes System, das Ziele verfolgt, Aufgaben plant und passende Aktionen ausführt",
+    "Ein Chatbot, der natürlichsprachliche Fragen beantwortet",
+    "Ein fest regelgesteuerter Algorithmus ohne eigene Entscheidungsmöglichkeiten"
+  ],
+  "startplatz-38-q5421": [
+    "Programmierschnittstelle, Datenbank und Benutzeroberfläche",
+    "Maschinelles Lernen, Deep Learning und bestärkendes Lernen",
+    "System-Prompt, verfügbare Werkzeuge und Agenda",
+    "Eingabe, Verarbeitung und Ausgabe"
+  ],
+  "startplatz-39-q7111": [
+    "Sie lieferten ethische Leitlinien und ein inhaltliches Fundament für den AI Act",
+    "Sie schreiben verbindliche Zulassungstests für jedes KI-System vor",
+    "Sie ergänzten bestehende Datenschutzvorgaben",
+    "Sie regeln vor allem den KI-Einsatz in Behörden"
+  ],
+  "startplatz-40-q7121": [
+    "Transparenz",
+    "Rechenschaft und Verantwortlichkeit",
+    "Technische Robustheit und Sicherheit",
+    "Schutz der Privatsphäre und Datenqualität"
+  ],
+  "startplatz-41-q7122": [
+    "Datenschutz, sparsame Datennutzung, Informationssicherheit und Verschlüsselung",
+    "Erklärbarkeit, Rückverfolgbarkeit, Offenheit und Kommunikation",
+    "Fairness, Zugänglichkeit, Vielfalt und Beteiligung relevanter Gruppen",
+    "Schutz vor Angriffen, Genauigkeit, Verlässlichkeit und Reproduzierbarkeit"
+  ],
+  "startplatz-42-q7131": [
+    "Transparente KI-Systeme benötigen zu viel Rechenleistung und rechnen sich deshalb nicht",
+    "Mehr Transparenz verschlechtert grundsätzlich Genauigkeit und Leistung",
+    "Deep-Learning-Systeme lassen sich oft nur schwer erklären und gelten daher als Black Box",
+    "Erklärbarkeit ist nur mit Open-Source-Modellen möglich und gefährdet Geschäftsgeheimnisse"
+  ],
+  "startplatz-43-q7211": [
+    "Ein lernendes System, das aus Eingaben Vorhersagen ableitet",
+    "Ein Werkzeug für einfache statistische Berechnungen",
+    "Ein System, das ohne menschliche Kontrolle eigenständig arbeitet",
+    "Ein anpassungsfähiges System mit eigenen, nicht ausdrücklich vorgegebenen Zielen"
+  ],
+  "startplatz-44-q7221": [
+    "Die Regulierung richtet sich nach der verwendeten Technologie",
+    "Die Regulierung orientiert sich an der jeweiligen Anwendung",
+    "Die Anforderungen richten sich nach dem Risiko des Systems",
+    "Die Regeln unterscheiden sich nach der geografischen Region"
+  ],
+  "startplatz-45-q7331": [
+    "Mindestens 1.000 Nutzer innerhalb der EU",
+    "Mindestens 5.000 Nutzer innerhalb der EU",
+    "Mindestens 10.000 Nutzer innerhalb der EU",
+    "Mindestens 50.000 Nutzer innerhalb der EU"
+  ],
+  "startplatz-46-q7411": [
+    "KI-Modelle technisch trainieren zu können",
+    "Chancen und Gefahren von KI-Systemen einschätzen zu können",
+    "KI-Programme in unterschiedlichen Sprachen schreiben zu können",
+    "Die Geschichte der KI-Forschung zu kennen"
+  ],
+  "startplatz-47-q7232": [
+    "Ein KI-System entwickeln, bevor es auf den Markt kommt",
+    "Ein KI-System erforschen, bevor es in Betrieb genommen wird",
+    "Ein KI-System unter realen Einsatzbedingungen testen",
+    "Ein KI-System durch einen Betreiber mit Sitz in der EU einsetzen"
+  ],
+  "startplatz-48-q7511": [
+    "Mit Inkrafttreten der EU-KI-Verordnung verlieren alle anderen KI-Gesetze ihre Gültigkeit",
+    "Die Verordnung ersetzt nationale Datenschutzregeln vollständig",
+    "Fragen des Urheber- und Strafrechts müssen dadurch nicht mehr geprüft werden",
+    "Die KI-Verordnung gilt neben anderen Rechtsvorschriften, die ebenfalls einzuhalten sind"
+  ],
+  "startplatz-49-q7611": [
+    "Anbieter entwickeln und programmieren Systeme; Betreiber übernehmen Wartung und technischen Support",
+    "Anbieter verlangen immer Geld; Betreiber dürfen Systeme kostenlos bereitstellen",
+    "Anbieter bringen Systeme auf den Markt; Betreiber verwenden sie selbst oder für Dritte",
+    "Anbieter haften nie für Fehler; Betreiber tragen sämtliche rechtlichen Folgen"
+  ],
+  "startplatz-50-q7614": [
+    "Das System nach Herstellerangaben regelmäßig warten und konfigurieren",
+    "Ein Hochrisiko-System so verändern, dass die Änderung von der ursprünglichen Konformitätsprüfung nicht erfasst war",
+    "Beschäftigte regelmäßig zur sicheren Nutzung des Systems schulen",
+    "Hardware planmäßig tauschen und Datenbanken aktualisieren, ohne die Funktionen zu verändern"
+  ],
+  "startplatz-51-q7623": [
+    "Der Anbieter führt eine Konformitätsbewertung durch und bringt die CE-Kennzeichnung an",
+    "Der Anbieter registriert das System in der EU-Datenbank und stellt laufend Updates bereit",
+    "Der Anbieter sorgt für KI-Kompetenz; freiwillige Verhaltenskodizes kann er zusätzlich befolgen",
+    "Der Anbieter weist auf die KI-Interaktion hin und erfüllt keine weiteren Transparenzpflichten"
+  ],
+  "startplatz-52-q7712": [
+    "Vor dem Start beziehungsweise der ersten Nutzung des Hochrisiko-Systems",
+    "Erst wenn Betriebsrat oder einzelne Beschäftigte ausdrücklich danach fragen",
+    "Spätestens zwei Wochen nach der Einführung des Systems",
+    "Nur im Rahmen der jährlichen Betriebsversammlung"
+  ],
+  "startplatz-53-q7113": [
+    "Eine KI empfiehlt Produkte anhand des bisherigen Verhaltens der Nutzer",
+    "Eine KI nutzt unterschwellige Signale, um Kaufentscheidungen zu beeinflussen",
+    "Eine KI zeigt Werbung auf Basis demografischer Merkmale an",
+    "Eine KI schätzt Kaufchancen aus zusammengefassten Kundendaten"
+  ],
+  "startplatz-54-q7121": [
+    "Social Scoring ist nur im öffentlichen Dienst verboten",
+    "Freiwillige Teilnahme macht Social Scoring grundsätzlich zulässig",
+    "Social Scoring ist verboten, wenn es zu ungerechtfertigter Benachteiligung führt",
+    "Social Scoring ist erlaubt, solange keine biometrischen Angaben genutzt werden"
+  ],
+  "startplatz-55-q7132": [
+    "Gesichtsbilder gezielt und mit Zustimmung der betroffenen Personen sammeln",
+    "Rechtmäßig erhobene Beschäftigtenfotos für Zugangskontrollen verwenden",
+    "Gesichtsbilder ohne gezielte Auswahl aus öffentlichen Social-Media-Profilen sammeln",
+    "Eine Forschungsdatenbank mit Zustimmung im öffentlichen Interesse aufbauen"
+  ]
+};
+  const answerRewrites = [
+  [
+    "ausschließlich",
+    "nur"
+  ],
+  [
+    "Ausschließlich",
+    "Nur"
+  ],
+  [
+    "ausschließliche",
+    "alleinige"
+  ],
+  [
+    "Ausschließliche",
+    "Alleinige"
+  ],
+  [
+    "vollständige",
+    "komplette"
+  ],
+  [
+    "Vollständige",
+    "Komplette"
+  ],
+  [
+    "vollständig",
+    "komplett"
+  ],
+  [
+    "Vollständig",
+    "Komplett"
+  ],
+  [
+    "grundlegende",
+    "wesentliche"
+  ],
+  [
+    "Grundlegende",
+    "Wesentliche"
+  ],
+  [
+    "entscheidenden",
+    "maßgeblichen"
+  ],
+  [
+    "Entscheidenden",
+    "Maßgeblichen"
+  ],
+  [
+    "entscheidende",
+    "maßgebliche"
+  ],
+  [
+    "Entscheidende",
+    "Maßgebliche"
+  ],
+  [
+    "entscheidend",
+    "maßgeblich"
+  ],
+  [
+    "Entscheidend",
+    "Maßgeblich"
+  ],
+  [
+    "wichtigsten",
+    "zentralen"
+  ],
+  [
+    "Wichtigsten",
+    "Zentralen"
+  ],
+  [
+    "wichtigste",
+    "zentrale"
+  ],
+  [
+    "Wichtigste",
+    "Zentrale"
+  ],
+  [
+    "insbesondere",
+    "vor allem"
+  ],
+  [
+    "Insbesondere",
+    "Vor allem"
+  ],
+  [
+    "Verwendung",
+    "Nutzung"
+  ],
+  [
+    "Nutzung",
+    "Verwendung"
+  ],
+  [
+    "Erstellung",
+    "Erzeugung"
+  ],
+  [
+    "Analyse",
+    "Auswertung"
+  ],
+  [
+    "Bewertung",
+    "Beurteilung"
+  ],
+  [
+    "Definition",
+    "Begriffsbestimmung"
+  ],
+  [
+    "Möglichkeit",
+    "Option"
+  ],
+  [
+    "Möglichkeiten",
+    "Optionen"
+  ],
+  [
+    "Rolle",
+    "Funktion"
+  ],
+  [
+    "erfolgreich",
+    "wirksam"
+  ],
+  [
+    "Erfolgreiche",
+    "Wirksame"
+  ],
+  [
+    "komplexe",
+    "anspruchsvolle"
+  ],
+  [
+    "Komplexe",
+    "Anspruchsvolle"
+  ],
+  [
+    "komplexen",
+    "anspruchsvollen"
+  ],
+  [
+    "verschiedene",
+    "unterschiedliche"
+  ],
+  [
+    "Verschiedene",
+    "Unterschiedliche"
+  ],
+  [
+    "verschiedenen",
+    "unterschiedlichen"
+  ],
+  [
+    "kontinuierliche",
+    "fortlaufende"
+  ],
+  [
+    "Kontinuierliche",
+    "Fortlaufende"
+  ],
+  [
+    "präzise",
+    "genaue"
+  ],
+  [
+    "Präzise",
+    "Genaue"
+  ],
+  [
+    "erhöhte",
+    "gesteigerte"
+  ],
+  [
+    "Erhöhte",
+    "Gesteigerte"
+  ],
+  [
+    "reduzierte",
+    "verringerte"
+  ],
+  [
+    "Reduzierte",
+    "Verringerte"
+  ],
+  [
+    "bereitgestellten",
+    "gelieferten"
+  ],
+  [
+    "eigenständig",
+    "selbstständig"
+  ],
+  [
+    "Eigenständig",
+    "Selbstständig"
+  ],
+  [
+    "vorherigen",
+    "zuvor erstellten"
+  ],
+  [
+    "späteren",
+    "nachfolgenden"
+  ],
+  [
+    "gemeinsam",
+    "zusammen"
+  ],
+  [
+    "Verarbeitung",
+    "Bearbeitung"
+  ],
+  [
+    "Ergebnisse",
+    "Resultate"
+  ],
+  [
+    "Ergebnis",
+    "Resultat"
+  ],
+  [
+    "Grundlage",
+    "Basis"
+  ],
+  [
+    "bedeutet",
+    "heißt"
+  ],
+  [
+    "Bedeutet",
+    "Heißt"
+  ],
+  [
+    "definiert",
+    "beschreibt"
+  ],
+  [
+    "Definiert",
+    "Beschreibt"
+  ],
+  [
+    "beschreibt",
+    "charakterisiert"
+  ],
+  [
+    "Beschreibt",
+    "Charakterisiert"
+  ],
+  [
+    "erkennen",
+    "identifizieren"
+  ],
+  [
+    "Erkennen",
+    "Identifizieren"
+  ],
+  [
+    "Unterstützung",
+    "Hilfe"
+  ],
+  [
+    "unterstützen",
+    "helfen"
+  ],
+  [
+    "ersetzen",
+    "ablösen"
+  ],
+  [
+    "Ersetzen",
+    "Ablösen"
+  ],
+  [
+    "bestimmte",
+    "konkrete"
+  ],
+  [
+    "Bestimmte",
+    "Konkrete"
+  ],
+  [
+    "unabhängig",
+    "eigenständig"
+  ],
+  [
+    "Unabhängig",
+    "Eigenständig"
+  ],
+  [
+    "Funktion",
+    "Aufgabe"
+  ],
+  [
+    "Ziel",
+    "Zweck"
+  ],
+  [
+    "Kriterien",
+    "Merkmale"
+  ],
+  [
+    "Risiken",
+    "Gefahren"
+  ],
+  [
+    "regelbasiert",
+    "regelgestützt"
+  ],
+  [
+    "regelbasierten",
+    "regelgestützten"
+  ],
+  [
+    "Technologie",
+    "Technik"
+  ],
+  [
+    "technologische",
+    "technische"
+  ],
+  [
+    "Umsetzung",
+    "Realisierung"
+  ],
+  [
+    "Einbindung",
+    "Integration"
+  ],
+  [
+    "Integration",
+    "Einbindung"
+  ],
+  [
+    "Verbindung",
+    "Verknüpfung"
+  ],
+  [
+    "Kombination",
+    "Verknüpfung"
+  ],
+  [
+    "Lösungen",
+    "Ergebnisse"
+  ],
+  [
+    "Informationen",
+    "Angaben"
+  ],
+  [
+    "Information",
+    "Angabe"
+  ],
+  [
+    "Nutzer",
+    "Anwender"
+  ],
+  [
+    "Nutzern",
+    "Anwendern"
+  ],
+  [
+    "Nutzerin",
+    "Anwenderin"
+  ],
+  [
+    "Anpassbarkeit",
+    "Flexibilität"
+  ],
+  [
+    "Speicherung",
+    "Ablage"
+  ],
+  [
+    "Verantwortung",
+    "Zuständigkeit"
+  ],
+  [
+    "Widerstandsfähigkeit",
+    "Robustheit"
+  ],
+  [
+    "Zuverlässigkeit",
+    "Verlässlichkeit"
+  ],
+  [
+    "Präzision",
+    "Genauigkeit"
+  ],
+  [
+    "Geschäftsmodell",
+    "Geschäftskonzept"
+  ],
+  [
+    "Anpassung",
+    "Abstimmung"
+  ],
+  [
+    "verwendet",
+    "nutzt"
+  ],
+  [
+    "Verwendet",
+    "Nutzt"
+  ],
+  [
+    "nutzen",
+    "verwenden"
+  ],
+  [
+    "Nutzen",
+    "Verwenden"
+  ],
+  [
+    "verhindert",
+    "unterbindet"
+  ],
+  [
+    "Verhindert",
+    "Unterbindet"
+  ],
+  [
+    "ermöglicht",
+    "erlaubt"
+  ],
+  [
+    "Ermöglicht",
+    "Erlaubt"
+  ],
+  [
+    "umfasst",
+    "beinhaltet"
+  ],
+  [
+    "Umfasst",
+    "Beinhaltet"
+  ],
+  [
+    "beinhaltet",
+    "umfasst"
+  ],
+  [
+    "Beinhaltet",
+    "Umfasst"
+  ],
+  [
+    "basiert auf",
+    "beruht auf"
+  ],
+  [
+    "Basiert auf",
+    "Beruht auf"
+  ],
+  [
+    "kombiniert",
+    "verbindet"
+  ],
+  [
+    "Kombiniert",
+    "Verbindet"
+  ],
+  [
+    "kombinieren",
+    "verbinden"
+  ],
+  [
+    "entwickelt",
+    "erarbeitet"
+  ],
+  [
+    "Erstellt",
+    "Generiert"
+  ],
+  [
+    "erstellt",
+    "generiert"
+  ],
+  [
+    "erhält",
+    "bekommt"
+  ],
+  [
+    "Erhält",
+    "Bekommt"
+  ],
+  [
+    "verarbeitet",
+    "bearbeitet"
+  ],
+  [
+    "Verarbeitet",
+    "Bearbeitet"
+  ],
+  [
+    "Computer",
+    "Rechner"
+  ]
+];
+  function rewordAnswer(text,intensity=1) {
+    const candidates=[];
+    for (const [from,to] of answerRewrites) {
+      const escaped=from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern=new RegExp('(^|[^\\p{L}\\p{N}_])'+escaped+'(?=$|[^\\p{L}\\p{N}_])','u');
+      const match=pattern.exec(text);
+      if(!match) continue;
+      const start=match.index+match[1].length,end=start+from.length;
+      if(candidates.some(item=>start<item.end&&end>item.start)) continue;
+      candidates.push({start,end,to});
+    }
+    const selected=shuffle(candidates).slice(0,Math.min(intensity,candidates.length)).sort((x,y)=>y.start-x.start);
+    let result=text;
+    for(const item of selected) result=result.slice(0,item.start)+item.to+result.slice(item.end);
+    return result;
+  }
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -43,11 +954,18 @@
   function startExam(questionPool=pool(),forcedCount=null,isReview=false){
     if(timerId){clearInterval(timerId);timerId=null;}
     const requested=forcedCount ?? ($('#sp-count').value==='all'?questionPool.length:Number($('#sp-count').value));
-    run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>({
-      question,
-      options:shuffle(question.options.map((text,index)=>({text,correct:question.correct.includes(index)}))),
-      selected:new Set()
-    }));
+    run=shuffle(questionPool).slice(0,Math.min(requested,questionPool.length)).map(question=>{
+      const wordingEnabled=$('#sp-wording-mode')?.value==='varied';
+      const wordingIntensity=wordingEnabled ? 1+Math.floor(Math.random()*3) : 0;
+      const baseQuestion=wordingVariants[question.id] || question.question;
+      return {
+        question,
+        displayQuestion: wordingIntensity && Math.random()<wordingIntensity*0.3 ? rewordAnswer(baseQuestion,wordingIntensity) : question.question,
+        displayExplanation: wordingIntensity && question.explanation ? rewordAnswer(question.explanation,wordingIntensity) : question.explanation,
+        options:shuffle(question.options.map((text,index)=>({text:wordingIntensity && Math.random()<wordingIntensity*0.25 ? (answerVariants[question.id]?.[index] || rewordAnswer(text,wordingIntensity)) : text,correct:question.correct.includes(index)}))),
+        selected:new Set()
+      };
+    });
     if(!run.length)return;
     pos=0;finished=false;reviewOnly=isReview;seconds=Number($('#sp-duration').value)*60;startedAt=Date.now();
     $('#sp-setup').hidden=true;$('#sp-result').hidden=true;$('#sp-run').hidden=false;
@@ -69,7 +987,7 @@
     $('#sp-prev').disabled=pos===0;$('#sp-next').hidden=pos===run.length-1;$('#sp-finish').hidden=false;
     box.replaceChildren();
     const meta=document.createElement('div');meta.className='source-meta';const origin=question.week===6?'Ergänzende Übungsfrage aus Woche 6':'Offizielle Startplatz-Prüfungsfrage';meta.textContent=`${origin} · ${question.sourceId}${multi?` · Mehrfachauswahl (${question.correct.length} richtige Antworten)`:' · Eine Antwort'}`;box.append(meta);
-    const title=document.createElement('h2');title.className='question-title';title.textContent=question.question;box.append(title);
+    const title=document.createElement('h2');title.className='question-title';title.textContent=item.displayQuestion;box.append(title);
     const choices=document.createElement('div');choices.className='question-options';
     item.options.forEach((option,index)=>{
       const label=document.createElement('label');label.className='option';
@@ -136,7 +1054,7 @@
       const article=document.createElement('article');article.className='review-item';
       const meta=document.createElement('div');meta.className='source-meta';meta.textContent=`${question.sourceId} · Woche ${question.week}`;article.append(meta);
       const status=document.createElement('h3');status.className=ok?'correct-text':'wrong-text';status.textContent=`${index+1}. ${ok?'Richtig':'Falsch oder nicht beantwortet'}`;article.append(status);
-      const prompt=document.createElement('p');prompt.textContent=question.question;article.append(prompt);
+      const prompt=document.createElement('p');prompt.textContent=item.displayQuestion || question.question;article.append(prompt);
       const list=document.createElement('ul');list.className='choice-list';
       item.options.forEach((option,optionIndex)=>{
         const isSelected=item.selected.has(optionIndex),wrongSelection=isSelected&&!option.correct;
@@ -146,7 +1064,7 @@
         list.append(li);
       });
       article.append(list);
-      if(question.explanation){const explanation=document.createElement('p');explanation.textContent=question.explanation;article.append(explanation);}
+      if(item.displayExplanation){const explanation=document.createElement('p');explanation.className='question-explanation';explanation.textContent=item.displayExplanation;article.append(explanation);}
       review.append(article);
     });
     result.append(review);
@@ -203,7 +1121,10 @@
   $('#sp-repeat-weakest').addEventListener('click',()=>{
     const list=weakestQuestions().slice(0,10).map(item=>item.question);
     if(!list.length)return;
-    $('#tab-startplatz').click();startExam(list,list.length,true);
+    $('.tabs [role="tab"]').forEach(tab=>tab.setAttribute('aria-selected',String(tab.id==='tab-startplatz')));
+    $('.tab-panel').forEach(panel=>panel.hidden=panel.id!=='startplatz');
+    startExam(list,list.length,true);
+    requestAnimationFrame(()=>$('#sp-question-box').scrollIntoView({behavior:'smooth',block:'start'}));
   });
   $('#sp-clear-stats').addEventListener('click',()=>{
     if(!window.confirm('Deine Schwächen-Auswertung auf diesem Gerät zurücksetzen?'))return;
