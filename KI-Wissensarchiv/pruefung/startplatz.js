@@ -1144,8 +1144,7 @@
   $('#sp-repeat-weakest').addEventListener('click',()=>{
     const list=weakestQuestions().slice(0,10).map(item=>item.question);
     if(!list.length)return;
-    $('.tabs [role="tab"]').forEach(tab=>tab.setAttribute('aria-selected',String(tab.id==='tab-startplatz')));
-    $('.tab-panel').forEach(panel=>panel.hidden=panel.id!=='startplatz');
+    $('#tab-startplatz').click();
     startExam(list,list.length,true);
     requestAnimationFrame(()=>$('#sp-question-box').scrollIntoView({behavior:'smooth',block:'start'}));
   });
