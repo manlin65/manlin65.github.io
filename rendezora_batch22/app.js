@@ -176,6 +176,9 @@ function t(key,vars={}){return (TEXT[language][key]||TEXT.de[key]||key).replace(
 Object.assign(TEXT.de,{startMode:'Startpunkte',startCenters:'Ortszentren (Standard)',startPrecise:'Genauer: GPS → Adresse → Ortszentrum',startHelp:'Standardmäßig rechnen wir ab Ortszentrum. Im genauen Modus hat GPS Vorrang, danach die Adresse. Ohne beides gilt das Ortszentrum.',startEdit:'Genaue Startpunkte eingeben (freiwillig)',startPrivacy:'Nur für diese Sitzung. Bei der Berechnung werden Koordinaten an OSRM gesendet. Eingegebene Adressen werden im genauen Modus zur Ortssuche an Photon/Komoot gesendet. Bitte nur mit Zustimmung der betreffenden Person verwenden.',startGps:'GPS: Breitengrad, Längengrad',startAddress:'Vollständige Adresse (freiwillig)',startInvalid:'GPS ungültig für {name}. Bitte Breitengrad, Längengrad eingeben.',startNotFound:'Adresse für {name} nicht eindeutig gefunden. Bitte GPS verwenden oder die Adresse präzisieren.',startCenterLabel:'Ortszentrum',startGpsLabel:'GPS',startAddressLabel:'Adresse'});
 Object.assign(TEXT.en,{startMode:'Starting points',startCenters:'Town centres (default)',startPrecise:'Precise: GPS → address → town centre',startHelp:'Town centres are the default. In precise mode GPS takes priority, then the address. With neither, the town centre is used.',startEdit:'Enter precise starting points (optional)',startPrivacy:'For this session only. Calculations send coordinates to OSRM. In precise mode, entered addresses are sent to Photon/Komoot for geocoding. Use only with the person’s permission.',startGps:'GPS: latitude, longitude',startAddress:'Full address (optional)',startInvalid:'Invalid GPS for {name}. Enter latitude, longitude.',startNotFound:'No unambiguous address found for {name}. Use GPS or refine the address.',startCenterLabel:'Town centre',startGpsLabel:'GPS',startAddressLabel:'Address'});
 
+Object.assign(TEXT.de,{groups1:'1 Gruppe',errorGroupMinimum:'Für regionale Gruppen bitte mindestens zwei Personen auswählen.',groupMinimumHelp:'Regionale Gruppen: mindestens 2 Personen je Gruppe. Bei zu wenigen Personen wird die Gruppenzahl automatisch reduziert.',groupsReduced:'Gruppenzahl automatisch auf {n} reduziert: mindestens zwei Personen je Gruppe.'});
+Object.assign(TEXT.en,{groups1:'1 group',errorGroupMinimum:'Select at least two people for regional groups.',groupMinimumHelp:'Regional groups: at least 2 people per group. The group count is automatically reduced when too few people are selected.',groupsReduced:'Group count automatically reduced to {n}: at least two people per group.'});
+
 const COLORS=['#173D37','#A36713','#526A8F','#86566E'];
 const $=id=>document.getElementById(id);
 const km=n=>new Intl.NumberFormat(language==='de'?'de-DE':'en-GB',{maximumFractionDigits:1}).format(n)+' km';
@@ -197,6 +200,8 @@ function airDistance(a,b){
 
 // Deterministisches agglomeratives Clustering mit Ward-ähnlichem Distanzkriterium.
 function clusterPeople(people,count){
+  if(people.length<2)throw new Error("At least two participants required");
+  count=Math.max(1,Math.min(count,Math.floor(people.length/2)));
   const cost=group=>group.reduce((sum,a,i)=>sum+group.slice(i+1).reduce((s,b)=>s+airDistance(a,b)**2,0),0)/group.length;
   let groups=people.map(p=>[p]);
   while(groups.length>count){
@@ -207,6 +212,16 @@ function clusterPeople(people,count){
     }
     groups[best.i]=[...groups[best.i],...groups[best.j]];
     groups.splice(best.j,1);
+  }
+  // Move the least costly participant from a larger group to each singleton.
+  for(const group of groups.filter(g=>g.length===1)){
+    let best={increase:Infinity};
+    for(const donor of groups.filter(g=>g.length>2))for(const person of donor){
+      const remaining=donor.filter(p=>p!==person);
+      const increase=cost([...group,person])+cost(remaining)-cost(group)-cost(donor);
+      if(increase<best.increase)best={increase,donor,person};
+    }
+    best.donor.splice(best.donor.indexOf(best.person),1);group.push(best.person);
   }
   return groups.sort((a,b)=>Math.min(...a.map(p=>p.id))-Math.min(...b.map(p=>p.id)));
 }
@@ -280,6 +295,7 @@ function renderResults(results,matrix,fitMap=true){
  if(geographic){
   setStatus('geoStatus');$('status').textContent+=' '+t(matrix.road?'geoRoad':'geoAir');
  }else setStatus('roadStatus',{count:matrix.candidateCount,criterion:t(fair?'fairCriterion':'roadCriterion')});
+ if(matrix.groupAdjusted)$('status').textContent+=' '+t('groupsReduced',{n:matrix.groupCount});
  $('summary').hidden=!!comparisonState;
  $('summary').innerHTML=comparisonState?'':results.map((r,i)=>`<div class="summary-card" style="--group:${COLORS[i]}"><small>${t('groupLabel',{n:i+1})} · ${t('peopleCount',{n:r.people.length})}</small><strong>${cityName(r.city)}</strong><small>${centerDetails(r.city)}</small><div class="geo-metrics"><span>${t('totalKm')}<b>${km(r.total)}</b></span><span>${t('maxKm')}<b>${km(r.max)}</b></span><span>${t('spreadKm')}<b>${km(r.spread)}</b></span></div><small>${t(matrix.road?'roadLabel':'airLabel')}</small></div>`).join('');
  $('result-body').innerHTML=comparisonState?'':results.map((r,i)=>r.people.map((p,j)=>`<tr><td><span class="group-key" style="background:${COLORS[i]}"></span>${i+1} · ${cityName(r.city)}</td><td>${personName(p)}</td><td>${homeName(p)}</td><td>${km(r.distances[j])}<br><small>${t(matrix.road?'roadShort':'airShort')}</small></td></tr>`).join('')).join('');
@@ -347,10 +363,11 @@ function applyLanguage(){
 async function calculate(event){
  event?.preventDefault();if(busy)return;
  const people=selectedPeople(),mode=document.querySelector('input[name=mode]:checked').value;
- const count=Number($('group-count').value),objective=$('objective').value;
+ const requestedCount=Number($('group-count').value),count=Math.min(requestedCount,Math.floor(people.length/2)),objective=$('objective').value;
  if(!people.length){setStatus('errorEmpty');return;}
  if(mode==='individual'&&(people.length<2||people.length>4)){setStatus('errorIndividual');return;}
- if(mode==='groups'&&people.length<count){setStatus('errorGroups',{n:count});return;}
+ if(mode==='groups'&&people.length<2){setStatus('errorGroupMinimum');return;}
+ if(mode==='groups')$('group-count').value=String(count);
  clearResult();busy=true;
  const controls=[...document.querySelectorAll('#planner input, #planner button, #planner select, [data-language]')];
  controls.forEach(el=>el.disabled=true);$('planner').setAttribute('aria-busy','true');$('calculate').textContent=t('calculating');
@@ -364,7 +381,7 @@ async function calculate(event){
    if(objective!=='geographic')throw error;
    matrix={road:false,values:Object.fromEntries(people.map(p=>[p.id,centers.map(c=>airDistance(p,c))]))};
   }
-  matrix={...matrix,objective,candidateCount:candidates.length};
+  matrix={...matrix,objective,candidateCount:candidates.length,groupAdjusted:mode==='groups'&&count<requestedCount,groupCount:count};
   let results;
   if(objective==='geographic')results=groups.map((group,i)=>meetingResult(group,centers[i],i,matrix));
   else{
