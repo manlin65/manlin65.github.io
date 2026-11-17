@@ -148,7 +148,7 @@ const TEXT = {
   whoLink:'Who is who · Kontaktliste',whoHint:'Geschützter Bereich für die eingetragenen Personen.',pageTitle:'Rendezora · Gemeinsam treffen. Fair anreisen.', tagline:'Gemeinsam treffen. Fair anreisen.', eyebrow:'VERSCHIEDENE WEGE. EIN GEMEINSAMER PUNKT.', hero:'Wo treffen wir uns?', intro:'Findet einen Treffpunkt, der eure Anfahrten berücksichtigt. Vergleicht drei Orte und entscheidet gemeinsam.', heroNote:'Menschen verbinden. Wege fair verteilen.', plan:'Euer Treffen', objective:'Berechnungsart', fair:'Ausgewogene Auto-Anfahrt', road:'Wenigste Auto-Kilometer gesamt', geographic:'Geografische Mitte',
   help_fair:'Die längste Einzelanfahrt wird möglichst kurz gehalten. Bei Gleichstand zählen der kleinere Unterschied und danach die Gesamtkilometer.',help_road:'Minimiert wird die Summe aller einfachen Auto-Anfahrten. Einzelne Personen können dabei deutlich weiter fahren.',help_geographic:'Alle Wohnorte zählen gleich. Der geografische Mittelpunkt wird markiert. Straßenkilometer werden separat angefragt.',
   mode:'Betriebsart',modeAll:'Gemeinsamer Treffpunkt',modeAllDesc:'Alle oder ausgewählte Personen',modeGroups:'Regionale Gruppen',modeGroupsDesc:'Nahe Wohnorte zusammenfassen',modeIndividual:'Individuelle Auswahl',modeIndividualDesc:'Gezielt 2 bis 4 Personen verbinden',groupCount:'Anzahl der Gruppen',groups2:'2 Gruppen',groups3:'3 Gruppen',groups4:'4 Gruppen',participants:'Teilnehmer',selectAll:'Alle auswählen',selectNone:'Keine auswählen',selectedCount:'{n} von {total} Personen ausgewählt',mapCount:'{n} ausgewählte Wohnorte',calculate:'Treffpunkt berechnen',calculating:'Anfahrten werden berechnet …',privacy:'Ortszentren als Startpunkte. Keine Anmeldung. Teilnehmerauswahl wird nicht gespeichert.',mapHeading:'Eure Wege im Blick',mapAria:'Interaktive Karte mit Wohnorten und Treffpunkten',homeLegend:'Wohnort',meetingLegend:'Treffpunkt',lineLegend:'Linien sind schematisch, keine Straßenrouten.',resultsEyebrow:'EURE MÖGLICHKEITEN',readyTitle:'Ein Treffpunkt für euch.',ready:'Bereit',initial:'Wählt eure Teilnehmer und berechnet einen Treffpunkt.',changed:'Auswahl geändert. Bitte neu berechnen.',resultsAria:'Karte und Ergebnisse',methodTitle:'Wie wird berechnet?',
-  methodText:'„Ausgewogene Auto-Anfahrt“ minimiert die längste Einzelanfahrt. Bei Gleichstand zählen die kleinere Differenz der Anfahrten und danach die Gesamtsumme. „Wenigste Auto-Kilometer gesamt“ minimiert die Summe. Verglichen werden hinterlegte Kandidatenstädte; ein weltweites Optimum wird nicht garantiert. Ortszentren dienen als Start und Ziel; OSRM nutzt befahrbare Punkte in maximal 1 km Abstand und bevorzugt schnelle Routen, nicht zwingend die jeweils kürzeste Strecke. Es sind berechnete Straßenkilometer, keine Messung einer gefahrenen Strecke. Regionale Gruppen werden zunächst geografisch gebildet, dann ihre Treffpunkte optimiert. „Geografische Mitte“ berechnet den gleichgewichteten Schwerpunkt der Wohnorte; dort werden Luftlinien bei einem Routingausfall ausdrücklich gekennzeichnet. Für Auto-Optimierungen gibt es ohne vollständige Routingdaten keine Empfehlung. Keine Bahn-, Kosten- oder CO₂-Berechnung und keine Live-Verkehrsdaten.',
+  methodText:'„Ausgewogene Auto-Anfahrt“ minimiert die längste Einzelanfahrt. Bei Gleichstand zählen die kleinere Differenz der Anfahrten und danach die Gesamtsumme. „Wenigste Auto-Kilometer gesamt“ minimiert die Summe. Verglichen werden hinterlegte Kandidatenstädte; ein weltweites Optimum wird nicht garantiert. Standard: Ortszentren als Start und Ziel. Im genauen Modus: GPS vor Adresse, sonst Ortszentrum; OSRM nutzt befahrbare Punkte in maximal 1 km Abstand und bevorzugt schnelle Routen, nicht zwingend die jeweils kürzeste Strecke. Es sind berechnete Straßenkilometer, keine Messung einer gefahrenen Strecke. Regionale Gruppen werden zunächst geografisch gebildet, dann ihre Treffpunkte optimiert. „Geografische Mitte“ berechnet den gleichgewichteten Schwerpunkt der Wohnorte; dort werden Luftlinien bei einem Routingausfall ausdrücklich gekennzeichnet. Für Auto-Optimierungen gibt es ohne vollständige Routingdaten keine Empfehlung. Keine Bahn-, Kosten- oder CO₂-Berechnung und keine Live-Verkehrsdaten.',
   compareTitle:'Drei Treffpunkte im Vergleich',sortFair:'Sortierung: kürzeste längste Anfahrt, dann kleinster Unterschied, dann Gesamtkilometer.',sortRoad:'Sortierung: geringste Gesamtkilometer, dann kürzeste längste Anfahrt.',compareHelp:'{criterion} Geroutete Auto-Kilometer, einfache Fahrt. Wählt je Gruppe einen Ort für die Karte.',groupLabel:'Gruppe {n}',peopleCount:'{n} Personen',compareCaption:'Die drei besten verglichenen Treffpunkte für Gruppe {n}',oneWay:'Auto · einfache Fahrt',rank:'{n}. Platz',onMapSelected:'Auf Karte ausgewählt',showOnMap:'Auf Karte anzeigen',totalKm:'Gesamtkilometer',maxKm:'Längste Anfahrt',minKm:'Kürzeste Anfahrt',spreadKm:'Unterschied längste / kürzeste',scrollHelp:'Tabelle seitlich wischen, um alle Orte zu sehen.',
   centerName:'Geografische Mitte',nearCity:'Orientierung: {km} Luftlinie von {city}',roadLabel:'Auto · Straßenkilometer',airLabel:'Luftlinie · keine Auto-Kilometer',roadShort:'Auto · Straße',airShort:'Luftlinie',to:'nach',totalShort:'gesamt',average:'Ø',geoTitle:'Eure geografische Mitte.',geoGroupsTitle:'{n} Gruppen · geografische Mittelpunkte',fairTitle:'Ausgewogene Auto-Anfahrt: {city}',fairGroupsTitle:'{n} Gruppen · ausgewogene Auto-Anfahrt',roadTitle:'Wenigste Auto-Kilometer: {city}',roadGroupsTitle:'{n} Gruppen · optimierte Auto-Anfahrt',chosenTitle:'Ausgewählter Treffpunkt: {city}',chosenGroupsTitle:'Eure ausgewählten Treffpunkte.',
   geoStatus:'Geografischer Schwerpunkt der ausgewählten Wohnorte, jede Person zählt gleich. Der Punkt wird nicht auf eine Stadt verschoben.',geoRoad:'Entfernungen: geroutete Auto-Anfahrt zum nächstgelegenen befahrbaren Punkt.',geoAir:'Straßenrouting nicht verfügbar. Alle Entfernungen sind ausdrücklich Luftlinien.',roadStatus:'{count} Kandidaten je Gruppe verglichen. {criterion} Beste der verglichenen Optionen; einfache Fahrt und eine separate Anfahrt je Person. Ortszentren als Start und Ziel. Später könnt ihr im Umkreis nach einer Location suchen.',fairCriterion:'Die längste Anfahrt wird minimiert; bei Gleichstand zählen der kleinere Unterschied und dann die Gesamtsumme.',roadCriterion:'Die Summe aller Auto-Anfahrten wird minimiert.',
@@ -173,6 +173,9 @@ let language='de';
 try{const saved=localStorage.getItem('rendezora-language');if(saved==='de'||saved==='en')language=saved;}catch{}
 function t(key,vars={}){return (TEXT[language][key]||TEXT.de[key]||key).replace(/\{(\w+)\}/g,(_,name)=>vars[name]??`{${name}}`);}
 
+Object.assign(TEXT.de,{startMode:'Startpunkte',startCenters:'Ortszentren (Standard)',startPrecise:'Genauer: GPS → Adresse → Ortszentrum',startHelp:'Standardmäßig rechnen wir ab Ortszentrum. Im genauen Modus hat GPS Vorrang, danach die Adresse. Ohne beides gilt das Ortszentrum.',startEdit:'Genaue Startpunkte eingeben (freiwillig)',startPrivacy:'Nur für diese Sitzung. Bei der Berechnung werden Koordinaten an OSRM gesendet. Eingegebene Adressen werden im genauen Modus zur Ortssuche an Photon/Komoot gesendet. Bitte nur mit Zustimmung der betreffenden Person verwenden.',startGps:'GPS: Breitengrad, Längengrad',startAddress:'Vollständige Adresse (freiwillig)',startInvalid:'GPS ungültig für {name}. Bitte Breitengrad, Längengrad eingeben.',startNotFound:'Adresse für {name} nicht eindeutig gefunden. Bitte GPS verwenden oder die Adresse präzisieren.',startCenterLabel:'Ortszentrum',startGpsLabel:'GPS',startAddressLabel:'Adresse'});
+Object.assign(TEXT.en,{startMode:'Starting points',startCenters:'Town centres (default)',startPrecise:'Precise: GPS → address → town centre',startHelp:'Town centres are the default. In precise mode GPS takes priority, then the address. With neither, the town centre is used.',startEdit:'Enter precise starting points (optional)',startPrivacy:'For this session only. Calculations send coordinates to OSRM. In precise mode, entered addresses are sent to Photon/Komoot for geocoding. Use only with the person’s permission.',startGps:'GPS: latitude, longitude',startAddress:'Full address (optional)',startInvalid:'Invalid GPS for {name}. Enter latitude, longitude.',startNotFound:'No unambiguous address found for {name}. Use GPS or refine the address.',startCenterLabel:'Town centre',startGpsLabel:'GPS',startAddressLabel:'Address'});
+
 const COLORS=['#173D37','#A36713','#526A8F','#86566E'];
 const $=id=>document.getElementById(id);
 const km=n=>new Intl.NumberFormat(language==='de'?'de-DE':'en-GB',{maximumFractionDigits:1}).format(n)+' km';
@@ -182,6 +185,8 @@ const cityName=city=>city.isCenter?t('centerName'):homeName(city);
 let map,layers,offline,streets,layerControl,zoomControl,busy=false,comparisonState=null,lastResult=null,mapNotice=null;
 let statusMessage={key:'initial',vars:{}};
 const matrixCache=new Map();
+const originalStarts=new Map(PARTICIPANTS.map(p=>[p.id,{lat:p.lat,lon:p.lon}]));
+const addressCache=new Map();
 function setStatus(key,vars={}){statusMessage={key,vars};$('status').textContent=t(key,vars);}
 function showMapNotice(key){mapNotice=key;$('map-error').hidden=!key;if(key)$('map-error').textContent=t(key);}
 function airDistance(a,b){
@@ -216,7 +221,7 @@ function geographicCenter(people){
  return {...center,isCenter:true,reference:nearest.city,referenceDistance:airDistance(center,nearest)};
 }
 async function distanceMatrix(people,destinations){
- const key=JSON.stringify([people.map(p=>p.id),destinations.map(c=>[c.lat,c.lon])]);
+ const key=JSON.stringify([people.map(p=>[p.id,p.lat,p.lon]),destinations.map(c=>[c.lat,c.lon])]);
  if(matrixCache.has(key))return matrixCache.get(key);
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),7000);
  try{
@@ -289,7 +294,7 @@ function drawMap(results=null,road=true,fit=true){
   const result=group>=0?results[group]:null;
   const distance=result?result.distances[result.people.findIndex(member=>member.id===p.id)]:null;
   const travel=distance!==null?`<br>${km(distance)} · ${t(road?'roadShort':'airShort')} ${t('to')} ${cityName(result.city)}`:'';
-  L.circleMarker([p.lat,p.lon],{radius:7,color:'#fff',weight:2,fillColor:active?color:'#9ba7a0',fillOpacity:active?1:.35}).bindPopup(`<strong>${personName(p)}</strong><br>${homeName(p)}${travel}`).addTo(layers);
+  L.circleMarker([p.lat,p.lon],{radius:7,color:'#fff',weight:2,fillColor:active?color:'#9ba7a0',fillOpacity:active?1:.35}).bindPopup(`<strong>${personName(p)}</strong><br>${homeName(p)} · ${t(p.startSource||'startCenterLabel')}${travel}`).addTo(layers);
   bounds.push([p.lat,p.lon]);
  });
  results?.forEach((r,i)=>{
@@ -351,6 +356,7 @@ async function calculate(event){
  controls.forEach(el=>el.disabled=true);$('planner').setAttribute('aria-busy','true');$('calculate').textContent=t('calculating');
  setStatus(objective==='geographic'?'loadingGeo':'loadingRoad');
  try{
+  await resolveStarts(people);
   const groups=mode==='groups'?clusterPeople(people,count):[people];
   const centers=groups.map(geographicCenter),candidates=objective==='geographic'?centers:REFERENCE_CITIES;
   let matrix;
@@ -366,12 +372,51 @@ async function calculate(event){
    comparisonState={options,selected:groups.map(()=>0),matrix};results=options.map(options=>options[0]);
   }
   renderComparison();renderResults(results,matrix);
- }catch{
+ }catch(error){
   $('result-title').textContent=t('errorTitle');$('method').textContent=t('missingRouting');setStatus('errorRouting');
+  if(error.startMessage)$('status').textContent=error.startMessage;
  }finally{
   busy=false;controls.forEach(el=>el.disabled=false);$('planner').setAttribute('aria-busy','false');
   $('calculate').innerHTML=`${t('calculate')} <span aria-hidden="true">→</span>`;
  }
+}
+function initStartInputs(){
+ $('start-inputs').innerHTML=PARTICIPANTS.map(p=>`<fieldset><legend>${personName(p)}</legend><label><span data-i18n="startGps"></span><input id="gps-${p.id}" type="text" placeholder="49.3300, 11.0200" autocomplete="off" style="width:100%;box-sizing:border-box"></label><label><span data-i18n="startAddress"></span><input id="address-${p.id}" type="text" autocomplete="off" style="width:100%;box-sizing:border-box"></label></fieldset>`).join('');
+ const reset=()=>{PARTICIPANTS.forEach(p=>{Object.assign(p,originalStarts.get(p.id));p.startSource='startCenterLabel';});matrixCache.clear();clearResult();};
+ $('start-mode').addEventListener('change',()=>{$('start-fields').hidden=$('start-mode').value!=='precise';reset();});
+ $('start-inputs').addEventListener('input',reset);
+ window.addEventListener('pagehide',()=>{document.querySelectorAll('#start-inputs input').forEach(el=>el.value='');addressCache.clear();PARTICIPANTS.forEach(p=>Object.assign(p,originalStarts.get(p.id)));});
+}
+async function resolveStarts(people){
+ const pending=[];
+ for(const p of people){
+  let point={...originalStarts.get(p.id),startSource:'startCenterLabel'};
+  if($('start-mode').value==='precise'){
+   const gps=$('gps-'+p.id).value.trim(),address=$('address-'+p.id).value.trim();
+   const fail=key=>{const e=new Error(key);e.startMessage=t(key,{name:personName(p)});throw e;};
+   if(gps){
+    const parts=gps.split(/[,;\s]+/).filter(Boolean).map(Number);
+    if(parts.length!==2||parts.some(n=>!Number.isFinite(n))||Math.abs(parts[0])>90||Math.abs(parts[1])>180)fail('startInvalid');
+    point={lat:parts[0],lon:parts[1],startSource:'startGpsLabel'};
+   }else if(address){
+    let found=addressCache.get(address);
+    if(!found){
+     try{
+      const response=await fetch('https://photon.komoot.io/api/?limit=2&q='+encodeURIComponent(address),{signal:AbortSignal.timeout(8000)});
+      if(!response.ok)fail('startNotFound');
+      const data=await response.json();
+      if(data.features?.length!==1)fail('startNotFound');
+      const [lon,lat]=data.features[0].geometry.coordinates;
+      if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180)fail('startNotFound');
+      found={lat,lon};addressCache.set(address,found);
+     }catch{fail('startNotFound');}
+    }
+    point={...found,startSource:'startAddressLabel'};
+   }
+  }
+  pending.push([p,point]);
+ }
+ pending.forEach(([p,point])=>Object.assign(p,point));
 }
 function init(){
  $('participants').innerHTML=PARTICIPANTS.map(p=>`<label class="person"><input type="checkbox" id="person-${p.id}" checked><span class="avatar" aria-hidden="true">${p.id<3?p.name.slice(0,2).toUpperCase():p.name.slice(-2)}</span><span><strong id="name-${p.id}"></strong><small id="home-${p.id}"></small></span></label>`).join('');
@@ -389,6 +434,7 @@ function init(){
    let lastWidth=0;new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(Math.abs(width-lastWidth)>1){lastWidth=width;map.invalidateSize({pan:false});drawMap(lastResult?.results||null,lastResult?.matrix.road??true);}}).observe($('map'));
   }
  }else{$('map').hidden=true;showMapNotice('leafletFailed');}
+ initStartInputs();
  $('participants').addEventListener('change',()=>{refreshCounters();clearResult();});
  $('toggle-all').addEventListener('click',()=>{const all=selectedPeople().length===PARTICIPANTS.length;PARTICIPANTS.forEach(p=>$('person-'+p.id).checked=!all);refreshCounters();clearResult();});
  document.querySelectorAll('input[name=mode]').forEach(el=>el.addEventListener('change',()=>{$('group-control').hidden=el.value!=='groups';clearResult();}));
