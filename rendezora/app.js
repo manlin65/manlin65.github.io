@@ -107,9 +107,9 @@ const PARTICIPANTS = [
   },
   {
     "name": "Thomas",
-    "city": "",
-    "lat": null,
-    "lon": null
+    "city": "Düsseldorf",
+    "lat": 51.2277,
+    "lon": 6.7735
   }
 ].map((person,id)=>({...person,id}));
 
