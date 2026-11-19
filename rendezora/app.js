@@ -88,6 +88,12 @@ const PARTICIPANTS = [
     "lon": 9.9937
   },
   {
+    "name": "Milena",
+    "city": "Mayen",
+    "lat": 50.3286,
+    "lon": 7.2226
+  },
+  {
     "name": "Oxana",
     "city": "Remscheid",
     "lat": 51.1787,
