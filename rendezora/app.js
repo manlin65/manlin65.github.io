@@ -15,6 +15,12 @@ const PARTICIPANTS = [
     "lon": 10.2194
   },
   {
+    "name": "Angelika",
+    "city": "Köln",
+    "lat": 50.9375,
+    "lon": 6.9603
+  },
+  {
     "name": "Dinah",
     "city": "Hamburg",
     "lat": 53.5511,
@@ -98,12 +104,18 @@ const PARTICIPANTS = [
     "city": "Remscheid",
     "lat": 51.1787,
     "lon": 7.1897
+  },
+  {
+    "name": "Thomas",
+    "city": "",
+    "lat": null,
+    "lon": null
   }
 ].map((person,id)=>({...person,id}));
 
 // Kandidaten für den Vergleich tatsächlich gerouteter Auto-Anfahrtskilometer.
 const REFERENCE_CITIES = [
-  ...PARTICIPANTS.map(p=>({city:p.city,lat:p.lat,lon:p.lon})),
+  ...PARTICIPANTS.filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon)).map(p=>({city:p.city,lat:p.lat,lon:p.lon})),
   {city:'Kassel',lat:51.3127,lon:9.4797},
   {city:'Fulda',lat:50.5558,lon:9.6808},
   {city:'Gießen',lat:50.5841,lon:8.6784},
@@ -185,11 +197,14 @@ Object.assign(TEXT.en,{startMode:'Starting points',startCenters:'Town centres (d
 Object.assign(TEXT.de,{groups1:'1 Gruppe',errorGroupMinimum:'Für regionale Gruppen bitte mindestens zwei Personen auswählen.',groupMinimumHelp:'Regionale Gruppen: mindestens 2 Personen je Gruppe. Bei zu wenigen Personen wird die Gruppenzahl automatisch reduziert.',groupsReduced:'Gruppenzahl automatisch auf {n} reduziert: mindestens zwei Personen je Gruppe.'});
 Object.assign(TEXT.en,{groups1:'1 group',errorGroupMinimum:'Select at least two people for regional groups.',groupMinimumHelp:'Regional groups: at least 2 people per group. The group count is automatically reduced when too few people are selected.',groupsReduced:'Group count automatically reduced to {n}: at least two people per group.'});
 
+Object.assign(TEXT.de,{missingStart:'Wohnort fehlt · noch nicht berechenbar'});
+Object.assign(TEXT.en,{missingStart:'Town missing · cannot calculate yet'});
+
 const COLORS=['#173D37','#A36713','#526A8F','#86566E'];
 const $=id=>document.getElementById(id);
 const km=n=>new Intl.NumberFormat(language==='de'?'de-DE':'en-GB',{maximumFractionDigits:1}).format(n)+' km';
 const personName=p=>p.name.startsWith('Teilnehmer ')?t('participant',{id:p.name.split(' ')[1]}):p.name;
-const homeName=p=>language==='en'&&p.city==='Mayen bei Koblenz'?'Mayen near Koblenz':p.city;
+const homeName=p=>!p.city?t('missingStart'):language==='en'&&p.city==='Mayen bei Koblenz'?'Mayen near Koblenz':p.city;
 const cityName=city=>city.isCenter?t('centerName'):homeName(city);
 let map,layers,offline,streets,layerControl,zoomControl,busy=false,comparisonState=null,lastResult=null,mapNotice=null;
 let statusMessage={key:'initial',vars:{}};
@@ -270,11 +285,12 @@ function rankRoadMeetings(people,candidates,matrix){
 function centerDetails(city){
  return `${city.lat.toFixed(5)}° N, ${city.lon.toFixed(5)}° E`+(city.reference?`<br>${t('nearCity',{km:km(city.referenceDistance),city:city.reference})}`:'');
 }
-function selectedPeople(){return PARTICIPANTS.filter(p=>$('person-'+p.id).checked);}
+const hasStart=p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon);
+function selectedPeople(){return PARTICIPANTS.filter(p=>hasStart(p)&&$('person-'+p.id).checked);}
 function refreshCounters(){
  const n=selectedPeople().length;
  $('selection-count').textContent=t('selectedCount',{n,total:PARTICIPANTS.length});
- $('toggle-all').textContent=t(n===PARTICIPANTS.length?'selectNone':'selectAll');
+ $('toggle-all').textContent=t(n===PARTICIPANTS.filter(hasStart).length?'selectNone':'selectAll');
  $('map-count').textContent=t('mapCount',{n});
 }
 function renderComparison(){
@@ -311,6 +327,7 @@ function drawMap(results=null,road=true,fit=true){
  if(!map)return;layers.clearLayers();
  const selected=selectedPeople(),bounds=[];
  PARTICIPANTS.forEach(p=>{
+  if(!hasStart(p))return;
   const group=results?.findIndex(r=>r.people.some(member=>member.id===p.id));
   const color=group>=0?COLORS[group]:COLORS[0],active=selected.some(s=>s.id===p.id);
   const result=group>=0?results[group]:null;
@@ -442,7 +459,7 @@ async function resolveStarts(people){
  pending.forEach(([p,point])=>Object.assign(p,point));
 }
 function init(){
- $('participants').innerHTML=PARTICIPANTS.map(p=>`<label class="person"><input type="checkbox" id="person-${p.id}" checked><span class="avatar" aria-hidden="true">${p.id<3?p.name.slice(0,2).toUpperCase():p.name.slice(-2)}</span><span><strong id="name-${p.id}"></strong><small id="home-${p.id}"></small></span></label>`).join('');
+ $('participants').innerHTML=PARTICIPANTS.map(p=>`<label class="person"><input type="checkbox" id="person-${p.id}" ${hasStart(p)?'checked':'disabled'}><span class="avatar" aria-hidden="true">${p.id<3?p.name.slice(0,2).toUpperCase():p.name.slice(-2)}</span><span><strong id="name-${p.id}"></strong><small id="home-${p.id}"></small></span></label>`).join('');
  if(typeof L!=='undefined'){
   map=L.map('map',{scrollWheelZoom:false,zoomControl:false}).setView([51,9],6);
   zoomControl=L.control.zoom({zoomInTitle:t('zoomIn'),zoomOutTitle:t('zoomOut')}).addTo(map);
@@ -459,7 +476,7 @@ function init(){
  }else{$('map').hidden=true;showMapNotice('leafletFailed');}
  initStartInputs();
  $('participants').addEventListener('change',()=>{refreshCounters();clearResult();});
- $('toggle-all').addEventListener('click',()=>{const all=selectedPeople().length===PARTICIPANTS.length;PARTICIPANTS.forEach(p=>$('person-'+p.id).checked=!all);refreshCounters();clearResult();});
+ $('toggle-all').addEventListener('click',()=>{const all=selectedPeople().length===PARTICIPANTS.filter(hasStart).length;PARTICIPANTS.forEach(p=>$('person-'+p.id).checked=hasStart(p)&&!all);refreshCounters();clearResult();});
  document.querySelectorAll('input[name=mode]').forEach(el=>el.addEventListener('change',()=>{$('group-control').hidden=el.value!=='groups';clearResult();}));
  $('objective').addEventListener('change',()=>{$('objective-help').textContent=t('help_'+$('objective').value);clearResult();});
  $('group-count').addEventListener('change',clearResult);
