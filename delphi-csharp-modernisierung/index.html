@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lokaler Prototyp zur Analyse von Delphi-Projektdateien und zur Übersetzung einfacher Delphi-Funktionen nach C#.">
+  <title>Delphi → C# Modernisierung</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./converter.js" defer></script>
+  <script src="./project.js" defer></script>
+  <script src="./project-export.js" defer></script>
+  <script src="./demo.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="frame masthead-inner">
+      <span class="wordmark">manli<span>Nova</span></span>
+    </div>
+  </header>
+
+  <main class="frame workspace">
+    <h1>Delphi <span class="title-arrow">→</span> C# Modernisierung</h1>
+    <div class="mode-switch" role="group" aria-label="Arbeitsbereich">
+      <button type="button" data-mode="project" aria-controls="project-mode" aria-pressed="true">Projekt umwandeln</button>
+      <button type="button" data-mode="file" aria-controls="file-mode" aria-pressed="false">Einzeldatei übersetzen</button>
+      <button type="button" data-mode="example" aria-controls="example-mode" aria-pressed="false">Demo</button>
+    </div>
+
+    <section class="mode-panel" id="project-mode" aria-label="Projekt umwandeln">
+      <p class="notice">Übersetzt werden einfache <code>Integer</code>-Funktionen mit <code>if</code>/<code>else</code>. Die Analyse und der Export laufen im Browser.</p>
+      <button class="show-button project-sample" id="project-sample" type="button">Beispielprojekt direkt testen</button>
+      <p class="notice" id="project-help">Für ein eigenes Projekt wähle deine <code>.dproj</code> und die zugehörigen <code>.pas</code>-Dateien.</p>
+      <form id="project-form" class="controls import-controls">
+        <div class="picker">
+          <label for="project-file">Delphi-Projektdatei auswählen (.dproj)</label>
+          <input id="project-file" type="file" accept=".dproj" required aria-describedby="project-help">
+        </div>
+        <div class="picker">
+          <label for="project-sources">Zugehörige .pas-Dateien auswählen</label>
+          <input id="project-sources" type="file" accept=".pas,.dpr,.dpk,.inc,.dfm,.fmx,.rc,.xml,.cfg,.txt,.res,.dcu,.ico" multiple disabled aria-describedby="project-help">
+        </div>
+        <button class="show-button" type="submit">Projekt analysieren</button>
+      </form>
+      <p id="project-status" role="status" class="import-status"></p>
+      <div class="project-actions" id="project-actions" hidden>
+        <button id="project-export" class="show-button project-export" type="button" aria-describedby="project-export-help" disabled>C#-Projekt als ZIP speichern</button>
+        <p id="project-export-help" class="project-help"></p>
+      </div>
+      <ul id="project-results" class="project-results" aria-label="Dateien im Delphi-Projekt" tabindex="-1" hidden></ul>
+    </section>
+
+    <section class="mode-panel" id="file-mode" aria-label="Einzeldatei übersetzen" hidden>
+      <p class="notice" id="import-limit">Lade eine <code>.pas</code>-Datei mit einer einfachen <code>Integer</code>-Funktion. Der C#-Code erscheint unter der Dateiauswahl.</p>
+      <form id="import-form" class="controls import-controls">
+        <div class="picker">
+          <label for="pascal-file">Delphi-Datei auswählen</label>
+          <input id="pascal-file" type="file" accept=".pas" aria-describedby="import-limit" required>
+        </div>
+        <button class="show-button" type="submit">In C# übersetzen</button>
+      </form>
+      <p id="import-status" role="status" class="import-status"></p>
+
+      <details class="import-files">
+        <summary>Pascal-Dateien zum Ausprobieren</summary>
+        <p>Wähle die Dateien aus dem Ordner <code>beispiele</code> über <strong>Delphi-Datei auswählen</strong>.</p>
+        <h2>Automatisch übersetzbare Dateien</h2>
+        <ul>
+          <li><code>Rabatt.pas</code> · Rabattstufen</li>
+          <li><code>Schwellwerte.pas</code> · Gleichheit und Ungleichheit</li>
+          <li><code>Temperaturzone.pas</code> · Negative Schwellenwerte</li>
+          <li><code>Versandklasse.pas</code> · Vier Gewichtsstufen und Fehlerwert</li>
+          <li><code>Statusprioritaet.pas</code> · Sonderfall vor allgemeinen Regeln</li>
+        </ul>
+        <h2>Komplexere Dateien für den Fehlermeldungstest</h2>
+        <ul>
+          <li><code>Messwertanalyse.pas</code> · Array, Schleife und verschachtelte Bedingungen</li>
+          <li><code>Bestandsreservierung.pas</code> · Klasse mit Eigenschaften und Zustandsänderungen</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="mode-panel" id="example-mode" aria-label="Demo" hidden>
+      <p class="notice">Hier vergleichst du vorbereitete Delphi- und C#-Beispiele. Eigene Dateien kannst du in den anderen Bereichen übersetzen.</p>
+      <form id="example-form" class="controls">
+        <div class="picker">
+          <label for="example">Vorbereitetes Beispiel auswählen</label>
+          <select id="example">
+            <option value="condition">Funktion mit Bedingungen</option>
+            <option value="sum">Schleife mit Summenberechnung</option>
+            <option value="class">Einfache Klasse</option>
+          </select>
+        </div>
+        <button class="show-button" type="submit">Beispiel anzeigen</button>
+      </form>
+    </section>
+    <noscript><p>Für die Übersetzung und die Beispiele muss JavaScript aktiviert sein.</p></noscript>
+
+    <div id="code-output" hidden>
+      <section aria-labelledby="example-title">
+        <a id="project-back" href="#project-results" hidden>Zur Projektdateiliste</a>
+        <h2 id="example-title" tabindex="-1">Funktion mit Bedingungen</h2>
+        <div class="comparison">
+          <section class="code-panel" aria-labelledby="pascal-heading">
+            <div class="panel-header">
+              <h3 id="pascal-heading">Delphi/Object Pascal</h3>
+            </div>
+            <pre tabindex="0" aria-labelledby="pascal-heading"><code id="pascal-code"></code></pre>
+          </section>
+          <section class="code-panel code-panel-target" aria-labelledby="csharp-heading">
+            <div class="panel-header">
+              <h3 id="csharp-heading">C#/.NET</h3>
+              <button class="copy-button" id="copy" type="button">C#-Code kopieren</button>
+            </div>
+            <pre tabindex="0" aria-labelledby="csharp-heading"><code id="csharp-code"></code></pre>
+          </section>
+        </div>
+        <p id="status" class="status" role="status"></p>
+      </section>
+
+      <section id="notes" class="notes" aria-labelledby="notes-title">
+        <h2 id="notes-title">Was sich im Code ändert</h2>
+        <ul id="differences"></ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

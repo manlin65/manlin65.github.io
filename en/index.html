@@ -303,6 +303,7 @@ dialog.modal::backdrop{background:#071b2bb8}
 @media(max-width:740px){.legacy-grid{grid-template-columns:1fr;gap:20px}.legacy-band{padding:45px 0}.legacy-actions a{max-width:100%;text-align:center}}
 </style>
 <link rel="stylesheet" href="../assets/career.css?v=20261110-kunden">
+<link rel="stylesheet" href="../assets/delphi-project.css">
 <script src="../assets/home.js?v=20261109-karriere" defer></script>
 </head>
 <body>
@@ -441,7 +442,26 @@ dialog.modal::backdrop{background:#071b2bb8}
 <p class="sec-intro">Try it yourself: applications and demos show how I check data, structure information and support technical workflows.</p>
 
 <div class="proj-grid">
-<div class="proj-card"><div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div><h3 class="proj-h">Delphi → C#/.NET</h3><p class="proj-body">Working prototype for AI-assisted conversion of Delphi/Object Pascal source code to C#/.NET.</p></div>
+<article class="proj-card delphi-project">
+  <div class="delphi-preview delphi-preview-en">
+    <div class="delphi-code-pair">
+      <div>
+        <span>Object Pascal</span>
+        <pre><code><b>if</b> Amount &gt;= 100 <b>then</b>
+  Result := 10</code></pre>
+      </div>
+      <div>
+        <span>C#</span>
+        <pre><code><b>if</b> (Amount &gt;= 100)
+    <b>return</b> 10;</code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div>
+  <h3 class="proj-h">Delphi → C#/.NET</h3>
+  <p class="proj-body">Rule-based prototype that translates simple Delphi functions into C# and exports them as a buildable .NET 8 class library.</p>
+  <div class="proj-links"><button class="legacy-example-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="View Delphi → C#/.NET project">View project →</button></div>
+</article>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div><h3 class="proj-h">SQL Server Analysis and Health Check</h3><p class="proj-body">Prototype for analysing existing SQL Server environments and presenting potential weaknesses in a structured format.</p></div>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">01 / DATA QUALITY</span></div><h3 class="proj-h">Making errors visible before import</h3><p class="proj-body">Detecting duplicates, missing entries and implausible values in Excel, CSV or SQL data with traceable rules – before import, migration or reporting begins.</p><div class="proj-links"><a class="legacy-example-link" href="../datenqualitaetscheck/">Open demo →</a><button class="legacy-example-link" data-legacy-modal="modal-quality" type="button">View Data Quality Check →</button></div></div>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">02 / DOCUMENT PROCESSING</span></div><h3 class="proj-h">From PDF to verifiable data record</h3><p class="proj-body">Invoice and business data arrives as PDF. Text is extracted; OCR can supplement scans. Captured fields are structured, verified and prepared for transfer to Excel or SQL Server.</p><div class="proj-links"><button class="legacy-example-link" data-legacy-modal="modal-invoice" type="button">View Invoice Check →</button></div></div>
@@ -517,6 +537,19 @@ dialog.modal::backdrop{background:#071b2bb8}
 </footer>
 
 <!-- MODALS -->
+<dialog class="modal" id="modal-delphi" aria-labelledby="modal-delphi-title">
+  <div class="modal-dialog">
+    <div class="modal-head"><h3 id="modal-delphi-title">Delphi → C#/.NET</h3><button class="modal-close" type="button" data-modal-close aria-label="Close">×</button></div>
+    <div class="modal-body">
+      <p>The demo reads file references from a <code>.dproj</code> and matches them to the supplied sources. It translates simple <code>Integer</code> functions with <code>if</code>/<code>else</code> into C# using fixed rules.</p>
+      <p>The sample translates <code>Rabatt.pas</code> and <code>Versandklasse.pas</code>. It skips <code>Messwertanalyse.pas</code> because the function takes an array parameter. The ZIP contains a .NET 8 class library with the translated functions and a report explaining omissions. Full application migration is outside the scope.</p>
+      <div class="modal-actions delphi-modal-actions">
+        <a class="btn-primary" href="../delphi-csharp-modernisierung/" hreflang="de">Open demo (German)</a>
+        <a class="btn-ghost" href="../assets/Delphi-CSharp-Projektueberblick.pdf" hreflang="de" type="application/pdf" target="_blank" rel="noopener noreferrer">Project overview PDF (German) <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+</dialog>
 <dialog aria-labelledby="modal-invoice-title" class="modal" id="modal-invoice"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-invoice-title">AI-Assisted Invoice Check</h3><button aria-label="Close" class="modal-close" data-modal-close="" type="button">×</button></div><div class="modal-body"><p>PDF documents are captured, invoice data and line items are presented in a structured format and then verified arithmetically and formally.</p><div class="tech-block"><h4>Technology Used</h4><ul><li>PDF processing and structured document data</li><li>Local rule engine for line item totals, VAT, total amount and mandatory fields</li><li>Checking deadlines and duplicate invoice numbers</li><li>Export to Excel/CSV and SQL Server script</li><li>Productively extensible with OCR/AI service via REST API</li></ul></div></div></div></dialog>
 <dialog aria-labelledby="modal-quality-title" class="modal" id="modal-quality"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-quality-title">AI-Assisted Data Quality Check</h3><button aria-label="Close" class="modal-close" data-modal-close="" type="button">×</button></div><div class="modal-body"><p>Structured business data is automatically checked for typical quality problems before import, migration or reporting, and prioritized.</p><div class="tech-block"><h4>Technology Used</h4><ul><li>Direct processing of Excel/XLSX and CSV in demo mode</li><li>Rule engine for duplicates, required fields, data types, formats, outliers and sum errors</li><li>ASP.NET Core REST API as a secure layer between browser and SQL Server</li><li>T-SQL checks and customer-specific quality rules</li><li>Local summary; external AI service optional for semantic evaluations</li></ul></div></div></div></dialog>
 <dialog aria-labelledby="modal-log-title" class="modal" id="modal-log"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-log-title">AI-Assisted Log File &amp; Error Analyzer</h3><button aria-label="Close" class="modal-close" data-modal-close="" type="button">×</button></div><div class="modal-body"><p>Many individual log lines are condensed into technically useful error patterns. Patterns, temporal correlations and priorities remain traceable.</p><div class="tech-block"><h4>Technology Used</h4><ul><li>Browser-based analysis of .log, .txt and .csv files</li><li>Detection of typical patterns such as SQL Timeout, Deadlock, Connection Pool, HTTP 5xx and network errors</li><li>Correlation of temporally related error chains</li><li>ASP.NET Core backend for productive integration</li><li>Optional SQL Server storage and CSV reports</li></ul></div></div></div></dialog>
