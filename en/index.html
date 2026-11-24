@@ -322,7 +322,7 @@ dialog.modal::backdrop{background:#071b2bb8}
 <a href="#services">Services</a>
 <a href="#projects">Case Studies</a>
 
-<a href="../legacy-check.html">Legacy Check</a>
+<a href="../legacy-check/" hreflang="de">Legacy Check</a>
 <a href="#professional-profile">Professional Profile</a>
 <div class="lang-switch">
   <a href="/">DE</a>
@@ -401,14 +401,14 @@ dialog.modal::backdrop{background:#071b2bb8}
 <div class="leist-icon"><svg fill="none" height="22" stroke="#157D83" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 22 22" width="22"><rect height="16" rx="2" width="12" x="3" y="2"></rect><path d="M7 7h4M7 10h4M7 13h2"></path><path d="M15 8l4 4-4 4"></path></svg></div>
 <div class="leist-nr">01 / AI PRACTICAL REVIEW</div>
 <h3 class="leist-h">Where can AI help your business?</h3>
-<p class="leist-body">We look at one specific workflow and assess how AI could provide useful support.</p>
+<p class="leist-body">I review a specific workflow to identify where AI can help.</p>
 <ul class="customer-offer-list"><li>One workflow and its specific goal</li><li>Review data, systems and prerequisites</li><li>Outcome: an assessment and a practical next step</li></ul><a class="leist-link" href="mailto:info@mlinner-software.de?subject=AI%20practical%20review">Discuss an AI practical review →</a></div>
 <div class="leist-card">
 <div class="leist-icon"><svg fill="none" height="22" stroke="#157D83" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 22 22" width="22"><circle cx="5" cy="11" r="2.5"></circle><circle cx="17" cy="5" r="2.5"></circle><circle cx="17" cy="17" r="2.5"></circle><path d="M7.5 11h4M14.6 6.8l-4.5 3M14.6 15.2l-4.5-3"></path></svg></div>
 <div class="leist-nr">02 / LEGACY CHECK</div>
 <h3 class="leist-h">Clarity about your existing software.</h3>
 <p class="leist-body">Get a sound basis for deciding whether to keep running, improve or modernise your application.</p>
-<ul class="customer-offer-list"><li>Analyse code, dependencies and business logic</li><li>Assess technical risks clearly</li><li>Outcome: documented analysis and recommendations</li></ul><a class="leist-link" href="../legacy-check.html">Explore the Legacy Check →</a></div>
+<ul class="customer-offer-list"><li>Analyse code, dependencies and business logic</li><li>Assess technical risks clearly</li><li>Outcome: documented analysis and recommendations</li></ul><a class="leist-link" href="../legacy-check/" hreflang="de">Explore the Legacy Check →</a></div>
 </div>
 </div>
 </section>
@@ -420,8 +420,9 @@ dialog.modal::backdrop{background:#071b2bb8}
 <p class="sec-label">— LEGACY CHECK</p>
 <h2 class="sec-h">Your old software still runs. But for how much longer?</h2>
 <p>Delphi, Access or VBA applications are often business-critical – even when knowledge of their structure has been lost over time. I analyze the existing code and dependencies and provide a clear decision basis: keep running, selectively improve or gradually modernize.</p>
+<p class="delphi-legacy-reference">My <a href="#delphi-modernisierung">Delphi-to-C# prototype</a> shows how individual business rules can be carried over. It translates supported functions using fixed rules and exports a .NET 8 class library.</p>
 <div class="legacy-actions">
-<a class="legacy-primary" href="../legacy-check.html">View Service →</a>
+<a class="legacy-primary" href="../legacy-check/" hreflang="de">View Service →</a>
 <a class="legacy-secondary" href="mailto:info@mlinner-software.de?subject=Enquiry%20LEGACY%20CHECK">Request Free Initial Consultation ↗</a>
 </div>
 </div>
@@ -442,16 +443,16 @@ dialog.modal::backdrop{background:#071b2bb8}
 <p class="sec-intro">Try it yourself: applications and demos show how I check data, structure information and support technical workflows.</p>
 
 <div class="proj-grid">
-<article class="proj-card delphi-project">
+<article class="proj-card delphi-project" id="delphi-modernisierung">
   <div class="delphi-preview delphi-preview-en">
     <div class="delphi-code-pair">
       <div>
-        <span>Object Pascal</span>
+        <span>Object Pascal · Rabatt.pas</span>
         <pre><code><b>if</b> Amount &gt;= 100 <b>then</b>
   Result := 10</code></pre>
       </div>
       <div>
-        <span>C#</span>
+        <span>Generated C#</span>
         <pre><code><b>if</b> (Amount &gt;= 100)
     <b>return</b> 10;</code></pre>
       </div>
@@ -460,7 +461,8 @@ dialog.modal::backdrop{background:#071b2bb8}
   <div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div>
   <h3 class="proj-h">Delphi → C#/.NET</h3>
   <p class="proj-body">The prototype reads Delphi projects, translates supported functions into C# using fixed rules, and exports a buildable .NET 8 class library.</p>
-  <div class="proj-links"><button class="legacy-example-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="View Delphi → C#/.NET project">View project →</button></div>
+  <ul class="delphi-tags"><li>Delphi</li><li>C#</li><li>.NET 8</li></ul>
+  <div class="proj-links"><button class="legacy-example-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="View Delphi → C#/.NET project">View project →</button><a class="legacy-example-link" href="../legacy-check/" hreflang="de">Legacy Check (German)</a></div>
 </article>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div><h3 class="proj-h">SQL Server Analysis and Health Check</h3><p class="proj-body">Prototype for analysing existing SQL Server environments and presenting potential weaknesses in a structured format.</p></div>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">01 / DATA QUALITY</span></div><h3 class="proj-h">Making errors visible before import</h3><p class="proj-body">Detecting duplicates, missing entries and implausible values in Excel, CSV or SQL data with traceable rules – before import, migration or reporting begins.</p><div class="proj-links"><a class="legacy-example-link" href="../datenqualitaetscheck/">Open demo →</a><button class="legacy-example-link" data-legacy-modal="modal-quality" type="button">View Data Quality Check →</button></div></div>
