@@ -191,23 +191,29 @@
   <div class="project-preview delphi-preview">
     <div class="delphi-code-pair">
       <div>
-        <span>Object Pascal · Rabatt.pas</span>
-        <pre><code><b>if</b> Amount &gt;= 100 <b>then</b>
-  Result := 10</code></pre>
+        <span>Object Pascal · Auftragsreservierung</span>
+        <pre><code><b>if</b> (Positions[Index] &lt; 0) <b>or</b>
+   (Positions[Index] &gt;
+    FAvailable[Index]) <b>then</b>
+  <b>Exit</b>(<b>False</b>);</code></pre>
       </div>
       <div>
         <span>Erzeugtes C#</span>
-        <pre><code><b>if</b> (Amount &gt;= 100)
-    <b>return</b> 10;</code></pre>
+        <pre><code><b>if</b> ((Positions[Index] &lt; 0) ||
+    (Positions[Index] &gt;
+     this.FAvailable[Index]))
+{
+    <b>return</b> <b>false</b>;
+}</code></pre>
       </div>
     </div>
   </div>
   <div class="project-body">
     <div class="project-meta">Eigenentwicklung · Prototyp</div>
-    <h3>Delphi → C#/.NET</h3>
-    <p>Der Prototyp liest Delphi-Projekte ein, übersetzt unterstützte Funktionen regelbasiert nach C# und exportiert eine kompilierbare .NET-8-Klassenbibliothek.</p>
+    <h3>Delphi → C# – vom Quellcode zum .NET-Build</h3>
+    <p>Der Prototyp übersetzt Delphi-Funktionen und eine Auftragsreservierung mit mehreren Positionen regelbasiert nach C#. Der mit <code>dotnet build</code> geprüfte ZIP-Export enthält das .NET-8-Projekt und die erzeugten <code>.cs</code>-Dateien.</p>
     <ul class="project-tags"><li>Delphi</li><li>C#</li><li>.NET 8</li></ul>
-    <div class="project-actions"><button class="text-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="Delphi → C#/.NET ansehen">Projekt ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><a class="text-link" href="legacy-check/">Zum Legacy Check</a></div>
+    <div class="project-actions"><button class="text-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="Delphi → C# – vom Quellcode zum .NET-Build ansehen">Projekt ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><a class="text-link" href="legacy-check/">Zum Legacy Check</a></div>
   </div>
 </article>
 <article class="project-card"><div class="project-preview" aria-label="Schematische Vorschau: SQL-Abfrageanalyse mit Tabelle, Index und Lesezugriffen" role="img"><svg viewBox="0 0 600 245" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block" aria-hidden="true"><rect width="600" height="245" fill="#10283a"/><rect x="34" y="28" width="532" height="188" rx="11" fill="#173749" stroke="#416678"/><rect x="34" y="28" width="532" height="30" rx="11" fill="#24485a"/><circle cx="56" cy="43" r="4" fill="#31b89d"/><circle cx="70" cy="43" r="4" fill="#68a3b1"/><text x="90" y="47" fill="#e3f4f6" font-size="13" font-family="Arial, sans-serif">SQL Server · Analyse</text><rect x="56" y="77" width="215" height="119" rx="6" fill="#21495a"/><text x="70" y="97" fill="#aed8e1" font-size="12" font-family="Arial, sans-serif">INDEXNUTZUNG</text><path d="M70 164 L108 144 L146 156 L184 118 L222 133 L254 105" fill="none" stroke="#37c9bd" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M70 178 H254" stroke="#52798a" stroke-width="1"/><rect x="291" y="77" width="253" height="119" rx="6" fill="#21495a"/><text x="306" y="97" fill="#aed8e1" font-size="12" font-family="Arial, sans-serif">ABFRAGECACHE</text><rect x="306" y="112" width="175" height="7" rx="3" fill="#5a8998"/><rect x="306" y="131" width="219" height="7" rx="3" fill="#2fb9a9"/><rect x="306" y="150" width="132" height="7" rx="3" fill="#5a8998"/><text x="306" y="180" fill="#f4fbfb" font-size="14" font-family="Arial, sans-serif">12,7 Mio. Lesezugriffe</text></svg></div><div class="project-body"><div class="project-meta">Datenbankanalyse</div><h3>SQL Server Analyse-Cockpit</h3><p>Datenbankstruktur, Indexnutzung und auffällige SQL-Abfragen im Überblick.</p><ul class="project-tags"><li>Python</li><li>SQL Server</li><li>Performance</li></ul><div class="project-actions"><button class="text-link" type="button" data-legacy-modal="modal-sql-cockpit" aria-label="SQL Server Analyse-Cockpit ansehen">Projekt ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div></article>
@@ -318,12 +324,24 @@
 <dialog class="modal" id="modal-planning" aria-labelledby="modal-planning-title"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-planning-title">Personal-, Schicht- und Maschinenplanung</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div><div class="modal-body"><p>Ein Planungsbeispiel aus der eigenen Entwicklungsarbeit: Qualifikationen, Abwesenheiten, Personalbedarf und Maschinen werden zusammen betrachtet, um einen nachvollziehbaren Einsatzplan vorzubereiten.</p><img class="modal-image" src="assets/einsatz_ergebnis.png" alt="Beispielansicht des Einsatzplans" width="1200" height="700" loading="lazy"><div class="tech-block"><h4>Bausteine der Planung</h4><ul><li>Vorhandene Personal- und Bedarfsdaten übernehmen</li><li>Qualifikationen, Verfügbarkeit und Planungsregeln berücksichtigen</li><li>Besetzung und offene Bedarfe sichtbar machen</li><li>Ergebnisse als Grundlage für die weitere Abstimmung nutzen</li></ul></div><div class="modal-actions"><a class="button button-primary" href="mailto:info@mlinner-software.de?subject=Anfrage%20Ressourcenplanung">Planungsaufgabe besprechen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></div></div></dialog>
 <dialog class="modal" id="modal-delphi" aria-labelledby="modal-delphi-title">
   <div class="modal-dialog">
-    <div class="modal-head"><h3 id="modal-delphi-title">Delphi → C#/.NET</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
+    <div class="modal-head"><h3 id="modal-delphi-title">Delphi → C# – vom Quellcode zum .NET-Build</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div>
     <div class="modal-body">
       <p>Der Prototyp liest Dateiverweise aus einer <code>.dproj</code> und ordnet die bereitgestellten Quellen zu. Er übersetzt <code>Integer</code>-Funktionen mit <code>if</code>/<code>else</code> regelbasiert nach C#.</p>
-      <p>Im Beispiel werden <code>Rabatt.pas</code> und <code>Versandklasse.pas</code> übersetzt. <code>Messwertanalyse.pas</code> bleibt wegen eines Array-Parameters außen vor. Der ZIP-Export enthält eine .NET-8-Klassenbibliothek mit den übersetzten Funktionen und einen Projektbericht mit den Gründen für Auslassungen. Eine vollständige Anwendungsportierung liegt außerhalb des Umfangs.</p>
+      <h4>Vorführfall: Auftrag mit mehreren Positionen</h4>
+      <p>Aus <code>Auftragsreservierung.pas</code> entsteht die Klasse <code>TOrderInventory</code>. Eine Schleife prüft alle Positionen. Erst wenn alle lieferbar sind, bucht eine zweite Schleife den Bestand. Der Vorführfall verwaltet jeweils einen aktiven Auftrag im Speicher.</p>
+      <ul>
+        <li>Startbestand A/B: <strong>10/3</strong></li>
+        <li>Anfrage 6/4 abgelehnt: Bestand bleibt <strong>10/3</strong>.</li>
+        <li>Anfrage 6/2 angenommen: verfügbar <strong>4/1</strong>, reserviert 6/2.</li>
+        <li>Storno: wieder <strong>10/3</strong> verfügbar, nichts reserviert.</li>
+      </ul>
+      <h4>Vorführfall: Lagerreservierung</h4>
+      <p>Der Konverter liest <code>Bestandsreservierung.pas</code> ein und erzeugt die C#-Klasse <code>TInventory</code>. Bei 10 Stück werden 6 reserviert, weitere 5 abgelehnt und 2 freigegeben. Der Test der exportierten Klasse endet bei <strong>6 verfügbar und 4 reserviert</strong>.</p>
+      <h4>Geprüfter .NET-8-Export</h4>
+      <p>Das ZIP enthält <code>DelphiModernisierung.csproj</code>, vier erzeugte <code>.cs</code>-Dateien und den Projektbericht. <code>dotnet build</code> lief mit 0 Warnungen und 0 Fehlern. Der Bericht dokumentiert auch, warum <code>Messwertanalyse.pas</code> mit ihrem Array-Parameter ausgelassen wurde.</p>
       <div class="modal-actions delphi-modal-actions">
         <a class="button button-primary" href="assets/Delphi-CSharp-Projektueberblick.pdf" hreflang="de" type="application/pdf" target="_blank" rel="noopener noreferrer">Projektüberblick als PDF <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="assets/Delphi-CSharp-Build-Beispiel.zip" download>Geprüften Export herunterladen</a>
       </div>
     </div>
   </div>

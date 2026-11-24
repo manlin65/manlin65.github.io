@@ -447,22 +447,28 @@ dialog.modal::backdrop{background:#071b2bb8}
   <div class="delphi-preview delphi-preview-en">
     <div class="delphi-code-pair">
       <div>
-        <span>Object Pascal · Rabatt.pas</span>
-        <pre><code><b>if</b> Amount &gt;= 100 <b>then</b>
-  Result := 10</code></pre>
+        <span>Object Pascal · Auftragsreservierung</span>
+        <pre><code><b>if</b> (Positions[Index] &lt; 0) <b>or</b>
+   (Positions[Index] &gt;
+    FAvailable[Index]) <b>then</b>
+  <b>Exit</b>(<b>False</b>);</code></pre>
       </div>
       <div>
         <span>Generated C#</span>
-        <pre><code><b>if</b> (Amount &gt;= 100)
-    <b>return</b> 10;</code></pre>
+        <pre><code><b>if</b> ((Positions[Index] &lt; 0) ||
+    (Positions[Index] &gt;
+     this.FAvailable[Index]))
+{
+    <b>return</b> <b>false</b>;
+}</code></pre>
       </div>
     </div>
   </div>
   <div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div>
-  <h3 class="proj-h">Delphi → C#/.NET</h3>
-  <p class="proj-body">The prototype reads Delphi projects, translates supported functions into C# using fixed rules, and exports a buildable .NET 8 class library.</p>
+  <h3 class="proj-h">Delphi → C# – from source code to a .NET build</h3>
+  <p class="proj-body">The prototype translates Delphi functions and a multi-line order reservation into C# using fixed rules. The ZIP contains the .NET 8 project and generated <code>.cs</code> files, verified with <code>dotnet build</code>.</p>
   <ul class="delphi-tags"><li>Delphi</li><li>C#</li><li>.NET 8</li></ul>
-  <div class="proj-links"><button class="legacy-example-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="View Delphi → C#/.NET project">View project →</button><a class="legacy-example-link" href="../legacy-check/" hreflang="de">Legacy Check (German)</a></div>
+  <div class="proj-links"><button class="legacy-example-link" type="button" data-legacy-modal="modal-delphi" aria-haspopup="dialog" aria-label="View Delphi → C# – from source code to a .NET build">View project →</button><a class="legacy-example-link" href="../legacy-check/" hreflang="de">Legacy Check (German)</a></div>
 </article>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">In-house development · Prototype</span></div><h3 class="proj-h">SQL Server Analysis and Health Check</h3><p class="proj-body">Prototype for analysing existing SQL Server environments and presenting potential weaknesses in a structured format.</p></div>
 <div class="proj-card"><div class="proj-meta"><span class="tag t">01 / DATA QUALITY</span></div><h3 class="proj-h">Making errors visible before import</h3><p class="proj-body">Detecting duplicates, missing entries and implausible values in Excel, CSV or SQL data with traceable rules – before import, migration or reporting begins.</p><div class="proj-links"><a class="legacy-example-link" href="../datenqualitaetscheck/">Open demo →</a><button class="legacy-example-link" data-legacy-modal="modal-quality" type="button">View Data Quality Check →</button></div></div>
@@ -541,12 +547,24 @@ dialog.modal::backdrop{background:#071b2bb8}
 <!-- MODALS -->
 <dialog class="modal" id="modal-delphi" aria-labelledby="modal-delphi-title">
   <div class="modal-dialog">
-    <div class="modal-head"><h3 id="modal-delphi-title">Delphi → C#/.NET</h3><button class="modal-close" type="button" data-modal-close aria-label="Close">×</button></div>
+    <div class="modal-head"><h3 id="modal-delphi-title">Delphi → C# – from source code to a .NET build</h3><button class="modal-close" type="button" data-modal-close aria-label="Close">×</button></div>
     <div class="modal-body">
       <p>The prototype reads file references from a <code>.dproj</code> and matches them to the supplied sources. It translates <code>Integer</code> functions with <code>if</code>/<code>else</code> into C# using fixed rules.</p>
-      <p>The sample translates <code>Rabatt.pas</code> and <code>Versandklasse.pas</code>. It skips <code>Messwertanalyse.pas</code> because the function takes an array parameter. The ZIP contains a .NET 8 class library with the translated functions and a report explaining omissions. Full application migration is outside the scope.</p>
+      <h4>Test case: order with multiple lines</h4>
+      <p>The converter generates <code>TOrderInventory</code> from <code>Auftragsreservierung.pas</code>. One loop checks every line. A second loop updates stock once the whole order can be fulfilled. The example keeps one active order in memory at a time.</p>
+      <ul>
+        <li>Starting stock for A/B: <strong>10/3</strong></li>
+        <li>Request for 6/4 rejected: stock stays at <strong>10/3</strong>.</li>
+        <li>Request for 6/2 accepted: <strong>4/1</strong> available, 6/2 reserved.</li>
+        <li>After cancellation: <strong>10/3</strong> available, zero reserved.</li>
+      </ul>
+      <h4>Test case: inventory reservation</h4>
+      <p>The converter reads <code>Bestandsreservierung.pas</code> and generates the C# class <code>TInventory</code>. Starting with 10 units, the test reserves 6, rejects a request for 5 more, and releases 2. The exported class ends with <strong>6 available and 4 reserved</strong>.</p>
+      <h4>Verified .NET 8 export</h4>
+      <p>The ZIP contains <code>DelphiModernisierung.csproj</code>, four generated <code>.cs</code> files and the project report. <code>dotnet build</code> finished with zero warnings and zero errors. The report explains why <code>Messwertanalyse.pas</code>, which takes an array parameter, was skipped.</p>
       <div class="modal-actions delphi-modal-actions">
         <a class="btn-primary" href="../assets/Delphi-CSharp-Projektueberblick.pdf" hreflang="de" type="application/pdf" target="_blank" rel="noopener noreferrer">Project overview PDF (German) <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="../assets/Delphi-CSharp-Build-Beispiel.zip" download>Download verified export</a>
       </div>
     </div>
   </div>
