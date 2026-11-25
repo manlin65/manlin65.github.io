@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interaktiver Prototyp zur Verwaltung von Qualifikationen und Zertifikaten.">
+  <meta name="theme-color" content="#0E2233">
+  <title>Qualifikations- und Zertifikatsmanager</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body id="uebersicht">
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="m9 13-2 8 5-3 5 3-2-8"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.4"/><rect x="14" y="3" width="7" height="7" rx="1.4"/><rect x="3" y="14" width="7" height="7" rx="1.4"/><rect x="14" y="14" width="7" height="7" rx="1.4"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9h8M8 13h8m-8 4h5"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.6 7.4M3 4v7h7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.7 2.7L16 9.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5m0 4h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="white"/><circle cx="15" cy="17" r="2" fill="white"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m14.5 5.5 4 4M4 20l4.8-1 11-11a2.8 2.8 0 0 0-4-4l-11 11L4 20Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13m-8 4v5m4-5v5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </svg>
+
+  <aside class="sidebar">
+    <a class="brand" href="#uebersicht">
+      <span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg></span>
+      <span>Qualifikations- und<br>Zertifikatsmanager</span>
+    </a>
+    <nav class="navigation" aria-label="Hauptnavigation">
+      <a href="#uebersicht" aria-current="location"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>Übersicht</a>
+      <a href="#nachweise"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg>Nachweise</a>
+    </nav>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar">
+      <span class="page-label">Übersicht</span>
+      <button type="button" class="button button-secondary reset-button" id="reset-demo">
+        <svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg>Demodaten zurücksetzen
+      </button>
+    </header>
+
+    <main class="content">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <span class="demo-label">Interaktiver Prototyp mit fiktiven Beispieldaten</span>
+          <h1 id="page-title">Qualifikations- und<br class="hero-break"> Zertifikatsmanager</h1>
+        </div>
+        <button type="button" class="button button-primary" id="add-record">
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Nachweis hinzufügen
+        </button>
+      </section>
+
+      <section class="metrics" aria-label="Kennzahlen">
+        <article class="metric metric-total">
+          <div class="metric-top"><h2>Nachweise insgesamt</h2><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg></span></div>
+          <strong id="count-total">0</strong>
+        </article>
+        <article class="metric metric-valid">
+          <div class="metric-top"><h2>Gültig</h2><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+          <div class="metric-value"><strong id="count-valid">0</strong><span>inkl. unbefristet</span></div>
+        </article>
+        <article class="metric metric-soon">
+          <div class="metric-top"><h2>Ablauf innerhalb<br class="metric-break"> von 90 Tagen</h2><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg></span></div>
+          <strong id="count-soon">0</strong>
+        </article>
+        <article class="metric metric-expired">
+          <div class="metric-top"><h2>Abgelaufen</h2><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg></span></div>
+          <strong id="count-expired">0</strong>
+        </article>
+      </section>
+
+      <section class="records" id="nachweise" aria-labelledby="records-title">
+        <div class="records-header">
+          <h2 id="records-title">Nachweise</h2>
+          <div class="filters">
+            <label class="search-control">
+              <span class="sr-only">Nach Person oder Zertifikat suchen</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <input id="search" type="search" placeholder="Person oder Zertifikat suchen">
+            </label>
+            <label class="select-control">
+              <span class="sr-only">Nach Status filtern</span>
+              <svg class="icon select-filter" aria-hidden="true"><use href="#i-filter"/></svg>
+              <select id="status-filter">
+                <option value="all">Alle Status</option>
+                <option value="valid">Gültig</option>
+                <option value="soon">Läuft bald ab</option>
+                <option value="expired">Abgelaufen</option>
+                <option value="unlimited">Unbefristet</option>
+              </select>
+              <svg class="icon select-chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </label>
+          </div>
+        </div>
+        <div class="table-area">
+          <table aria-labelledby="records-title" role="table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader">Person</th>
+                <th scope="col" role="columnheader">Abteilung</th>
+                <th scope="col" role="columnheader">Zertifikat</th>
+                <th scope="col" role="columnheader">Aussteller</th>
+                <th scope="col" role="columnheader">Ausgestellt am</th>
+                <th scope="col" role="columnheader">Gültig bis</th>
+                <th scope="col" role="columnheader">Status</th>
+                <th scope="col" role="columnheader"><span class="sr-only">Aktionen</span></th>
+              </tr>
+            </thead>
+            <tbody id="records-body" role="rowgroup"></tbody>
+          </table>
+          <p id="empty-state" class="empty-state" hidden></p>
+        </div>
+        <div class="records-footer"><p id="result-count" role="status"></p></div>
+      </section>
+
+      <footer class="footer"><a href="https://www.mlinner-software.de">Manfred Linner | Software &amp; Datenbanken</a></footer>
+    </main>
+  </div>
+
+  <dialog id="record-dialog" aria-labelledby="form-title">
+    <form id="record-form">
+      <div class="dialog-heading">
+        <h2 id="form-title">Nachweis hinzufügen</h2>
+        <button type="button" class="icon-button" data-close aria-label="Formular schließen"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+      <p class="dialog-note">Alle Felder außer dem Ablaufdatum sind Pflichtfelder.</p>
+      <div class="form-grid">
+        <label>Person<input name="person" required maxlength="100" autofocus></label>
+        <label>Abteilung<input name="department" required maxlength="100"></label>
+        <label>Zertifikat<input name="certificate" required maxlength="120"></label>
+        <label>Aussteller<input name="issuer" required maxlength="100"></label>
+        <label>Ausgestellt am<input name="issued" type="date" min="0001-01-01" max="9999-12-31" required></label>
+        <label>Gültig bis <span class="optional">(optional)</span><input name="expires" type="date" min="0001-01-01" max="9999-12-31"></label>
+      </div>
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="button button-secondary" data-close>Abbrechen</button>
+        <button type="submit" class="button button-primary">Speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <form id="confirm-form">
+      <div class="dialog-heading"><h2 id="confirm-title"></h2></div>
+      <p class="dialog-note" id="confirm-message"></p>
+      <p class="form-error" id="confirm-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="button button-secondary" data-close autofocus>Abbrechen</button>
+        <button type="submit" class="button button-danger" id="confirm-submit"></button>
+      </div>
+    </form>
+  </dialog>
+
+  <p class="sr-only" id="action-status" role="status"></p>
+  <p class="storage-notice" id="storage-notice" role="alert" hidden></p>
+
+  <template id="row-template">
+    <tr role="row">
+      <td role="cell" class="person-cell"><div class="person"><span class="avatar" aria-hidden="true"></span><span data-field="person"></span></div></td>
+      <td role="cell" data-label="Abteilung" data-field="department"></td>
+      <td role="cell" class="certificate-cell" data-label="Zertifikat" data-field="certificate"></td>
+      <td role="cell" data-label="Aussteller" data-field="issuer"></td>
+      <td role="cell" class="date-cell" data-label="Ausgestellt am" data-field="issued"></td>
+      <td role="cell" class="date-cell" data-label="Gültig bis" data-field="expires"></td>
+      <td role="cell" class="status-cell" data-label="Status"><span class="status-badge"></span></td>
+      <td role="cell" class="row-actions">
+        <button type="button" class="icon-button" data-action="edit" title="Bearbeiten"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+        <button type="button" class="icon-button delete-button" data-action="delete" title="Löschen"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
+      </td>
+    </tr>
+  </template>
+</body>
+</html>

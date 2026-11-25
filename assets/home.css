@@ -47,3 +47,20 @@ dialog.modal{padding:0;width:min(780px,calc(100% - 32px));max-height:88vh;border
 @media(max-width:480px){.tech-item{font-size:11px;padding-inline:20px}.tech-control{right:12px;width:34px;height:34px}.tech-viewport{padding-block:16px}}
 @media(prefers-reduced-motion:reduce){.tech-track{width:auto;animation:none!important}.tech-set{flex-wrap:wrap;justify-content:center;gap:10px 0;flex-shrink:1}.tech-set[aria-hidden=true],.tech-control,.tech::after{display:none}.tech-item{font-size:10px;padding-inline:13px}}
 @media print{.tech{display:none}}
+
+.more-card-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+.more-card .more-card-note {
+  color: var(--petrol);
+  font-size: 13px;
+  font-weight: 650;
+}
