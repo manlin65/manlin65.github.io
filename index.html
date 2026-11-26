@@ -224,14 +224,10 @@
     <article class="more-card"><h3>Logfile- und Fehleranalyse</h3><p>Wiederkehrende Fehlermuster und zeitliche Zusammenhänge in technischen Meldungen sichtbar machen.</p><button class="text-link" type="button" data-legacy-modal="modal-log">Logfile-Analyse ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></article>
     <article class="more-card"><h3>Pragmatischer DMS-Check</h3><p>Ablage, Suchbarkeit, Berechtigungen und Medienbrüche als zusammenhängenden Dokumentenprozess betrachten.</p><button class="text-link" type="button" data-legacy-modal="modal-dms">DMS-Check ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></article>
     <article class="more-card"><h3>WorkflowPilot mit n8n und Gemini</h3><p>Stellenanforderungen mit einem Kurzprofil vergleichen und einen prüfbaren Bewerbungstext-Entwurf vorbereiten.</p><button class="text-link" type="button" data-legacy-modal="modal-n8n">Workflow kennenlernen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></article>
-    <article class="more-card more-card--with-preview">
-      <img class="more-card-preview" src="assets/zertifikatsmanager-vorschau.png" alt="Übersicht des Zertifikatsmanagers mit Fristen, Status und Nachweisliste" width="1440" height="1031" loading="lazy" decoding="async">
-      <div>
-        <h3>Qualifikations- und Zertifikatsmanager</h3>
-        <p>Qualifikationen und Zertifikate zentral verwalten und Ablauffristen im Blick behalten. In der interaktiven Demo lassen sich Nachweise suchen, filtern, anlegen und bearbeiten. Der Status wird automatisch anhand des Ablaufdatums berechnet.</p>
-        <p class="more-card-note">Interaktiver Prototyp mit fiktiven Beispieldaten</p>
-        <a class="text-link" href="/zertifikatsmanager/">Demo ausprobieren <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
-      </div>
+    <article class="more-card" id="qualifikations-und-zertifikatsmanager">
+      <h3>Qualifikations- und Zertifikatsmanager</h3>
+      <p>Schulungsnachweise, Zertifikate und Softwarelizenzen im Überblick. Fristen und Status zeigen, wo Handlungsbedarf besteht.</p>
+      <button class="text-link" type="button" data-legacy-modal="modal-zertifikatsmanager" aria-haspopup="dialog" aria-label="Qualifikations- und Zertifikatsmanager ansehen">Projekt ansehen <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
     </article>
   </div></details>
 </div></section>
@@ -357,6 +353,19 @@
   </div>
 </dialog>
 <dialog class="modal" id="modal-sql-cockpit" aria-labelledby="modal-sql-cockpit-title"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-sql-cockpit-title">SQL Server Analyse-Cockpit</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div><div class="modal-body"><p>Das SQL Server Analyse-Cockpit ist ein Prototyp zur Untersuchung bestehender SQL-Server-Datenbanken. Es zeigt Tabellenstruktur, Indexnutzung und ressourcenintensive Abfragen aus dem Abfragecache.</p><p>Der einseitige Projektüberblick veranschaulicht anhand von Beispieldaten, wie ressourcenintensive SQL-Abfragen analysiert, hohe Lesezugriffe eingeordnet und daraus gezielte weitere Prüfschritte abgeleitet werden.</p><div class="modal-actions"><a class="button button-primary" href="assets/SQL-Server-Analyse-Cockpit-Projektueberblick.pdf" target="_blank" rel="noopener noreferrer">Projektüberblick als PDF <span aria-hidden="true">↗</span></a></div></div></div></dialog>
+<dialog class="modal" id="modal-zertifikatsmanager" aria-labelledby="modal-zertifikatsmanager-title">
+  <div class="modal-dialog">
+    <div class="modal-head">
+      <h3 id="modal-zertifikatsmanager-title">Qualifikations- und Zertifikatsmanager</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Nachweise für Mitarbeitende erfassen, nach Person oder Zertifikat suchen und nach Status filtern. Die Anwendung berechnet den Status aus dem Ablaufdatum und zeigt, welche Nachweise in den nächsten 90 Tagen auslaufen.</p>
+      <p>Der Lizenzprüfer stellt Softwarebestand, technische Aktivierungsdaten und Lizenzlaufzeiten in getrennten Ansichten dar. Über Status und Resttage lassen sich Fristen einordnen.</p>
+      <div class="modal-actions"><a class="button button-primary" href="assets/Qualifikations-und-Zertifikatsmanager-Projektblatt.pdf" target="_blank" rel="noopener noreferrer">Projektüberblick als PDF</a></div>
+    </div>
+  </div>
+</dialog>
 <dialog class="modal" id="modal-potential" aria-labelledby="modal-potential-title"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-potential-title">KI-Potenziale erkennen und bewerten</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div><div class="modal-body"><p>Unternehmensprozesse erfassen, geeignete KI-Anwendungsfälle erkennen und ihren wirtschaftlichen Nutzen anhand nachvollziehbarer Annahmen bewerten. Die Analyse bereitet eine priorisierte Roadmap für die nächsten Schritte vor.</p><p>Geschützter Pilotbereich mit fiktiven Beispielen. Zugang nach Absprache; externe KI ist optional und erfordert Zustimmung. Der interne Agenten-Eignungscheck ist noch kein bestätigter Bestandteil der Online-Anwendung.</p><div class="modal-actions"><a class="button button-primary" href="/manlinova/#selvamo">Zur Anwendungsübersicht →</a></div></div></div></dialog>
 <dialog class="modal" id="modal-purchasing" aria-labelledby="modal-purchasing-title"><div class="modal-dialog"><div class="modal-head"><h3 id="modal-purchasing-title">Beschaffung und Lieferantenvergleich</h3><button class="modal-close" type="button" data-modal-close aria-label="Schließen">×</button></div><div class="modal-body"><p>Ein modularer Beschaffungsassistent führt Artikel, Lagerbestände und Bezugsquellen zusammen. Die aktuelle Demo berechnet Fehlmengen und vergleicht fiktive Lieferanten nach Gesamtkosten und Lieferzeit.</p><p>Funktionsfähige Demo mit lokalen, fiktiven Daten im Browser. Keine echte KI-Anbindung, automatische Websuche oder echten Bestellungen. Warenwirtschaftsanbindung ist eine mögliche Ausbaustufe. Keine echten Kundendaten eingeben.</p><div class="modal-actions"><a class="button button-primary" href="/manlinova/#quoventra">Zur Anwendungsübersicht →</a></div></div></div></dialog>
 <script src="assets/analytics.js?v=20261110" defer></script>
