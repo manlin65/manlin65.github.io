@@ -7,7 +7,7 @@ Vier Praxisbeispiele zeigen Aufgabe, Ansatz und möglichen Nutzen. Die ersten dr
 stammen aus eigenen Entwicklungen; der DMS-Check ist ein Analyse- und Beratungsangebot.
 Kompetenzen und Werkzeuge sind nach KI, Daten/Prozessen sowie Software/Integration gruppiert.
 
-Die Cert-IT-Zertifizierung wird nicht als abgeschlossen dargestellt.
+Die Cert-IT-Zertifizierung zum KI-Manager ist abgeschlossen (20.11.2026, Zertifikatsnummer KI001388).
 Remote-Projekte werden deutschlandweit und international genannt.
 
 Zum lokalen Prüfen: index.html im Browser öffnen.
